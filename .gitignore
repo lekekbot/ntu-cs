@@ -1,0 +1,33 @@
+# Ignore .DS_Store files (macOS Finder metadata)
+.DS_Store
+**/.DS_Store
+
+# Ignore system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Common build directories
+build/
+dist/
+target/
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Logs
+*.log
+logs/
+
+# Compiled files
+*.class
+*.o
+*.pyc
+__pycache__/
