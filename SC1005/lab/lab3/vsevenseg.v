@@ -56,13 +56,13 @@ assign seg_L = ~seg;
 // students to fill in these 3 expressions
 // remember to end each statement with a semicolon ";"
   // segment c
-   assign seg[2] = 
+  assign seg[2] = x[3]&~x[2] | ~x[1]&~x[0] | ~x[3]&~x[2]&~x[1] | ~x[3]&x[0] | x[2]&x[1]&x[0];
 
   // segment d
-   assign seg[3] = 
+  assign seg[3] = ~x[1]&~x[0] | ~x[3]&~x[2]&~x[1] | x[2]&~x[1]&x[0] | ~x[3]&x[2]&x[1] | x[3]&~x[2]&x[1] | x[3]&x[2]&~x[1];
 
   // segment f
-   assign seg[5] = 
+  assign seg[5] = ~x[3]&~x[1]&~x[0] | ~x[3]&x[2]&~x[0] | ~x[3]&x[2]&x[1] | x[3]&~x[2] | x[3]&x[2]&x[1];
 
  
 endmodule
