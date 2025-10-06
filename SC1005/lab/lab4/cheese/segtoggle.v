@@ -80,9 +80,9 @@ module segtoggle(
 
 
 // COPY YOUR ALWAYS BLOCK HERE AND USE "selnum" AS THE CASE CONDITION
-// Active-low seven-seg decoder controlled by 'numsel'
+// Active-low seven-seg decoder controlled by 'selnum'
 always @* begin
-    case (numsel)
+    case (selnum)
         4'd0:  seg_L = 7'b100_0000;
         4'd1:  seg_L = 7'b111_1001;
         4'd2:  seg_L = 7'b010_0100;
