@@ -189,6 +189,63 @@ Success: PP count increased after touching pages
   the increase that happened at `sbrk()` time. The printed label alone therefore does not prove
   demand paging; only the intermediate `After sbrk` line does.
 
+### Checkpoint 2
+
+**The counting boundary.** Both calls describe exactly the range `[0, p->sz)`, rounded up to a
+page. That range contains the loaded program, its data, the heap, the user stack, and the stack
+guard page — everything the process can name with an ordinary virtual address. Three groups are
+deliberately outside it:
+
+* the **page-table frames** themselves (they are reachable only through `satp`, not through any
+  user virtual address, so no PTE in this range points at them);
+* the **kernel stack**, which is mapped in the kernel page table, not `p->pagetable`;
+* **`TRAMPOLINE` and `TRAPFRAME`**, which are fixed mappings at `MAXVA - PGSIZE` and
+  `MAXVA - 2*PGSIZE` ([kernel/memlayout.h:44](./kernel/memlayout.h:44)), far above any `p->sz`
+  this kernel allows.
+
+A partially used final page still counts as a whole virtual page (hence `PGROUNDUP`), because the
+hardware translates whole pages.
+
+**The guard page.** `exec()` allocates `USERSTACK+1` pages and calls `uvmclear()` on the lowest
+one, so that page has a real frame and a valid PTE whose `PTE_U` bit is cleared
+([kernel/exec.c:86](./kernel/exec.c:86), [kernel/vm.c:347](./kernel/vm.c:347)). It is *inside* the
+range and *has* a frame, so `countpp()` counts it. This is exactly why the handler must use
+`walk()` and not `walkaddr()`: `walkaddr()` also rejects `!PTE_U`
+([kernel/vm.c:109](./kernel/vm.c:109)) and would have reported one frame too few. The visible
+effect is that `Before` prints `VP=4, PP=4` rather than `PP=3`.
+
+**`lazytest` is really reaching the system calls.** With the supplied placeholders still in place,
+the same program printed:
+
+```
+Before: VP=0, PP=0
+After sbrk(122880): VP=0, PP=0
+Error: VP count did not increase by 30
+Success: PP count unchanged (lazy allocation verified)
+```
+
+All four values were the hard-coded `return 0`, and `VP` never moved even though `sbrk()` had
+succeeded — proof the placeholders were being called, not the kernel. After removing them the
+numbers follow the process: `VP` jumps by exactly the 30 pages requested and `PP` tracks the frames
+that `kalloc()` actually handed out. Two more checks confirm the wiring end to end:
+
+* `user/usys.S` (generated from [user/usys.pl](./user/usys.pl)) now contains
+  `li a7, SYS_countvp` / `li a7, SYS_countpp`;
+* [kernel/syscall.h](./kernel/syscall.h) and the dispatch table in [kernel/syscall.c](./kernel/syscall.c)
+  map those numbers to `sys_countvp` / `sys_countpp`;
+* `lazytest.c` no longer defines either function, so a missing syscall would fail to link rather
+  than silently print zeros.
+
+**The eager counts, within one run.** `Before: VP=4, PP=4` is the two program pages plus the guard
+page and the one stack page (`USERSTACK` is 1 in [kernel/param.h:14](./kernel/param.h:14)); every
+one of them is backed, so `PP = VP`. `After sbrk(122880): VP=34, PP=34` shows both counts rising by
+30 at once, because `growproc()` still calls `uvmalloc()`, which `kalloc()`s and maps every page up
+front. `After touching: PP=34` shows no further rise: the pages were already mapped, so the writes
+cause no faults. That triple — `PP` up at `sbrk`, flat at touch, equal to `VP` throughout — is the
+eager signature, and the "PP count changed immediately" line is its expected label. For contrast,
+the Part 4 kernel on the same test prints `VP=34, PP=4` after `sbrk()` and `PP=34` only after the
+touches.
+
 ---
 
 ## Part 3 — Observe page faults and trap handling
