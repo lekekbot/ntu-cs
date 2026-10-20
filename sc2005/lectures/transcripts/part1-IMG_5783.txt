@@ -1,0 +1,179 @@
+Topics and terms of programs written for Intel. Smoothly, even though Apple at some point swapped the chip from Intel to ARM that they developed themselves.
+If you are using Apple Mac produced after 2020, it's very likely that you are using ARM, but you can still run x86 programs.
+Another idea of it is, for example, if anyone plays old computer games from Nintendo or something like this on the PC, this works through the emulator.
+So you have the emulator of Nintendo running on your computer, and then you can run unmodified programs with it.
+Okay, so this is the most important theory how virtualization actually works.
+You should definitely find more details in the pre-recorded lectures, but let us now go directly into the practice.
+So here we are talking about the real world analogy for all these three concepts.
+So one lecture feather in five courses.
+What does it mean?
+It means that courses one by one
+would be given into the lecture feather.
+So we will not have five courses in one lecture feather.
+We will have one at a time.
+So that's multiplication, that's not aggregation.
+So people who want to be, they confuse this point,
+but here, for example, there is a lot of access points
+campus so for example there are so many routers and you go anywhere and there is the same wifi network
+you don't need to enter your password again you don't need to choose another network how does it
+work that works through aggregation so actually as you move from through the campus your phone
+smoothly reconnects from like one point to another point always chooses the closest point and just
+keep going without bothering you so you don't need to reconnect to wifi this is a classic example of
+application. And emulation is for example when you just try to access internet with your phone
+so for your browser it actually doesn't matter at all
+maybe it's a router, maybe it's your phone, it doesn't matter. Your phone becomes your router.
+Let's move to the next one.
+So most of you did answer right, but some of you missed this part.
+And here there is still confusion with the one network card shared by 8 VMs.
+That means multiplexing. So 8 VMs with multiplex to access the same network card.
+This is a classic example of a communication we mentioned when two links can be connected to one.
+Okay, let's keep going.
+So let's talk a little bit more about multiplexing.
+So I told you that there are BCPUs which are scheduled as processes on the host.
+But inside the guest OS, they are regarded as real CPUs.
+So they are real cores for the guest OS scatter.
+So what the guest OS scatter does, it manages the RedQ, it sends the process, it assigns
+processes to virtual cpus and those processes would kind of
+clock that cpu for a while but at the same time
+the host site was called hypervisor or the host os
+it only sees the vcp so it knows that there are two ems
+and each of these vms for example have or for example here eight vms each one of
+them has two vcpus that means there are 16 vcpus to schedule
+on the host so that would be equivalent to
+scheduling 16 processes on the host moreover some of these vcpus
+can be inactive because maybe the guest has
+nothing to run and that is why you can actually map
+these 16 vcpus on four cores how because for example you have a
+partition scanner you map four vcpus to one core
+and then they would just swap on that code right so that would mean that the host os would also
+for the hypervisor would also have a ready queue in the host but in that ready queue there will be
+vcpu with no processes while in the guest os there will be ready queue in front of the each vcpu owned
+by that virtual machine okay so the state machine in that case would be kind of replicated um
+There is a state machine for each process inside each virtual machine and there is also a state machine for each of the ECPUs outside on the host.
+Ok, let's do another example.
+Thank you.
+Thank you.
+Okay, I can sense some confusion in here, but most people did get it right, and that actually encourages people to participate in more activities.
+If you are here, please walk. That's why you are practicing, right?
+Okay, so again, let's think about it. Each vCPU is like a process on the host.
+So in that regard, that means each of these processes can be scheduled independently.
+So at most four BCPUs can execute because you have four real physical cores, right?
+So all others would be in the ready state, while these four will be in the running state.
+So at the same time the state machine is completely decoupled,
+so the guest OS will have processes in the ready cubes.
+And some of them will be in the running state, some of them will be in the running state.
+This is based on how the guest OS assigns it to the vcpu.
+So it's independent from the host side.
+So here and here, these are major confusions here.
+So for the hypervisor doesn't pause VMs because it doesn't manage VMs.
+It manages each vcpu separately.
+and here there is no guarantees, right?
+just like there is no guarantees for processes to share this GPUs equally
+there is no guarantees for the hypervisors to do it
+Okay, let's move on.
+So, the next is the formal definition of this layers, right?
+So, we talked about the approaches.
+like, um, you guys know?
+Yeah, sure.
+Yeah, so we talked about multiplexing, emulation,
+so now let's talk about layers.
+So here, the guest OS is just like we learned before,
+so there's application, there is an operating system here,
+system here there is a emulator hardware virtual hardware here but then there is
+another layer called the virtual machine monitor or a provisor which emulates
+this virtual devices by multiplying aggregating or emulating the real
+hardware for those fields so it does so that programs can run efficiently but
+also so that they are isolated from each other so that none of them actually is
+aware that it's virtual not real and it actually shares real hardware with
+someone else. Okay so the hypervisor here is in control of the real hardware and
+decides how to expose this hardware to each of these virtual machines. For
+For example, cores can be multiplexed, memory can be multiplexed, network can be also multiplexed,
+or maybe either in space or in time, for example, assigning a network card to a specific VM,
+or assigning an edge view to a specific VM.
+So these can be both multiplexed and aggregated, so there could be many disks exposed to many VMs
+as separate logical drives or same logical drive.
+And then some of the hardware can be emulated because maybe some of the virtual machines
+they use some old network card or old keyboard abstractions.
+Okay, so how does it actually work?
+The key here is what's called limited direct execution.
+And this is really really important for you to understand.
+So, three aggregation, debug and emulation and direct execution.
+It's very very important.
+So, we cannot really emulate every single instruction that runs inside the virtual machine.
+So that it translates into the instruction in the host.
+So instead, we separate the instructions
+which require trap into the guest OS.
+And the guest OS may trap into the hardware writer.
+Right?
+And finally, there is this actual hardware.
+So most of the instructions would still be just arithmetics.
+And it actually doesn't matter which of these three layers,
+which of these three layers
+which of these three layers issues this arithmetic?
+It doesn't matter.
+So that's what's called direct execution.
+For example, if it's just arithmetic,
+it doesn't matter whether it's application layer
+or the guest OS.
+But if this is a privileged instruction,
+then the application first is trapped into the guest OS.
+Right, for example, when it issues a system call
+or process an interrupt.
+And then sometimes when the guest-free system needs to access real hardware, it has to trap into the DMM as well.
+So what's important to understand here is that each of these layers can either execute directly if it's like a harmless execution,
+but there is no privileged, no sensitive instructions here.
+Or it will trap into the next layer.
+But as I said, the application layer
+cannot directly access the VMM,
+or for example, the hardware cannot be directly accessed
+by the application or the guest OS,
+except for direct execution.
+Okay.
+So just remember that adjusting the layers
+can talk to each other,
+the way it's gonna be skipped.
+So for example, the application will never know
+that the hypervisor is there.
+Okay.
+Let's do another.
+Thank you.
+Thank you.
+Okay, so the correct answers are A and C.
+But some of you chose also P.
+But the app system call goes to the guest kernel.
+It doesn't really go to the hypervisor because the application cannot access hypervisor.
+So if the guest OS needs to mediate, we just capture it.
+Another thing that is important for lecture quizzes, for concept quizzes, is the types of hypervisors.
+For this, I will just show you this thing.
+I encourage you all to spend more time on understanding what is type 1, what is type 2, and so on.
+I don't think it's that important for this practice.
+So, we just captured this information and this is the past and this is the explanation.
+So this I just encourage you to look into the pre-recorded lectures.
+It's pretty easy, it's more of like you just need to remember what is type 1, type 2, para, oh, sorry.
+Okay, so now let's consider a complex problem, which we need to consider two standards and two state machines.
+So here we have a round-robin over two VCPUs where each VM would get four units, four cycles per turn.
+So if VCPU doesn't execute then there is nothing happening and if there is a speed log then it works like a regular speed log.
+That's all. Nothing is different. So what you need to understand is how
+processes and VMs swap each other on the cores. So let's take a look.
+So here for example what you see is there are two cores and there are two VMs.
+owns vcpus A0 and A1. So basically there are two vcpus A0 and A1 and VMB has P0 and P1
+vcpus and VMA has two processes A1, small a1, small a2 which actually have some synchronization
+between them. So you can see how this A1 and A2 are implemented. So you can see that first cycle there is work, second cycle there is a lock, then followed by work, then there is two cycles of work, and then finally there is a work and then an unlock, and work and exit here. So this is first cycle distribution of what these two processes do.
+And then we have the run-robin here.
+So for course here, it will execute vcpu a0, then vcpu b0,
+then vcpu a0, then vcpu b0.
+So this is a partition scheduler here on the host.
+So it will take one vcpu from bm1 and one, sorry, bma,
+from VMB so you will see it B1, A1, B1, B1
+Multi-Vexel Core 1 so they don't really jump from one core to another
+so your goal here is to understand how does it work and show on the ledger
+It's not difficult, just think about two cores independently on the host and who gets scheduled
+on that core.
+All right.
+Start the prep.
+Thank you.
+So the correct answer is B. So let's see what happens.
+Actually before we see what happens, let's do another one.
+Then I'll show you the whole ledger.
+Or maybe you just capture this one and I'll show you the ledger directly.
+capture it. This way you practice.

@@ -1,0 +1,22 @@
+*~
+_*
+*.o
+*.d
+*.asm
+*.sym
+*.img
+vectors.S
+bootblock
+entryother
+initcode
+initcode.out
+kernelmemfs
+mkfs
+kernel/kernel
+user/usys.S
+.gdbinit
+
+# Lab 1 and Lab 2 live here as separate checkouts on their own branches.
+# They are separate git repositories, so keep them out of Lab 3's index.
+lab1/
+lab2/

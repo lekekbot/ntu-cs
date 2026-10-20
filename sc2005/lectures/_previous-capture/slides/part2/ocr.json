@@ -1,0 +1,203 @@
+{
+  "video": "/private/tmp/sc2005-transcribe/src/B.mp4",
+  "source_file": "video_2026-10-02_15-15-01 (2).mp4",
+  "label": "Part 2 \u2014 lecture capture (18:34)",
+  "slides": [
+    {
+      "n": 1,
+      "start": "00:00:00",
+      "end": "00:00:08",
+      "image": "001.png",
+      "ocr": "LOck-holde\n\u2014 en\nr Preemption 4 Spiniock @CrOss the Vy boundary\n30 AO wt\nrua\nve\n-\nr\nA\n\u201cre\nwrval\nsee\nok) eee oe\n_\n\u2014e"
+    },
+    {
+      "n": 2,
+      "start": "00:00:08",
+      "end": "00:00:12",
+      "image": "002.png",
+      "ocr": "EE Uae ees\nre ew cos\nLock-holder Preemption\n2 Spinlock across the VM\nToo cows WA cere Ps AS ans At\nWM 8 cers BO ane Bt ot\nWnt 02 (A ee Be noite m\nUTE BLUE Tet Vite \u2014 meee\nbedi ILL ST\noor\nes\nWOPU PAS LACe Come ROM Pa, De\nPROCESIES of ano ap\nCone\nON eet way\nCnt\nVA wor ee ru re\ntore\nOUR! Prat cr va\nam\nam ee\nND enna eet\nond weeny\noN ot\nWORD \u00a9 One wnt Of Computation grees Ines \u00a9 te\n(Ae secten, men while halting wm.\nVY processes shen howe wart Lack\nProges tre thes ore nk\nWAT PO WORK OUT - 3 MTS alone\n= Vote & how many units does 22 spend pinning 00 m ichecking F, finding & held?\n* Vote 7; at C= 5, what is a's etate in quest A's eyes, and Is vCPU's state In he Neots?\n\u2018age860\nSS"
+    },
+    {
+      "n": 3,
+      "start": "00:00:12",
+      "end": "00:01:33",
+      "image": "003.png",
+      "ocr": "NE Pe rare,\nee\n\u2014\u2014 ce op\nStop 2, t= 8 to 15: a1 releases\nM at 8; a2 gets it at 12\nWola 6 Pree tore #5 \u00ab7, Vote? Purving\n\u00a9 HA Renty ut te hone\nr\n\u201cTT\nTIE LEDOER 10-45 1 C5 0 1 ah bs ott samme WEbem\n\u2019\n.\nter VE hee Be coy\nCORE 8 es\nwes\now\nJ\n\u00b0\n.\nCORE) mt\nwe\n=\n:\nmelo By\nwe\nac\naa\nwe\n\u201c\nsebety \u2014 at nay\na\nwe\n2\n=\nfe Katy last CS uni, undochin} ats ond. t \u00a9 12 VOPU AS bs back ms toe a2 rere CE Gone td\nMAT EEK 4 ASSAD. AND WD COULD Fur fT\n* Week \u00a35 \u2018ipin while the holder runs\u201d assumed\nONE wate machine, a1 ran tor puest A only\n* Fix $: a blocking mutex \u2014 22 blocks, vOPU AI\nats and ives core f deck te WWE\n* Flu 2: para-virteaitzation \u2014 the guest can bel Ore VIM 1 hold 8 lock\u2019, or neh whe rune\nseoo"
+    },
+    {
+      "n": 4,
+      "start": "00:01:33",
+      "end": "00:01:37",
+      "image": "004.png",
+      "ocr": "Sn Re rece,\nCO\nOt ne my\nFUNS Programs on your behaif\nWHI 0 ak, 0 mee Scie. & homens on yur\nmene ite Cov Namens Nan he tape\n\u2014 marca\n* A terminal toot\nThe\nOs type a tank: & reads ang\nORs fee, runt Commands\nMode, bn the clos, decides:\nBe harness, 69 your apton nets\nTad Laat DAT OL sramene\n* OpenCinw. 9 sel-Nosted\n* Every harness is 2 loop:\nSeirwny cumming chat sesuions: tools ren i containers\nPOMEL = modal + teal\u00bb renal = modal a\n\u201cew\nOT 7 OC ONSs & DOS COURSE\n* Alarness multipleses, alates aed reterves Dat is De OSs jnd Gercrpton\n+ No@hing from Dis side to the ond is examinadie\nSO"
+    },
+    {
+      "n": 5,
+      "start": "00:01:37",
+      "end": "00:02:03",
+      "image": "005.png",
+      "ocr": "ED aes Oey\nee\n\u2014- mom oy\nStep 2,t=8 to 15: a4\nVite 6 Sree wre B+ 56) vee\nreleases m at 8; a2 gets it at 12\nPring par A Reaty 1 be Seat\ne\n~\nTHE LEDER: 1\u00bb 5-65 0 C8 \u00a9 04 butte te ete snes Wiem\nJ\nfer VE et he tere\nCoat teas\n\u201ccs\n*\n7\n)\n\u201d\n.\nCOmE 9 tees\nee\nwe\n\u201cer\nwe\nws\nemorr\n\u201c\nac\nact\nwe\nobety \u2014 ahety natty\n2\nty hy\nE* KATY last C$ we umlochim) at Rs ond. {\u00a9 12: CPU AS is beck, me tre neve Ch\nCore wt 4\nOA! WEEN 4 ASSUNT ANS BNO COULD Pa\n* Week 45 \u2018spin while De hokder runs\u2019 pssumed\n* Fix t: a Blocking mutes \u2014 22 Mocks, CPU At\nONE state machine: 91 re for guest A erly\nNata and pives core f bac to WWE\n\u201cfad pare-vitssizaion \u2014 te guest can tel the VIM Y held \u00bb lock\u2019. or ash whe rune\na"
+    },
+    {
+      "n": 6,
+      "start": "00:02:03",
+      "end": "00:02:36",
+      "image": "006.png",
+      "ocr": "OE Rae ores\nClaude Code\nOt a am\n@ program that\nTuns Programs on your behalf\nYO 9 2 task\u00bb model cectton \u00bb ~~\nMODWG bch Cory Namees Nes ths te\n\u2014 woe\n* A terminal tot\n*The\nYOO ype 8 tank: 8 ready\nOd 06% fen, runs commands\nmodel in the clowd, decides: the\nMenenn, 08 your laptop. ety\nMd bane Dt 1 tomes\n* OpenClne: 2 sell Aosted\n* Every harness bt 2 loop: prompt\nOwning Chat tensions: tools mun in containers\nodel ~~ tool - reset ..\nmode.\n\u201cow\nVe W SaLOuts ones Counet\n* Abarness mutiplenes, inatates and relerves: Out is De OS ud description\n+ Nothing trom DNis side to De ond is eanminadic\nseco"
+    },
+    {
+      "n": 7,
+      "start": "00:02:36",
+      "end": "00:04:17",
+      "image": "007.png",
+      "ocr": "OS Ore\nSS ee\nAn OS and a hamess have\nthe same four layers\n(AR whet you named mn weet + Richt he bom\nPant D0 bos tehumes tow by roe\nAM CPORADINO BYITON\n\u2014 eee\nAA ROENT pate ss\neee\n* O% your program mane ty code\n* Parsee the model\nchien 5 ep\n[= fen\n* Kalter\nPa] WA De moching\neer\nMt oe\nEe\n* OF 0 nye cat, og meat)\nPass]\neee\nee we ee\nfe Nenene\n+ Marve Steet cal 0g mad\n= 8s or run 2 command\nod\n* OF the haenel checks sights\nBe ee eee ne eh et Se ee Ne me seen ah he\n= Goat De work wires\n+ Karvess Oe bare, wD your\n~ permavora m De thts\n\u201c\n_ See,"
+    },
+    {
+      "n": 8,
+      "start": "00:04:17",
+      "end": "00:05:26",
+      "image": "008.png",
+      "ocr": "aS oor\n=\nOne turn\nhamess decides and executes\nACH Cal 0 reat Be hemens Cech 8 see & aed\nman De med br Be net sing\n\u2014 Ot Ome Ger OnLy ane\nCoe hare of an agent harness. wad os ws 0\n* Rem requests, seww actions\n* The Nammens athows Ross you,\not\nBOO\n~ \u00a9 PANO De trap hardier\nen Comes\neee\n(000r CA 0078 On Bd ence\n\u2014\u2014\net\n* Rand oF 080 1 Tin, ren\u00bb command\noo me\n* Se evwy call bs checked tnt\n~ SOA, NAA, ont 2 bebegent\nae ee\n\u201c\u2014\u2014\nOATS 6 ROCnRE OF\neee ree ee ae ore me ees a ee\n= _\n* Wile 0 tool rane, he model wats\n~ 8 process nalts & eyview call\n+ The final aeeew bs De ext"
+    },
+    {
+      "n": 9,
+      "start": "00:05:26",
+      "end": "00:09:59",
+      "image": "009.png",
+      "ocr": "= iS Ores\nMee eee\nWeeks 4 to 6:\n.\nwhere each\nConcept lives inside the hamess\nThe beter half f Pe map, Vidal enchasen ang\nWiatenion put Pet oun sites nee\nCONCEPT \u00abIm Det Og Te manne\nMemory ls the row we cannot ft yt\nEls Die topic ater the recess,\nComer\n:\nae\nOt nee ny\nWea enchant inchs, compere-and\nAha wen\ntt ely whet Yo0 saa, mle H chara one sap emis\nMet Cee pon eeen\nOP reat & Dimed sty T ie manne contat ty\nViteetentos\nVEO 4 pen tcees,\nSommands 0\" OF nentinen, cheed sossinne it \u00a7 sentined vig\nMomery fwoet fh\nPAM twee\nOe Hentent window Compaction summations Sif hone"
+    },
+    {
+      "n": 10,
+      "start": "00:09:59",
+      "end": "00:10:58",
+      "image": "010.png",
+      "ocr": "Ot Rae ora,\nThe model runs in the cloug:\nAo Dols run beside your files\nTAR Pe LLM bechond 8 GPL cate saving Pexnan\no tennore, Fhe he mete on ye\n\u2014 \u201cure\nPEGE RAO ee a\nToe Cancion aerate te tae cat spat\nOR Clore myo\n* Ont model, Crownands of sensions\n* CPU time nd memory are nearce\n* Tehens be hetchew Round Rabie\n_|\nwok COamOR\n* The harnens process \u00a30 yrur laptng\n(====)\n~ OF De name be 4 cloud santben\noe eee\nee |\n* Commands run inaide Bn CS sandben\nee ot ee\n|\noe ee ee eee\na\n\u2014\n70 Soe\nee ee\n* Server which sension gets # token\nee ee penne pee\n* Marnenn: whic\u2019 cals oun now\n~ paraliel ob De bechground\naeeoo"
+    },
+    {
+      "n": 11,
+      "start": "00:10:58",
+      "end": "00:11:12",
+      "image": "011.png",
+      "ocr": "2 Oous\n~~ eee\nShared state is the repository; the harness has three answers\nTe0 paratel ots tere fe, ne lock Pe i ater wir, sane eet 6) bet wotee\n-\nTet ace Ta Demet rons\n* Two parallel e605 te one fie * Seruilinn: coe o6t at 5 tne\n; ~ Be harness bs the wcheduer\n* Catt wrter wins, Bercy\n~ week 45 loot\noo * Pertlion: 5 yee copy of te\n~ Mapeaery per agent 20 shared\n+ No harnel referees the fies 7\n= De Narress must\n* Cvtect Gt only 2 fe you mad,\n~ and utene 1 Charged since\n* Not deadlock: nobody wats Compare ant oe7\n~ DN a wit makes talent ; \u201c"
+    },
+    {
+      "n": 12,
+      "start": "00:11:12",
+      "end": "00:11:22",
+      "image": "012.png",
+      "ocr": "_\u2014 ~ oo\nWhere a Command runs dee.\nThe WAIT letter. Ocean par session, 4\n\u2019 BORE OF YOU Ne Or 8 certain Vag\n\u2014 wee\n\u201ceo\nWhere Goes an agants command\n(A O84 whe kas ne?\n\"mts\nMt emcee\nOAL CONAN 6 e seeece\nSeaek, Linen bubtionrny\n* Meteot\n* When only wher stewed\n* Ctdres\nSve 8 Haring precy\now\nPROT Ne barctee\nES) esjeS \u2014\n* Riuky cals wep x Oe harness\n~ Slow, ath De weer or mine\n* Wiel Ty Gaal mode is seteny\nht eel\noe\n\u2014~\u2014\u2014\n\u2014_\nSenne\n\u2014\u2014 mp\n\u2014 \u201cue\nee\nProcess -~ sandbox \u2014 container Vi\nOr ee ee | pees | eee ee eee\nom ae\n+ Same boteres nt De mee\nCrteee per pension per rat\n\u2018ag860"
+    },
+    {
+      "n": 13,
+      "start": "00:11:22",
+      "end": "00:12:23",
+      "image": "013.png",
+      "ocr": "_ ~ wats rere ee\nThe agent's memory is ite, and it swaps\nThe Cirtent window is Be rooney Rass me\" ANN Ct Loe on emete nd trppet sengyng\n~\u2014 Mt Conny woos\n* Al De model can $00 Dis step: the\nWePecr'ge, too! resets,\n* Floto, tha RAM: each tool mesom ame\nGoats apece, The \u00bb page\n\u2014\u2014 compaction\n* When the window fifa. the harness summarizes oid\nhares bad beeps De summary\n* Swapping out, week & what keeves memory comes\nDak on Cement or a bet\n\u2014\u2014 cer rus\n* Facts wort heeping across sessions 90 te Gab, indexed. loaded on Geman\n* A lie syvtem for an agent after the recess we bud the real one"
+    },
+    {
+      "n": 14,
+      "start": "00:12:23",
+      "end": "00:12:59",
+      "image": "014.png",
+      "ocr": "The agent's memory is finite, and it swaps\n* Al De mote: CON $00 DNs pte De Warscret tool ree. Ma fen t meg\n* Fletta, the RAM: each toot result coats space, Ts \u00bb pace\n* When the window Gils te Nearness Bummarines old turns Ded beens Gs ee\nos Gwe oe >\u00bb"
+    },
+    {
+      "n": 15,
+      "start": "00:12:59",
+      "end": "00:13:05",
+      "image": "015.png",
+      "ocr": "Se eee\non ee\nThe 2900s memory is inte, aed it swaps\nNo tote ww 2 he agers ean ON 0 08 acne et ema\n\u2014 eee cone\nPee ni Se 200 Bie ap He Weer te sen Sn 3\n* FOR Ce NA ot td me ts sgn, Be + pe a\n\u2014\u2014 wra re\n\u00a9 Secy cae Se Nene sonntan Sihene ents Oe sey\n* SAPPY A out & whet nes sry sams heh deme oni\n\u2014 ean\n* Fa wet heeging Sarees Sematary get uh, Yd, tnd denen\n* Ain oyna ber om age Wher the mane we lid he md ore"
+    },
+    {
+      "n": 16,
+      "start": "00:13:05",
+      "end": "00:13:07",
+      "image": "016.png",
+      "ocr": "=e\nry ~\u2014 oF 3 > \u2014\n<3 \u2014 =~ ~\nre\n\u2014i == =-. Ca\n\u2014 \"rl a\nPreemcteca reates be *: Pieety Cacites fom\nmeee f\n{ ]\n\u2014 = ~~\n\u2014\u2014\u2014 nl\n- 4"
+    },
+    {
+      "n": 17,
+      "start": "00:13:07",
+      "end": "00:13:16",
+      "image": "017.png",
+      "ocr": "'\nnee\ni =\nae Prose =\nIption Stes decict.\nre CFS Secislons: pricey Socios thee\n\u2014\u2014d |\n* PRE prety oxen PO tw \u00a9 Fe ewe mes tee\nwhenever one bb RURRARLE\n; ;\nay Cetin tee 0 at meet\n\u00ab A toner Gel \u00a9 areter Gch 0 gry sate pay\ni oa De tame wnnew\nae | TY\n* Cbd PO wtarven: me bead at ol Prt \u00a9 tmtnd toe\n|\n| ;\na\n\u2014 - \u2014"
+    },
+    {
+      "n": 18,
+      "start": "00:13:16",
+      "end": "00:13:22",
+      "image": "018.png",
+      "ocr": "\u2014\u00ae\n*s\n= 0H) Gey Oeus | tan\n-\n:\nS\naon, SS Gee eee en\nOOO 10s weeny\n\u2014\nG\n40%\n-\nTats S\n=\n==\n\u2014\u2014\u2014= ewe\n= 25S\n\u2018\u2014\u2014 eens\n\u2014s\noe eee\n=\nme ee\nWOOCLAP\n+ WO OM anmeee nr cy\nThe conperstee\nFevlire i talied they\nay |\nA NONE me. Why\nOt Tet ee ee\nheghiend tT\nOo paren \u00a9 ee \u00ae\non) eet\nSw Neto actertly stems he nites\nOn ee ee eee\n\u2014]\nTena Py & othe some ne toy ot he Wee\n\u2014\u2014 8\n~~"
+    },
+    {
+      "n": 19,
+      "start": "00:13:22",
+      "end": "00:13:26",
+      "image": "019.png",
+      "ocr": "/\n= 2 = an a je\na en HOO YT Aa a =\nH = ATI Yay cay <4\n@. 806 = ow. = .\n\u2014 aid on = ee \u00a5 \u2019\n\u2014~N \u2014 e\n(18) pa oe LEC, \u2122 x\ngree at \u00a9, = a ne ne \"NGemnQacct \u00b0F\n. e-~ = \u2014\u2014ee \u2014_i Ff\ne @-~ tk namemnnee een \u00a5 .\n=e R . Cena c es q\nEE = -_\n- = ue =\nwae s- ~swussash, \u201ci\nj = \u2014 eee en\n1 7 mM - - [\u2014\u2014\u2014 |\n. \u2014o\u2014 ne Ree eens |\n) 2, owas\n\u2014 a\u2014--\n~ \u2014\n~ a - ~\nStencils nee be\n\u2014\u2014 7S ee eee mee wh emepeeenen bs\n\u2014\u2014\u2014 \u00a9 =\n\u2014 2 eee ee oe 4\n\u20ac Q we oes n\ne . ol\nz esuee .* \u2014 on\n\u00b0 G won \u2014<- -\n5 a = Qrisiecie \u201c\nai wecas"
+    },
+    {
+      "n": 20,
+      "start": "00:13:26",
+      "end": "00:13:38",
+      "image": "020.png",
+      "ocr": "=\n+ ee\nss\nGre \u201cAPOE td wee the\nom Ow 5\nWUB-6 | Tee Vite share tay\n% Pret Romnd Benin 4\nWMA tare the spintoch me\nFo Nord Precmmans 5)\nlod\nOw ay wens Goes 4)\n02 een\n1m betore ccm ke?\nrs\n~\u2014\n\u201c\u2014 eo:\n(205)\nmt\n\u2122 3\n\u2014 a4"
+    },
+    {
+      "n": 21,
+      "start": "00:13:38",
+      "end": "00:14:41",
+      "image": "021.png",
+      "ocr": "\u2014\nte\nwm\n*\nexe\n(Ad?\nShe ADS wel wae the\nrh PCD 5\n\u2018C31 The tetris tread pains i\nmona PS Why med & nae\ntot the 0 towtin &\nmw\nee ten emery \u00ab\new nd rye\n@\u00ae\ned\n\u201ca\n@\nay\nOm et mt tet\n\"\u201d\n\u00ae\ntee hn mae ete\ns\n@\n\"\negg ae,"
+    },
+    {
+      "n": 22,
+      "start": "00:14:41",
+      "end": "00:14:44",
+      "image": "022.png",
+      "ocr": "\u2014\u2014__\n-\n>>\n=\"\n\u2014~e\n~_-\n~e\n\u2014 a\n= = we\n\u2014 sa. =\nPee\n~\u2014\n=\n\"2\n\u2014\n\u2014\u00a5 = ms\ncn\n\u2014_\n\u2014 tao.\n\u2014 ee\neo me\nWOOCLAp\nMOS OME anmete Capes\nThe seoperstve\neee\ntine Calted thy\n-~\u2014 \u00a7\nNeed het et tee\ney cat\nMerarepbbepaly tol"
+    },
+    {
+      "n": 23,
+      "start": "00:14:44",
+      "end": "00:15:05",
+      "image": "023.png",
+      "ocr": "_\na\nFS Ore\n\u2014-+ ee 9 a -\u2014Yy\n0 We weetap tem wad ons te \u00ab POR Dax\nAB2-Q11A Cts te\nCO\u00bb be ~4 APOE 8 recees Os Rentble ome opeting ty tr PAD WO etepwistion \u2014_\ni . nN\n~ ry ceting eo ~ 66\ni\nfa) ? De mee Oot Ne 0 et tay Nein de ty SU)\nse l\njs }\n: ws a"
+    },
+    {
+      "n": 24,
+      "start": "00:15:05",
+      "end": "00:15:07",
+      "image": "024.png",
+      "ocr": "iW"
+    },
+    {
+      "n": 25,
+      "start": "00:15:07",
+      "end": "00:15:11",
+      "image": "025.png",
+      "ocr": "|\nwhey a)\nu Fol s ey\nOH ey\nONGHe: |"
+    },
+    {
+      "n": 26,
+      "start": "00:15:11",
+      "end": "00:15:19",
+      "image": "026.png",
+      "ocr": "J"
+    },
+    {
+      "n": 27,
+      "start": "00:15:19",
+      "end": "00:15:55",
+      "image": "027.png",
+      "ocr": "Vork\nAf\n-\u00a2"
+    },
+    {
+      "n": 28,
+      "start": "00:15:55",
+      "end": null,
+      "image": "028.png",
+      "ocr": "rOSM are : ;\nSD! \u2018\nDL, will vow be OG De me tote\n-\n. 0 Peed ty memes aN one\n1 hy tg eth Or0G De Dates :\n\u00b0 ;\nPs\n\u201c"
+    }
+  ]
+}

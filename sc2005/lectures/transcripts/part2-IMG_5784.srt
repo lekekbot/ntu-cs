@@ -1,0 +1,648 @@
+1
+00:00:00,000 --> 00:00:05,000
+So, if you are not engaged, it will just run VMP on both.
+
+2
+00:00:05,000 --> 00:00:13,000
+So, A1, so here, there's work, lock, work, work, work, unlock, right?
+
+3
+00:00:13,000 --> 00:00:25,000
+So, what happens is this work enters the critical section, inside the critical section, inside, and then here it runs out of round-robin quantum support, right?
+
+4
+00:00:25,000 --> 00:00:33,880
+on 4-1, VMP just does something. So A2 can only start working here
+
+5
+00:00:35,240 --> 00:00:42,200
+and then it just realizes that the spin lock is taken by A1
+
+6
+00:00:42,200 --> 00:00:45,800
+and all it can do is spin. So it just consumes
+
+7
+00:00:45,800 --> 00:00:49,400
+the CPU and spins. So it's like busy waiting, right?
+
+8
+00:00:49,400 --> 00:00:53,000
+while here in EMD you would just be working.
+
+9
+00:00:53,000 --> 00:00:58,840
+Okay, so then at cycle 8 what happens is that
+
+10
+00:00:59,880 --> 00:01:07,240
+so A1 comes back, it finishes the work and then it releases the spin lock, right?
+
+11
+00:01:07,240 --> 00:01:12,920
+So after this A1 just finished, it's gone. So it will start executing
+
+12
+00:01:12,920 --> 00:01:30,040
+the EME, but first, first, the 4-1 has to finish the full cycle of the quantum, so A2 only comes back here and takes the spin loop and cycles up.
+
+13
+00:01:34,540 --> 00:01:40,960
+Alright, so that's about it for visualization, so pay attention to this
+
+14
+00:01:40,960 --> 00:01:48,700
+multiplexing, integration, emulation, direct execution, virtualization,
+
+15
+00:01:48,700 --> 00:01:54,080
+full virtualization that I wanted to. This is what you need to know. And some algorithm-acquired
+
+16
+00:01:54,080 --> 00:02:00,820
+solutions. This would be a hard task. I understand this is difficult. Some of you can do it, I'm sure.
+
+17
+00:02:00,820 --> 00:02:10,300
+with some partners. Okay, so now let's talk about the fun part which is like why
+
+18
+00:02:10,300 --> 00:02:30,520
+harness is a new operating system. It's first harnesses they appeared in the end of last year and went viral I would say in January or February this year, 96. So we've heard of OpenClock, Code, Codex, these are all about this one. So there's a lot of similarities
+
+19
+00:02:30,520 --> 00:02:38,320
+about them and we'll talk about those so the way it works is evolving so in a
+
+20
+00:02:38,320 --> 00:02:42,520
+very system work in this way we talked about this so this is your program
+
+21
+00:02:42,520 --> 00:02:47,380
+sometimes it calls into the system called so by the way this is not
+
+22
+00:02:47,380 --> 00:02:53,020
+acceptable but from here to the end it's not acceptable this is for fun okay so
+
+23
+00:02:53,020 --> 00:02:57,340
+here in the program falls into system host and this is the post is an entry
+
+24
+00:02:57,340 --> 00:03:01,720
+point for the kernel execution. And the kernel can actually manage the hardware
+
+25
+00:03:01,720 --> 00:03:12,300
+and execute commands on a request of your prop. So the way the agent works is that
+
+26
+00:03:12,300 --> 00:03:16,840
+there is a model which receives your prop and then what it can do is it can issue
+
+27
+00:03:16,840 --> 00:03:22,720
+two calls. For example it can run bash scripts, it can run feather scripts, it can write
+
+28
+00:03:22,720 --> 00:03:30,040
+something, edit something and so on. So these two calls and the one of calls are
+
+29
+00:03:30,040 --> 00:03:34,760
+they have to go to the harness which is X is a kernel so what it will do it
+
+30
+00:03:34,760 --> 00:03:41,180
+with the steer these commands to either CPUs for two calls or to GPUs for a
+
+31
+00:03:41,180 --> 00:03:46,800
+lem request and the harness will run on your laptop and will decide where to
+
+32
+00:03:46,800 --> 00:03:52,320
+execute this so there is a lot of similarities here across step right so
+
+33
+00:03:52,320 --> 00:03:56,940
+basically the harness is the curve in a way and system call is like a tool
+
+34
+00:03:56,940 --> 00:04:06,620
+component okay so then harness also checks like the permissions checks
+
+35
+00:04:06,620 --> 00:04:12,040
+access it also needs to manage the sandboxes secure environment where it
+
+36
+00:04:12,040 --> 00:04:16,040
+execute so that your model doesn't skip and conquer the world.
+
+37
+00:04:16,040 --> 00:04:20,040
+Okay, so how it works. It works in a very simple way.
+
+38
+00:04:20,040 --> 00:04:24,040
+So the model, the user prompts the model and the model
+
+39
+00:04:24,040 --> 00:04:28,040
+can run some tool calls.
+
+40
+00:04:28,040 --> 00:04:32,040
+Or for example,
+
+41
+00:04:32,040 --> 00:04:36,040
+it can consume some results from the team calls. It is also
+
+42
+00:04:36,040 --> 00:04:40,040
+available, it also can access the disk, it also can
+
+43
+00:04:40,040 --> 00:04:46,040
+write some programs, deploy them, take the output from these programs and so on.
+
+44
+00:04:49,000 --> 00:04:56,440
+So the harness would orchestrate the model requests, like the LL requests and tool calls, and
+
+45
+00:04:59,080 --> 00:05:05,800
+also can spawn sub-agents for example. So just like you can spawn, given four processes,
+
+46
+00:05:05,800 --> 00:05:12,800
+NIT can spawn sub-agents, for example there is a big agent which architects how to approach the problem.
+
+47
+00:05:12,800 --> 00:05:22,800
+NIT can spawn sub-agents, for example smaller models that would search the internet and find useful information to feed it to the big model.
+
+48
+00:05:22,800 --> 00:05:30,800
+Okay, so let's look at the similarities.
+
+49
+00:05:30,800 --> 00:05:38,300
+So processes have every space and the attributes and engines have context.
+
+50
+00:05:38,300 --> 00:05:47,300
+So what is inside the Kibale cache, what is inside the context, which tokens, which words, which paragraphs, which articles, which source files and so on.
+
+51
+00:05:47,300 --> 00:05:49,300
+So they all form the context.
+
+52
+00:05:49,300 --> 00:05:53,300
+Then processes can spawn threads.
+
+53
+00:05:53,300 --> 00:05:59,300
+So here, for example, a harness can spawn several parallel tuples.
+
+54
+00:05:59,300 --> 00:06:05,300
+For example, it can do web search in parallel with hundreds of different requests at the same time.
+
+55
+00:06:05,300 --> 00:06:07,300
+This is similar to threads.
+
+56
+00:06:07,300 --> 00:06:13,300
+They will all have the same context, but they will look, for example, at different websites.
+
+57
+00:06:13,300 --> 00:06:17,300
+And the agents themselves can work.
+
+58
+00:06:17,300 --> 00:06:21,300
+So they can create sub-agents for subtasks which operate on their prepared context,
+
+59
+00:06:21,300 --> 00:06:26,300
+which is different from the agentic context, from the parent-agent context.
+
+60
+00:06:26,300 --> 00:06:42,300
+Then we discuss the system call with its traps into the kernel, while the tool call is the medium for transition into the state from the environment into the model or from the model to the execution environment.
+
+61
+00:06:42,300 --> 00:06:53,300
+Then harness also does the scheduling and decides what to run, which tool call to run, synchronously or asynchronously, blocking or non-blocking, and so on.
+
+62
+00:06:53,300 --> 00:06:58,020
+There are also interrupts if you have asynchronous processing. So for example
+
+63
+00:06:58,020 --> 00:07:01,980
+there is a web search that completes and it needs to be given to the model once
+
+64
+00:07:01,980 --> 00:07:08,680
+it completes it also has the interrupt pass just like we have in the operating system.
+
+65
+00:07:09,740 --> 00:07:16,180
+So the concepts are also similar. For example inside the harness the
+
+66
+00:07:16,180 --> 00:07:22,000
+processors need to understand who is working on which task and how tools go
+
+67
+00:07:22,000 --> 00:07:30,400
+synchronize among each other because they have access to specific files or specific folders
+
+68
+00:07:30,400 --> 00:07:36,560
+or specific information and that has to be managed in the same way as with new synchronization
+
+69
+00:07:36,560 --> 00:07:45,040
+for example mutual exclusion then of course they need to allocate for example if they are to share
+
+70
+00:07:45,040 --> 00:07:52,080
+GPU, how does this agent share the amount of memory inside the GPU so that the host, the whole
+
+71
+00:07:54,400 --> 00:07:59,680
+agentic workflow can make progress. For example, the main agent can take half of the GPU memory
+
+72
+00:07:59,680 --> 00:08:05,440
+and then it can spawn, let's say, two sub-agents that can execute within the second half of the
+
+73
+00:08:05,440 --> 00:08:13,360
+memory. But then if it happens that your agentic workflow keeps spawning agents, they may actually
+
+74
+00:08:13,360 --> 00:08:18,900
+start trashing just like what happens if you run out of memory or run out of disk.
+
+75
+00:08:18,900 --> 00:08:23,860
+So the whole workflow may actually end up stuck due to the lack of resources.
+
+76
+00:08:23,860 --> 00:08:30,080
+Then the execution environment for tools is nothing but virtualization.
+
+77
+00:08:30,080 --> 00:08:32,300
+It's virtual machines or containers.
+
+78
+00:08:32,300 --> 00:08:35,600
+So this is exactly what we discussed today.
+
+79
+00:08:35,600 --> 00:08:38,600
+And for memory or context window is actually super super interesting.
+
+80
+00:08:38,600 --> 00:08:40,920
+We will not talk about it.
+
+81
+00:08:40,920 --> 00:08:43,460
+But this is really where the state of the art right now.
+
+82
+00:08:43,460 --> 00:08:46,520
+Memory systems or long horizon agents.
+
+83
+00:08:46,520 --> 00:08:49,540
+How do the agents share memory?
+
+84
+00:08:49,540 --> 00:08:52,040
+How do they exchange experiences?
+
+85
+00:08:52,040 --> 00:08:57,040
+So you can think of agents sharing parts of their brains,
+
+86
+00:08:57,420 --> 00:08:59,480
+like humans sharing part of their brains
+
+87
+00:08:59,480 --> 00:09:02,700
+or their experiences completely transparently.
+
+88
+00:09:03,900 --> 00:09:08,580
+You may also have heard of news about agent swarms,
+
+89
+00:09:08,580 --> 00:09:12,080
+hacking some, I think the way this news came out yesterday
+
+90
+00:09:12,080 --> 00:09:15,740
+when some agents were hacked Australian,
+
+91
+00:09:16,900 --> 00:09:20,660
+I think Australian health ministry,
+
+92
+00:09:20,660 --> 00:09:22,800
+because somebody asked these agents,
+
+93
+00:09:22,800 --> 00:09:24,360
+I need some information on the funding
+
+94
+00:09:24,360 --> 00:09:27,540
+of health programs or something like this.
+
+95
+00:09:27,540 --> 00:09:29,260
+So the agents were just like,
+
+96
+00:09:29,260 --> 00:09:31,020
+if I need to solve this question,
+
+97
+00:09:31,020 --> 00:09:33,080
+I mean the easiest thing is to just go to healthcare
+
+98
+00:09:33,080 --> 00:09:36,180
+and hack it, so they did it.
+
+99
+00:09:36,180 --> 00:09:40,260
+And, uh, opening I sent an email to healthcare ministry in Australia,
+
+100
+00:09:40,260 --> 00:09:43,620
+and said, like, look, we, we are apologizing, but we hacked you.
+
+101
+00:09:44,160 --> 00:09:49,380
+And then two months after, two months after, Australian government said,
+
+102
+00:09:49,380 --> 00:09:51,180
+like, this is not nice, we just read it.
+
+103
+00:09:53,460 --> 00:09:55,980
+So you can see how behind we are, right?
+
+104
+00:09:55,980 --> 00:09:57,180
+On containing this threat.
+
+105
+00:09:57,720 --> 00:09:59,040
+Well, it's a fun world.
+
+106
+00:10:00,840 --> 00:10:01,240
+Okay.
+
+107
+00:10:01,260 --> 00:10:04,420
+So as we discussed the forks and processes, right?
+
+108
+00:10:04,420 --> 00:10:12,020
+So agents can spawn sub-agents and they can create fresh context and they can also see how these agents share information.
+
+109
+00:10:12,020 --> 00:10:18,420
+So today it's more like message passing. So we talked about message passing in the first lecture, right?
+
+110
+00:10:18,420 --> 00:10:27,420
+But the future is of course shared memory. You want agents to share memories so that we can streamline the communication there.
+
+111
+00:10:27,420 --> 00:10:33,420
+As opposed to transferring everything into tokens, sending the tokens, refilling the tokens.
+
+112
+00:10:34,420 --> 00:10:38,820
+Okay, then another important thing is where does virtualization come from?
+
+113
+00:10:38,820 --> 00:10:45,940
+Well, virtualization comes with GPU aggregation in the GPU cluster where we actually execute the models
+
+114
+00:10:45,940 --> 00:10:54,820
+and the tool execution environment which is containers, virtualization and so on.
+
+115
+00:10:54,820 --> 00:10:58,820
+So this is where tools are run.
+
+116
+00:10:58,820 --> 00:11:08,820
+Okay, so whenever you have shared state you need security.
+
+117
+00:11:08,820 --> 00:11:10,820
+So this is what happens.
+
+118
+00:11:10,820 --> 00:11:16,820
+So there are different ways of sandboxing the tools.
+
+119
+00:11:16,820 --> 00:11:18,820
+You can go over here, see it here.
+
+120
+00:11:18,820 --> 00:11:28,820
+And there is a huge problem with protection and security.
+
+121
+00:11:28,820 --> 00:11:33,820
+I encourage you to look at it and see what matters.
+
+122
+00:11:33,820 --> 00:11:40,820
+For example, to subvert an engine you don't need to hack the kernel.
+
+123
+00:11:40,820 --> 00:11:43,820
+You can just poison the prompt.
+
+124
+00:11:43,820 --> 00:11:50,860
+so you poison the skills for example so that the engine behavior changes in your favor
+
+125
+00:11:51,900 --> 00:11:55,660
+this is pretty scary and pretty difficult to detect with scar event viruses
+
+126
+00:11:58,940 --> 00:11:59,660
+yeah and finally
+
+127
+00:12:02,620 --> 00:12:08,140
+the memory memory system is really important so memory system is agentic on its own so you can
+
+128
+00:12:08,140 --> 00:12:14,460
+think of there is an agent that manages the memory experiences where what do we read what do we what
+
+129
+00:12:14,460 --> 00:12:19,100
+do we include into the context of what do we exclude from the context what do we write for
+
+130
+00:12:19,100 --> 00:12:28,300
+future i encourage you to install for example here means or go and see how it develops memories about
+
+131
+00:12:28,300 --> 00:12:34,380
+you and what you ask it's really interesting and sharing these memories is actually an open problem
+
+132
+00:12:34,380 --> 00:12:38,060
+because for example if you develop a super useful skill that works for you
+
+133
+00:12:38,060 --> 00:12:42,540
+how exactly do you share it with your teammates for example this is an unsolved problem
+
+134
+00:12:45,340 --> 00:12:52,460
+okay cool so now what i'm gonna do is i'm gonna show you the next two questions
+
+135
+00:12:55,180 --> 00:12:57,100
+and then if we have time maybe a couple more
+
+136
+00:13:04,380 --> 00:13:34,360
+Thank you.
+
+137
+00:13:34,380 --> 00:13:48,860
+This is our priesthood.
+
+138
+00:14:04,380 --> 00:14:34,360
+Thank you.
+
+139
+00:14:34,380 --> 00:14:46,260
+So this is the correct answer.
+
+140
+00:14:46,260 --> 00:14:54,720
+So we have to remember the previous questions were a bit easier, right?
+
+141
+00:14:56,360 --> 00:14:57,360
+Progressive is easier.
+
+142
+00:14:59,700 --> 00:15:01,460
+This is what we discussed yesterday.
+
+143
+00:15:01,460 --> 00:15:06,460
+So now we move into more difficult ones.
+
+144
+00:15:13,460 --> 00:15:16,460
+This is the explanation.
+
+145
+00:15:17,460 --> 00:15:21,460
+You do need to remember about the tolerance convention.
+
+146
+00:15:24,460 --> 00:15:29,460
+And you also need to distinguish thread switches from process switches.
+
+147
+00:15:31,460 --> 00:15:44,440
+So, you need to know the theory, and then you need to know how the maps should practice.
+
+148
+00:15:44,440 --> 00:15:47,980
+And what is available at different level, for example, there is no timer in the Y-Card,
+
+149
+00:15:47,980 --> 00:15:51,620
+the timer is the card for the kernel interaction.
+
+150
+00:15:51,620 --> 00:16:00,320
+Okay, let's do the next one.
+
+151
+00:16:00,320 --> 00:16:02,320
+Can they start a timer?
+
+152
+00:16:30,320 --> 00:17:00,300
+Thank you.
+
+153
+00:17:00,320 --> 00:17:14,820
+Okay, so the right answer is B. I think quite a few people answered it correctly.
+
+154
+00:17:14,820 --> 00:17:14,900
+Okay.
+
+155
+00:17:18,860 --> 00:17:20,020
+This is not too bad.
+
+156
+00:17:23,640 --> 00:17:25,820
+And the explanation...
+
+157
+00:17:25,820 --> 00:17:52,340
+So you can also think about this, the mapping for lab 1, lab 2.
+
+158
+00:17:52,340 --> 00:17:59,420
+like what these questions test. So actually every single question there
+
+159
+00:17:59,420 --> 00:18:05,480
+will be mapped on one of the checkpoints. You remember checkpoints? So this is your...
+
+160
+00:18:05,480 --> 00:18:11,220
+You should go to the checkpoints and see if you understand everything that the checkpoints list.
+
+161
+00:18:11,220 --> 00:18:18,000
+I understand that some of you will have a call-up today, so you can just take it to prepare.
+
+162
+00:18:18,000 --> 00:18:33,000
+Alright, cool. So if you have anything to share to previous people, let me know. I remember there were some questions.
+

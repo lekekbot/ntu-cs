@@ -1,0 +1,716 @@
+1
+00:00:00,000 --> 00:00:12,000
+Topics and terms of programs written for Intel. Smoothly, even though Apple at some point swapped the chip from Intel to ARM that they developed themselves.
+
+2
+00:00:12,000 --> 00:00:24,000
+If you are using Apple Mac produced after 2020, it's very likely that you are using ARM, but you can still run x86 programs.
+
+3
+00:00:24,000 --> 00:00:41,000
+Another idea of it is, for example, if anyone plays old computer games from Nintendo or something like this on the PC, this works through the emulator.
+
+4
+00:00:41,000 --> 00:00:49,000
+So you have the emulator of Nintendo running on your computer, and then you can run unmodified programs with it.
+
+5
+00:00:49,000 --> 00:00:56,000
+Okay, so this is the most important theory how virtualization actually works.
+
+6
+00:00:56,000 --> 00:01:05,000
+You should definitely find more details in the pre-recorded lectures, but let us now go directly into the practice.
+
+7
+00:01:19,000 --> 00:01:45,900
+So here we are talking about the real world analogy for all these three concepts.
+
+8
+00:01:45,900 --> 00:01:48,660
+So one lecture feather in five courses.
+
+9
+00:01:48,660 --> 00:01:49,500
+What does it mean?
+
+10
+00:01:49,500 --> 00:01:52,560
+It means that courses one by one
+
+11
+00:01:52,560 --> 00:01:55,360
+would be given into the lecture feather.
+
+12
+00:01:55,360 --> 00:01:58,920
+So we will not have five courses in one lecture feather.
+
+13
+00:01:58,920 --> 00:02:01,480
+We will have one at a time.
+
+14
+00:02:01,480 --> 00:02:04,320
+So that's multiplication, that's not aggregation.
+
+15
+00:02:04,320 --> 00:02:08,540
+So people who want to be, they confuse this point,
+
+16
+00:02:08,540 --> 00:02:12,880
+but here, for example, there is a lot of access points
+
+17
+00:02:12,880 --> 00:02:19,040
+campus so for example there are so many routers and you go anywhere and there is the same wifi network
+
+18
+00:02:19,040 --> 00:02:23,840
+you don't need to enter your password again you don't need to choose another network how does it
+
+19
+00:02:23,840 --> 00:02:30,080
+work that works through aggregation so actually as you move from through the campus your phone
+
+20
+00:02:30,880 --> 00:02:36,720
+smoothly reconnects from like one point to another point always chooses the closest point and just
+
+21
+00:02:36,720 --> 00:02:41,440
+keep going without bothering you so you don't need to reconnect to wifi this is a classic example of
+
+22
+00:02:41,440 --> 00:02:51,360
+application. And emulation is for example when you just try to access internet with your phone
+
+23
+00:02:52,160 --> 00:02:55,760
+so for your browser it actually doesn't matter at all
+
+24
+00:02:56,320 --> 00:02:59,920
+maybe it's a router, maybe it's your phone, it doesn't matter. Your phone becomes your router.
+
+25
+00:03:11,440 --> 00:03:18,440
+Let's move to the next one.
+
+26
+00:03:41,440 --> 00:03:54,440
+So most of you did answer right, but some of you missed this part.
+
+27
+00:03:54,440 --> 00:04:00,440
+And here there is still confusion with the one network card shared by 8 VMs.
+
+28
+00:04:00,440 --> 00:04:06,440
+That means multiplexing. So 8 VMs with multiplex to access the same network card.
+
+29
+00:04:06,440 --> 00:04:14,440
+This is a classic example of a communication we mentioned when two links can be connected to one.
+
+30
+00:04:36,440 --> 00:04:42,420
+Okay, let's keep going.
+
+31
+00:04:42,420 --> 00:04:46,780
+So let's talk a little bit more about multiplexing.
+
+32
+00:04:46,780 --> 00:04:54,080
+So I told you that there are BCPUs which are scheduled as processes on the host.
+
+33
+00:04:54,080 --> 00:04:58,800
+But inside the guest OS, they are regarded as real CPUs.
+
+34
+00:04:58,800 --> 00:05:01,560
+So they are real cores for the guest OS scatter.
+
+35
+00:05:01,560 --> 00:05:06,120
+So what the guest OS scatter does, it manages the RedQ, it sends the process, it assigns
+
+36
+00:05:06,120 --> 00:05:10,600
+processes to virtual cpus and those processes would kind of
+
+37
+00:05:10,600 --> 00:05:14,040
+clock that cpu for a while but at the same time
+
+38
+00:05:14,040 --> 00:05:21,400
+the host site was called hypervisor or the host os
+
+39
+00:05:21,400 --> 00:05:25,080
+it only sees the vcp so it knows that there are two ems
+
+40
+00:05:25,080 --> 00:05:30,520
+and each of these vms for example have or for example here eight vms each one of
+
+41
+00:05:30,520 --> 00:05:34,440
+them has two vcpus that means there are 16 vcpus to schedule
+
+42
+00:05:34,440 --> 00:05:37,800
+on the host so that would be equivalent to
+
+43
+00:05:37,800 --> 00:05:43,560
+scheduling 16 processes on the host moreover some of these vcpus
+
+44
+00:05:43,560 --> 00:05:46,920
+can be inactive because maybe the guest has
+
+45
+00:05:46,920 --> 00:05:51,240
+nothing to run and that is why you can actually map
+
+46
+00:05:51,240 --> 00:05:56,440
+these 16 vcpus on four cores how because for example you have a
+
+47
+00:05:56,440 --> 00:06:01,400
+partition scanner you map four vcpus to one core
+
+48
+00:06:01,400 --> 00:06:07,480
+and then they would just swap on that code right so that would mean that the host os would also
+
+49
+00:06:07,480 --> 00:06:13,880
+for the hypervisor would also have a ready queue in the host but in that ready queue there will be
+
+50
+00:06:13,880 --> 00:06:20,280
+vcpu with no processes while in the guest os there will be ready queue in front of the each vcpu owned
+
+51
+00:06:20,280 --> 00:06:28,040
+by that virtual machine okay so the state machine in that case would be kind of replicated um
+
+52
+00:06:28,040 --> 00:06:39,040
+There is a state machine for each process inside each virtual machine and there is also a state machine for each of the ECPUs outside on the host.
+
+53
+00:06:45,040 --> 00:06:49,040
+Ok, let's do another example.
+
+54
+00:06:58,040 --> 00:07:28,020
+Thank you.
+
+55
+00:07:28,040 --> 00:07:58,020
+Thank you.
+
+56
+00:07:58,040 --> 00:08:07,040
+Okay, I can sense some confusion in here, but most people did get it right, and that actually encourages people to participate in more activities.
+
+57
+00:08:07,040 --> 00:08:13,040
+If you are here, please walk. That's why you are practicing, right?
+
+58
+00:08:13,040 --> 00:08:20,040
+Okay, so again, let's think about it. Each vCPU is like a process on the host.
+
+59
+00:08:20,040 --> 00:08:26,040
+So in that regard, that means each of these processes can be scheduled independently.
+
+60
+00:08:26,040 --> 00:08:34,040
+So at most four BCPUs can execute because you have four real physical cores, right?
+
+61
+00:08:34,040 --> 00:08:40,040
+So all others would be in the ready state, while these four will be in the running state.
+
+62
+00:08:46,040 --> 00:08:50,040
+So at the same time the state machine is completely decoupled,
+
+63
+00:08:50,040 --> 00:08:54,040
+so the guest OS will have processes in the ready cubes.
+
+64
+00:08:54,040 --> 00:08:59,040
+And some of them will be in the running state, some of them will be in the running state.
+
+65
+00:08:59,040 --> 00:09:05,040
+This is based on how the guest OS assigns it to the vcpu.
+
+66
+00:09:05,040 --> 00:09:08,040
+So it's independent from the host side.
+
+67
+00:09:08,040 --> 00:09:13,040
+So here and here, these are major confusions here.
+
+68
+00:09:13,040 --> 00:09:18,040
+So for the hypervisor doesn't pause VMs because it doesn't manage VMs.
+
+69
+00:09:18,040 --> 00:09:21,040
+It manages each vcpu separately.
+
+70
+00:09:21,040 --> 00:09:25,040
+and here there is no guarantees, right?
+
+71
+00:09:25,040 --> 00:09:30,040
+just like there is no guarantees for processes to share this GPUs equally
+
+72
+00:09:30,040 --> 00:09:34,040
+there is no guarantees for the hypervisors to do it
+
+73
+00:09:51,040 --> 00:10:05,460
+Okay, let's move on.
+
+74
+00:10:06,180 --> 00:10:12,300
+So, the next is the formal definition of this layers, right?
+
+75
+00:10:12,300 --> 00:10:13,600
+So, we talked about the approaches.
+
+76
+00:10:13,600 --> 00:10:17,600
+like, um, you guys know?
+
+77
+00:10:17,600 --> 00:10:19,600
+Yeah, sure.
+
+78
+00:10:25,600 --> 00:10:29,600
+Yeah, so we talked about multiplexing, emulation,
+
+79
+00:10:29,600 --> 00:10:31,600
+so now let's talk about layers.
+
+80
+00:10:31,600 --> 00:10:35,600
+So here, the guest OS is just like we learned before,
+
+81
+00:10:35,600 --> 00:10:38,600
+so there's application, there is an operating system here,
+
+82
+00:10:38,600 --> 00:10:45,500
+system here there is a emulator hardware virtual hardware here but then there is
+
+83
+00:10:45,500 --> 00:10:50,840
+another layer called the virtual machine monitor or a provisor which emulates
+
+84
+00:10:50,840 --> 00:10:57,980
+this virtual devices by multiplying aggregating or emulating the real
+
+85
+00:10:57,980 --> 00:11:06,200
+hardware for those fields so it does so that programs can run efficiently but
+
+86
+00:11:06,200 --> 00:11:14,000
+also so that they are isolated from each other so that none of them actually is
+
+87
+00:11:14,000 --> 00:11:19,660
+aware that it's virtual not real and it actually shares real hardware with
+
+88
+00:11:19,660 --> 00:11:27,400
+someone else. Okay so the hypervisor here is in control of the real hardware and
+
+89
+00:11:27,400 --> 00:11:32,500
+decides how to expose this hardware to each of these virtual machines. For
+
+90
+00:11:32,500 --> 00:11:42,900
+For example, cores can be multiplexed, memory can be multiplexed, network can be also multiplexed,
+
+91
+00:11:42,900 --> 00:11:50,100
+or maybe either in space or in time, for example, assigning a network card to a specific VM,
+
+92
+00:11:50,100 --> 00:11:54,500
+or assigning an edge view to a specific VM.
+
+93
+00:11:54,500 --> 00:12:02,500
+So these can be both multiplexed and aggregated, so there could be many disks exposed to many VMs
+
+94
+00:12:02,500 --> 00:12:07,500
+as separate logical drives or same logical drive.
+
+95
+00:12:07,500 --> 00:12:12,500
+And then some of the hardware can be emulated because maybe some of the virtual machines
+
+96
+00:12:12,500 --> 00:12:18,500
+they use some old network card or old keyboard abstractions.
+
+97
+00:12:18,500 --> 00:12:22,500
+Okay, so how does it actually work?
+
+98
+00:12:22,500 --> 00:12:26,500
+The key here is what's called limited direct execution.
+
+99
+00:12:26,500 --> 00:12:30,500
+And this is really really important for you to understand.
+
+100
+00:12:30,500 --> 00:12:34,500
+So, three aggregation, debug and emulation and direct execution.
+
+101
+00:12:34,500 --> 00:12:36,500
+It's very very important.
+
+102
+00:12:36,500 --> 00:12:43,500
+So, we cannot really emulate every single instruction that runs inside the virtual machine.
+
+103
+00:12:43,500 --> 00:12:47,500
+So that it translates into the instruction in the host.
+
+104
+00:12:47,500 --> 00:12:50,540
+So instead, we separate the instructions
+
+105
+00:12:50,540 --> 00:12:53,460
+which require trap into the guest OS.
+
+106
+00:12:55,560 --> 00:13:00,560
+And the guest OS may trap into the hardware writer.
+
+107
+00:13:01,400 --> 00:13:02,280
+Right?
+
+108
+00:13:02,280 --> 00:13:05,120
+And finally, there is this actual hardware.
+
+109
+00:13:05,120 --> 00:13:08,400
+So most of the instructions would still be just arithmetics.
+
+110
+00:13:08,400 --> 00:13:12,360
+And it actually doesn't matter which of these three layers,
+
+111
+00:13:13,440 --> 00:13:14,780
+which of these three layers
+
+112
+00:13:17,500 --> 00:13:22,500
+which of these three layers issues this arithmetic?
+
+113
+00:13:26,040 --> 00:13:26,880
+It doesn't matter.
+
+114
+00:13:26,880 --> 00:13:28,760
+So that's what's called direct execution.
+
+115
+00:13:28,760 --> 00:13:30,680
+For example, if it's just arithmetic,
+
+116
+00:13:30,680 --> 00:13:33,280
+it doesn't matter whether it's application layer
+
+117
+00:13:33,280 --> 00:13:34,320
+or the guest OS.
+
+118
+00:13:34,320 --> 00:13:36,800
+But if this is a privileged instruction,
+
+119
+00:13:37,900 --> 00:13:41,800
+then the application first is trapped into the guest OS.
+
+120
+00:13:41,800 --> 00:13:44,740
+Right, for example, when it issues a system call
+
+121
+00:13:44,740 --> 00:13:46,300
+or process an interrupt.
+
+122
+00:13:46,300 --> 00:13:59,820
+And then sometimes when the guest-free system needs to access real hardware, it has to trap into the DMM as well.
+
+123
+00:13:59,820 --> 00:14:08,980
+So what's important to understand here is that each of these layers can either execute directly if it's like a harmless execution,
+
+124
+00:14:08,980 --> 00:14:13,260
+but there is no privileged, no sensitive instructions here.
+
+125
+00:14:13,260 --> 00:14:16,660
+Or it will trap into the next layer.
+
+126
+00:14:16,660 --> 00:14:18,280
+But as I said, the application layer
+
+127
+00:14:18,280 --> 00:14:21,100
+cannot directly access the VMM,
+
+128
+00:14:21,100 --> 00:14:23,480
+or for example, the hardware cannot be directly accessed
+
+129
+00:14:23,480 --> 00:14:26,200
+by the application or the guest OS,
+
+130
+00:14:28,060 --> 00:14:29,600
+except for direct execution.
+
+131
+00:14:31,260 --> 00:14:32,100
+Okay.
+
+132
+00:14:33,180 --> 00:14:35,240
+So just remember that adjusting the layers
+
+133
+00:14:35,240 --> 00:14:36,220
+can talk to each other,
+
+134
+00:14:36,220 --> 00:14:38,980
+the way it's gonna be skipped.
+
+135
+00:14:41,480 --> 00:14:44,120
+So for example, the application will never know
+
+136
+00:14:44,120 --> 00:14:45,620
+that the hypervisor is there.
+
+137
+00:14:48,540 --> 00:14:49,380
+Okay.
+
+138
+00:14:51,320 --> 00:14:52,420
+Let's do another.
+
+139
+00:15:06,220 --> 00:15:36,200
+Thank you.
+
+140
+00:15:36,220 --> 00:16:06,200
+Thank you.
+
+141
+00:16:06,220 --> 00:16:34,980
+Okay, so the correct answers are A and C.
+
+142
+00:16:34,980 --> 00:16:36,980
+But some of you chose also P.
+
+143
+00:16:41,980 --> 00:16:45,980
+But the app system call goes to the guest kernel.
+
+144
+00:16:46,980 --> 00:16:50,980
+It doesn't really go to the hypervisor because the application cannot access hypervisor.
+
+145
+00:16:51,980 --> 00:16:56,980
+So if the guest OS needs to mediate, we just capture it.
+
+146
+00:17:04,980 --> 00:17:13,980
+Another thing that is important for lecture quizzes, for concept quizzes, is the types of hypervisors.
+
+147
+00:17:13,980 --> 00:17:16,980
+For this, I will just show you this thing.
+
+148
+00:17:16,980 --> 00:17:23,980
+I encourage you all to spend more time on understanding what is type 1, what is type 2, and so on.
+
+149
+00:17:23,980 --> 00:17:26,980
+I don't think it's that important for this practice.
+
+150
+00:17:26,980 --> 00:17:51,420
+So, we just captured this information and this is the past and this is the explanation.
+
+151
+00:17:51,420 --> 00:17:54,420
+So this I just encourage you to look into the pre-recorded lectures.
+
+152
+00:17:54,420 --> 00:18:01,420
+It's pretty easy, it's more of like you just need to remember what is type 1, type 2, para, oh, sorry.
+
+153
+00:18:04,420 --> 00:18:15,420
+Okay, so now let's consider a complex problem, which we need to consider two standards and two state machines.
+
+154
+00:18:15,420 --> 00:18:27,420
+So here we have a round-robin over two VCPUs where each VM would get four units, four cycles per turn.
+
+155
+00:18:27,420 --> 00:18:40,420
+So if VCPU doesn't execute then there is nothing happening and if there is a speed log then it works like a regular speed log.
+
+156
+00:18:40,420 --> 00:18:46,140
+That's all. Nothing is different. So what you need to understand is how
+
+157
+00:18:46,140 --> 00:18:55,180
+processes and VMs swap each other on the cores. So let's take a look.
+
+158
+00:18:55,180 --> 00:19:01,720
+So here for example what you see is there are two cores and there are two VMs.
+
+159
+00:19:01,720 --> 00:19:15,720
+owns vcpus A0 and A1. So basically there are two vcpus A0 and A1 and VMB has P0 and P1
+
+160
+00:19:15,720 --> 00:19:25,720
+vcpus and VMA has two processes A1, small a1, small a2 which actually have some synchronization
+
+161
+00:19:25,720 --> 00:19:51,620
+between them. So you can see how this A1 and A2 are implemented. So you can see that first cycle there is work, second cycle there is a lock, then followed by work, then there is two cycles of work, and then finally there is a work and then an unlock, and work and exit here. So this is first cycle distribution of what these two processes do.
+
+162
+00:19:51,620 --> 00:19:55,620
+And then we have the run-robin here.
+
+163
+00:19:55,620 --> 00:20:06,620
+So for course here, it will execute vcpu a0, then vcpu b0,
+
+164
+00:20:06,620 --> 00:20:08,620
+then vcpu a0, then vcpu b0.
+
+165
+00:20:08,620 --> 00:20:11,620
+So this is a partition scheduler here on the host.
+
+166
+00:20:11,620 --> 00:20:18,620
+So it will take one vcpu from bm1 and one, sorry, bma,
+
+167
+00:20:18,620 --> 00:20:24,620
+from VMB so you will see it B1, A1, B1, B1
+
+168
+00:20:24,620 --> 00:20:29,620
+Multi-Vexel Core 1 so they don't really jump from one core to another
+
+169
+00:20:29,620 --> 00:20:39,620
+so your goal here is to understand how does it work and show on the ledger
+
+170
+00:20:39,620 --> 00:20:52,680
+It's not difficult, just think about two cores independently on the host and who gets scheduled
+
+171
+00:20:52,680 --> 00:20:53,680
+on that core.
+
+172
+00:20:53,680 --> 00:21:22,440
+All right.
+
+173
+00:21:22,440 --> 00:21:24,440
+Start the prep.
+
+174
+00:21:52,440 --> 00:22:22,420
+Thank you.
+
+175
+00:22:22,440 --> 00:22:36,200
+So the correct answer is B. So let's see what happens.
+
+176
+00:22:36,200 --> 00:22:41,400
+Actually before we see what happens, let's do another one.
+
+177
+00:22:41,400 --> 00:22:44,400
+Then I'll show you the whole ledger.
+
+178
+00:22:44,400 --> 00:22:49,780
+Or maybe you just capture this one and I'll show you the ledger directly.
+
+179
+00:22:49,780 --> 00:22:55,020
+capture it. This way you practice.
+
