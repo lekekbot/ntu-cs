@@ -1,0 +1,195 @@
+[00:00] Now let's look at the memory allocation approaches. As I already explained, basically there are two
+different categories. The first one is the contiguous allocation, and the second one is called non-
+contiguous allocation. So under the contiguous allocation category, that means the physical memory
+assigned to a process is contiguous. Or in other words, the logical address space of the process
+remains contiguous in the physical memory. So under contiguous allocation, we have fixed allocation,
+fixed partitioning, and dynamic partitioning. For non-contiguous allocation, right, so implies by
+the name.
+
+[00:52] So that basically means the logical address space of the process is no longer contiguous in the
+physical memory. It's a non-contiguous physical memory is assigned to the process, right. So under
+this non-contiguous allocation, so we will cover paging and segmentation. Now let's look at fixed
+partitioning first, right. So for fixed partitioning, so the memory basically is partitioned into
+regions with fixed boundaries. So what does that mean? So that basically means the physical memory
+is pre-partitioned into a fixed number of partitions, right. So the number of partitions is fixed,
+and the size of each partition is also fixed, right.
+
+[01:46] Then given a process, logical address space, logical process image, then what OS will do is OS will
+find a partition that's large enough that can accommodate this process image, and assign the
+partition to the process. So this process image may not occupy the entire partition, so that means
+part of the partition is not really in use. It's wasted, right. So when a process is created, then
+OS finds a large enough partition for the process to assign to the process. Right. And then when a
+process is terminated, and the partition is assigned to the process, then it will be reclaimed. It
+will become free, right.
+
+[02:39] It will become available, so it can be reassigned to another process. Right. So you can see the
+problem here. So what's the problem here? So obviously, so it's not really possible. It's not really
+easy, right, to determine. So how many partitions we need to have, and what's the size of each
+partition. Right. All right. So that's the problem here, right. And it's not easy to determine the
+number of partitions and the size of each partition. Right. And so because a process is created
+dynamically, right, and we don't have prior knowledge, right, about the memory requirement of
+processes. Right. Then the other problem is that a partition will be assigned to a process.
+
+[03:35] Right. And the part of partition will be visited. It's not really used. Right. So this is called
+internal fragmentation. Right. So this, this tomology fragmentation. So I will, again, cover this
+later on. Right. So that's a fixed partition. So instead of predetermine how many partitions we're
+going to have, and what are the size of each partition. Right. So the dynamic partitioning basically
+is, we try to create the partition dynamically on demand. Right. So in this case, so starting with,
+right, and the entire physical memory is available. So we use this terminology hole. Right. So it's
+a hole that refers to a block of available memory.
+
+[04:29] So to starting with, to starting with, the entire physical memory is available. We have a very
+large, big hole. Right. So when a process arrives, then what OS will do is, OS will find a large
+enough hole to assign to the process. Right. Then when the process terminates, then the OS will
+reclaim back the memory space assigned to the process. So you can imagine. So as a process created
+and terminated, then the memory will become fragmented. Right. So you have a, you have a holes of a
+different size. Right. Then in order to do the memory allocation using this approach. So OS then
+need to maintain certain information.
+
+[05:23] Right. So first of all, the OS need to know, so which part of the memory are currently allocated?
+What are the allocated partitions? Then the OS also need to know, so which part of memory currently
+not allocated? What are the holes, right, the free partitions? Now let's look at an example to
+illustrate how this can work. Right. So, assuming that, right, so this number of processes, we have
+five processes. Then we have a corresponding memory requirement for each process. So that's the size
+of the process image. Right. Then we also know how long each process may execute. Right. So for
+instance, for process P1, so the size of process image is 600K.
+
+[06:21] Right. It takes 10 time units to complete. Right. So beginning with a single large hole. Right. The
+physical memory is free. So everything is free. Now at the time zero. Right. So all these processes
+are in the job queue, waiting to be loaded into the memory to execute. Right. So recall the state
+transition diagram. Right. So these are the processes in the job queue. When they are loaded into
+the memory to execute, then there's a state transition, state change. Right. For the process. So the
+process then we are changing to the ready state. Right. From the new state change to the ready state
+and added into the ready queue.
+
+[07:17] Right. So now at time zero. So these processes are in the job queue. Right. And waiting to be loaded
+into the memory for execution. So at this time, then we have a sufficient amount of memory to assign
+to P1, P2 and P3. So assign P1, P2 and P3. So after assigning memory for these three processes, then
+the remaining hole is this one. 260K. So 260K is too small. Right. For the memory requirement for P4
+and P5. So that means at time zero, then we cannot load P4 and P5. So only P1, P2 and P3 will be
+able to load into the memory for execution. So P1, P2, P3 will be added into the ready queue. Right.
+
+[08:13] The state will change from new to ready. So that's at time zero. Now, so when P4 and P5 can be
+loaded. Right. So when this can be loaded is untuned. Until one of these three processes terminates.
+So when one of the process terminates, then the memory space assigned to the process will be
+reclaimed. Right. So this three processes, P1, P2 and P3. Right. So this is the corresponding
+execution time for these processes. So P2 will terminate first at time five. When P2 terminates at
+time five, the memory space assigned to P2 will be reclaimed become available. We have another hole
+here. So this hole is 1000K.
+
+[09:04] So this hole is large enough to assign to P4. Right. So at time five, P4 then will be loaded into
+the memory to execute and added into the ready queue. Right. So after assign the memory for P4, then
+the left over hole. So this left over hole is 300K. So this is too small for P5. So we have two
+holes. So this is 300K. So 260K. So both holes are too small for the last process. That's P5, which
+requires 500K. So we cannot load P5 at time five. We can only load P5 at time when one of these
+three processes current in the memory terminates. So which one will be terminating next? So P1 is
+already executed for five time units.
+
+[10:09] When it will terminate at the 10th, require another five time units. P4 just loaded, require eight
+time units to execute. And P3 already executed five and require another 15 time units to execute. So
+the next process to terminate, then will be P1 at time 10. At time 10, P1 terminates. Then the
+memory space allocated to P1 is reclaimed. Then we have a hole here. So this hole is 600K. And the
+last enough for P5. P5, in this case, can be loaded into the memory for execution at time 10. So
+after the memory allocation for P5, then we have left our hole. So that's 100K. So in this case,
+three holes here.
+
+[11:08] So this hole is 100K. And the second hole is 300K. And the last hole is 260K. Right. So that's how
+this approach works. Right. So you can see here, right, so as I just mentioned, as the process
+created and terminated, then the memory space will become fragmented. Then we have a hole. Then we
+have holes. Right. And when there are multiple holes that are large enough to satisfy a request of a
+process and then which hole to use. So in this case, right, so we have multiple holes. Right. They
+are all large enough to satisfy a memory requirement of a process. Now the question is which one to
+choose. So we need a policy.
+
+[11:57] Right. So this policy is called dynamic storage allocation policy. Right. So we did the three
+policies that can be used. Right. The first policy is called first fit. So that's basically to
+allocate the first large enough hole to the process. Right. But remember, remember, recall, the OS
+will maintain a list of available holes. Right. Then give a memory requirement of a process. Then in
+this case, the OS will search this list. Right. The first large enough hole that can be used to
+satisfy the memory requirement of the process and that hole that may be used. So that's called first
+feet. Now what is the best fit?
+
+[12:50] So for the best fit, so basically OS will search the list and found the hole that large enough. And
+that will generate the smallest level over hole. Right. So basically, so in this case, the OS will
+choose the smallest hole in the list that's large enough to satisfy the memory requirement of the
+process and use that hole. Right. So if you're using that hole, so that means the level over hole
+will be the smallest. And in contrast to the best fit, then for the worst fit, then in this case, so
+the OS will search the entire list and we found the large, largest hole in the list to satisfy the
+request.
+
+[13:44] So that's basically means the left over hole will be the largest. Right. So WebR3 different dynamic
+storage allocation policies. So first feet, best fit and the worst fit. So for both best fit and the
+worst fit. So that's required to search the entire list of the three available holes. Right. In
+order to find out either the smallest, large enough hole or the largest hole in the list. allocated
+partitions, right? And internal fragmentation, so that refers to unusable memory space within
+allocated partitions, right? So for instance, for external fragmentation, right? So we have an
+external fragmentation here.
+
+[15:16] You see in this case, we have three holes, but all these holes are too small, maybe too small,
+right? To be useful, right? So in this case, the holes here is in between allocated memory
+partitions. It's outside allocated memory partition. So this is called external fragmentation,
+right? And for internal, so this happens here, right? So recall, so we assign a partition to a
+process, but that process image may not occupy the entire partition. then part of this is not really
+in use. It's wasted, right? So in this case, so this wastage happening inside an allocated
+partition, so this refers to internal fragmentation, right?
+
+[16:09] So there are two different types of fragmentation, right? So in particular, to deal with this
+external fragmentation, right? So the OS commonly will use this compaction strategy, right? So for
+memory compaction, so that basically refers to shuffle memory contents, right? In order to place,
+merge smaller holes together to form a larger hole, right? Now let's look at example, right? So the
+same example, the five processes, right? So it's zero, then we do the memory allocation for P1, P2,
+and P3. So these three processes are added into ready Q. Then we have a remaining hole that's too
+small for P4 and P5.
+
+[17:02] Then at time 5, right? At time 5, right? Then P2, P2 terminates, right? Then the OS claim back the
+memory space are sent to P2, so we have another hole, right? So this hole is large enough to satisfy
+the memory requirement for P4, right? Then we load P4 into the memory, for execution, so P4 is added
+into ready Q. So after the memory allocation for P4, there were two smaller holes, right? So this is
+the first hole, 300K, and second hole, 260K. So both holes are too small to satisfy the memory
+requirement for P5. So in this case, then what we can do is we can do the memory compaction by
+moving P3 up, right?
+
+[17:59] So when P3 moving up, there's two holes will, next to each other, then can be merged into a larger
+hole, right? So this hole, there is a 500K, and there will be large enough to satisfy the memory
+requirement for P5. So the P5, then we'll be able to load into the memory to execute, add into ready
+Q, at time 5, right? So compared to the previous case, right? So P4, or P5, will be unable to load
+into the memory to execute at the time 10, right? So if you're using memory compaction, so that
+basically means we're able to load P5 into the memory for execution much earlier, right? Now if we
+do the memory compaction,
+
+[18:53] right, so what's the requirement? So that's basically required to shuffle the memory content, right?
+Need to copy the process in the memory from its current location to another location. So this is
+overhead, right? Another issue is, sorry, so this is only possible, right? So if address binding, so
+I mentioned this address translation from the logical to physical address, right? So this is only
+possible, is this address translation from logical to physical is carried out during the execution
+time. All right, so for address translation, again, so as, right, so we mentioned this address
+translation
+
+[19:41] from logical to physical address, right? So if you're using this contiguous allocation, the slides
+here basically shows how the address translation can be carried out, right? So address translation
+in this case can be carried out by using this kind of mechanism, right? So we have a relocation
+register, right? So relocation register basically will remember the base address. So that's the
+starting physical address where the process image is in the physical memory, right? For instance, in
+this case, so the process image is loaded into the physical memory starting from 1024. So that's the
+base address,
+
+[20:28] right? The starting address, right? So if I draw, okay, I try to draw, right? So this is the process
+image is loaded into physical memory and the starting address is 1024, right? So it's the base
+address. It's where the process image is started at the physical memory, right? It's 1024. So this
+is loaded into the relocation register, right? So I go back, change back to the laser pointer,
+right? So this is remembered by the relocation register, right? When a screened instruction, the
+instruction may generate address reference, recall, the address reference always reference to a
+space is a location
+
+[21:22] in the logical address space. Again, if I draw a picture, right? So this is a logical address
+starting from zero, so this is logical, right? So this is physical, right? Starting with zero. So as
+good instruction, right, the CPU will generate address reference refers to this location in the
+logical address space, right? So this location, then, this logical address, then can be translated
+to the physical address address by adding the base address with the logical address. By adding base
+with the logical address, then we will generate the physical address, right? So this is the place
+we're going to access. So logical address
+
+[22:22] basically is the offset, right, from the beginning of the process image, right? So base plus offset,
+so that will generate the physical address. All right, so we stop here for the first part of the
+memory allocation, right? In the next video, then we'll continue to look at the second part. So the
+second part, then we'll look at the non-contiguous memory allocation.

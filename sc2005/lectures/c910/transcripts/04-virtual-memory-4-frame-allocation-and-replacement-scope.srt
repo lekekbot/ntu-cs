@@ -1,0 +1,464 @@
+1
+00:00:00,000 --> 00:00:09,400
+This is the last lecture on virtual memory support.
+
+2
+00:00:09,400 --> 00:00:17,720
+So in this lecture, we look at the free modification and specific performance issue related to virtual
+
+3
+00:00:17,720 --> 00:00:18,920
+memory support.
+
+4
+00:00:18,920 --> 00:00:21,120
+So that's thrashing.
+
+5
+00:00:21,120 --> 00:00:27,240
+Now recall, the physical memory is shared among multiple processes.
+
+6
+00:00:27,240 --> 00:00:34,300
+And the OIS must make the decision regarding how many frames assigned to each process.
+
+7
+00:00:34,300 --> 00:00:41,240
+Or in other words, how many pages to bring in into physical memory for each process.
+
+8
+00:00:41,240 --> 00:00:51,480
+If OIS assign a small amount of frames to each process, so that's basically means given the
+
+9
+00:00:51,480 --> 00:00:58,540
+fixed number of page frames available, given the fixed size of the physical memory, then
+
+10
+00:00:58,540 --> 00:01:04,160
+we're able to load more processes into the memory for execution.
+
+11
+00:01:04,160 --> 00:01:08,540
+So this will increase the degree of multiprogramming.
+
+12
+00:01:08,540 --> 00:01:15,600
+Now if they assign a very small number of frames for each process, so that's basically means
+
+13
+00:01:15,600 --> 00:01:21,600
+that each process only has a small number of pages, resides inside the memory.
+
+14
+00:01:21,600 --> 00:01:26,600
+Then the chance for the process to have page 4 will increase.
+
+15
+00:01:26,600 --> 00:01:42,660
+So beyond certain size, the further allocation of pages will not have any effect on page 4 read.
+
+16
+00:01:42,660 --> 00:02:03,720
+To determine how many frames to be allocated to each process.
+
+17
+00:02:03,720 --> 00:02:07,780
+So the OIS needs to use certain kind of policy.
+
+18
+00:02:07,780 --> 00:02:11,780
+So in general, there are two different policies.
+
+19
+00:02:11,780 --> 00:02:15,780
+So one is called fixed allocation policy.
+
+20
+00:02:15,780 --> 00:02:19,780
+And the other one is called variable allocation policy.
+
+21
+00:02:19,780 --> 00:02:27,780
+So under fixed allocation policy, so that means the total number of frames assigned to each process
+
+22
+00:02:27,780 --> 00:02:31,780
+is unchanged during the process execution.
+
+23
+00:02:31,780 --> 00:02:35,840
+Then regarding how many frames to assign each process.
+
+24
+00:02:35,840 --> 00:02:40,840
+So for instance, then this can be based on equal allocation.
+
+25
+00:02:40,840 --> 00:02:45,840
+That means every person has an equal number of frames to be allocated.
+
+26
+00:02:45,840 --> 00:02:49,840
+Or can be proportional allocation.
+
+27
+00:02:49,840 --> 00:02:59,840
+So the number of frames assigned to the process can be proportional to the size of logical address space of the process.
+
+28
+00:02:59,840 --> 00:03:07,900
+So because in this case, the number of frames assigned to the process is unchanged.
+
+29
+00:03:07,900 --> 00:03:08,900
+It's a fixed number.
+
+30
+00:03:08,900 --> 00:03:11,900
+So during the entire execution process.
+
+31
+00:03:11,900 --> 00:03:16,900
+So that basically implies whenever there is a page 4,
+
+32
+00:03:16,900 --> 00:03:23,960
+then one of the pages that belong to the same process must be replaced.
+
+33
+00:03:23,960 --> 00:03:24,960
+Right.
+
+34
+00:03:24,960 --> 00:03:29,960
+So otherwise, I mean, if there's a page 4 and the OIS replaced page that belong to another process,
+
+35
+00:03:29,960 --> 00:03:36,960
+then the total number of frames assigned to the process will now be a constant, will now be fixed.
+
+36
+00:03:36,960 --> 00:03:39,020
+So that's fixed allocation.
+
+37
+00:03:39,020 --> 00:03:46,020
+Then in contrast to fixed allocation, so under variable allocation implied by the name.
+
+38
+00:03:46,020 --> 00:03:55,020
+So that basically means the number of frames assigned to a process can change over time during the process allocation.
+
+39
+00:03:55,020 --> 00:04:08,080
+So this kind of policy allows the number of page frames allocated to a process to be varied over the lifetime of the process.
+
+40
+00:04:08,080 --> 00:04:13,080
+Another related issue is the scope of replacement.
+
+41
+00:04:13,080 --> 00:04:20,140
+So when there's a page 4, can we replace page belong to the same process?
+
+42
+00:04:20,140 --> 00:04:25,140
+Or can we replace a page belong to any other process?
+
+43
+00:04:25,140 --> 00:04:33,140
+So in terms of replace page, replacement scope, then there are two different scopes.
+
+44
+00:04:33,140 --> 00:04:41,200
+So one is called global replacement, and the other one is a local replacement.
+
+45
+00:04:41,200 --> 00:04:53,200
+So global replacement, so that basically means, so when there's a page 4, then the process can replace a page that belongs to any of the process.
+
+46
+00:04:53,200 --> 00:05:02,700
+So the process selects a replacement frame from the set of all the frames, right, in the physical memory.
+
+47
+00:05:03,140 --> 00:05:11,200
+So in this case, so that's basically implies that one person can take a frame from another process.
+
+48
+00:05:11,200 --> 00:05:20,200
+So that's a global, right, so can replace a frame, right, so that belongs to any, replace a page that belongs to any of the process.
+
+49
+00:05:20,200 --> 00:05:32,900
+Then for the local replacement, right, so that's basically means, so wherever it is a page 4, then the process can only replace a page that belongs to the
+
+50
+00:05:32,900 --> 00:05:44,900
+the current process, right, so each process only selects from its own set of allocated frames, right, for the page replacement.
+
+51
+00:05:44,900 --> 00:05:52,960
+Now let's look at a specific example, right, for the illustrate, there's a scope of replacement, right.
+
+52
+00:05:52,960 --> 00:06:01,960
+So it actually means that the street possesses that's currently in the memory, right, so A, B, and C, right.
+
+53
+00:06:01,960 --> 00:06:12,320
+And here shows the time last access for each of the pages, right, for each of the pages, right.
+
+54
+00:06:12,320 --> 00:06:18,240
+So this is the original frame allocation for these three processes.
+
+55
+00:06:19,720 --> 00:06:29,380
+Now let's assume process A generates a reference to page number 6, right, so generates a reference to page number 6.
+
+56
+00:06:29,380 --> 00:06:42,380
+So this A6, right, so page number 6 of process A is currently not in the memory, right, and currently all the frames are occupied,
+
+57
+00:06:42,380 --> 00:06:51,380
+so memory is full, then we need to run a page replacement algorithm, right, to identify a victim page, right.
+
+58
+00:06:51,380 --> 00:07:02,380
+So let's further assume, right, so we use least recently used page replacement algorithm, right, to find a victim page, right.
+
+59
+00:07:02,380 --> 00:07:05,380
+So recall what we covered during the last lecture.
+
+60
+00:07:05,380 --> 00:07:15,380
+So the least recently used algorithm algorithm, we found a page that hasn't been used for the longest period of time, right.
+
+61
+00:07:15,380 --> 00:07:28,380
+So that basically means the page that with the earliest time last access will be the LRO page, right, will be the victim page to be replaced.
+
+62
+00:07:28,380 --> 00:07:43,380
+So if you're using local replacement, so that basically means, so we only choose one of these pages that's currently in the memory, belong to the same process, right, to replace.
+
+63
+00:07:43,380 --> 00:07:58,380
+Then in this case, among these pages, belong to process A, that's currently in the memory, this page here, right, so page number 5 of process A has the earliest last access time.
+
+64
+00:07:58,380 --> 00:08:03,380
+Among those pages belong to process A in the memory.
+
+65
+00:08:03,380 --> 00:08:07,380
+So this will be identified as victim page and replace.
+
+66
+00:08:07,380 --> 00:08:14,380
+So page out, page 5 of process A, and page in, page 6 of process A.
+
+67
+00:08:14,380 --> 00:08:20,380
+So this is a local replacement, right, so we replace a page that belongs to the same process.
+
+68
+00:08:20,380 --> 00:08:29,380
+Then for the global, right, then in this case, we can replace a page that belongs to any of the process, right.
+
+69
+00:08:29,380 --> 00:08:44,380
+We're still using LRO, then in this case, globally, right, so this page, so this page 3 of process B, so has the earliest time last access, right.
+
+70
+00:08:44,380 --> 00:08:47,380
+So this may be identified as a victim page.
+
+71
+00:08:47,380 --> 00:08:54,380
+Then page out, page 3 of process B, and page in, page 6 of process A.
+
+72
+00:08:54,380 --> 00:09:04,380
+So you can see here, if you're using global, so that means, so the number of pages in this case for process A will be increased.
+
+73
+00:09:04,380 --> 00:09:09,380
+The number of pages of process B, then will be reduced, right.
+
+74
+00:09:09,380 --> 00:09:20,380
+So the number of page, the number of frames, right, the number of page, or in other words, the number of pages of a person inside the memory, no longer a constant.
+
+75
+00:09:20,380 --> 00:09:34,380
+All right, so replace a page, right, so when there's page 4, then there's a likelihood, right, so this process may replace a page that belongs to another process.
+
+76
+00:09:34,380 --> 00:09:46,380
+Right, so that's basically means, in this case, the performance of process may also depending on the performance of other processes, right.
+
+77
+00:09:46,380 --> 00:09:50,380
+So that's the effect of the global replacement, right.
+
+78
+00:09:50,380 --> 00:09:54,380
+So the number of pages, right, are sent to a process no longer a constant, right.
+
+79
+00:09:54,380 --> 00:10:06,380
+The effect of the performance of one process, right, so may be affected by the performance of other processes.
+
+80
+00:10:06,380 --> 00:10:12,380
+Then for local replacement, right, for local replacement, again, as you see, as you can see from the example here, right.
+
+81
+00:10:12,380 --> 00:10:26,380
+So we only replace a page that belongs to the same process, then the number of pages assigned to the process, then in this case, you will remain a constant, right, a fixed number, right.
+
+82
+00:10:26,380 --> 00:10:28,380
+Now, what's the problem?
+
+83
+00:10:28,380 --> 00:10:41,380
+The problem in this case, for instance, so this page of process B stream not really in active use during the current execution of process B.
+
+84
+00:10:41,380 --> 00:10:51,380
+Even though this page is not really in active use by process B, then we cannot replace this page, right.
+
+85
+00:10:51,380 --> 00:11:02,380
+We cannot make the frame occupied by this page to be available, to be used by other processes, right.
+
+86
+00:11:02,380 --> 00:11:06,380
+So that's the problem here for the local replacement, right.
+
+87
+00:11:06,380 --> 00:11:16,380
+So may hinder other processes by not making available this less use the page or frames, right.
+
+88
+00:11:16,380 --> 00:11:19,380
+So let's look at this, right.
+
+89
+00:11:19,380 --> 00:11:26,380
+So let's put together the frame allocation and replacement scope, right.
+
+90
+00:11:26,380 --> 00:11:40,380
+So in terms of frame allocation, so for fixed allocation and the variable allocation, and in terms of replacement scope, then local replacement and global replacement, right.
+
+91
+00:11:40,380 --> 00:11:51,380
+So for fixed allocation, so that's basically implies, so we must use the local replacement, right.
+
+92
+00:11:51,380 --> 00:11:57,380
+So global replacement in this case is not really possible, not applicable, right.
+
+93
+00:11:57,380 --> 00:12:05,380
+So whenever it is page 4, then the page that belongs to the same process will be replaced, right.
+
+94
+00:12:05,380 --> 00:12:14,380
+In order that the number of frames assigned to the process is a constant during the execution of the process.
+
+95
+00:12:14,380 --> 00:12:15,380
+Right.
+
+96
+00:12:15,380 --> 00:12:19,380
+So for the global replacement, right.
+
+97
+00:12:19,380 --> 00:12:25,380
+For global replacement, again, as I just illustrate by the example, right.
+
+98
+00:12:25,380 --> 00:12:33,380
+So that implies the number of frames assigned to the process may change over time.
+
+99
+00:12:33,380 --> 00:12:42,380
+So that's basically implies, so the allocation of the frame must be variable allocation, right.
+
+100
+00:12:42,380 --> 00:12:49,380
+And this variable allocation and the local replacement can also be used together.
+
+101
+00:12:49,380 --> 00:12:53,380
+So how this can be used together, right.
+
+102
+00:12:53,380 --> 00:13:05,380
+So basically, initially, when the process is started to execute, then OIS will assign a fixed number of frames to the process.
+
+103
+00:13:05,380 --> 00:13:06,380
+Right.
+
+104
+00:13:06,380 --> 00:13:13,380
+Then whenever there is a page forward, then OIS will replace a page that belongs to the same process.
+
+105
+00:13:13,380 --> 00:13:26,380
+But in the meantime, during the process execution, OIS also monitor the performance of the process in terms of a page forward route, right.
+
+106
+00:13:26,380 --> 00:13:35,380
+So if there are too many page forward, meaning the number of frames assigned to the process is too small.
+
+107
+00:13:35,380 --> 00:13:41,380
+Then in this case, the OIS will be assigned more frames to the process.
+
+108
+00:13:41,380 --> 00:13:51,380
+So if over a long, very long period of time, the page forward rate is relatively small.
+
+109
+00:13:51,380 --> 00:14:00,380
+So that means, so there may be over allocation of frames to the process, then OIS will take away some frames from the process.
+
+110
+00:14:00,380 --> 00:14:10,380
+So periodically, the OIS may increase the number of frames or reduce the number of frames assigned to the process.
+
+111
+00:14:10,380 --> 00:14:11,380
+Right.
+
+112
+00:14:11,380 --> 00:14:16,380
+Depending on the page for performance of the process.
+
+113
+00:14:16,380 --> 00:14:20,380
+So the number of frames assigned to the process in this case is variable, right.
+
+114
+00:14:20,380 --> 00:14:22,380
+It's changed over time.
+
+115
+00:14:22,380 --> 00:14:30,380
+But whenever it is page forward, the OIS only replace the page that belongs to the same process.
+
+116
+00:14:30,380 --> 00:14:38,380
+So that's how this variable allocation and the local replacement can be used jointly together.
+

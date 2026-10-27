@@ -1,0 +1,2008 @@
+1
+00:00:00,000 --> 00:00:14,160
+All right, so this is the second lecture on memory organization.
+
+2
+00:00:15,280 --> 00:00:22,080
+And in this lecture we will focus on paging. So paging is a memory allocation
+
+3
+00:00:22,080 --> 00:00:32,080
+under the non-contiguous memory allocation approach. So for paging, right, so the memory,
+
+4
+00:00:32,080 --> 00:00:39,040
+the physical memory, is located to a process. It's no longer contiguous, right. Or in other words,
+
+5
+00:00:39,040 --> 00:00:47,040
+so the process image or logical address space of the process will be assigned to non-contiguous
+
+6
+00:00:47,040 --> 00:00:56,480
+physical memory. Right. And using paging, right, so the physical memory will be divided into
+
+7
+00:00:57,040 --> 00:01:05,760
+fixed size blocks. So each of these blocks is called a frame. Typically the size of the frame
+
+8
+00:01:05,760 --> 00:01:16,640
+is a part of 2, between 512 and 8192 bytes. Correspondingly, we also divide the logical address
+
+9
+00:01:16,640 --> 00:01:24,080
+space or logical memory into blocks of the same size. So each of these, that is called a page.
+
+10
+00:01:24,880 --> 00:01:33,680
+So we divide the physical memory into frames and then we divide the logical address space into pages.
+
+11
+00:01:35,760 --> 00:01:46,160
+So using paging, right, so what all I need to keep track is the available frames
+
+12
+00:01:46,640 --> 00:01:56,080
+in the physical memory. So to load the process whose logical address space
+
+13
+00:01:56,960 --> 00:02:06,400
+consists of n pages, recall, we divide the logical address space of a process into pages, right. So with this
+
+14
+00:02:06,400 --> 00:02:13,440
+process, logical address space consists of n pages. So that basically means in order to load
+
+15
+00:02:13,440 --> 00:02:19,840
+the logical address of the logical address of this process, the process image into the physical memory,
+
+16
+00:02:19,840 --> 00:02:30,080
+then we need to find unavailable frames in the physical memory. Right, so then the OS need to know,
+
+17
+00:02:30,080 --> 00:02:39,440
+right, need to keep track. So which frame is currently occupied and which frame is currently free. So OS will keep track of all the free frames.
+
+18
+00:02:39,440 --> 00:02:47,760
+So OS also need to remember, right, so which page of the logical address space
+
+19
+00:02:49,280 --> 00:03:00,160
+is loaded into which frame in the physical memory. So this is done by using a page table. As I explain it around,
+
+20
+00:03:00,160 --> 00:03:06,800
+so page table is also used for address translation to translate from the logical address
+
+21
+00:03:06,800 --> 00:03:14,320
+and then the physical address. If you're using a page table. If you're using a page table. Right, so in this case,
+
+22
+00:03:14,960 --> 00:03:22,720
+as long as a frame is available, then it can be assigned to a page of a process. So in this case,
+
+23
+00:03:22,720 --> 00:03:30,080
+we don't really have an external fragmentation. So recall in the last lecture, we covered the two different
+
+24
+00:03:30,080 --> 00:03:40,400
+type of fragmentation. So one is internal, the other one is external. Right. So external fragmentation refers to
+
+25
+00:03:41,040 --> 00:03:48,880
+a usable memory space in between allocated memory space. Right. So if you're using paging, every single frame
+
+26
+00:03:48,880 --> 00:03:57,520
+can be in use as long as it's free. So in this case, we don't really have external fragmentation. Right. But internal
+
+27
+00:03:57,520 --> 00:04:03,920
+fragmentation is still possible. So internal fragmentation recall, so that refers to
+
+28
+00:04:04,720 --> 00:04:14,880
+a usable memory space within a partition. Right. So the process may not occupy the entire partition. Right.
+
+29
+00:04:14,880 --> 00:04:22,240
+I look at the partition, then part of the allocated partition is not really used. So if you're using paging,
+
+30
+00:04:22,240 --> 00:04:30,240
+so internal fragmentation may still happen. Right. And this is just happened to the last page. Right.
+
+31
+00:04:30,240 --> 00:04:37,600
+The reason means because the logical address space may not divide into exact number of pages. Right. So the
+
+32
+00:04:37,600 --> 00:04:44,240
+last page, in this case, may not occupy the entire frame and part of frame will not be in use.
+
+33
+00:04:44,240 --> 00:05:05,600
+So in this case, we are assuming that the frame size, as well as the page size, right, so is 4 bytes. Right. And we divide
+
+34
+00:05:06,240 --> 00:05:19,440
+logical memory, logical address space into pages. So in this case, we are assuming that the size of logical address space is 16 bytes.
+
+35
+00:05:20,000 --> 00:05:27,440
+So page size is 4 bytes. So this logical address space will be divided into 4 pages.
+
+36
+00:05:27,440 --> 00:05:31,840
+logical address space in the logical address space. Right. So 4 bytes will be divided into 8 bytes.
+
+37
+00:05:31,840 --> 00:05:33,760
+You'll remember this particular case in this specific case.
+
+38
+00:05:33,760 --> 00:05:40,320
+So for example, we assume that the physical memory consists of 32 bytes. Right.
+
+39
+00:05:41,760 --> 00:05:48,000
+So the frame size is 4 bytes. So 32 bytes will be divided into 8 frames. Right.
+
+40
+00:05:48,000 --> 00:05:55,840
+So we have 4 pages in the logical address space and 8 frames in the physical memory.
+
+41
+00:05:55,840 --> 00:06:05,440
+So to load this process into the physical memory, then we need to find four free page frames.
+
+42
+00:06:05,440 --> 00:06:13,940
+So in this specific example, so page 0 is loaded into frame 5.
+
+43
+00:06:13,940 --> 00:06:24,640
+So ABCD is here, so page 0 is loaded into frame 5, and page 1 is loaded into frame 6.
+
+44
+00:06:24,640 --> 00:06:34,640
+Page 2 is loaded into frame 1, and page 3 is loaded into frame 2.
+
+45
+00:06:34,640 --> 00:06:41,640
+So which page is loaded into which frame? So this information is maintained in the page table.
+
+46
+00:06:41,640 --> 00:06:46,640
+So in page table, there is one entry per page.
+
+47
+00:06:46,640 --> 00:06:51,640
+So in this case, the logical address space, we have four pages.
+
+48
+00:06:51,640 --> 00:06:58,640
+So for the page table, there are four entries. There is one entry per page.
+
+49
+00:06:58,640 --> 00:07:04,640
+So the entry contains the frame number. That's where the corresponding page is in the physical memory.
+
+50
+00:07:04,640 --> 00:07:13,640
+So for instance, entry 0 contains 5. So that means page 0 is in frame 5.
+
+51
+00:07:13,640 --> 00:07:20,640
+So this is a specific example to illustrate how the paging scheme works.
+
+52
+00:07:20,640 --> 00:07:30,640
+So as you can see here, if you're using paging, this logical address space or process is no longer contiguous in the physical memory.
+
+53
+00:07:30,640 --> 00:07:44,640
+So page 0 is in frame 5. Page 1 is in frame 6. And so on and so forth.
+
+54
+00:07:44,640 --> 00:07:49,640
+It's not in the contiguous physical memory space.
+
+55
+00:07:49,640 --> 00:07:53,640
+So this is a specific example.
+
+56
+00:07:53,640 --> 00:08:01,640
+So to use the paging scheme, then what's the logic address format?
+
+57
+00:08:01,640 --> 00:08:03,640
+Now let's try to figure out.
+
+58
+00:08:03,640 --> 00:08:10,640
+So to identify a specific location in the logic address space.
+
+59
+00:08:10,640 --> 00:08:15,640
+So for example, this particular location here, right?
+
+60
+00:08:15,640 --> 00:08:20,640
+Then we need to know this position, right?
+
+61
+00:08:20,640 --> 00:08:23,640
+So it's in which page?
+
+62
+00:08:23,640 --> 00:08:27,640
+And what's the off-site of this position within that page?
+
+63
+00:08:27,640 --> 00:08:28,640
+Right?
+
+64
+00:08:28,640 --> 00:08:32,640
+So for instance, so for this particular location,
+
+65
+00:08:32,640 --> 00:08:39,640
+So this is a byte and recall, but logic address space is always byte addressable.
+
+66
+00:08:39,640 --> 00:08:43,640
+We address this byte by byte. It's sequence of bytes, right?
+
+67
+00:08:43,640 --> 00:08:49,640
+So for this particular byte, so this byte is in page 1, right?
+
+68
+00:08:49,640 --> 00:08:55,640
+And the off-site. So this is 0, 1, 0, 1, 2.
+
+69
+00:08:55,640 --> 00:09:04,640
+So this is the position of this, the third byte within this page.
+
+70
+00:09:04,640 --> 00:09:05,640
+Right?
+
+71
+00:09:05,640 --> 00:09:07,640
+So this first, second, and the third, right?
+
+72
+00:09:07,640 --> 00:09:10,640
+And the third byte within that page.
+
+73
+00:09:10,640 --> 00:09:17,640
+So to identify a specific position, then we need this two information, right?
+
+74
+00:09:17,640 --> 00:09:19,640
+So the page number and offset.
+
+75
+00:09:19,640 --> 00:09:22,640
+So that's basically implies, right?
+
+76
+00:09:22,640 --> 00:09:25,640
+So for the logic address, right?
+
+77
+00:09:25,640 --> 00:09:30,640
+So logic address, then we contain two components, the page number and offset.
+
+78
+00:09:30,640 --> 00:09:31,640
+Right?
+
+79
+00:09:31,640 --> 00:09:37,640
+So given a logic address, number of bits, right?
+
+80
+00:09:37,640 --> 00:09:41,640
+Then we divide this number of bits into two portions.
+
+81
+00:09:41,640 --> 00:09:43,640
+Right? So page number and offset.
+
+82
+00:09:43,640 --> 00:09:49,640
+So the page number, then we use the page number to index into the page table
+
+83
+00:09:49,640 --> 00:09:52,640
+to locate the record entry, right?
+
+84
+00:09:52,640 --> 00:09:56,640
+And from entry, we obtain the frame number.
+
+85
+00:09:56,640 --> 00:10:01,640
+Then we use the frame number together with offset, combined with the offset
+
+86
+00:10:01,640 --> 00:10:03,640
+to form the physical address.
+
+87
+00:10:03,640 --> 00:10:04,640
+Right?
+
+88
+00:10:04,640 --> 00:10:10,640
+Now let's look at, so given a specific logic address in terms of a number of bits, right?
+
+89
+00:10:10,640 --> 00:10:19,640
+How can we divide this logic address into two portions, page number and offset?
+
+90
+00:10:19,640 --> 00:10:20,640
+Right?
+
+91
+00:10:20,640 --> 00:10:24,640
+Now, again, so let's look at the example, right?
+
+92
+00:10:24,640 --> 00:10:29,640
+So, I'll assume that, so the page size is 2.0 of nbis, right?
+
+93
+00:10:29,640 --> 00:10:31,640
+So in page size 2.0 of nbis, right?
+
+94
+00:10:31,640 --> 00:10:38,640
+And the logic address space is 2.0 of nbis.
+
+95
+00:10:38,640 --> 00:10:47,640
+So if you have logic address space, 2.0 of nbis, so that basically means we need nbis for the logic address.
+
+96
+00:10:47,640 --> 00:10:48,640
+Right?
+
+97
+00:10:48,640 --> 00:10:52,640
+We need to recall, again, I mentioned this multiple times, right?
+
+98
+00:10:52,640 --> 00:10:55,640
+So for logic address, it's byte address symbol.
+
+99
+00:10:55,640 --> 00:10:59,640
+So we address this byte by byte.
+
+100
+00:10:59,640 --> 00:11:12,640
+In order to address every single byte in this logic address space, which is 2.0 of nbis, then we need at least, we need nbis.
+
+101
+00:11:12,640 --> 00:11:13,640
+Right?
+
+102
+00:11:13,640 --> 00:11:19,640
+Okay, so just for you to understand this better, right?
+
+103
+00:11:19,640 --> 00:11:24,640
+So for instance, if logic address space is 4 bytes, right?
+
+104
+00:11:24,640 --> 00:11:27,640
+So 4 bytes is 2.0 of nbis, right?
+
+105
+00:11:27,640 --> 00:11:33,640
+Then in this case, we need 2 bits to address every single byte in this logic address space.
+
+106
+00:11:33,640 --> 00:11:34,640
+2 bits.
+
+107
+00:11:34,640 --> 00:11:39,640
+So 0.0, 0.1, 1, 0, and 1.
+
+108
+00:11:39,640 --> 00:11:40,640
+Right?
+
+109
+00:11:40,640 --> 00:11:44,640
+So we have 4 bytes, that's 2.0 of nbis, right?
+
+110
+00:11:44,640 --> 00:11:46,640
+So if you have 2.0 of nbis, then we need 2 bits.
+
+111
+00:11:46,640 --> 00:11:47,640
+Alright?
+
+112
+00:11:47,640 --> 00:11:48,640
+So in this case, the logic address has nbis, right?
+
+113
+00:11:48,640 --> 00:12:09,640
+So given this nbis, then we need to determine how many bits will be used for the page number, how many bits will be used to identify the offside.
+
+114
+00:12:09,640 --> 00:12:10,640
+Right?
+
+115
+00:12:10,640 --> 00:12:27,640
+So given this logic address, alright, so logic address space 2.0 of nbis, and page size 2.0 of nbis, how many pages this logic address can be divided into?
+
+116
+00:12:27,640 --> 00:12:28,640
+Right?
+
+117
+00:12:28,640 --> 00:12:40,640
+So 2.0 of nbis, divided by 2.0 of nbis, then we have 2.0 of nbis, then we have 2.0 of nbis, so this address space can be divided into this number of pages.
+
+118
+00:12:40,640 --> 00:12:41,640
+Right?
+
+119
+00:12:41,640 --> 00:12:46,640
+So in total, we have a imbis for the logic address space.
+
+120
+00:12:46,640 --> 00:12:53,640
+For the logic address space, for the logic address space, we have imbis, as I just explained, right?
+
+121
+00:12:53,640 --> 00:13:05,640
+For this imbis, right, so given that the page size is 2.0 of n, so that means the lower nbis, so that will be used to identify the offside.
+
+122
+00:13:05,640 --> 00:13:06,640
+Right?
+
+123
+00:13:06,640 --> 00:13:11,640
+So the lower nbis will be used to identify the offside.
+
+124
+00:13:11,640 --> 00:13:17,640
+Then the higher i minus nbis, then will be used to identify the page number.
+
+125
+00:13:17,640 --> 00:13:28,640
+So where this particular byte is in which page, and what's the offset of this particular byte within that page.
+
+126
+00:13:28,640 --> 00:13:29,640
+Alright?
+
+127
+00:13:29,640 --> 00:13:43,640
+So that's given our logical address, how can we identify, so this address is belong to which page, and what's offside of this address within that page.
+
+128
+00:13:43,640 --> 00:13:44,640
+Right?
+
+129
+00:13:44,640 --> 00:13:56,640
+So once we are able to identify the page number and offside for this address, then we can use the page table to do the address translation.
+
+130
+00:13:56,640 --> 00:14:01,640
+So we use the page number to index into the page table.
+
+131
+00:14:01,640 --> 00:14:06,640
+So recall, for the page table, we have one entry per page.
+
+132
+00:14:06,640 --> 00:14:07,640
+Right?
+
+133
+00:14:07,640 --> 00:14:12,640
+So the page table entry is arranged according to the page number order.
+
+134
+00:14:12,640 --> 00:14:13,640
+Right?
+
+135
+00:14:13,640 --> 00:14:19,640
+So given this page number, then we can identify the entry in the page table.
+
+136
+00:14:19,640 --> 00:14:22,640
+From the entry, they obtain the frame number.
+
+137
+00:14:22,640 --> 00:14:26,640
+That's indicating this page is mapped into this frame.
+
+138
+00:14:26,640 --> 00:14:27,640
+Right?
+
+139
+00:14:27,640 --> 00:14:32,640
+Then we use the frame number together with the offside to form the physical address.
+
+140
+00:14:32,640 --> 00:14:40,640
+So that's how the logical address is translated to the physical address, if you're using the paging scheme.
+
+141
+00:14:40,640 --> 00:14:45,640
+Now again, look at an example here.
+
+142
+00:14:45,640 --> 00:14:46,640
+Right?
+
+143
+00:14:46,640 --> 00:14:48,640
+So in this example, right?
+
+144
+00:14:48,640 --> 00:14:52,640
+So assuming we have this logical address, right?
+
+145
+00:14:52,640 --> 00:14:55,640
+So that's 0, 1, 1, 1.
+
+146
+00:14:55,640 --> 00:14:56,640
+Right?
+
+147
+00:14:56,640 --> 00:15:00,640
+So recall, so in this example, right?
+
+148
+00:15:00,640 --> 00:15:07,640
+So the space, the size of logical address space is 2 power of 4.
+
+149
+00:15:07,640 --> 00:15:09,640
+16 bytes, 2 power of 4.
+
+150
+00:15:09,640 --> 00:15:13,640
+So that means we need the 4 bits for the logical address.
+
+151
+00:15:13,640 --> 00:15:14,640
+Right?
+
+152
+00:15:14,640 --> 00:15:16,640
+In order to identify every single byte.
+
+153
+00:15:16,640 --> 00:15:17,640
+Right?
+
+154
+00:15:17,640 --> 00:15:19,640
+So there's 16 bytes, right?
+
+155
+00:15:19,640 --> 00:15:20,640
+2 power of 4.
+
+156
+00:15:20,640 --> 00:15:22,640
+Then we need the 4 bits.
+
+157
+00:15:22,640 --> 00:15:27,640
+And the page size is 4 bytes.
+
+158
+00:15:27,640 --> 00:15:29,640
+The page size is 4 bytes.
+
+159
+00:15:29,640 --> 00:15:30,640
+Right?
+
+160
+00:15:30,640 --> 00:15:31,640
+So page size is 4 bytes.
+
+161
+00:15:31,640 --> 00:15:35,640
+So that 2 power of 2, so that means the lower 2 bits.
+
+162
+00:15:35,640 --> 00:15:36,640
+Right?
+
+163
+00:15:36,640 --> 00:15:41,640
+So we'll be used to identify the offside, right?
+
+164
+00:15:41,640 --> 00:15:43,640
+Of this byte.
+
+165
+00:15:43,640 --> 00:15:44,640
+Right?
+
+166
+00:15:44,640 --> 00:15:47,640
+So this byte was the offside of this byte within the page.
+
+167
+00:15:47,640 --> 00:15:48,640
+Right?
+
+168
+00:15:48,640 --> 00:15:49,640
+The lower 2 bits.
+
+169
+00:15:49,640 --> 00:15:50,640
+The higher 2 bits.
+
+170
+00:15:50,640 --> 00:15:55,640
+In this case, that will be used to identify the page number.
+
+171
+00:15:55,640 --> 00:15:56,640
+Right?
+
+172
+00:15:56,640 --> 00:15:58,640
+So 0, 1, 1, 1.
+
+173
+00:15:58,640 --> 00:16:07,640
+So that means, so this particular byte is in page 1 and offside is 3.
+
+174
+00:16:07,640 --> 00:16:08,640
+Right?
+
+175
+00:16:08,640 --> 00:16:10,640
+So which one are we looking at?
+
+176
+00:16:10,640 --> 00:16:14,640
+So, okay, so I use pen.
+
+177
+00:16:14,640 --> 00:16:15,640
+Okay?
+
+178
+00:16:15,640 --> 00:16:20,640
+So page 1 and offside 3.
+
+179
+00:16:20,640 --> 00:16:25,640
+So that basically means this one here.
+
+180
+00:16:25,640 --> 00:16:26,640
+Right?
+
+181
+00:16:26,640 --> 00:16:27,640
+Okay?
+
+182
+00:16:27,640 --> 00:16:30,640
+So offside starting from 0.
+
+183
+00:16:30,640 --> 00:16:32,640
+So 0, 1, 2, 3.
+
+184
+00:16:32,640 --> 00:16:33,640
+Right?
+
+185
+00:16:33,640 --> 00:16:36,640
+So that's the last byte within page 1.
+
+186
+00:16:36,640 --> 00:16:37,640
+Right?
+
+187
+00:16:37,640 --> 00:16:42,640
+So this is the logical address.
+
+188
+00:16:42,640 --> 00:16:43,640
+Right?
+
+189
+00:16:43,640 --> 00:16:52,640
+So that's the address we try to access in this logical address space of the process.
+
+190
+00:16:52,640 --> 00:16:53,640
+Right?
+
+191
+00:16:53,640 --> 00:16:59,640
+But this particular page is mapped to a frame in the physical memory.
+
+192
+00:16:59,640 --> 00:17:00,640
+Right?
+
+193
+00:17:00,640 --> 00:17:05,640
+So this page is mapped into this frame.
+
+194
+00:17:05,640 --> 00:17:06,640
+Frame 6.
+
+195
+00:17:06,640 --> 00:17:10,640
+And this particular byte is here in the physical memory.
+
+196
+00:17:10,640 --> 00:17:11,640
+Right?
+
+197
+00:17:11,640 --> 00:17:14,640
+So again, so use pen.
+
+198
+00:17:14,640 --> 00:17:18,640
+So this particular byte is here in the physical memory.
+
+199
+00:17:18,640 --> 00:17:19,640
+Right?
+
+200
+00:17:19,640 --> 00:17:27,640
+So to access this position, then we need to use this address here.
+
+201
+00:17:27,640 --> 00:17:28,640
+Right?
+
+202
+00:17:28,640 --> 00:17:34,640
+So the other two access this, then this is the physical address.
+
+203
+00:17:34,640 --> 00:17:35,640
+Need to be used.
+
+204
+00:17:35,640 --> 00:17:36,640
+Right?
+
+205
+00:17:36,640 --> 00:17:37,640
+To access this.
+
+206
+00:17:37,640 --> 00:17:38,640
+So this physical address.
+
+207
+00:17:38,640 --> 00:17:40,640
+So what is the physical address here?
+
+208
+00:17:40,640 --> 00:17:45,640
+So this is the last byte of frame 6.
+
+209
+00:17:45,640 --> 00:17:46,640
+Right?
+
+210
+00:17:46,640 --> 00:17:47,640
+In numerical number.
+
+211
+00:17:47,640 --> 00:17:49,640
+So this is a 27.
+
+212
+00:17:49,640 --> 00:17:50,640
+Right?
+
+213
+00:17:50,640 --> 00:17:53,640
+To access this location, so we need to use this.
+
+214
+00:17:53,640 --> 00:17:54,640
+All right.
+
+215
+00:17:54,640 --> 00:17:59,640
+Now what we have here is the logical address.
+
+216
+00:17:59,640 --> 00:18:04,640
+The hardest logical address can be translated into this physical address.
+
+217
+00:18:04,640 --> 00:18:05,640
+Right?
+
+218
+00:18:05,640 --> 00:18:11,640
+In order to get the corresponding data or instruction in this position here.
+
+219
+00:18:11,640 --> 00:18:12,640
+Right?
+
+220
+00:18:12,640 --> 00:18:13,640
+The translation.
+
+221
+00:18:13,640 --> 00:18:14,640
+Right?
+
+222
+00:18:14,640 --> 00:18:18,640
+So as illustrated in the last slide.
+
+223
+00:18:18,640 --> 00:18:19,640
+Right?
+
+224
+00:18:19,640 --> 00:18:21,640
+This is done using this manner.
+
+225
+00:18:21,640 --> 00:18:22,640
+Right?
+
+226
+00:18:22,640 --> 00:18:29,640
+So given the page number, then we identify the corresponding entry in the page table.
+
+227
+00:18:29,640 --> 00:18:33,640
+From entry, we obtain the frame number.
+
+228
+00:18:33,640 --> 00:18:38,640
+Using frame number together with the offside to form the physical address.
+
+229
+00:18:38,640 --> 00:18:40,640
+Now continue.
+
+230
+00:18:40,640 --> 00:18:41,640
+Right?
+
+231
+00:18:41,640 --> 00:18:42,640
+So look at this example.
+
+232
+00:18:42,640 --> 00:18:43,640
+Right?
+
+233
+00:18:43,640 --> 00:18:46,640
+Continue to look at this example.
+
+234
+00:18:46,640 --> 00:18:47,640
+Right?
+
+235
+00:18:47,640 --> 00:18:50,640
+So we already know for this logical address.
+
+236
+00:18:50,640 --> 00:18:54,640
+It's in page 1 with offside 3.
+
+237
+00:18:54,640 --> 00:18:56,640
+So page 1.
+
+238
+00:18:56,640 --> 00:18:58,640
+So we use this page 1.
+
+239
+00:18:58,640 --> 00:19:01,640
+Page 1.
+
+240
+00:19:01,640 --> 00:19:02,640
+Right?
+
+241
+00:19:02,640 --> 00:19:08,640
+To index into the page table to locate entry.
+
+242
+00:19:08,640 --> 00:19:10,640
+We locate this entry.
+
+243
+00:19:10,640 --> 00:19:11,640
+Right?
+
+244
+00:19:11,640 --> 00:19:12,640
+So this entry for page 1.
+
+245
+00:19:12,640 --> 00:19:13,640
+Right?
+
+246
+00:19:13,640 --> 00:19:16,640
+From this entry here, we obtain the frame number.
+
+247
+00:19:16,640 --> 00:19:20,640
+The frame number together with the offside.
+
+248
+00:19:20,640 --> 00:19:22,640
+The frame number together with offside.
+
+249
+00:19:22,640 --> 00:19:25,640
+To form the physical address.
+
+250
+00:19:25,640 --> 00:19:26,640
+Right?
+
+251
+00:19:26,640 --> 00:19:29,640
+So now we have the physical address.
+
+252
+00:19:29,640 --> 00:19:31,640
+So 1 1 0 1 1.
+
+253
+00:19:31,640 --> 00:19:32,640
+So this is a binary.
+
+254
+00:19:32,640 --> 00:19:33,640
+Right?
+
+255
+00:19:33,640 --> 00:19:35,640
+Numerical number.
+
+256
+00:19:35,640 --> 00:19:36,640
+Right?
+
+257
+00:19:36,640 --> 00:19:40,640
+So for this 1 1 0 1 1.
+
+258
+00:19:40,640 --> 00:19:41,640
+Right?
+
+259
+00:19:41,640 --> 00:19:43,640
+So this is a thread.
+
+260
+00:19:43,640 --> 00:19:44,640
+Right?
+
+261
+00:19:44,640 --> 00:19:45,640
+So it's exactly 27.
+
+262
+00:19:45,640 --> 00:19:46,640
+Right?
+
+263
+00:19:46,640 --> 00:19:54,640
+So that's basically how the logic address is translated into the physical address.
+
+264
+00:19:54,640 --> 00:19:56,640
+If you're using paging.
+
+265
+00:19:56,640 --> 00:19:59,640
+Now, you may ask.
+
+266
+00:19:59,640 --> 00:20:00,640
+Right?
+
+267
+00:20:00,640 --> 00:20:05,640
+So how the OS will know where the page table is?
+
+268
+00:20:05,640 --> 00:20:06,640
+Right?
+
+269
+00:20:06,640 --> 00:20:10,640
+So you can see here, to do this address translation, it's rely on the page table.
+
+270
+00:20:10,640 --> 00:20:11,640
+So where is the page table?
+
+271
+00:20:11,640 --> 00:20:12,640
+Right?
+
+272
+00:20:12,640 --> 00:20:13,640
+So the page table itself.
+
+273
+00:20:13,640 --> 00:20:14,640
+Right?
+
+274
+00:20:14,640 --> 00:20:16,640
+So the page table itself.
+
+275
+00:20:16,640 --> 00:20:17,640
+Right?
+
+276
+00:20:17,640 --> 00:20:21,640
+It's also stored in the physical memory.
+
+277
+00:20:21,640 --> 00:20:22,640
+Right?
+
+278
+00:20:22,640 --> 00:20:32,640
+Then the OS will use these two resistors to locate where the page table of the current running
+
+279
+00:20:32,640 --> 00:20:35,640
+process is in the memory.
+
+280
+00:20:35,640 --> 00:20:36,640
+Right?
+
+281
+00:20:36,640 --> 00:20:40,640
+So these two resistors are the page table base register.
+
+282
+00:20:40,640 --> 00:20:47,640
+So that's passed to the starting location of the page table in the physical memory.
+
+283
+00:20:47,640 --> 00:20:51,640
+The other one is the page table length register.
+
+284
+00:20:51,640 --> 00:20:56,640
+So that's basically indicating the size of the page table.
+
+285
+00:20:56,640 --> 00:21:03,640
+As I mentioned, right, so these two resistors are for the current running process.
+
+286
+00:21:03,640 --> 00:21:04,640
+Process in the running state.
+
+287
+00:21:04,640 --> 00:21:05,640
+Right?
+
+288
+00:21:05,640 --> 00:21:10,640
+So recall the concept of a contact switch.
+
+289
+00:21:10,640 --> 00:21:11,640
+Right?
+
+290
+00:21:11,640 --> 00:21:17,640
+So when the process is changing from running state, right, to other state, for example,
+
+291
+00:21:17,640 --> 00:21:25,640
+to the ready state or to the waiting state, then the value of these two resistors then
+
+292
+00:21:25,640 --> 00:21:29,640
+will be saved into the process control block.
+
+293
+00:21:29,640 --> 00:21:30,640
+Right?
+
+294
+00:21:30,640 --> 00:21:32,640
+So it will be saved into the present control block.
+
+295
+00:21:32,640 --> 00:21:33,640
+Right?
+
+296
+00:21:33,640 --> 00:21:40,640
+So when the process is changing from the ready state to the running state, then the value in the process control block
+
+297
+00:21:40,640 --> 00:21:44,640
+that will be used to initialize these two resistors.
+
+298
+00:21:44,640 --> 00:21:45,640
+Right?
+
+299
+00:21:45,640 --> 00:21:51,640
+So that's basically how the OS will know where to locate page table for the process.
+
+300
+00:21:51,640 --> 00:21:52,640
+Right?
+
+301
+00:21:52,640 --> 00:22:02,640
+So when the process is not running, this information will be kept in the process control block PCB.
+
+302
+00:22:02,640 --> 00:22:03,640
+Right?
+
+303
+00:22:03,640 --> 00:22:05,640
+Now what's the problem?
+
+304
+00:22:05,640 --> 00:22:06,640
+Right?
+
+305
+00:22:06,640 --> 00:22:08,640
+So the problem you look at here.
+
+306
+00:22:08,640 --> 00:22:14,640
+To do this address translation, so we need to rely on the page table.
+
+307
+00:22:14,640 --> 00:22:18,640
+And the page table itself is stored in the physical memory.
+
+308
+00:22:18,640 --> 00:22:24,640
+So that basically means effectively the memory access time will be doubled.
+
+309
+00:22:24,640 --> 00:22:25,640
+Right?
+
+310
+00:22:25,640 --> 00:22:33,640
+So given a logical address, so we need to access the page table once which is in the memory to do the address translation.
+
+311
+00:22:33,640 --> 00:22:42,640
+So once we have the physical address, then we assess the physical memory to get corresponding data or instruction.
+
+312
+00:22:42,640 --> 00:22:48,640
+So to assess physical memory effectively the memory access time will be doubled.
+
+313
+00:22:48,640 --> 00:22:49,640
+Right?
+
+314
+00:22:49,640 --> 00:22:58,640
+So if I'm assuming that the memory access time is mu, then the effective memory access time will become 2 mu, will be doubled.
+
+315
+00:22:58,640 --> 00:23:00,640
+So that's the problem.
+
+316
+00:23:00,640 --> 00:23:01,640
+Right?
+
+317
+00:23:01,640 --> 00:23:05,640
+Now in order to improve on this, right?
+
+318
+00:23:05,640 --> 00:23:09,640
+So make this memory access time more efficient, right?
+
+319
+00:23:09,640 --> 00:23:17,640
+Then we can use this associative register or translation look asset buffer.
+
+320
+00:23:17,640 --> 00:23:18,640
+Right?
+
+321
+00:23:18,640 --> 00:23:21,640
+So in order to improve the performance, right?
+
+322
+00:23:21,640 --> 00:23:24,640
+Now let's look at how this can be used.
+
+323
+00:23:24,640 --> 00:23:27,640
+So this translation look asset buffer.
+
+324
+00:23:27,640 --> 00:23:28,640
+Right?
+
+325
+00:23:28,640 --> 00:23:33,640
+So this is the, you can consider this is a fast memory.
+
+326
+00:23:33,640 --> 00:23:34,640
+Right?
+
+327
+00:23:34,640 --> 00:23:42,640
+So we use this one to cache the frequent access entry in the page table.
+
+328
+00:23:42,640 --> 00:23:43,640
+All right?
+
+329
+00:23:43,640 --> 00:23:44,640
+So if an entry is frequently accessed in the page table, okay, so I use the pen.
+
+330
+00:23:44,640 --> 00:23:45,640
+If entry is frequently accessed in the page table, then that entry will be a fast memory.
+
+331
+00:23:45,640 --> 00:23:46,640
+Right?
+
+332
+00:23:46,640 --> 00:23:48,640
+So if an entry is frequently accessed in the page table, okay, so I use the pen.
+
+333
+00:23:48,640 --> 00:23:49,640
+Alright?
+
+334
+00:24:16,580 --> 00:24:23,580
+So the page number and the frame number.
+
+335
+00:24:23,580 --> 00:24:34,580
+Right, so if the entry is frequently accessed, then we'll be cached in the TLB.
+
+336
+00:24:34,580 --> 00:24:38,580
+Okay, go back, go back.
+
+337
+00:24:38,580 --> 00:24:41,580
+Okay, cached in the TLB.
+
+338
+00:24:41,580 --> 00:24:49,580
+Alright, so given the logic address, so we already explained, so given this logic address,
+
+339
+00:24:49,580 --> 00:24:53,580
+so how to divide this into page number and offset, right?
+
+340
+00:24:53,580 --> 00:25:03,580
+So given the page number of this logic address, then first of all, we will search a matching entry in the TLB.
+
+341
+00:25:03,580 --> 00:25:11,580
+So recall TLB, adding cache, the most frequently assessed page table entries.
+
+342
+00:25:11,580 --> 00:25:21,580
+If able to locate an entry in the TLB, then we use the frame number together with offset to form the physical address.
+
+343
+00:25:21,580 --> 00:25:30,580
+Right, because the TLB does not contain all the page table entries, so there will be a miss.
+
+344
+00:25:30,580 --> 00:25:36,580
+So if you're not able to locate a matching entry in the TLB, so that means the TLB miss,
+
+345
+00:25:36,580 --> 00:25:42,580
+then we still have to do the page table lookup, right, locate entry in the page table.
+
+346
+00:25:42,580 --> 00:25:49,580
+And from here we obtain the frame number together with offset to form the physical address.
+
+347
+00:25:49,580 --> 00:25:51,580
+So that's how the TLB can be used.
+
+348
+00:25:51,580 --> 00:26:02,580
+So typically, the access time of TLB is much, much faster than the access time of the physical memory.
+
+349
+00:26:02,580 --> 00:26:11,580
+Now let's try to figure out, right, so if you're using TLB, then what will be the effective memory access time?
+
+350
+00:26:11,580 --> 00:26:21,580
+So assuming that, so the TLB access time is epsilon, and the memory access time is mu, right?
+
+351
+00:26:21,580 --> 00:26:26,580
+So epsilon is much, much less than mu, right?
+
+352
+00:26:26,580 --> 00:26:32,580
+So assuming that the heat ratio, right?
+
+353
+00:26:32,580 --> 00:26:41,580
+So the percentage of time, right, we're able to locate entry in the TLB is alpha, right?
+
+354
+00:26:41,580 --> 00:26:47,580
+Now for the effective memory access time, effective memory access time, right?
+
+355
+00:26:47,580 --> 00:26:55,580
+So if there's a heat, so that means we're able to locate entry in the TLB, then,
+
+356
+00:26:55,580 --> 00:27:02,580
+we will use the TLB to do the address translation, right?
+
+357
+00:27:02,580 --> 00:27:05,580
+So we obtain the frame number from the TLB.
+
+358
+00:27:05,580 --> 00:27:11,580
+So that's, that's, sorry, this is epsilon, right?
+
+359
+00:27:11,580 --> 00:27:17,580
+Okay.
+
+360
+00:27:22,580 --> 00:27:25,580
+So we use the TLB, right?
+
+361
+00:27:25,580 --> 00:27:29,580
+To do the address translation, locate entry in TLB, obtain the frame number.
+
+362
+00:27:29,580 --> 00:27:32,580
+So that's epsilon, right?
+
+363
+00:27:32,580 --> 00:27:37,580
+So once we obtain the physical address,
+
+364
+00:27:39,760 --> 00:27:42,680
+then we can assess the physical memory, that's mu.
+
+365
+00:27:42,680 --> 00:27:47,320
+All right, so if CELUN is to access TRB
+
+366
+00:27:47,320 --> 00:27:51,580
+to do the logical to physical address translation,
+
+367
+00:27:51,580 --> 00:27:54,000
+and mu, so after we got a physical address,
+
+368
+00:27:54,000 --> 00:27:55,740
+then we access the physical memory
+
+369
+00:27:55,740 --> 00:28:00,740
+to get the required data or instruction.
+
+370
+00:28:00,740 --> 00:28:05,020
+So that's in terms when there's a hit.
+
+371
+00:28:05,020 --> 00:28:09,580
+In terms of it's a miss, so that's one minus alpha, right?
+
+372
+00:28:09,580 --> 00:28:10,900
+It's a miss.
+
+373
+00:28:10,900 --> 00:28:13,600
+So for miss, we already access the TRB,
+
+374
+00:28:13,600 --> 00:28:15,600
+so that's EELIN, right?
+
+375
+00:28:15,600 --> 00:28:20,400
+But it's a miss, we're not able to locate entry in the TRB.
+
+376
+00:28:20,400 --> 00:28:24,160
+Then we still have to use the page table, right?
+
+377
+00:28:24,160 --> 00:28:26,060
+So that's one mu, right?
+
+378
+00:28:26,060 --> 00:28:28,760
+We still have to use the page table
+
+379
+00:28:28,760 --> 00:28:33,040
+to do the address translation, that's one mu.
+
+380
+00:28:33,040 --> 00:28:36,720
+Right, so recall page table is in the memory.
+
+381
+00:28:36,720 --> 00:28:39,440
+Then once we obtain the physical address,
+
+382
+00:28:39,440 --> 00:28:42,880
+then we use this to access physical memory,
+
+383
+00:28:42,880 --> 00:28:46,420
+to obtain the required data or instruction, right?
+
+384
+00:28:46,420 --> 00:28:51,700
+So if there's a miss, then there's one EELIN and two mu.
+
+385
+00:28:51,700 --> 00:28:56,180
+Right, so this is how we obtain the effective memory access time,
+
+386
+00:28:56,180 --> 00:28:59,740
+right, for this TRB scheme, right?
+
+387
+00:28:59,740 --> 00:29:03,700
+So that's basically showing the slides here, right?
+
+388
+00:29:03,700 --> 00:29:07,700
+So this is exactly what we went through, right?
+
+389
+00:29:07,700 --> 00:29:11,980
+So this term then can be simplified into this.
+
+390
+00:29:11,980 --> 00:29:15,500
+So that's for using TRB, right?
+
+391
+00:29:15,500 --> 00:29:23,860
+So recall, so up to now, so what we assume.
+
+392
+00:29:23,860 --> 00:29:31,500
+So we assume, so this is one page table per process, right?
+
+393
+00:29:31,500 --> 00:29:35,780
+So every process there, there's a corresponding page table, right?
+
+394
+00:29:35,780 --> 00:29:39,460
+And in the page table, there's one entry per page.
+
+395
+00:29:39,460 --> 00:29:47,340
+And the page table entry is arranged according to the page number order, right?
+
+396
+00:29:47,340 --> 00:29:52,420
+And the page table itself is also in the physical memory, right?
+
+397
+00:29:52,420 --> 00:29:56,540
+So this also occupies memory space, right?
+
+398
+00:29:56,540 --> 00:29:58,540
+So you can imagine.
+
+399
+00:29:58,540 --> 00:30:03,620
+So if the logical address space of a process is very large,
+
+400
+00:30:03,620 --> 00:30:07,180
+so that means there are a lot of pages in the logical address space.
+
+401
+00:30:07,180 --> 00:30:12,100
+So that will translate into the lot of entries in the page table, right?
+
+402
+00:30:12,100 --> 00:30:16,460
+So the page table itself can also get really big
+
+403
+00:30:16,460 --> 00:30:20,660
+and occupy a lot of memory space, right?
+
+404
+00:30:20,660 --> 00:30:28,420
+One solution to overcome this issue is, so instead of one page table per process,
+
+405
+00:30:28,420 --> 00:30:33,860
+then what we can do is we can have one inverted page table
+
+406
+00:30:33,860 --> 00:30:39,820
+for the entire system and share among all the processes, right?
+
+407
+00:30:39,820 --> 00:30:46,580
+So that's the inverted page table scheme, right?
+
+408
+00:30:46,580 --> 00:30:54,340
+So in inverted page table scheme, so in this case, so what we assume is,
+
+409
+00:30:54,340 --> 00:30:58,340
+there's only one inverted page table, right?
+
+410
+00:30:58,340 --> 00:31:08,620
+So in this inverted page table, there's one entry for every frame in the physical memory, right?
+
+411
+00:31:08,620 --> 00:31:16,380
+So the size of this inverted page table is proportional to the size of your physical memory, right?
+
+412
+00:31:16,380 --> 00:31:18,860
+So if there are 10 frames in the physical memory,
+
+413
+00:31:18,860 --> 00:31:23,820
+then there will be 10 entries in the inverted page table, right?
+
+414
+00:31:23,820 --> 00:31:32,380
+And the entries in this inverted page table is arranged according to the frame number order, right?
+
+415
+00:31:32,380 --> 00:31:40,140
+Then what entry contains? The entry will contains a process ID and the frame number.
+
+416
+00:31:40,140 --> 00:31:46,140
+Because the inverted page table is shared among all the processes, right?
+
+417
+00:31:46,140 --> 00:31:52,140
+Then if the entry only contains a page number, then we do know that page is belong to which process, right?
+
+418
+00:31:52,140 --> 00:32:02,140
+So in order to identify this page belongs to which process, so the entry in the inverted page table will contain the PID,
+
+419
+00:32:02,140 --> 00:32:06,700
+process ID together with the page number, right?
+
+420
+00:32:07,580 --> 00:32:09,900
+So that's why this is called inverted page table.
+
+421
+00:32:09,900 --> 00:32:13,900
+It's kind of an inversion of the page table, right?
+
+422
+00:32:13,900 --> 00:32:20,140
+Page table, so there's one entry per page and arranged according to page number and order,
+
+423
+00:32:20,140 --> 00:32:23,580
+So the entry will contain the page number, right?
+
+424
+00:32:23,580 --> 00:32:28,220
+So the inverted page table is kind of an inversion of the page table, right?
+
+425
+00:32:28,220 --> 00:32:35,740
+So there's one entry per frame and the entry arranged according to frame number order,
+
+426
+00:32:36,380 --> 00:32:42,540
+then the entry will contain the page number together with the process ID, right?
+
+427
+00:32:42,540 --> 00:32:48,540
+Now given a logical address, right?
+
+428
+00:32:48,540 --> 00:32:50,940
+So that's the page number and offset.
+
+429
+00:32:50,940 --> 00:32:59,500
+Then what do we do is we also prefix this page number and offset with the process ID, right?
+
+430
+00:33:00,540 --> 00:33:07,900
+Now let's look at how the logical address can be translated into the physical address if
+
+431
+00:33:07,900 --> 00:33:10,840
+if you're using this inverted page table screen.
+
+432
+00:33:10,840 --> 00:33:12,040
+Right.
+
+433
+00:33:12,040 --> 00:33:14,440
+So give a logical address,
+
+434
+00:33:14,440 --> 00:33:16,280
+as I just mentioned,
+
+435
+00:33:16,280 --> 00:33:20,860
+then we prefix this page number
+
+436
+00:33:20,860 --> 00:33:24,240
+and off-site with the personality PID.
+
+437
+00:33:24,240 --> 00:33:25,180
+Right.
+
+438
+00:33:25,180 --> 00:33:26,440
+Then what do we do?
+
+439
+00:33:26,440 --> 00:33:31,240
+So we use the PID and the page number
+
+440
+00:33:31,240 --> 00:33:34,740
+to search this inverted page table
+
+441
+00:33:34,740 --> 00:33:37,520
+to find a matching entry.
+
+442
+00:33:37,520 --> 00:33:38,360
+Right.
+
+443
+00:33:38,360 --> 00:33:42,180
+So if a matching entry is found in the entry I,
+
+444
+00:33:42,180 --> 00:33:46,580
+so that's basically means this page of this process
+
+445
+00:33:46,580 --> 00:33:48,320
+is in frame I.
+
+446
+00:33:49,220 --> 00:33:50,060
+Right.
+
+447
+00:33:50,060 --> 00:33:50,900
+It's in frame I.
+
+448
+00:33:50,900 --> 00:33:55,020
+Then we use I together with the off-site
+
+449
+00:33:55,020 --> 00:33:57,840
+to form the physical address.
+
+450
+00:33:57,840 --> 00:34:01,800
+So that's how the address translation is carried out.
+
+451
+00:34:01,800 --> 00:34:02,640
+Right.
+
+452
+00:34:02,640 --> 00:34:03,640
+So in this case,
+
+453
+00:34:03,640 --> 00:34:05,980
+if you're using inverted page table.
+
+454
+00:34:05,980 --> 00:34:06,880
+Right.
+
+455
+00:34:06,880 --> 00:34:09,340
+So using inverted page table.
+
+456
+00:34:09,340 --> 00:34:10,960
+So in this case,
+
+457
+00:34:10,960 --> 00:34:14,360
+we don't need to maintain a page table for each process.
+
+458
+00:34:14,360 --> 00:34:15,200
+Right.
+
+459
+00:34:15,200 --> 00:34:18,600
+So I only have one single inverted page table
+
+460
+00:34:18,600 --> 00:34:21,020
+that will share among all the processes.
+
+461
+00:34:21,020 --> 00:34:24,440
+So that will translate into save other memory space.
+
+462
+00:34:24,440 --> 00:34:25,280
+Right.
+
+463
+00:34:25,280 --> 00:34:26,280
+For keeping track,
+
+464
+00:34:26,280 --> 00:34:27,120
+this,
+
+465
+00:34:27,120 --> 00:34:29,780
+the page table information.
+
+466
+00:34:29,780 --> 00:34:30,640
+Right.
+
+467
+00:34:30,640 --> 00:34:32,480
+But the downside,
+
+468
+00:34:32,480 --> 00:34:34,180
+the drag back is this.
+
+469
+00:34:34,180 --> 00:34:34,720
+Right.
+
+470
+00:34:34,720 --> 00:34:40,120
+So this is the logic address to physical address translation.
+
+471
+00:34:40,120 --> 00:34:44,920
+The time required for doing this translation will become longer.
+
+472
+00:34:44,920 --> 00:34:45,100
+Right.
+
+473
+00:34:45,100 --> 00:34:47,560
+So why is that so?
+
+474
+00:34:47,560 --> 00:34:48,800
+So that's because,
+
+475
+00:34:48,800 --> 00:34:52,580
+so given logical address,
+
+476
+00:34:52,580 --> 00:35:03,980
+then we have to use this process ID and the page number part to search the entire inverted page table to locate entry.
+
+477
+00:35:03,980 --> 00:35:04,620
+Right.
+
+478
+00:35:04,620 --> 00:35:05,940
+So required is a searching.
+
+479
+00:35:05,940 --> 00:35:06,540
+Right.
+
+480
+00:35:06,540 --> 00:35:08,220
+So unlike the,
+
+481
+00:35:08,220 --> 00:35:09,120
+the pitching scheme.
+
+482
+00:35:09,120 --> 00:35:09,620
+Right.
+
+483
+00:35:09,620 --> 00:35:11,460
+So recall for pitching scheme.
+
+484
+00:35:11,460 --> 00:35:13,460
+So given logical address,
+
+485
+00:35:13,460 --> 00:35:16,460
+so that's the page number offside.
+
+486
+00:35:16,460 --> 00:35:24,460
+Then we can use the page number to directly index into the page table to locate entry.
+
+487
+00:35:24,460 --> 00:35:25,460
+Right.
+
+488
+00:35:25,460 --> 00:35:30,460
+Because the page table is arranged according to the page number order.
+
+489
+00:35:30,460 --> 00:35:31,460
+But in this case,
+
+490
+00:35:31,460 --> 00:35:36,460
+for inverted page table is arranged according to the frame number order.
+
+491
+00:35:36,460 --> 00:35:41,460
+So given this PID and the page number,
+
+492
+00:35:41,460 --> 00:35:42,460
+then in this case,
+
+493
+00:35:42,460 --> 00:35:44,460
+to locate a matching entry,
+
+494
+00:35:44,460 --> 00:35:48,460
+then we have to search the entire page table.
+
+495
+00:35:48,460 --> 00:35:49,460
+Right.
+
+496
+00:35:49,460 --> 00:35:51,460
+The entire inverted page table.
+
+497
+00:35:51,460 --> 00:35:54,460
+So this logical address to physical address translation,
+
+498
+00:35:54,460 --> 00:35:57,460
+then will be increased.
+
+499
+00:35:57,460 --> 00:35:58,460
+Right.
+
+500
+00:35:58,460 --> 00:36:01,460
+So we stop here for this lecture and the next lecture,
+
+501
+00:36:01,460 --> 00:36:04,460
+then we will look at the segmentation.
+
+502
+00:36:04,460 --> 00:36:07,460
+So we will look at the segmentation scheme.
+

@@ -1,0 +1,152 @@
+1
+00:00:00,000 --> 00:00:13,200
+This video recording explains the particular anomaly that may happen when we use page replacement
+
+2
+00:00:13,200 --> 00:00:22,800
+algorithm. So it's called belated anomaly. As we have already explained, the objective of using
+
+3
+00:00:22,800 --> 00:00:30,880
+page replacement algorithm is to minimize the number of page force. And we illustrate how a page
+
+4
+00:00:30,880 --> 00:00:35,920
+replacement algorithm works by using this example page reference string.
+
+5
+00:00:38,320 --> 00:00:46,720
+So intuitively, when we assign more frames to a process, then the number of page force should be
+
+6
+00:00:46,720 --> 00:00:54,560
+reduced when using a particular page replacement algorithm. However, this is not always the case.
+
+7
+00:00:55,840 --> 00:01:02,800
+When we assign more frames to a process, it doesn't result in a few number of page force,
+
+8
+00:01:02,800 --> 00:01:06,000
+then we see that the belated anomaly happens.
+
+9
+00:01:06,000 --> 00:01:19,600
+We introduced quite a number of page replacement algorithms. So first in, first out, so that will
+
+10
+00:01:19,600 --> 00:01:27,200
+identify the oldest page as the victim page to replace. So optimal algorithm, so that will identify
+
+11
+00:01:27,200 --> 00:01:35,040
+the page that will now be referenced for the longest period of time as a victim page to replace.
+
+12
+00:01:36,000 --> 00:01:45,840
+LRU, the least recently used algorithm. So that will replace a page that hasn't been referenced,
+
+13
+00:01:45,840 --> 00:01:54,960
+used for the longest period of time to replace. And second chance algorithm, so this is LRU approximation
+
+14
+00:01:54,960 --> 00:02:03,760
+is a variation of the 5-4 algorithm. And it is a variation of 5-4. And a positive mate, the behavior of LRU.
+
+15
+00:02:05,920 --> 00:02:11,520
+Now let's look at the 5-4 algorithm first. See if I strongly suffer from belated anomaly.
+
+16
+00:02:12,160 --> 00:02:20,000
+The slide here shows we assign three frames to the process. For this given reference string,
+
+17
+00:02:20,000 --> 00:02:24,080
+that is generated 9-page force when using 5-4 algorithm.
+
+18
+00:02:26,400 --> 00:02:30,320
+Now when we increase the number of frames assigned to the process,
+
+19
+00:02:30,880 --> 00:02:37,680
+for the same reference string, that is generated 10-page force. So what's that mean? So that means
+
+20
+00:02:37,680 --> 00:02:44,880
+this algorithm suffers from belated anomaly. So when we increase the number of frames assigned to the
+
+21
+00:02:44,880 --> 00:02:54,560
+process. When using this 5-4 algorithm for page replacement, it doesn't result in a few number of page force.
+
+22
+00:02:57,520 --> 00:03:06,480
+So in general, if we know a page replacement algorithm that satisfies this inclusion property,
+
+23
+00:03:06,480 --> 00:03:14,480
+then we can guarantee that algorithm doesn't suffer from belated anomaly. So what is the inclusion property?
+
+24
+00:03:15,440 --> 00:03:24,320
+So inclusion property says, the pages that's currently in the memory when using n frames
+
+25
+00:03:24,320 --> 00:03:40,560
+n plus 1 frames. So that's the inclusion property. So if this property is true, then basically it guarantees
+
+26
+00:03:41,200 --> 00:03:49,440
+if there's no page 4 when we're using n frames, then there will be no page 4 when we're using n plus 1 frames.
+
+27
+00:03:49,440 --> 00:03:58,720
+So for optimal algorithm, then we can prove the algorithm satisfies this inclusion property.
+
+28
+00:03:59,520 --> 00:04:08,080
+So recall how the algorithm works, right? So the algorithm replaces a page that will not be referenced
+
+29
+00:04:08,080 --> 00:04:17,840
+for the longest period of time. So the algorithm basically guarantees the current n pages in the memory
+
+30
+00:04:17,840 --> 00:04:26,480
+when using n frames. So the next n frames are the next n pages that will be referenced in the immediate future.
+
+31
+00:04:27,360 --> 00:04:36,480
+So if we increase the number of frames to n plus 1, then these n pages will be still in the memory.
+
+32
+00:04:36,480 --> 00:04:41,120
+So inclusion property is true, is satisfied.
+
+33
+00:04:41,120 --> 00:04:56,160
+So similar to the optimal algorithm, the arial algorithm doesn't suffer the belated anomaly either.
+
+34
+00:04:56,880 --> 00:05:02,480
+So we can prove this algorithm also satisfies the inclusion property.
+
+35
+00:05:02,480 --> 00:05:12,000
+So for this replacement algorithm, the set of pages in the memory will be the n most recently referenced pages.
+
+36
+00:05:12,800 --> 00:05:21,440
+If the number of frames is increased, then these n pages will be still the most recently referenced,
+
+37
+00:05:22,000 --> 00:05:27,440
+and so will be still in the memory. So the inclusion property is true,
+
+38
+00:05:27,440 --> 00:05:32,166
+and the organism doesn't suffer from belated anomaly.
+

@@ -1,0 +1,222 @@
+[00:00] Effective memory management is very important in multi-programming system. To improve CPU
+utilization, multiple processes need to be loaded into memory in order to make sure a reasonable
+supply of ready processes to consume available CPU time. So we begin this part of lecture by
+understanding how a process gets executed. Next, we look at different memory management approaches.
+So in general, there are two different types of memory management approaches. One type is called
+contiguous allocation. So where the contiguous memory space is allocated to a process. So under
+contiguous memory allocation, we have a fixed allocation and dynamic partitioning.
+
+[01:12] In contrast to the contiguous memory allocation, so for paging and segmentation, where non-
+contiguous memory space will be allocated to a process. So we'll explain all these concepts. So
+fixed partitioning, dynamic partitioning, paging and segmentation in details under this part of
+lecture. Now let's look at the storage hierarchy first. So the diagram here shows the storage
+hierarchy of a computer. So at the top of the hierarchy, so register, cache and the memory. So this
+commonly referred to as primary storage. Then below this, there are flash disks and traditional hard
+disks. So this commonly referred to as secondary storage.
+
+[02:15] And at bottom, there are remote secondary storage. You can look at here. So from top to bottom, the
+capacity will be increased, but the access time will be also increased. At the top hierarchy, the
+register and the cache. So these are managed by management by the CPU. So this is our CPU. So this
+is not managed by operating system. So the OS will manage the main memory. And OS will also manage
+the disk, the secondary storage. And for the topics that are going to be covered in the second half
+of the lecture. And for this part of the lecture, the memory organization. So it's looking at how
+the space can be allocated to a process on memory.
+
+[03:17] For the next part of the lecture. So that's the virtual memory support. So that we are looking at
+how to virtually extend the physical memory in order to run a larger process. So the virtual memory
+support will involve both the physical memory and the hard disk. And the file system. So the file
+system basically we are looking into how the space allocation can be done for the files, to store
+the files on the hard disk. Now let's look at the memory requirement for running a process. The
+diagram here basically virtually or logically shows what other space will be required in order to
+run a process.
+
+[04:11] So to run a process, we need a memory space, not just for the code, but also required memory space
+for both static data and dynamic data. So this diagram here basically shows we need a space
+allocation for the code. So that refers to the text section. And for the static data, right, so like
+a global parameters and constants and also the dynamic data. So that will be stored as in the heap
+section or the stack section. The heap. So that's basically the storage space, the memory space for
+the dynamically allocated variables. So for instance, when a new object instance is created. So
+that's object instance then will be stored in the heap area.
+
+[05:17] And the stack. The stack basically used for the parameters and the local variables in a function
+call. Right. When a function call is made, right, then the parameter function call, right, will be
+pushed into the stack. And the local variable will be created also using the stack space. Right. And
+perhaps you heard of the heap overflow or the stack overflow. So that's basically means if you're
+continuously creating dynamic variables like the object instance, but never delete the object
+instance. Then eventually the heap area will running out. Right. When the heap area running out,
+then your program will be stopped.
+
+[06:07] Right. And a core dump will be generated. The same also apply to the stack. Right. So when the stack
+area is running out, then the program will be also terminated. Right. One particular example, the
+stack area may be running out. For instance, when you have a re-recursive function calls, right,
+unlimited recursive function calls. And then eventually the stack area will be running out. Right.
+Then your program will be terminated and the core dump will be generated. Right. So when a process
+is executed, the process will generate the address references that refer to this area. So this is
+basically is also referred to a logical address space.
+
+[06:58] Right. So we refer this to a logical address space or a process image. Right. Now let's look at how
+this process image can be generated. Right. So this logical address space or a process image
+basically specifies the memory requirement for running a process. Right. The hardest process image
+can be generated. So this process image can be generated through the following stages. Right. So
+it's following processes. So compilation, linking and loading. Right. So your program may consist of
+a set of source code. Right. So one for the main program. Right. And the other is for the
+subroutines. Right. Procedures.
+
+[07:50] Right. Or functions. Right. Then the compiler basically will compile the source code to generate
+object modules. Right. So that's what compiler does. Right. The update compilation. Then the link.
+So the link will link all the object modules together with the library. Right. To resolve the cross
+references and regenerate a loadable module. Okay. This commonly, commonly referred to as a script
+code. Right. And finally, the loader. So the loader basically will create a process image. Right. As
+showing in this slide screen. So the process image. Right. Will create a process image. And allocate
+memory space for the process image.
+
+[08:46] And the load the process image into the memory. So that's what loaded us. Right. Now, let's look at.
+So how the program will be executed. Right. To executing instruction. The CPU will load the
+instruction. Right. And as good as this instruction. It may generate the address references. Right.
+Either for the data required. Or for the instruction, the next instruction to be executed. Right. So
+for instance, for this instruction here. Right. The X is the address reference. Right. Of the data
+that need to be loaded. Right. And this instruction here. John. Why? So why is the address reference
+of the next instruction to be executed?
+
+[09:45] Now the question is. Right. For these address references generated when executing instruction. Can
+these references be used to access the physical memory directly or not? Right. To understand. To
+answer this question. To understand. To answer this question. So we need to understand. Right. So
+this address binding. So when the address. When the code and the data are binded to the physical
+memory. Right. So this address binding. Right. Can be performed as at the compilation time. Load
+time. Or execution time. Right. So at the compilation time. So if we know at the compilation time.
+Which part of physical memory.
+
+[10:36] The code will be loaded into. Then the compiler. Will generate the code in absolute address format.
+Right. Then this. If we do this binding. So bind the code and the data. To the physical memory
+locations. If we do this binding at the load time. Then in this case. The compiler. Then we will
+generate the relocatable code. Right. So I will explain this concept later on. In the next slide.
+Right. The compiler will generate the relocatable code. And the loader. Then we will translate the
+address reference. Right. From the relocatable code format. To the absolute code format. Right. So
+the binding in this case.
+
+[11:30] Then will be done by the loader. So this binding of the code and the data. to the actual physical
+locations can be further delayed until the execution time. So that basically means when executing an
+instruction, the instruction will generally reference. So the reference will refer to the logical
+address space. Then this logical address then needs to be dynamically translated into the physical
+address during the execution time. Now let's further look at these concepts here. So compilation
+time binding, in this case, during the compilation time, we know this part of the memory space will
+be allocated to the process,
+
+[12:21] starting from the memory location 1024. Then in this case, then compiler will generate code in the
+absolute address format. right? Then the loader, then just load the code accordingly to the assigned
+memory space. Right? So this is the compilation time binding. Right? So once the code is loaded into
+the memory, the address format is already in the absolute address format. Right? So load 1824 means
+to access this particular location here. Right? And jump 1424. 1424. So this refers to this physical
+location here. So this is a compilation time binding. Right? So we bind the address reference to the
+physical locations
+
+[13:19] during the compilation time. Right? Now this can be further delayed until the load time. So for load
+time binding, then the compiler will generate the code in this relocatable address format. Right? So
+commonly, so this relocatable address format is also referred to the relitable address format.
+Right? So address here is relit to the beginning of the address space. Right? So for instance, this
+instruction here, load 800. So this position is referred to this place here. So this is a in relit
+to the beginning of the address space. Right? So the compiler generate code in the relocatable
+address format.
+
+[14:11] Right? And during the loading time, then the loader will assign this memory space to the process.
+starting from 1024. And then the loader then will do the address translation. Right? So add 1024,
+the starting physical address of the memory space assigned to the process to the relocatable
+address. Right? Then this 800 will become 1024 plus 800 becomes 1824. Right? And similarly here, the
+400 will become 400 plus 1024 become 1424. So once the code is loaded into the memory, right, then
+the address reference generated then will be the epsilon address. address. So again, for instance
+here, the load
+
+[15:11] 1824, so that's this 1824 refers to this physical memory location and the 1424 refers to this
+physical memory location. Right? So now better is compilation time binding or load time binding. So
+once the code is in the memory, the address format will be in the absolute address format. Now, this
+can be the address binding, so the bind, the code, and the data into the physical location can be
+further delayed, right, so into the execution time. So for execution time binding, right, the
+compiler will generate code in the relocatable format, right, so similar to the load time binding,
+right, but for the
+
+[15:59] loader, so the loader will determine, right, so this physical location, this part of physical memory
+is assigned to the process starting from 1024 and then load the code into the memory without doing
+any translation, right, so what's that mean? So that means the address format of the code in the
+memory is still in relocatable address format, right, now, when executing this instruction, then
+this address reference generated then need to be dynamically translated into the physical address in
+order to get the right data, right, so recall this load instruction here is intended to load the
+data in this location,
+
+[16:53] right, but address reference here is 800, right, so that's the relocatable address format, right, we
+need to translate this into the physical address, how this can be done, right, so recall, so this
+process image is loaded into the memory starting from 1024, so this is called the base address,
+right, and the length of the marine space, right, so occupy by the process, so this is called the
+limit, right, then address translation in this case is done using this approach, right, so there is
+a relocatable relocation register, right, so that's store the base address, so that's 1024 in our
+example, when execution
+
+[17:43] instruction, address reference is generated, right, so that's relocatable address reference, then
+this will add into the value stored in the relocation register to generate the physical address,
+right, so back to the diagram here, so when execution instruction, 800 will be generated, and this
+will be added into the base address to generate the physical address, which is 1824, so this is done
+dynamically during the execution of the process. Now, back to our original question, when executing
+an instruction, that instruction will generate an address reference, can we use that address
+reference to assign the
+
+[18:37] physical memory directly or not, right, so if address binding, right, is done during the compilation
+time or load time, the address format.code in the memory is in the absolute address format, then the
+answer to that question is yes, we can use the address to assign the physical memory directly,
+right, to get either data, required data, or instruction. However, this kind of binding is kind of
+static, right, so once we bind the process into this memory location, then we cannot move the
+process to other places in the memory. so if we want to move the process into other places in the
+memory, so that will
+
+[19:29] either require recopilation or reloading. So this is kind of restriction, right, so we will cover
+many memory management techniques later on, right, so for instance, memory compaction and the
+swapping and virtual memory support. All these techniques will require the process image to move
+around in the memory space, right, during the execution of the process. So we're not really
+interested in this kind of static binding, right, so compilation or load time binding, right, but
+what we're rather interested in is this, the execution time binding. So in execution time binding,
+so executing instruction will
+
+[20:16] generate address reference, so this address reference is in the relocatable address format or
+relative address format, right, so in this case, so this address that need to be dynamically
+translated to the physical address, right, by adding the base address to the relocatable address to
+generate actual physical address in order to get the required data or instruction, right, so this,
+in this case, then this address translation needs to be done dynamically, right, so in the
+following, we assume, right, as mentioned, we're not interested in the static binding, compilation
+time binding, and load time binding,
+
+[21:02] right, so in the following, we assume address binding is dynamic, right, it's execution time
+binding, right, now, when executing instruction, right, the CPU may generate address reference, so
+this reference generated by CPU when executing instruction is called logical address, right, and the
+address that will be used to access the physical memory is called physical address, so if address
+binding is static, right, so meaning either during the completion time or load time, then there's
+really there's no differentiation between the logical address, right, the address reference
+generated by the CPU
+
+[21:49] can be used directly to assign the physical memory, right, so there's no differentiation in this
+case, right, between the logical address and physical address, if address binding is static, right,
+compilation time or load time binding, however, if address binding is dynamic, execution time
+binding, then this logical address, the reference generated by CPU and the actual one that will be
+used to access physical memory, that will be different, right, so this logical address, that need to
+be dynamically translated into the physical address, right, then how this translation can be done,
+right, so that's
+
+[22:30] depending on the memory allocation approaches, right, so different memory allocation approaches may
+require to do this address translation in different ways, again, I will explain this when we cover
+the perspective, respective memory allocation approach. Now, for, as I mentioned, right, we are
+interested in the execution time binding, right, so in execution time binding in particular, right,
+logical address space is continuous address, right, starting from zero, and the logical address
+space is, well, actually, both logical address space and physical address space are byte
+addressable, but for logical
+
+[23:25] address space, it's always starting from zero, right, and the process executing and the process,
+right, will always generate address reference in the logical address space, right, so if you are
+executing interaction, will generate address reference, so address reference always refer to this
+logical address space, so logically, right, so we have a sequence of my starting from zero, right,
+and every process has this own logical address space, right, and to refer to this logical address
+space, we often use these terminologies, we refer this as a process image, or refer to the logical
+address space,
+
+[24:16] or refer this to as a logical memory, right, so it's very important to differentiate this logical
+address space and the physical address space, right, so every process is all logical address space,
+but we only have one physical memory that will be shared among multiple processes, right, so this
+basically is for this video recording of this part of lecture, right, so it's mainly focused on the
+introduction of the memory management and in particular address binding issues. In the next video
+recording, we will look at contiguous memory management techniques.

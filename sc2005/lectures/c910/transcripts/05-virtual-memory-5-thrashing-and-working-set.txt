@@ -1,0 +1,124 @@
+[00:00] This recording is about the thrashing. As shown in the figure here, and as what we have already
+explained, the page-fault handling involves a lot of overheads. Now let's consider what happens if a
+process does not have enough frames. And such as if it does not have the minimum number of frames,
+the process needs to support all pages required during the current stage of execution. So in this
+case, the process will quickly page fault. And at this time, at this point, it must replace some
+pages. If all pages are in active use, then this will cause either this process or some other
+processes to have page fault again.
+
+[00:57] So this kind of cumulative effect may cause high paging activities. And when this happens, then the
+system is in the thrashing stage. When thrashing happens, so the system then may spend most of its
+time paging in and paging out, and rather than executing instructions, so the CPU utilization will
+be very low. A common wisdom to improve CPU utilization is to increase the degree of
+multiprogramming. But under this kind of thrashing situation, if we load more processes into memory
+for execution, it will only make the memory contention even worse. So we will observe the CPU
+utilization will drop even further.
+
+[02:01] As shown in the figure here. So initially, when we increase the degree of multiprogramming, the CPU
+utilization will be increased because there's less chance that all processes are blocked. So the
+ready processes will become more, and the chance to keep CPU busy will be higher. However, until it
+reaches a point at which the average number of frames allocated to each process is inadequate. At
+this point, then the number of page faults rises dramatically and CPU utilization collapses. So this
+is when the thrashing happens. So when thrashing happens, basically we observe, so the CPU
+utilization is very low, and there are a lot of paging in, paging out activities.
+
+[03:03] So there are two approaches to deal with the thrashing situation. So by using working set model, or
+by using a page-fault frequency scheme. As we explained before, the diagram here shows the logical
+address space of a process. So logical address space of process is always contiguous. So if you're
+using paging, so this contiguous logical address space will be divided into pages. Then the pages of
+a process will be loaded into available frames in the physical memory. They are not necessarily to
+be contiguous. However, the content within a page, no matter is data or instruction, will remain
+contiguous in the physical memory.
+
+[04:05] The search space is also going to be loaded into the physical memory. To prevent the thrashing, we
+must provide a process with as many frames as the process required. But how do we know how many
+frames the process may need? So one strategy is to look at how many frames a process is actually
+using by using the locality of references. so there are two different types of locality so temporal
+locality and a spatial locality so temporal locality means locations referenced to just before are
+likely to be referenced again so for example except for branch and procedure function calls program
+execution is sequential
+
+[05:00] and therefore in most cases the last instruction to be fetched immediately follow the last
+instruction as quoted so another example so most of iterative constructs consist of relatively small
+number of instructions repeated many times so for the duration of iteration then computation is
+therefore confined running to a small continuous portion of a program and a spatial locality means
+code and data are usually clustered physically so for instance for a short period of time references
+two instructions tend to be localized to a few procedures and the code of a procedure is most likely
+placed contiguously in process address space in many programs much of the computation involves a
+
+[06:08] processing data structure such as arrays and a sequence of records and in many cases successful
+references to these data structures require access to closely located data items with this principle
+of locality and therefore the assumption that only a few pages of a process a process will be
+required over a short period of time is valid in addition it should be possible to make intelligent
+guess about which pages a process will be needed in the near future in order to avoid thrashing so
+these observations lead to the working set model details arelt here are two examples to illustrate
+the concept of locality so in this small code fragment so that generates a sum of elements in an
+array
+
+[07:14] they're both temporal and a spatial locality so for temporal locality so variable sum is referenced
+in each iteration during the loop execution and this instruction is also executed in every iteration
+during the loop execution for spatial locality so elements of this array are exercised in
+consecutive manner in the code and are placed contiguously in present address space and instructions
+in this code fragment are also placed contiguously in process logical address space so one way to
+confirm the principle of locality is to look at the logical memory access pattern of a process so
+this figure illustrates the concept of locality and how a process locality change over time
+
+[08:31] so at the time a the locality of this process is this side of pages and the locality will change to
+a different set of pages at time b but notice that there are some overlaps as some pages for example
+page 18 19 and 20 are part of both locality so this figure showing on this slide is a quite famous
+diagram that dramatically illustrates the principle of locality and you can find this diagram in
+almost all the os textbooks the right there is a direct relationship between the working set of
+process and its page-fault rate so typically the working set of process changes over time as
+references to data and code sections move from
+
+[09:38] one locality to another locality assuming there is a sufficient memory to store the working set of
+process the page-fault rate of a process will transit between peak and the values over time a peak
+in the page-fault rate occurs when we begin demand paging of a new locality however once the working
+set of this new locality is in the memory the page-fault rate will fall the page-fault rate rise
+towards the peak again and return to a low rate once the new working set is loaded into the memory
+the span of the time between the start of one peak to the start of the next peak representing the
+transition
+
+[10:53] from the previous working set to the current working set a working set is defined using a working
+set window so which is a fixed number of page references and for example if the working set window
+is 10 then we can define the determine the pages in the working set using the last 10 page
+references so at the time t1 if you look at the last 10 page references in the working set window
+then we know the working set at this time instance will consist of page 1 2 5 6 and 7 so the process
+may changing locality from time to time so at time t2 for instance so if you look at the last 10
+page references then the page reference within this time window will only consist of page 3 and 4
+
+[12:07] now let's look at how the working set can be used to control thrashing so let's define the working
+set size of a process pi by using the total number of pages referenced in the most recent working
+set window and d there is a summation of all the working set size of all the processes that's
+currently in the memory so d basically will specify the total memory demand for all the current
+processes in the memory right so that's basically the total number of active pages required by the
+processes at the current stage of execution and i am is the total number of frames so if d is larger
+than m meaning if the total demand to accommodate all the active pages of all the processes that's
+currently in the memory
+
+[13:19] is larger than the available frames in the physical memory then we know the system is currently
+thrashing when d is greater than m the system is thrashing then what os can do is to suspend some of
+the processes by suspending a process may mean to swap out the processes when we swap out a process
+then the frames occupied by the process will become available then can be reassigned to other
+processes the main problem of working set model is the optimal value of the working set window is
+unknown if the size of working set window is too small it will not encompass the entire locality the
+size of the working set window is too large then it will contain several localities
+
+[14:30] the second approach to deal with the thrashing is to use page frequency scheme so using this scheme
+the first establish an acceptable page-fault rate for a process lower bound page-fault rate and
+upper bound for the page-fault rate then os maintain the list of three available frames if actual
+page-fault rate of the process is lower than the lower bound the frame for the process the frame for
+the process will be removed and added to the free available frame list if actual page-fault rate is
+higher than the upper bound so that indicating the process requires more frames it will be removed
+and added to the position of the process for read it will be removed and added to the process
+
+[15:34] from the free available frame list if the free available frame list is empty then this case then os
+need to swap out a process to free up the frames occupied by that process In summary, thrashing
+happens when there are too many processes loaded into memory for execution. A system under thrashing
+will spend more time paging than execution, and the thrashing can be handled by using either working
+set model or page-fault frequency scheme. A locality represents a set of pages that are actively
+used together. As a process executes it moves from one locality to another. A working set is based
+on locality and is defined as a set of pages currently in use by a process.
+
+[16:43] No matter using working set model or page-fault frequency scheme, OS may need to swap out some
+processes in order to free up memory space occupied by this process.

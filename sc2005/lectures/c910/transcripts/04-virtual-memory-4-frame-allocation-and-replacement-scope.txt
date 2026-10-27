@@ -1,0 +1,127 @@
+[00:00] This is the last lecture on virtual memory support. So in this lecture, we look at the frame
+allocation and specific performance issue related to virtual memory support. So that's thrashing.
+Now recall, the physical memory is shared among multiple processes. And the OS must make the
+decision regarding how many frames assigned to each process. Or in other words, how many pages to
+bring in into physical memory for each process. If OS assign a small amount of frames to each
+process, so that's basically means given the fixed number of page frames available, given the fixed
+size of the physical memory, then
+
+[00:58] we're able to load more processes into the memory for execution. So this will increase the degree of
+multiprogramming. Now if they assign a very small number of frames for each process, so that's
+basically means that each process only has a small number of pages, resides inside the memory. Then
+the chance for the process to have a page fault will increase. So beyond certain size, the further
+allocation of pages will not have any effect on the page-fault rate. To determine how many frames to
+be allocated to each process. So the OS needs to use certain kind of policy. So in general, there
+are two different policies.
+
+[02:11] So one is called fixed allocation policy. And the other one is called variable allocation policy. So
+under fixed allocation policy, so that means the total number of frames assigned to each process is
+unchanged during the process execution. Then regarding how many frames to assign each process. So
+for instance, then this can be based on equal allocation. That means every process has an equal
+number of frames to be allocated. Or can be proportional allocation. So the number of frames
+assigned to the process can be proportional to the size of logical address space of the process. So
+because in this case, the number of frames assigned to the process is unchanged.
+
+[03:07] It's a fixed number. So during the entire execution process. So that basically implies whenever
+there is a page fault, then one of the pages that belong to the same process must be replaced.
+Right. So otherwise, I mean, if there's a page fault and the OS replaced page that belong to another
+process, then the total number of frames assigned to the process will now be a constant, will now be
+fixed. So that's fixed allocation. Then in contrast to fixed allocation, so under variable
+allocation implied by the name. So that basically means the number of frames assigned to a process
+can change over time during the process allocation.
+
+[03:55] So this kind of policy allows the number of page frames allocated to a process to be varied over the
+lifetime of the process. Another related issue is the scope of replacement. So when there's a page
+fault, can we replace page belong to the same process? Or can we replace a page belong to any other
+process? So in terms of replace page, replacement scope, then there are two different scopes. So one
+is called global replacement, and the other one is a local replacement. So global replacement, so
+that basically means, so when there's a page fault, then the process can replace a page that belongs
+to any of the process.
+
+[04:53] So the process selects a replacement frame from the set of all the frames, right, in the physical
+memory. So in this case, so that's basically implies that one process can take a frame from another
+process. So that's a global, right, so can replace a frame, right, so that belongs to any, replace a
+page that belongs to any of the process. Then for the local replacement, right, so that's basically
+means, so wherever it is a page 4, then the process can only replace a page that belongs to the the
+current process, right, so each process only selects from its own set of allocated frames, right,
+for the page replacement.
+
+[05:44] Now let's look at a specific example, right, for the illustrate, there's a scope of replacement,
+right. So it actually means that the three processes that's currently in the memory, right, so A, B,
+and C, right. And here shows the time last access for each of the pages, right, for each of the
+pages, right. So this is the original frame allocation for these three processes. Now let's assume
+process A generates a reference to page number 6, right, so generates a reference to page number 6.
+So this A6, right, so page number 6 of process A is currently not in the memory, right, and
+currently all the frames are occupied,
+
+[06:42] so memory is full, then we need to run a page replacement algorithm, right, to identify a victim
+page, right. So let's further assume, right, so we use least recently used page replacement
+algorithm, right, to find a victim page, right. So recall what we covered during the last lecture.
+So the least recently used algorithm algorithm, we found a page that hasn't been used for the
+longest period of time, right. So that basically means the page that with the earliest time last
+access will be the LRU page, right, will be the victim page to be replaced. So if you're using local
+replacement, so that basically means, so we only choose one of these pages that's currently in the
+memory, belong to the same process, right, to replace.
+
+[07:43] Then in this case, among these pages, belong to process A, that's currently in the memory, this page
+here, right, so page number 5 of process A has the earliest last access time. Among those pages
+belong to process A in the memory. So this will be identified as victim page and replace. So page
+out, page 5 of process A, and page in, page 6 of process A. So this is a local replacement, right,
+so we replace a page that belongs to the same process. Then for the global, right, then in this
+case, we can replace a page that belongs to any of the process, right. We're still using LRU, then
+in this case, globally, right, so this page, so this page 3 of process B, so has the earliest time
+last access, right.
+
+[08:44] So this may be identified as a victim page. Then page out, page 3 of process B, and page in, page 6
+of process A. So you can see here, if you're using global, so that means, so the number of pages in
+this case for process A will be increased. The number of pages of process B, then will be reduced,
+right. So the number of page, the number of frames, right, the number of page, or in other words,
+the number of pages of a process inside the memory, no longer a constant. All right, so replace a
+page, right, so when there's page 4, then there's a likelihood, right, so this process may replace a
+page that belongs to another process.
+
+[09:34] Right, so that's basically means, in this case, the performance of process may also depending on the
+performance of other processes, right. So that's the effect of the global replacement, right. So the
+number of pages, right, are sent to a process no longer a constant, right. The effect of the
+performance of one process, right, so may be affected by the performance of other processes. Then
+for local replacement, right, for local replacement, again, as you see, as you can see from the
+example here, right. So we only replace a page that belongs to the same process, then the number of
+pages assigned to the process, then in this case, you will remain a constant, right, a fixed number,
+right.
+
+[10:26] Now, what's the problem? The problem in this case, for instance, so this page of process B stream
+not really in active use during the current execution of process B. Even though this page is not
+really in active use by process B, then we cannot replace this page, right. We cannot make the frame
+occupied by this page to be available, to be used by other processes, right. So that's the problem
+here for the local replacement, right. So may hinder other processes by not making available this
+less use the page or frames, right. So let's look at this, right. So let's put together the frame
+allocation and replacement scope, right.
+
+[11:26] So in terms of frame allocation, so for fixed allocation and the variable allocation, and in terms
+of replacement scope, then local replacement and global replacement, right. So for fixed allocation,
+so that's basically implies, so we must use the local replacement, right. So global replacement in
+this case is not really possible, not applicable, right. So whenever there is a page fault, then the
+page that belongs to the same process will be replaced, right. In order that the number of frames
+assigned to the process is a constant during the execution of the process. Right. So for the global
+replacement, right.
+
+[12:19] For global replacement, again, as I just illustrate by the example, right. So that implies the
+number of frames assigned to the process may change over time. So that's basically implies, so the
+allocation of the frame must be variable allocation, right. And this variable allocation and the
+local replacement can also be used together. So how this can be used together, right. So basically,
+initially, when the process is started to execute, then OS will assign a fixed number of frames to
+the process. Right. Then whenever there is a page fault, then OS will replace a page that belongs to
+the same process.
+
+[13:13] But in the meantime, during the process execution, OS also monitor the performance of the process in
+terms of a page fault route, right. So if there are too many page fault, meaning the number of
+frames assigned to the process is too small. Then in this case, the OS will be assigned more frames
+to the process. So if over a long, very long period of time, the page-fault rate is relatively
+small. So that means, so there may be over allocation of frames to the process, then OS will take
+away some frames from the process. So periodically, the OS may increase the number of frames or
+reduce the number of frames assigned to the process.
+
+[14:10] Right. Depending on the page for performance of the process. So the number of frames assigned to the
+process in this case is variable, right. It's changed over time. But whenever it is page fault, the
+OS only replace the page that belongs to the same process. So that's how this variable allocation
+and the local replacement can be used jointly together.

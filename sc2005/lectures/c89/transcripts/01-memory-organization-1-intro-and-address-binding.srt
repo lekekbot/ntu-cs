@@ -1,0 +1,3996 @@
+1
+00:00:00,000 --> 00:00:14,140
+Effective memory management is very important in multi-programming system.
+
+2
+00:00:14,140 --> 00:00:25,000
+To improve CPU utilization, multiple processes need to be loaded into memory in order to make
+
+3
+00:00:25,000 --> 00:00:33,200
+sure a reasonable supply of ready processes to consume available CPU time.
+
+4
+00:00:33,200 --> 00:00:40,600
+So we begin this part of lecture by understanding how a process gets executed.
+
+5
+00:00:40,600 --> 00:00:46,280
+Next, we look at different memory management approaches.
+
+6
+00:00:46,280 --> 00:00:52,300
+So in general, there are two different types of memory management approaches.
+
+7
+00:00:52,300 --> 00:00:56,040
+One type is called contiguous allocation.
+
+8
+00:00:56,040 --> 00:01:01,500
+So where the contiguous memory space is allocated to a process.
+
+9
+00:01:01,500 --> 00:01:12,740
+So under contiguous memory allocation, we have a fixed allocation and dynamic partitioning.
+
+10
+00:01:12,740 --> 00:01:26,480
+In contrast to the contiguous memory allocation, so for paging and segmentation, where non-contiguous memory space will be allocated to a process.
+
+11
+00:01:26,480 --> 00:01:29,480
+So we'll explain all these concepts.
+
+12
+00:01:29,480 --> 00:01:41,220
+So fixed partitioning, dynamic partitioning, paging and segmentation in details under this part of lecture.
+
+13
+00:01:41,220 --> 00:01:45,220
+Now let's look at the storage hierarchy first.
+
+14
+00:01:45,220 --> 00:01:51,220
+So the diagram here shows the storage hierarchy of a computer.
+
+15
+00:01:51,220 --> 00:01:57,960
+So at the top of the hierarchy, so register, cache and the memory.
+
+16
+00:01:57,960 --> 00:02:03,680
+So this commonly referred to as primary storage.
+
+17
+00:02:03,680 --> 00:02:10,780
+Then below this, there are flash disks and traditional hard disks.
+
+18
+00:02:10,780 --> 00:02:15,780
+So this commonly referred to as secondary storage.
+
+19
+00:02:15,780 --> 00:02:20,520
+And at bottom, there are remote secondary storage.
+
+20
+00:02:20,520 --> 00:02:22,520
+You can look at here.
+
+21
+00:02:22,520 --> 00:02:32,520
+So from top to bottom, the capacity will be increased, but the access time will be also increased.
+
+22
+00:02:32,520 --> 00:02:37,240
+At the top hierarchy, the register and the cache.
+
+23
+00:02:37,240 --> 00:02:41,980
+So these are managed by management by the CPU.
+
+24
+00:02:41,980 --> 00:02:43,480
+So this is our CPU.
+
+25
+00:02:43,480 --> 00:02:46,980
+So this is not managed by operating system.
+
+26
+00:02:46,980 --> 00:02:51,980
+So the OIS will manage the main memory.
+
+27
+00:02:51,980 --> 00:02:57,980
+And OIS will also manage the disk, the secondary storage.
+
+28
+00:02:57,980 --> 00:03:04,980
+And for the topics that are going to be covered in the second half of the lecture.
+
+29
+00:03:04,980 --> 00:03:10,720
+And for this part of the lecture, the memory organization.
+
+30
+00:03:10,720 --> 00:03:17,840
+So it's looking at how the space can be allocated to a process on memory.
+
+31
+00:03:17,840 --> 00:03:20,880
+For the next part of the lecture.
+
+32
+00:03:20,880 --> 00:03:23,140
+So that's the virtual memory support.
+
+33
+00:03:23,140 --> 00:03:33,020
+So that we are looking at how to virtually extend the physical memory in order to run a larger process.
+
+34
+00:03:33,020 --> 00:03:42,020
+So the virtual memory support will involve both the physical memory and the hard disk.
+
+35
+00:03:42,020 --> 00:03:43,020
+And the file system.
+
+36
+00:03:43,020 --> 00:03:52,020
+So the file system basically we are looking into how the space allocation can be done for the files, to store the files on the hard disk.
+
+37
+00:03:52,020 --> 00:03:59,020
+Now let's look at the memory requirement for running a process.
+
+38
+00:03:59,020 --> 00:04:11,020
+The diagram here basically virtually or logically shows what other space will be required in order to run a process.
+
+39
+00:04:11,020 --> 00:04:26,020
+So to run a process, we need a memory space, not just for the code, but also required memory space for both static data and dynamic data.
+
+40
+00:04:26,020 --> 00:04:36,020
+So this diagram here basically shows we need a space allocation for the code.
+
+41
+00:04:36,020 --> 00:04:39,020
+So that refers to the text session.
+
+42
+00:04:39,020 --> 00:04:50,020
+And for the static data, right, so like a global parameters and constants and also the dynamic data.
+
+43
+00:04:50,020 --> 00:04:55,020
+So that will be stored as in the heap session or the stack session.
+
+44
+00:04:55,020 --> 00:04:57,020
+The heap.
+
+45
+00:04:57,020 --> 00:05:06,020
+So that's basically the storage space, the memory space for the dynamically allocated variables.
+
+46
+00:05:06,020 --> 00:05:12,020
+So for instance, when a new object instance is created.
+
+47
+00:05:12,020 --> 00:05:17,020
+So that's object instance then will be stored in the heap area.
+
+48
+00:05:17,020 --> 00:05:19,020
+And the stack.
+
+49
+00:05:19,020 --> 00:05:26,020
+The stack basically used for the parameters and the local variables in a function call.
+
+50
+00:05:26,020 --> 00:05:27,020
+Right.
+
+51
+00:05:27,020 --> 00:05:34,020
+When a function call is made, right, then the parameter function call, right, will be pushed into the stack.
+
+52
+00:05:34,020 --> 00:05:38,020
+And the local variable will be created also using the stack space.
+
+53
+00:05:38,020 --> 00:05:39,020
+Right.
+
+54
+00:05:39,020 --> 00:05:46,020
+And perhaps you heard of the heap overflow or the stack overflow.
+
+55
+00:05:46,020 --> 00:05:56,020
+So that's basically means if you're continuously creating dynamic variables like the object instance, but never delete the object instance.
+
+56
+00:05:56,020 --> 00:06:01,020
+Then eventually the heap area will running out.
+
+57
+00:06:01,020 --> 00:06:02,020
+Right.
+
+58
+00:06:02,020 --> 00:06:07,020
+When the heap area running out, then your program will be stopped.
+
+59
+00:06:07,020 --> 00:06:08,020
+Right.
+
+60
+00:06:08,020 --> 00:06:11,020
+And a call down will be generated.
+
+61
+00:06:11,020 --> 00:06:14,020
+The same also apply to the stack.
+
+62
+00:06:14,020 --> 00:06:15,020
+Right.
+
+63
+00:06:15,020 --> 00:06:20,020
+So when the stack area is running out, then the program will be also terminated.
+
+64
+00:06:20,020 --> 00:06:21,020
+Right.
+
+65
+00:06:22,020 --> 00:06:25,020
+One particular example, the stack area may be running out.
+
+66
+00:06:25,020 --> 00:06:35,020
+For instance, when you have a re-recursive function calls, right, unlimited recursive function calls.
+
+67
+00:06:35,020 --> 00:06:38,020
+And then eventually the stack area will be running out.
+
+68
+00:06:38,020 --> 00:06:39,020
+Right.
+
+69
+00:06:39,020 --> 00:06:43,020
+Then your program will be terminated and the call down will be generated.
+
+70
+00:06:43,020 --> 00:06:44,020
+Right.
+
+71
+00:06:44,020 --> 00:06:53,020
+So when a process is executed, the process will generate the address references that refer to this area.
+
+72
+00:06:53,020 --> 00:06:58,020
+So this is basically is also referred to a logical address space.
+
+73
+00:06:58,020 --> 00:06:59,020
+Right.
+
+74
+00:06:59,020 --> 00:07:06,020
+So we refer this to a logical address space or a process image.
+
+75
+00:07:06,020 --> 00:07:07,020
+Right.
+
+76
+00:07:07,020 --> 00:07:11,020
+Now let's look at how this process image can be generated.
+
+77
+00:07:11,020 --> 00:07:12,020
+Right.
+
+78
+00:07:12,020 --> 00:07:20,020
+So this logical address space or a process image basically specifies the memory requirement for running a process.
+
+79
+00:07:20,020 --> 00:07:21,020
+Right.
+
+80
+00:07:21,020 --> 00:07:24,020
+The hardest process image can be generated.
+
+81
+00:07:24,020 --> 00:07:30,020
+So this process image can be generated through the following stages.
+
+82
+00:07:30,020 --> 00:07:31,020
+Right.
+
+83
+00:07:31,020 --> 00:07:32,020
+So it's following processes.
+
+84
+00:07:32,020 --> 00:07:36,020
+So compilation, linking and loading.
+
+85
+00:07:36,020 --> 00:07:37,020
+Right.
+
+86
+00:07:37,020 --> 00:07:41,020
+So your program may consist of a set of source code.
+
+87
+00:07:41,020 --> 00:07:42,020
+Right.
+
+88
+00:07:42,020 --> 00:07:44,020
+So one for the main program.
+
+89
+00:07:44,020 --> 00:07:45,020
+Right.
+
+90
+00:07:45,020 --> 00:07:48,020
+And the other is for the subroutines.
+
+91
+00:07:48,020 --> 00:07:49,020
+Right.
+
+92
+00:07:49,020 --> 00:07:50,020
+Procedures.
+
+93
+00:07:50,020 --> 00:07:51,020
+Right.
+
+94
+00:07:51,020 --> 00:07:52,020
+Or functions.
+
+95
+00:07:52,020 --> 00:07:53,020
+Right.
+
+96
+00:07:53,020 --> 00:08:01,020
+Then the compiler basically will compile the source code to generate object modules.
+
+97
+00:08:01,020 --> 00:08:02,020
+Right.
+
+98
+00:08:02,020 --> 00:08:03,020
+So that's what compiler does.
+
+99
+00:08:03,020 --> 00:08:04,020
+Right.
+
+100
+00:08:04,020 --> 00:08:05,020
+The update compilation.
+
+101
+00:08:05,020 --> 00:08:06,020
+Then the link.
+
+102
+00:08:06,020 --> 00:08:13,020
+So the link will link all the object modules together with the library.
+
+103
+00:08:13,020 --> 00:08:14,020
+Right.
+
+104
+00:08:14,020 --> 00:08:21,020
+To resolve the cross references and regenerate a loadable module.
+
+105
+00:08:21,020 --> 00:08:22,020
+Okay.
+
+106
+00:08:22,020 --> 00:08:25,020
+This commonly, commonly referred to as a script code.
+
+107
+00:08:25,020 --> 00:08:26,020
+Right.
+
+108
+00:08:26,020 --> 00:08:27,020
+And finally, the loader.
+
+109
+00:08:27,020 --> 00:08:32,020
+So the loader basically will create a preset image.
+
+110
+00:08:32,020 --> 00:08:33,020
+Right.
+
+111
+00:08:33,020 --> 00:08:36,020
+As showing in this slide screen.
+
+112
+00:08:36,020 --> 00:08:37,020
+So the preset image.
+
+113
+00:08:37,020 --> 00:08:38,020
+Right.
+
+114
+00:08:38,020 --> 00:08:40,020
+Will create a preset image.
+
+115
+00:08:40,020 --> 00:08:46,020
+And allocate memory space for the preset image.
+
+116
+00:08:46,020 --> 00:08:50,020
+And the load the preset image into the memory.
+
+117
+00:08:50,020 --> 00:08:51,020
+So that's what loaded us.
+
+118
+00:08:51,020 --> 00:08:52,020
+Right.
+
+119
+00:08:52,020 --> 00:08:56,020
+Now, let's look at.
+
+120
+00:08:56,020 --> 00:08:59,020
+So how the program will be executed.
+
+121
+00:08:59,020 --> 00:09:00,020
+Right.
+
+122
+00:09:00,020 --> 00:09:03,020
+To executing instruction.
+
+123
+00:09:03,020 --> 00:09:09,020
+The CPU will load the instruction.
+
+124
+00:09:09,020 --> 00:09:10,020
+Right.
+
+125
+00:09:10,020 --> 00:09:13,020
+And as good as this instruction.
+
+126
+00:09:13,020 --> 00:09:17,020
+It may generate the address references.
+
+127
+00:09:17,020 --> 00:09:18,020
+Right.
+
+128
+00:09:18,020 --> 00:09:21,020
+Either for the data required.
+
+129
+00:09:21,020 --> 00:09:24,020
+Or for the instruction, the next instruction to be executed.
+
+130
+00:09:24,020 --> 00:09:25,020
+Right.
+
+131
+00:09:25,020 --> 00:09:28,020
+So for instance, for this instruction here.
+
+132
+00:09:28,020 --> 00:09:29,020
+Right.
+
+133
+00:09:30,020 --> 00:09:32,020
+The X is the address reference.
+
+134
+00:09:32,020 --> 00:09:33,020
+Right.
+
+135
+00:09:33,020 --> 00:09:35,020
+Of the data that need to be loaded.
+
+136
+00:09:35,020 --> 00:09:36,020
+Right.
+
+137
+00:09:36,020 --> 00:09:38,020
+And this instruction here.
+
+138
+00:09:38,020 --> 00:09:39,020
+John.
+
+139
+00:09:39,020 --> 00:09:40,020
+Why?
+
+140
+00:09:40,020 --> 00:09:45,020
+So why is the address reference of the next instruction to be executed?
+
+141
+00:09:45,020 --> 00:09:47,020
+Now the question is.
+
+142
+00:09:47,020 --> 00:09:48,020
+Right.
+
+143
+00:09:48,020 --> 00:09:52,020
+For these address references generated when executing instruction.
+
+144
+00:09:52,020 --> 00:09:58,020
+Can these references be used to access the physical memory directly or not?
+
+145
+00:09:59,020 --> 00:10:00,020
+Right.
+
+146
+00:10:00,020 --> 00:10:01,020
+To understand.
+
+147
+00:10:01,020 --> 00:10:02,020
+To answer this question.
+
+148
+00:10:02,020 --> 00:10:03,020
+To understand.
+
+149
+00:10:03,020 --> 00:10:04,020
+To answer this question.
+
+150
+00:10:04,020 --> 00:10:05,020
+So we need to understand.
+
+151
+00:10:05,020 --> 00:10:06,020
+Right.
+
+152
+00:10:06,020 --> 00:10:08,020
+So this address binding.
+
+153
+00:10:08,020 --> 00:10:11,020
+So when the address.
+
+154
+00:10:11,020 --> 00:10:18,020
+When the code and the data are binded to the physical memory.
+
+155
+00:10:18,020 --> 00:10:19,020
+Right.
+
+156
+00:10:19,020 --> 00:10:20,020
+So this address binding.
+
+157
+00:10:20,020 --> 00:10:21,020
+Right.
+
+158
+00:10:21,020 --> 00:10:25,020
+Can be performed as at the compilation time.
+
+159
+00:10:25,020 --> 00:10:26,020
+Load time.
+
+160
+00:10:26,020 --> 00:10:27,020
+Or execution time.
+
+161
+00:10:27,020 --> 00:10:28,020
+Right.
+
+162
+00:10:28,020 --> 00:10:29,020
+So at the compilation time.
+
+163
+00:10:29,020 --> 00:10:33,020
+So if we know at the completion time.
+
+164
+00:10:33,020 --> 00:10:36,020
+Which part of physical memory.
+
+165
+00:10:36,020 --> 00:10:38,020
+The code will be loaded into.
+
+166
+00:10:38,020 --> 00:10:39,020
+Then the compiler.
+
+167
+00:10:39,020 --> 00:10:44,020
+Will generate the code in absolute address format.
+
+168
+00:10:44,020 --> 00:10:45,020
+Right.
+
+169
+00:10:45,020 --> 00:10:46,020
+Then this.
+
+170
+00:10:46,020 --> 00:10:47,020
+If we do this binding.
+
+171
+00:10:47,020 --> 00:10:50,020
+So bind the code and the data.
+
+172
+00:10:50,020 --> 00:10:53,020
+To the physical memory locations.
+
+173
+00:10:53,020 --> 00:10:56,020
+If we do this binding at the load time.
+
+174
+00:10:56,020 --> 00:10:57,020
+Then in this case.
+
+175
+00:10:57,020 --> 00:10:58,020
+The compiler.
+
+176
+00:10:58,020 --> 00:11:00,020
+Then we will generate the relocatable code.
+
+177
+00:11:00,020 --> 00:11:01,020
+Right.
+
+178
+00:11:01,020 --> 00:11:02,020
+So I will explain this concept later on.
+
+179
+00:11:02,020 --> 00:11:03,020
+In the next slide.
+
+180
+00:11:03,020 --> 00:11:04,020
+Right.
+
+181
+00:11:04,020 --> 00:11:05,020
+The compiler will generate the relocatable code.
+
+182
+00:11:05,020 --> 00:11:06,020
+And the loader.
+
+183
+00:11:06,020 --> 00:11:07,020
+Then we will translate the address reference.
+
+184
+00:11:07,020 --> 00:11:08,020
+Right.
+
+185
+00:11:08,020 --> 00:11:24,020
+From the relocatable code format.
+
+186
+00:11:24,020 --> 00:11:27,020
+To the absolute code format.
+
+187
+00:11:27,020 --> 00:11:28,020
+Right.
+
+188
+00:11:28,020 --> 00:11:30,020
+So the binding in this case.
+
+189
+00:11:30,020 --> 00:11:32,020
+Then will be done by the loader.
+
+190
+00:11:32,020 --> 00:11:36,020
+So this binding of the code and the data.
+
+191
+00:11:36,020 --> 00:11:38,400
+to the actual physical locations
+
+192
+00:11:38,400 --> 00:11:41,100
+can be further delayed
+
+193
+00:11:41,100 --> 00:11:43,100
+until the execution time.
+
+194
+00:11:43,840 --> 00:11:46,200
+So that basically means
+
+195
+00:11:46,200 --> 00:11:48,840
+when executing an instruction,
+
+196
+00:11:49,440 --> 00:11:51,020
+the instruction will generally reference.
+
+197
+00:11:51,020 --> 00:11:53,580
+So the reference will refer to
+
+198
+00:11:53,580 --> 00:11:55,800
+the logic address space.
+
+199
+00:11:56,480 --> 00:11:58,140
+Then this logic address
+
+200
+00:11:58,140 --> 00:12:00,980
+then needs to be dynamically translated
+
+201
+00:12:00,980 --> 00:12:02,780
+into the physical address
+
+202
+00:12:02,780 --> 00:12:04,100
+during the execution time.
+
+203
+00:12:04,100 --> 00:12:06,740
+Now let's further look at
+
+204
+00:12:06,740 --> 00:12:08,420
+these concepts here.
+
+205
+00:12:09,280 --> 00:12:10,700
+So compilation time binding,
+
+206
+00:12:11,320 --> 00:12:12,000
+in this case,
+
+207
+00:12:12,580 --> 00:12:15,080
+during the compilation time,
+
+208
+00:12:15,420 --> 00:12:18,680
+we know this part of the memory space
+
+209
+00:12:18,680 --> 00:12:20,800
+will be allocated to the process,
+
+210
+00:12:21,080 --> 00:12:24,680
+starting from the memory location 1024.
+
+211
+00:12:25,640 --> 00:12:26,440
+Then in this case,
+
+212
+00:12:26,720 --> 00:12:29,020
+then compiler will generate code
+
+213
+00:12:29,020 --> 00:12:31,640
+in the absolute address format.
+
+214
+00:12:31,640 --> 00:12:32,540
+right?
+
+215
+00:12:32,900 --> 00:12:34,280
+Then the loader,
+
+216
+00:12:34,560 --> 00:12:35,920
+then just load the code
+
+217
+00:12:35,920 --> 00:12:39,520
+accordingly to the assigned memory space.
+
+218
+00:12:40,640 --> 00:12:40,820
+Right?
+
+219
+00:12:41,060 --> 00:12:44,160
+So this is the compilation time binding.
+
+220
+00:12:44,900 --> 00:12:45,100
+Right?
+
+221
+00:12:45,420 --> 00:12:47,340
+So once the code is loaded
+
+222
+00:12:47,340 --> 00:12:48,660
+into the memory,
+
+223
+00:12:49,200 --> 00:12:50,680
+the address format is already
+
+224
+00:12:50,680 --> 00:12:53,580
+in the absolute address format.
+
+225
+00:12:54,040 --> 00:12:54,220
+Right?
+
+226
+00:12:54,220 --> 00:12:58,260
+So load 1824 means to assess
+
+227
+00:12:58,260 --> 00:12:59,900
+this particular location here.
+
+228
+00:13:00,400 --> 00:13:00,600
+Right?
+
+229
+00:13:00,960 --> 00:13:03,440
+And jump 1424.
+
+230
+00:13:03,780 --> 00:13:05,780
+1424.
+
+231
+00:13:06,180 --> 00:13:07,820
+So this refers to
+
+232
+00:13:07,820 --> 00:13:09,700
+this physical location here.
+
+233
+00:13:10,860 --> 00:13:12,860
+So this is a compilation time binding.
+
+234
+00:13:12,860 --> 00:13:13,540
+Right?
+
+235
+00:13:13,680 --> 00:13:16,400
+So we bind the address reference
+
+236
+00:13:16,400 --> 00:13:19,400
+to the physical locations
+
+237
+00:13:19,400 --> 00:13:21,060
+during the compilation time.
+
+238
+00:13:21,060 --> 00:13:21,900
+Right?
+
+239
+00:13:21,900 --> 00:13:24,980
+Now this can be further delayed
+
+240
+00:13:24,980 --> 00:13:28,300
+until the load time.
+
+241
+00:13:29,120 --> 00:13:30,240
+So for load time binding,
+
+242
+00:13:30,720 --> 00:13:31,420
+then the compiler
+
+243
+00:13:31,420 --> 00:13:33,000
+will generate the code
+
+244
+00:13:33,000 --> 00:13:36,160
+in this relocatable address format.
+
+245
+00:13:36,760 --> 00:13:36,880
+Right?
+
+246
+00:13:37,040 --> 00:13:37,800
+So commonly,
+
+247
+00:13:38,480 --> 00:13:40,200
+so this relocatable address format
+
+248
+00:13:40,200 --> 00:13:41,900
+is also referred to
+
+249
+00:13:41,900 --> 00:13:44,320
+the relitable address format.
+
+250
+00:13:44,880 --> 00:13:45,060
+Right?
+
+251
+00:13:45,280 --> 00:13:46,280
+So address here
+
+252
+00:13:46,280 --> 00:13:48,360
+is relit to the beginning
+
+253
+00:13:48,360 --> 00:13:49,640
+of the address space.
+
+254
+00:13:49,960 --> 00:13:50,100
+Right?
+
+255
+00:13:50,100 --> 00:13:51,280
+So for instance,
+
+256
+00:13:51,700 --> 00:13:52,920
+this instruction here,
+
+257
+00:13:53,360 --> 00:13:54,680
+load 800.
+
+258
+00:13:55,280 --> 00:13:56,280
+So this position
+
+259
+00:13:56,280 --> 00:13:57,640
+is referred to
+
+260
+00:13:57,640 --> 00:13:58,480
+this place here.
+
+261
+00:13:59,100 --> 00:14:00,100
+So this is a
+
+262
+00:14:00,100 --> 00:14:01,340
+in relit to
+
+263
+00:14:01,340 --> 00:14:02,220
+the beginning
+
+264
+00:14:02,220 --> 00:14:04,280
+of the address space.
+
+265
+00:14:04,900 --> 00:14:05,040
+Right?
+
+266
+00:14:06,260 --> 00:14:08,020
+So the compiler
+
+267
+00:14:08,020 --> 00:14:08,840
+generate code
+
+268
+00:14:08,840 --> 00:14:10,660
+in the relocatable address format.
+
+269
+00:14:11,220 --> 00:14:11,540
+Right?
+
+270
+00:14:12,080 --> 00:14:13,940
+And during the loading time,
+
+271
+00:14:14,280 --> 00:14:15,120
+then the loader
+
+272
+00:14:15,120 --> 00:14:17,840
+will assign
+
+273
+00:14:17,840 --> 00:14:18,960
+this memory space
+
+274
+00:14:18,960 --> 00:14:19,860
+to the process.
+
+275
+00:14:19,860 --> 00:14:20,920
+starting from
+
+276
+00:14:20,920 --> 00:14:22,080
+1024.
+
+277
+00:14:22,680 --> 00:14:23,820
+And then the loader
+
+278
+00:14:23,820 --> 00:14:25,160
+then will do
+
+279
+00:14:25,160 --> 00:14:26,100
+the address translation.
+
+280
+00:14:26,740 --> 00:14:26,860
+Right?
+
+281
+00:14:27,260 --> 00:14:28,160
+So add
+
+282
+00:14:28,160 --> 00:14:29,280
+1024,
+
+283
+00:14:29,660 --> 00:14:31,740
+the starting physical address
+
+284
+00:14:31,740 --> 00:14:33,300
+of the memory space
+
+285
+00:14:33,300 --> 00:14:35,140
+assigned to the process
+
+286
+00:14:35,140 --> 00:14:36,080
+to
+
+287
+00:14:36,080 --> 00:14:38,300
+the relocatable address.
+
+288
+00:14:38,800 --> 00:14:38,920
+Right?
+
+289
+00:14:38,920 --> 00:14:40,280
+Then this 800
+
+290
+00:14:40,280 --> 00:14:41,660
+will become
+
+291
+00:14:41,660 --> 00:14:43,280
+1024
+
+292
+00:14:43,280 --> 00:14:44,240
+plus
+
+293
+00:14:44,240 --> 00:14:44,820
+800
+
+294
+00:14:44,820 --> 00:14:45,480
+becomes
+
+295
+00:14:45,480 --> 00:14:46,600
+1824.
+
+296
+00:14:46,600 --> 00:14:47,500
+Right?
+
+297
+00:14:47,880 --> 00:14:49,200
+And similarly here,
+
+298
+00:14:49,600 --> 00:14:50,200
+the 400
+
+299
+00:14:50,200 --> 00:14:51,160
+will become
+
+300
+00:14:51,160 --> 00:14:52,340
+400 plus
+
+301
+00:14:52,340 --> 00:14:53,180
+1024
+
+302
+00:14:53,180 --> 00:14:54,120
+become
+
+303
+00:14:54,120 --> 00:14:57,040
+1424.
+
+304
+00:14:57,660 --> 00:14:59,420
+So once the code
+
+305
+00:14:59,420 --> 00:14:59,980
+is loaded
+
+306
+00:14:59,980 --> 00:15:00,760
+into the memory,
+
+307
+00:15:01,320 --> 00:15:01,640
+right,
+
+308
+00:15:02,020 --> 00:15:03,220
+then the address
+
+309
+00:15:03,220 --> 00:15:04,240
+reference generated
+
+310
+00:15:04,240 --> 00:15:05,580
+then will be
+
+311
+00:15:05,580 --> 00:15:06,600
+the epsilon address.
+
+312
+00:15:06,600 --> 00:15:07,600
+address.
+
+313
+00:15:07,600 --> 00:15:08,600
+So again,
+
+314
+00:15:09,380 --> 00:15:10,160
+for instance here,
+
+315
+00:15:10,520 --> 00:15:11,060
+the load
+
+316
+00:15:11,060 --> 00:15:12,140
+1824,
+
+317
+00:15:12,700 --> 00:15:13,160
+so that's
+
+318
+00:15:13,160 --> 00:15:14,160
+this 1824
+
+319
+00:15:14,160 --> 00:15:15,200
+refers to
+
+320
+00:15:15,200 --> 00:15:15,800
+this
+
+321
+00:15:15,800 --> 00:15:17,300
+physical memory
+
+322
+00:15:17,300 --> 00:15:17,780
+location
+
+323
+00:15:17,780 --> 00:15:18,720
+and the
+
+324
+00:15:18,720 --> 00:15:20,600
+1424
+
+325
+00:15:21,320 --> 00:15:22,420
+refers to
+
+326
+00:15:22,420 --> 00:15:22,980
+this
+
+327
+00:15:22,980 --> 00:15:24,020
+physical memory
+
+328
+00:15:24,020 --> 00:15:24,540
+location.
+
+329
+00:15:25,280 --> 00:15:25,460
+Right?
+
+330
+00:15:25,780 --> 00:15:26,420
+So now better
+
+331
+00:15:26,420 --> 00:15:27,140
+is compilation
+
+332
+00:15:27,140 --> 00:15:27,740
+time binding
+
+333
+00:15:27,740 --> 00:15:28,800
+or load time binding.
+
+334
+00:15:28,800 --> 00:15:30,260
+So once the code
+
+335
+00:15:30,260 --> 00:15:31,200
+is in the memory,
+
+336
+00:15:31,780 --> 00:15:32,500
+the address format
+
+337
+00:15:32,500 --> 00:15:33,640
+will be in
+
+338
+00:15:33,640 --> 00:15:34,480
+the absolute
+
+339
+00:15:34,480 --> 00:15:35,260
+address format.
+
+340
+00:15:36,680 --> 00:15:37,320
+Now,
+
+341
+00:15:37,720 --> 00:15:38,460
+this can be
+
+342
+00:15:38,460 --> 00:15:39,240
+the address binding,
+
+343
+00:15:39,400 --> 00:15:40,080
+so the bind,
+
+344
+00:15:40,280 --> 00:15:40,960
+the code,
+
+345
+00:15:41,240 --> 00:15:41,740
+and the data
+
+346
+00:15:41,740 --> 00:15:42,760
+into the physical
+
+347
+00:15:42,760 --> 00:15:43,340
+location
+
+348
+00:15:43,340 --> 00:15:44,360
+can be further
+
+349
+00:15:44,360 --> 00:15:45,000
+delayed,
+
+350
+00:15:45,360 --> 00:15:45,520
+right,
+
+351
+00:15:45,600 --> 00:15:46,360
+so into the
+
+352
+00:15:46,360 --> 00:15:47,140
+execution time.
+
+353
+00:15:48,380 --> 00:15:49,180
+So for
+
+354
+00:15:49,180 --> 00:15:50,140
+execution time binding,
+
+355
+00:15:50,660 --> 00:15:50,860
+right,
+
+356
+00:15:50,940 --> 00:15:52,020
+the compiler
+
+357
+00:15:52,020 --> 00:15:53,160
+will generate code
+
+358
+00:15:53,160 --> 00:15:54,220
+in the relocatable
+
+359
+00:15:54,220 --> 00:15:54,760
+format,
+
+360
+00:15:55,160 --> 00:15:55,360
+right,
+
+361
+00:15:55,440 --> 00:15:56,460
+so similar to
+
+362
+00:15:56,460 --> 00:15:57,680
+the load time binding,
+
+363
+00:15:57,680 --> 00:15:58,360
+right,
+
+364
+00:15:58,800 --> 00:15:59,300
+but for the
+
+365
+00:15:59,300 --> 00:15:59,660
+loader,
+
+366
+00:16:00,500 --> 00:16:01,380
+so the loader
+
+367
+00:16:01,380 --> 00:16:03,340
+will determine,
+
+368
+00:16:04,040 --> 00:16:04,180
+right,
+
+369
+00:16:04,260 --> 00:16:04,740
+so this
+
+370
+00:16:04,740 --> 00:16:05,860
+physical location,
+
+371
+00:16:06,640 --> 00:16:07,780
+this part
+
+372
+00:16:07,780 --> 00:16:08,600
+of physical memory
+
+373
+00:16:08,600 --> 00:16:09,620
+is assigned
+
+374
+00:16:09,620 --> 00:16:10,260
+to the process
+
+375
+00:16:10,260 --> 00:16:11,100
+starting from
+
+376
+00:16:11,100 --> 00:16:11,800
+1024
+
+377
+00:16:11,800 --> 00:16:13,220
+and then load
+
+378
+00:16:13,220 --> 00:16:13,980
+the code
+
+379
+00:16:13,980 --> 00:16:15,700
+into the memory
+
+380
+00:16:15,700 --> 00:16:17,100
+without doing
+
+381
+00:16:17,100 --> 00:16:18,400
+any translation,
+
+382
+00:16:19,060 --> 00:16:19,240
+right,
+
+383
+00:16:19,500 --> 00:16:20,100
+so what's that
+
+384
+00:16:20,100 --> 00:16:20,280
+mean?
+
+385
+00:16:20,340 --> 00:16:21,000
+So that means
+
+386
+00:16:21,000 --> 00:16:22,040
+the address format
+
+387
+00:16:22,040 --> 00:16:22,640
+of the code
+
+388
+00:16:22,640 --> 00:16:23,540
+in the memory
+
+389
+00:16:23,540 --> 00:16:25,300
+is still in
+
+390
+00:16:25,300 --> 00:16:26,320
+relocatable
+
+391
+00:16:26,320 --> 00:16:27,100
+address format,
+
+392
+00:16:27,680 --> 00:16:28,420
+right,
+
+393
+00:16:28,740 --> 00:16:29,620
+now,
+
+394
+00:16:30,360 --> 00:16:31,660
+when executing
+
+395
+00:16:31,660 --> 00:16:32,700
+this instruction,
+
+396
+00:16:33,440 --> 00:16:35,040
+then this
+
+397
+00:16:35,040 --> 00:16:36,600
+address reference
+
+398
+00:16:36,600 --> 00:16:37,160
+generated
+
+399
+00:16:37,160 --> 00:16:38,280
+then need to be
+
+400
+00:16:38,280 --> 00:16:38,960
+dynamically
+
+401
+00:16:38,960 --> 00:16:40,140
+translated
+
+402
+00:16:40,140 --> 00:16:41,240
+into the
+
+403
+00:16:41,240 --> 00:16:42,900
+physical address
+
+404
+00:16:42,900 --> 00:16:43,780
+in order to
+
+405
+00:16:43,780 --> 00:16:44,620
+get the right
+
+406
+00:16:44,620 --> 00:16:45,140
+data,
+
+407
+00:16:45,420 --> 00:16:45,620
+right,
+
+408
+00:16:45,740 --> 00:16:46,420
+so recall
+
+409
+00:16:46,420 --> 00:16:47,820
+this load instruction
+
+410
+00:16:47,820 --> 00:16:49,040
+here is
+
+411
+00:16:49,040 --> 00:16:50,020
+intended to
+
+412
+00:16:50,020 --> 00:16:51,280
+load the data
+
+413
+00:16:51,280 --> 00:16:53,040
+in this location,
+
+414
+00:16:53,420 --> 00:16:53,640
+right,
+
+415
+00:16:53,860 --> 00:16:54,560
+but address reference
+
+416
+00:16:54,560 --> 00:16:56,100
+here is 800,
+
+417
+00:16:56,100 --> 00:16:56,900
+right,
+
+418
+00:16:56,980 --> 00:16:57,800
+so that's the
+
+419
+00:16:57,800 --> 00:16:59,080
+relocatable address
+
+420
+00:16:59,080 --> 00:16:59,380
+format,
+
+421
+00:16:59,880 --> 00:17:00,040
+right,
+
+422
+00:17:00,080 --> 00:17:00,460
+we need to
+
+423
+00:17:00,460 --> 00:17:01,220
+translate this
+
+424
+00:17:01,220 --> 00:17:02,080
+into the
+
+425
+00:17:02,080 --> 00:17:03,040
+physical address,
+
+426
+00:17:03,200 --> 00:17:03,800
+how this can be
+
+427
+00:17:03,800 --> 00:17:03,980
+done,
+
+428
+00:17:04,240 --> 00:17:04,480
+right,
+
+429
+00:17:05,020 --> 00:17:06,020
+so recall,
+
+430
+00:17:06,800 --> 00:17:07,460
+so this
+
+431
+00:17:07,460 --> 00:17:08,420
+present image
+
+432
+00:17:08,420 --> 00:17:08,940
+is loaded
+
+433
+00:17:08,940 --> 00:17:09,540
+into the memory
+
+434
+00:17:09,540 --> 00:17:10,180
+starting from
+
+435
+00:17:10,180 --> 00:17:10,960
+1024,
+
+436
+00:17:11,480 --> 00:17:12,240
+so this is called
+
+437
+00:17:12,240 --> 00:17:12,960
+the base address,
+
+438
+00:17:13,400 --> 00:17:13,700
+right,
+
+439
+00:17:13,700 --> 00:17:15,960
+and the length
+
+440
+00:17:15,960 --> 00:17:16,640
+of the
+
+441
+00:17:16,640 --> 00:17:17,300
+marine space,
+
+442
+00:17:17,640 --> 00:17:17,800
+right,
+
+443
+00:17:17,880 --> 00:17:18,980
+so occupy
+
+444
+00:17:18,980 --> 00:17:20,140
+by the process,
+
+445
+00:17:20,320 --> 00:17:21,440
+so this is called
+
+446
+00:17:21,440 --> 00:17:22,640
+the limit,
+
+447
+00:17:23,140 --> 00:17:23,440
+right,
+
+448
+00:17:24,140 --> 00:17:24,780
+then address
+
+449
+00:17:24,780 --> 00:17:25,800
+translation in
+
+450
+00:17:25,800 --> 00:17:26,340
+this case
+
+451
+00:17:26,340 --> 00:17:27,140
+is done
+
+452
+00:17:27,140 --> 00:17:28,960
+using this
+
+453
+00:17:28,960 --> 00:17:29,460
+approach,
+
+454
+00:17:29,860 --> 00:17:30,100
+right,
+
+455
+00:17:30,480 --> 00:17:32,340
+so there is a
+
+456
+00:17:32,340 --> 00:17:33,100
+relocatable
+
+457
+00:17:33,100 --> 00:17:35,620
+relocation register,
+
+458
+00:17:36,280 --> 00:17:36,480
+right,
+
+459
+00:17:36,480 --> 00:17:36,960
+so that's
+
+460
+00:17:36,960 --> 00:17:37,860
+store the base
+
+461
+00:17:37,860 --> 00:17:38,280
+address,
+
+462
+00:17:38,640 --> 00:17:39,060
+so that's
+
+463
+00:17:39,060 --> 00:17:39,860
+1024
+
+464
+00:17:39,860 --> 00:17:40,780
+in our
+
+465
+00:17:40,780 --> 00:17:41,260
+example,
+
+466
+00:17:42,460 --> 00:17:43,020
+when execution
+
+467
+00:17:43,020 --> 00:17:43,620
+instruction,
+
+468
+00:17:44,400 --> 00:17:45,440
+address reference
+
+469
+00:17:45,440 --> 00:17:46,200
+is generated,
+
+470
+00:17:46,840 --> 00:17:46,980
+right,
+
+471
+00:17:47,020 --> 00:17:47,420
+so that's
+
+472
+00:17:47,420 --> 00:17:48,140
+relocatable
+
+473
+00:17:48,140 --> 00:17:49,240
+address reference,
+
+474
+00:17:49,920 --> 00:17:50,780
+then this
+
+475
+00:17:50,780 --> 00:17:51,560
+will add
+
+476
+00:17:51,560 --> 00:17:52,440
+into
+
+477
+00:17:52,440 --> 00:17:54,320
+the value
+
+478
+00:17:54,320 --> 00:17:55,900
+stored in
+
+479
+00:17:55,900 --> 00:17:57,120
+the relocation
+
+480
+00:17:57,120 --> 00:17:57,620
+register
+
+481
+00:17:57,620 --> 00:17:58,800
+to generate
+
+482
+00:17:58,800 --> 00:17:59,680
+the physical
+
+483
+00:17:59,680 --> 00:18:00,260
+address,
+
+484
+00:18:00,780 --> 00:18:01,040
+right,
+
+485
+00:18:01,360 --> 00:18:01,980
+so back
+
+486
+00:18:01,980 --> 00:18:02,660
+to the
+
+487
+00:18:02,660 --> 00:18:03,340
+diagram here,
+
+488
+00:18:03,840 --> 00:18:04,160
+so when
+
+489
+00:18:04,160 --> 00:18:04,460
+execution
+
+490
+00:18:04,460 --> 00:18:05,260
+instruction,
+
+491
+00:18:05,260 --> 00:18:06,840
+800 will
+
+492
+00:18:06,840 --> 00:18:07,760
+be generated,
+
+493
+00:18:08,540 --> 00:18:09,360
+and this
+
+494
+00:18:09,360 --> 00:18:10,080
+will be added
+
+495
+00:18:10,080 --> 00:18:11,280
+into the
+
+496
+00:18:11,280 --> 00:18:11,960
+base address
+
+497
+00:18:11,960 --> 00:18:13,100
+to generate
+
+498
+00:18:13,100 --> 00:18:13,900
+the physical
+
+499
+00:18:13,900 --> 00:18:14,760
+address,
+
+500
+00:18:15,220 --> 00:18:15,620
+which is
+
+501
+00:18:15,620 --> 00:18:16,740
+1824,
+
+502
+00:18:17,080 --> 00:18:17,680
+so this is
+
+503
+00:18:17,680 --> 00:18:18,940
+done dynamically
+
+504
+00:18:18,940 --> 00:18:20,160
+during
+
+505
+00:18:20,160 --> 00:18:22,880
+the execution
+
+506
+00:18:22,880 --> 00:18:23,480
+of the
+
+507
+00:18:23,480 --> 00:18:23,860
+process.
+
+508
+00:18:25,040 --> 00:18:25,420
+Now,
+
+509
+00:18:25,680 --> 00:18:26,340
+back to
+
+510
+00:18:26,340 --> 00:18:27,160
+our original
+
+511
+00:18:27,160 --> 00:18:27,640
+question,
+
+512
+00:18:28,240 --> 00:18:29,240
+when executing
+
+513
+00:18:29,240 --> 00:18:30,080
+an instruction,
+
+514
+00:18:30,460 --> 00:18:31,000
+that instruction
+
+515
+00:18:31,000 --> 00:18:31,880
+will generate
+
+516
+00:18:31,880 --> 00:18:32,740
+an address
+
+517
+00:18:32,740 --> 00:18:33,340
+reference,
+
+518
+00:18:34,180 --> 00:18:35,140
+can we use
+
+519
+00:18:35,140 --> 00:18:35,900
+that address
+
+520
+00:18:35,900 --> 00:18:36,740
+reference to
+
+521
+00:18:36,740 --> 00:18:37,420
+assign the
+
+522
+00:18:37,420 --> 00:18:38,240
+physical memory
+
+523
+00:18:38,240 --> 00:18:39,460
+directly or
+
+524
+00:18:39,460 --> 00:18:39,820
+not,
+
+525
+00:18:40,200 --> 00:18:40,560
+right,
+
+526
+00:18:41,000 --> 00:18:42,240
+so if address
+
+527
+00:18:42,240 --> 00:18:42,700
+binding,
+
+528
+00:18:43,160 --> 00:18:43,400
+right,
+
+529
+00:18:43,460 --> 00:18:44,240
+is done
+
+530
+00:18:44,240 --> 00:18:45,160
+during the
+
+531
+00:18:45,160 --> 00:18:46,160
+compilation time
+
+532
+00:18:46,160 --> 00:18:47,160
+or load
+
+533
+00:18:47,160 --> 00:18:47,520
+time,
+
+534
+00:18:48,820 --> 00:18:49,360
+the address
+
+535
+00:18:49,360 --> 00:18:50,460
+format.code
+
+536
+00:18:50,460 --> 00:18:51,080
+in the memory
+
+537
+00:18:51,080 --> 00:18:52,220
+is in the
+
+538
+00:18:52,220 --> 00:18:53,160
+absolute address
+
+539
+00:18:53,160 --> 00:18:53,560
+format,
+
+540
+00:18:54,420 --> 00:18:55,200
+then the answer
+
+541
+00:18:55,200 --> 00:18:55,840
+to that
+
+542
+00:18:55,840 --> 00:18:56,900
+question is
+
+543
+00:18:56,900 --> 00:18:57,420
+yes,
+
+544
+00:18:58,120 --> 00:18:59,080
+we can use
+
+545
+00:18:59,080 --> 00:19:00,840
+the address
+
+546
+00:19:00,840 --> 00:19:02,860
+to assign
+
+547
+00:19:02,860 --> 00:19:03,500
+the physical
+
+548
+00:19:03,500 --> 00:19:03,900
+memory
+
+549
+00:19:03,900 --> 00:19:04,480
+directly,
+
+550
+00:19:05,160 --> 00:19:05,340
+right,
+
+551
+00:19:05,380 --> 00:19:05,820
+to get
+
+552
+00:19:05,820 --> 00:19:06,720
+either data,
+
+553
+00:19:06,900 --> 00:19:07,580
+required data,
+
+554
+00:19:08,440 --> 00:19:09,560
+or instruction.
+
+555
+00:19:11,040 --> 00:19:11,680
+However,
+
+556
+00:19:12,780 --> 00:19:13,340
+this kind
+
+557
+00:19:13,340 --> 00:19:13,740
+of binding
+
+558
+00:19:13,740 --> 00:19:14,400
+is kind
+
+559
+00:19:14,400 --> 00:19:15,360
+of static,
+
+560
+00:19:15,820 --> 00:19:15,980
+right,
+
+561
+00:19:16,060 --> 00:19:16,700
+so once
+
+562
+00:19:16,700 --> 00:19:18,120
+we bind
+
+563
+00:19:18,120 --> 00:19:18,560
+the process
+
+564
+00:19:18,560 --> 00:19:19,120
+into this
+
+565
+00:19:19,120 --> 00:19:19,820
+memory location,
+
+566
+00:19:20,080 --> 00:19:20,720
+then we cannot
+
+567
+00:19:20,720 --> 00:19:21,660
+move the
+
+568
+00:19:21,660 --> 00:19:22,560
+process to
+
+569
+00:19:22,560 --> 00:19:23,360
+other places
+
+570
+00:19:23,360 --> 00:19:23,980
+in the memory.
+
+571
+00:19:23,980 --> 00:19:25,400
+so if we
+
+572
+00:19:25,400 --> 00:19:25,920
+want to
+
+573
+00:19:25,920 --> 00:19:26,420
+move the
+
+574
+00:19:26,420 --> 00:19:27,040
+process into
+
+575
+00:19:27,040 --> 00:19:28,020
+other places
+
+576
+00:19:28,020 --> 00:19:28,780
+in the memory,
+
+577
+00:19:29,360 --> 00:19:29,940
+so that will
+
+578
+00:19:29,940 --> 00:19:30,700
+either require
+
+579
+00:19:30,700 --> 00:19:31,460
+recopilation
+
+580
+00:19:31,460 --> 00:19:32,940
+or reloading.
+
+581
+00:19:33,780 --> 00:19:34,500
+So this is
+
+582
+00:19:34,500 --> 00:19:34,820
+kind of
+
+583
+00:19:34,820 --> 00:19:35,380
+restriction,
+
+584
+00:19:35,960 --> 00:19:36,220
+right,
+
+585
+00:19:36,640 --> 00:19:37,460
+so we will
+
+586
+00:19:37,460 --> 00:19:39,520
+cover many
+
+587
+00:19:39,520 --> 00:19:40,760
+memory management
+
+588
+00:19:40,760 --> 00:19:41,640
+techniques later
+
+589
+00:19:41,640 --> 00:19:42,000
+on,
+
+590
+00:19:42,380 --> 00:19:42,540
+right,
+
+591
+00:19:42,620 --> 00:19:43,460
+so for instance,
+
+592
+00:19:43,640 --> 00:19:43,860
+memory
+
+593
+00:19:43,860 --> 00:19:44,420
+compaction
+
+594
+00:19:44,420 --> 00:19:45,860
+and the
+
+595
+00:19:45,860 --> 00:19:46,380
+swapping
+
+596
+00:19:46,380 --> 00:19:47,440
+and virtual
+
+597
+00:19:47,440 --> 00:19:48,200
+memory support.
+
+598
+00:19:48,560 --> 00:19:49,380
+All these
+
+599
+00:19:49,380 --> 00:19:50,280
+techniques will
+
+600
+00:19:50,280 --> 00:19:51,700
+require the
+
+601
+00:19:51,700 --> 00:19:52,320
+process image
+
+602
+00:19:52,320 --> 00:19:53,420
+to move around
+
+603
+00:19:53,420 --> 00:19:54,240
+in the memory
+
+604
+00:19:54,240 --> 00:19:54,760
+space,
+
+605
+00:19:55,120 --> 00:19:55,380
+right,
+
+606
+00:19:55,740 --> 00:19:56,140
+during the
+
+607
+00:19:56,140 --> 00:19:56,580
+execution of
+
+608
+00:19:56,580 --> 00:19:57,040
+the process.
+
+609
+00:19:57,740 --> 00:19:58,720
+So we're not
+
+610
+00:19:58,720 --> 00:19:59,600
+really interested
+
+611
+00:19:59,600 --> 00:20:00,940
+in this kind
+
+612
+00:20:00,940 --> 00:20:01,880
+of static
+
+613
+00:20:01,880 --> 00:20:02,280
+binding,
+
+614
+00:20:02,620 --> 00:20:02,800
+right,
+
+615
+00:20:02,820 --> 00:20:03,400
+so compilation
+
+616
+00:20:03,400 --> 00:20:05,100
+or load
+
+617
+00:20:05,100 --> 00:20:05,560
+time binding,
+
+618
+00:20:05,980 --> 00:20:06,220
+right,
+
+619
+00:20:06,300 --> 00:20:07,460
+but what we're
+
+620
+00:20:07,460 --> 00:20:08,020
+rather interested
+
+621
+00:20:08,020 --> 00:20:09,500
+in is this,
+
+622
+00:20:10,140 --> 00:20:10,880
+the execution
+
+623
+00:20:10,880 --> 00:20:11,420
+time binding.
+
+624
+00:20:12,580 --> 00:20:13,000
+So in
+
+625
+00:20:13,000 --> 00:20:13,740
+execution time
+
+626
+00:20:13,740 --> 00:20:14,040
+binding,
+
+627
+00:20:14,980 --> 00:20:15,500
+so executing
+
+628
+00:20:15,500 --> 00:20:16,260
+instruction will
+
+629
+00:20:16,260 --> 00:20:16,780
+generate
+
+630
+00:20:16,780 --> 00:20:18,280
+address reference,
+
+631
+00:20:18,880 --> 00:20:19,660
+so this address
+
+632
+00:20:19,660 --> 00:20:20,520
+reference is
+
+633
+00:20:20,520 --> 00:20:21,280
+in the
+
+634
+00:20:21,280 --> 00:20:22,080
+relocatable
+
+635
+00:20:22,080 --> 00:20:22,820
+address format
+
+636
+00:20:22,820 --> 00:20:23,660
+or relative
+
+637
+00:20:23,660 --> 00:20:24,400
+address format,
+
+638
+00:20:24,960 --> 00:20:25,380
+right,
+
+639
+00:20:25,740 --> 00:20:26,440
+so in this
+
+640
+00:20:26,440 --> 00:20:26,820
+case,
+
+641
+00:20:27,000 --> 00:20:27,980
+so this address
+
+642
+00:20:27,980 --> 00:20:29,020
+that need to
+
+643
+00:20:29,020 --> 00:20:29,860
+be dynamically
+
+644
+00:20:29,860 --> 00:20:31,260
+translated to
+
+645
+00:20:31,260 --> 00:20:32,240
+the physical
+
+646
+00:20:32,240 --> 00:20:32,680
+address,
+
+647
+00:20:32,900 --> 00:20:33,140
+right,
+
+648
+00:20:33,440 --> 00:20:34,140
+by adding
+
+649
+00:20:34,140 --> 00:20:34,880
+the base
+
+650
+00:20:34,880 --> 00:20:36,680
+address to
+
+651
+00:20:36,680 --> 00:20:37,680
+the relocatable
+
+652
+00:20:37,680 --> 00:20:38,780
+address to
+
+653
+00:20:38,780 --> 00:20:40,060
+generate actual
+
+654
+00:20:40,060 --> 00:20:40,880
+physical address
+
+655
+00:20:40,880 --> 00:20:41,660
+in order to
+
+656
+00:20:41,660 --> 00:20:42,160
+get the
+
+657
+00:20:42,160 --> 00:20:43,300
+required data
+
+658
+00:20:43,300 --> 00:20:44,360
+or instruction,
+
+659
+00:20:44,820 --> 00:20:45,040
+right,
+
+660
+00:20:45,440 --> 00:20:46,780
+so this,
+
+661
+00:20:47,000 --> 00:20:47,960
+in this case,
+
+662
+00:20:48,500 --> 00:20:49,040
+then this
+
+663
+00:20:49,040 --> 00:20:50,200
+address translation
+
+664
+00:20:50,200 --> 00:20:50,900
+needs to be
+
+665
+00:20:50,900 --> 00:20:51,940
+done dynamically,
+
+666
+00:20:51,940 --> 00:20:52,800
+right,
+
+667
+00:20:52,900 --> 00:20:53,680
+so in the
+
+668
+00:20:53,680 --> 00:20:53,920
+following,
+
+669
+00:20:54,520 --> 00:20:55,180
+we assume,
+
+670
+00:20:55,720 --> 00:20:56,040
+right,
+
+671
+00:20:56,220 --> 00:20:56,840
+as mentioned,
+
+672
+00:20:56,980 --> 00:20:57,340
+we're not
+
+673
+00:20:57,340 --> 00:20:58,160
+interested in
+
+674
+00:20:58,160 --> 00:20:59,020
+the static
+
+675
+00:20:59,020 --> 00:20:59,360
+binding,
+
+676
+00:20:59,800 --> 00:21:00,540
+compilation time
+
+677
+00:21:00,540 --> 00:21:00,840
+binding,
+
+678
+00:21:01,260 --> 00:21:01,700
+and load
+
+679
+00:21:01,700 --> 00:21:02,140
+time binding,
+
+680
+00:21:02,520 --> 00:21:02,680
+right,
+
+681
+00:21:02,740 --> 00:21:03,100
+so in the
+
+682
+00:21:03,100 --> 00:21:03,320
+following,
+
+683
+00:21:03,780 --> 00:21:04,440
+we assume
+
+684
+00:21:04,440 --> 00:21:05,280
+address binding
+
+685
+00:21:05,280 --> 00:21:06,160
+is dynamic,
+
+686
+00:21:06,500 --> 00:21:06,620
+right,
+
+687
+00:21:06,680 --> 00:21:07,260
+it's execution
+
+688
+00:21:07,260 --> 00:21:07,900
+time binding,
+
+689
+00:21:09,500 --> 00:21:09,760
+right,
+
+690
+00:21:10,720 --> 00:21:11,140
+now,
+
+691
+00:21:11,680 --> 00:21:12,680
+when executing
+
+692
+00:21:12,680 --> 00:21:13,320
+instruction,
+
+693
+00:21:14,060 --> 00:21:14,400
+right,
+
+694
+00:21:14,560 --> 00:21:15,180
+the CPU
+
+695
+00:21:15,180 --> 00:21:16,060
+may generate
+
+696
+00:21:16,060 --> 00:21:16,900
+address reference,
+
+697
+00:21:16,900 --> 00:21:17,560
+so this
+
+698
+00:21:17,560 --> 00:21:18,640
+reference
+
+699
+00:21:18,640 --> 00:21:19,900
+generated by
+
+700
+00:21:19,900 --> 00:21:20,540
+CPU
+
+701
+00:21:20,540 --> 00:21:21,360
+when executing
+
+702
+00:21:21,360 --> 00:21:21,860
+instruction
+
+703
+00:21:21,860 --> 00:21:23,000
+is called
+
+704
+00:21:23,000 --> 00:21:23,920
+logical
+
+705
+00:21:23,920 --> 00:21:24,520
+address,
+
+706
+00:21:25,080 --> 00:21:25,360
+right,
+
+707
+00:21:26,000 --> 00:21:26,560
+and the
+
+708
+00:21:26,560 --> 00:21:27,420
+address that
+
+709
+00:21:27,420 --> 00:21:28,820
+will be used
+
+710
+00:21:28,820 --> 00:21:29,600
+to assess
+
+711
+00:21:29,600 --> 00:21:30,260
+the physical
+
+712
+00:21:30,260 --> 00:21:30,660
+memory
+
+713
+00:21:30,660 --> 00:21:31,260
+is called
+
+714
+00:21:31,260 --> 00:21:32,140
+physical address,
+
+715
+00:21:32,640 --> 00:21:33,760
+so if
+
+716
+00:21:33,760 --> 00:21:34,360
+address binding
+
+717
+00:21:34,360 --> 00:21:34,920
+is static,
+
+718
+00:21:35,300 --> 00:21:35,440
+right,
+
+719
+00:21:35,500 --> 00:21:36,320
+so meaning
+
+720
+00:21:36,320 --> 00:21:37,100
+either during
+
+721
+00:21:37,100 --> 00:21:37,560
+the completion
+
+722
+00:21:37,560 --> 00:21:38,920
+time or load
+
+723
+00:21:38,920 --> 00:21:39,220
+time,
+
+724
+00:21:39,900 --> 00:21:40,860
+then there's
+
+725
+00:21:40,860 --> 00:21:41,560
+really there's
+
+726
+00:21:41,560 --> 00:21:42,360
+no differentiation
+
+727
+00:21:42,360 --> 00:21:43,500
+between the
+
+728
+00:21:43,500 --> 00:21:43,920
+logical
+
+729
+00:21:43,920 --> 00:21:45,480
+address,
+
+730
+00:21:45,680 --> 00:21:45,940
+right,
+
+731
+00:21:46,640 --> 00:21:47,680
+the address
+
+732
+00:21:47,680 --> 00:21:48,040
+reference
+
+733
+00:21:48,040 --> 00:21:48,580
+generated by
+
+734
+00:21:48,580 --> 00:21:49,120
+the CPU
+
+735
+00:21:49,120 --> 00:21:50,640
+can be
+
+736
+00:21:50,640 --> 00:21:52,100
+used directly
+
+737
+00:21:52,100 --> 00:21:52,960
+to assign
+
+738
+00:21:52,960 --> 00:21:53,440
+the physical
+
+739
+00:21:53,440 --> 00:21:53,720
+memory,
+
+740
+00:21:54,140 --> 00:21:54,340
+right,
+
+741
+00:21:54,380 --> 00:21:54,760
+so there's
+
+742
+00:21:54,760 --> 00:21:56,540
+no differentiation
+
+743
+00:21:56,540 --> 00:21:57,340
+in this case,
+
+744
+00:21:57,600 --> 00:21:57,780
+right,
+
+745
+00:21:57,840 --> 00:21:58,240
+between the
+
+746
+00:21:58,240 --> 00:21:59,060
+logical address
+
+747
+00:21:59,060 --> 00:21:59,520
+and physical
+
+748
+00:21:59,520 --> 00:21:59,880
+address,
+
+749
+00:22:00,080 --> 00:22:00,600
+if address
+
+750
+00:22:00,600 --> 00:22:01,260
+binding is
+
+751
+00:22:01,260 --> 00:22:01,820
+static,
+
+752
+00:22:02,180 --> 00:22:02,340
+right,
+
+753
+00:22:02,400 --> 00:22:02,720
+compilation
+
+754
+00:22:02,720 --> 00:22:03,900
+time or
+
+755
+00:22:03,900 --> 00:22:04,240
+load time
+
+756
+00:22:04,240 --> 00:22:04,480
+binding,
+
+757
+00:22:05,220 --> 00:22:05,620
+however,
+
+758
+00:22:05,760 --> 00:22:06,180
+if address
+
+759
+00:22:06,180 --> 00:22:07,120
+binding is
+
+760
+00:22:07,120 --> 00:22:07,840
+dynamic,
+
+761
+00:22:08,000 --> 00:22:08,340
+execution
+
+762
+00:22:08,340 --> 00:22:08,920
+time binding,
+
+763
+00:22:09,780 --> 00:22:10,480
+then this
+
+764
+00:22:10,480 --> 00:22:11,000
+logical
+
+765
+00:22:11,000 --> 00:22:11,460
+address,
+
+766
+00:22:11,720 --> 00:22:12,640
+the reference
+
+767
+00:22:12,640 --> 00:22:13,300
+generated
+
+768
+00:22:13,300 --> 00:22:13,800
+by
+
+769
+00:22:13,920 --> 00:22:14,280
+CPU
+
+770
+00:22:14,280 --> 00:22:15,360
+and the
+
+771
+00:22:15,360 --> 00:22:15,880
+actual
+
+772
+00:22:15,880 --> 00:22:16,780
+one that
+
+773
+00:22:16,780 --> 00:22:17,340
+will be
+
+774
+00:22:17,340 --> 00:22:17,820
+used to
+
+775
+00:22:17,820 --> 00:22:18,100
+assess
+
+776
+00:22:18,100 --> 00:22:18,480
+physical
+
+777
+00:22:18,480 --> 00:22:18,860
+memory,
+
+778
+00:22:19,320 --> 00:22:19,700
+that will
+
+779
+00:22:19,700 --> 00:22:20,200
+be different,
+
+780
+00:22:20,680 --> 00:22:21,060
+right,
+
+781
+00:22:21,240 --> 00:22:21,860
+so this
+
+782
+00:22:21,860 --> 00:22:22,220
+logical
+
+783
+00:22:22,220 --> 00:22:22,700
+address,
+
+784
+00:22:23,040 --> 00:22:23,420
+that need
+
+785
+00:22:23,420 --> 00:22:23,840
+to be
+
+786
+00:22:23,840 --> 00:22:24,460
+dynamically
+
+787
+00:22:24,460 --> 00:22:25,020
+translated
+
+788
+00:22:25,020 --> 00:22:25,400
+into the
+
+789
+00:22:25,400 --> 00:22:25,640
+physical
+
+790
+00:22:25,640 --> 00:22:26,080
+address,
+
+791
+00:22:26,460 --> 00:22:26,680
+right,
+
+792
+00:22:26,980 --> 00:22:27,440
+then how
+
+793
+00:22:27,440 --> 00:22:27,720
+this
+
+794
+00:22:27,720 --> 00:22:28,200
+translation
+
+795
+00:22:28,200 --> 00:22:28,560
+can be
+
+796
+00:22:28,560 --> 00:22:28,760
+done,
+
+797
+00:22:29,240 --> 00:22:29,580
+right,
+
+798
+00:22:29,980 --> 00:22:30,720
+so that's
+
+799
+00:22:30,720 --> 00:22:31,720
+depending on
+
+800
+00:22:31,720 --> 00:22:32,420
+the memory
+
+801
+00:22:32,420 --> 00:22:33,120
+allocation
+
+802
+00:22:33,120 --> 00:22:33,740
+approaches,
+
+803
+00:22:34,280 --> 00:22:34,420
+right,
+
+804
+00:22:34,480 --> 00:22:34,900
+so different
+
+805
+00:22:34,900 --> 00:22:36,460
+memory allocation
+
+806
+00:22:36,460 --> 00:22:37,860
+approaches may
+
+807
+00:22:37,860 --> 00:22:38,980
+require to
+
+808
+00:22:38,980 --> 00:22:39,660
+do this
+
+809
+00:22:39,660 --> 00:22:40,060
+address
+
+810
+00:22:40,060 --> 00:22:40,540
+translation
+
+811
+00:22:40,540 --> 00:22:41,700
+in different
+
+812
+00:22:41,700 --> 00:22:42,140
+ways,
+
+813
+00:22:42,560 --> 00:22:42,920
+again,
+
+814
+00:22:42,920 --> 00:22:43,880
+I will
+
+815
+00:22:43,880 --> 00:22:44,800
+explain this
+
+816
+00:22:44,800 --> 00:22:46,120
+when we
+
+817
+00:22:46,120 --> 00:22:47,440
+cover the
+
+818
+00:22:47,440 --> 00:22:49,060
+perspective,
+
+819
+00:22:49,520 --> 00:22:50,900
+respective memory
+
+820
+00:22:50,900 --> 00:22:51,240
+allocation
+
+821
+00:22:51,240 --> 00:22:51,700
+approach.
+
+822
+00:22:54,240 --> 00:22:55,200
+Now,
+
+823
+00:22:55,840 --> 00:22:56,340
+for,
+
+824
+00:22:56,880 --> 00:22:57,140
+as I
+
+825
+00:22:57,140 --> 00:22:57,460
+mentioned,
+
+826
+00:22:57,660 --> 00:22:57,840
+right,
+
+827
+00:22:57,960 --> 00:22:58,260
+we are
+
+828
+00:22:58,260 --> 00:22:59,740
+interested in
+
+829
+00:22:59,740 --> 00:23:00,480
+the
+
+830
+00:23:00,480 --> 00:23:01,840
+execution
+
+831
+00:23:01,840 --> 00:23:02,140
+time
+
+832
+00:23:02,140 --> 00:23:02,380
+binding,
+
+833
+00:23:02,780 --> 00:23:03,100
+right,
+
+834
+00:23:03,340 --> 00:23:04,200
+so in
+
+835
+00:23:04,200 --> 00:23:04,740
+execution
+
+836
+00:23:04,740 --> 00:23:05,220
+time
+
+837
+00:23:05,220 --> 00:23:05,600
+binding
+
+838
+00:23:05,600 --> 00:23:06,420
+in particular,
+
+839
+00:23:06,880 --> 00:23:07,120
+right,
+
+840
+00:23:07,120 --> 00:23:08,240
+logical
+
+841
+00:23:08,240 --> 00:23:08,700
+address
+
+842
+00:23:08,700 --> 00:23:09,220
+space
+
+843
+00:23:09,220 --> 00:23:09,920
+is
+
+844
+00:23:09,920 --> 00:23:11,920
+continuous
+
+845
+00:23:11,920 --> 00:23:12,640
+address,
+
+846
+00:23:13,240 --> 00:23:13,520
+right,
+
+847
+00:23:14,200 --> 00:23:14,720
+starting
+
+848
+00:23:14,720 --> 00:23:15,220
+from
+
+849
+00:23:15,220 --> 00:23:15,600
+zero,
+
+850
+00:23:16,240 --> 00:23:16,560
+and the
+
+851
+00:23:16,560 --> 00:23:16,940
+logical
+
+852
+00:23:16,940 --> 00:23:17,340
+address
+
+853
+00:23:17,340 --> 00:23:17,780
+space
+
+854
+00:23:17,780 --> 00:23:18,160
+is,
+
+855
+00:23:18,860 --> 00:23:19,020
+well,
+
+856
+00:23:19,240 --> 00:23:19,560
+actually,
+
+857
+00:23:19,680 --> 00:23:20,460
+both logical
+
+858
+00:23:20,460 --> 00:23:20,760
+address
+
+859
+00:23:20,760 --> 00:23:21,080
+space
+
+860
+00:23:21,080 --> 00:23:21,600
+and physical
+
+861
+00:23:21,600 --> 00:23:21,960
+address
+
+862
+00:23:21,960 --> 00:23:22,220
+space
+
+863
+00:23:22,220 --> 00:23:22,480
+are
+
+864
+00:23:22,480 --> 00:23:22,780
+byte
+
+865
+00:23:22,780 --> 00:23:23,440
+addressable,
+
+866
+00:23:24,440 --> 00:23:24,740
+but for
+
+867
+00:23:24,740 --> 00:23:25,100
+logical
+
+868
+00:23:25,100 --> 00:23:25,380
+address
+
+869
+00:23:25,380 --> 00:23:25,680
+space,
+
+870
+00:23:25,860 --> 00:23:26,520
+it's always
+
+871
+00:23:26,520 --> 00:23:27,120
+starting
+
+872
+00:23:27,120 --> 00:23:27,580
+from
+
+873
+00:23:27,580 --> 00:23:28,280
+zero,
+
+874
+00:23:29,000 --> 00:23:29,360
+right,
+
+875
+00:23:29,360 --> 00:23:31,680
+and the
+
+876
+00:23:31,680 --> 00:23:31,980
+process
+
+877
+00:23:31,980 --> 00:23:32,400
+executing
+
+878
+00:23:32,400 --> 00:23:33,500
+and the
+
+879
+00:23:33,500 --> 00:23:34,280
+process,
+
+880
+00:23:34,540 --> 00:23:35,540
+right,
+
+881
+00:23:35,680 --> 00:23:36,980
+will always
+
+882
+00:23:36,980 --> 00:23:37,720
+generate
+
+883
+00:23:37,720 --> 00:23:38,160
+address
+
+884
+00:23:38,160 --> 00:23:38,720
+reference
+
+885
+00:23:38,720 --> 00:23:39,920
+in the
+
+886
+00:23:39,920 --> 00:23:40,620
+logical
+
+887
+00:23:40,620 --> 00:23:40,920
+address
+
+888
+00:23:40,920 --> 00:23:41,220
+space,
+
+889
+00:23:41,500 --> 00:23:41,720
+right,
+
+890
+00:23:41,980 --> 00:23:42,300
+so if you
+
+891
+00:23:42,300 --> 00:23:42,660
+are executing
+
+892
+00:23:42,660 --> 00:23:43,140
+interaction,
+
+893
+00:23:43,640 --> 00:23:44,120
+will generate
+
+894
+00:23:44,120 --> 00:23:44,440
+address
+
+895
+00:23:44,440 --> 00:23:44,960
+reference,
+
+896
+00:23:45,320 --> 00:23:45,800
+so address
+
+897
+00:23:45,800 --> 00:23:46,120
+reference
+
+898
+00:23:46,120 --> 00:23:46,960
+always
+
+899
+00:23:46,960 --> 00:23:48,000
+refer to
+
+900
+00:23:48,000 --> 00:23:48,580
+this
+
+901
+00:23:48,580 --> 00:23:49,220
+logical
+
+902
+00:23:49,220 --> 00:23:49,580
+address
+
+903
+00:23:49,580 --> 00:23:49,840
+space,
+
+904
+00:23:50,040 --> 00:23:50,780
+so logically,
+
+905
+00:23:51,740 --> 00:23:51,980
+right,
+
+906
+00:23:52,080 --> 00:23:52,780
+so we have
+
+907
+00:23:52,780 --> 00:23:53,180
+a sequence
+
+908
+00:23:53,180 --> 00:23:53,520
+of my
+
+909
+00:23:53,520 --> 00:23:53,820
+starting
+
+910
+00:23:53,820 --> 00:23:54,080
+from
+
+911
+00:23:54,080 --> 00:23:54,320
+zero,
+
+912
+00:23:54,820 --> 00:23:55,160
+right,
+
+913
+00:23:56,380 --> 00:23:57,800
+and every
+
+914
+00:23:57,800 --> 00:23:58,340
+process
+
+915
+00:23:58,340 --> 00:23:58,900
+has this
+
+916
+00:23:58,900 --> 00:23:59,320
+own
+
+917
+00:23:59,320 --> 00:23:59,980
+logical
+
+918
+00:23:59,980 --> 00:24:00,300
+address
+
+919
+00:24:00,300 --> 00:24:00,660
+space,
+
+920
+00:24:01,380 --> 00:24:01,740
+right,
+
+921
+00:24:02,700 --> 00:24:04,340
+and to
+
+922
+00:24:04,340 --> 00:24:05,700
+refer to
+
+923
+00:24:05,700 --> 00:24:06,000
+this
+
+924
+00:24:06,000 --> 00:24:06,600
+logical
+
+925
+00:24:06,600 --> 00:24:06,920
+address
+
+926
+00:24:06,920 --> 00:24:07,280
+space,
+
+927
+00:24:07,840 --> 00:24:08,800
+we often
+
+928
+00:24:08,800 --> 00:24:09,800
+use these
+
+929
+00:24:09,800 --> 00:24:10,460
+terminologies,
+
+930
+00:24:11,140 --> 00:24:11,740
+we refer
+
+931
+00:24:11,740 --> 00:24:12,480
+this as
+
+932
+00:24:12,480 --> 00:24:13,420
+a present
+
+933
+00:24:13,420 --> 00:24:13,900
+image,
+
+934
+00:24:14,500 --> 00:24:15,000
+or refer
+
+935
+00:24:15,000 --> 00:24:15,640
+to the
+
+936
+00:24:15,640 --> 00:24:15,900
+logical
+
+937
+00:24:15,900 --> 00:24:16,160
+address
+
+938
+00:24:16,160 --> 00:24:16,480
+space,
+
+939
+00:24:16,700 --> 00:24:17,160
+or refer
+
+940
+00:24:17,160 --> 00:24:17,760
+this to
+
+941
+00:24:17,760 --> 00:24:18,600
+as a
+
+942
+00:24:18,600 --> 00:24:19,760
+logical
+
+943
+00:24:19,760 --> 00:24:20,320
+memory,
+
+944
+00:24:21,040 --> 00:24:21,440
+right,
+
+945
+00:24:21,600 --> 00:24:22,460
+so it's
+
+946
+00:24:22,460 --> 00:24:23,120
+very important
+
+947
+00:24:23,120 --> 00:24:23,940
+to differentiate
+
+948
+00:24:23,940 --> 00:24:25,080
+this logical
+
+949
+00:24:25,080 --> 00:24:25,360
+address
+
+950
+00:24:25,360 --> 00:24:25,840
+space and
+
+951
+00:24:25,840 --> 00:24:26,240
+the physical
+
+952
+00:24:26,240 --> 00:24:26,560
+address
+
+953
+00:24:26,560 --> 00:24:26,840
+space,
+
+954
+00:24:27,080 --> 00:24:27,380
+right,
+
+955
+00:24:27,380 --> 00:24:29,340
+so every
+
+956
+00:24:29,340 --> 00:24:30,020
+process is
+
+957
+00:24:30,020 --> 00:24:30,840
+all logical
+
+958
+00:24:30,840 --> 00:24:31,200
+address
+
+959
+00:24:31,200 --> 00:24:31,580
+space,
+
+960
+00:24:31,820 --> 00:24:32,580
+but we
+
+961
+00:24:32,580 --> 00:24:33,200
+only have
+
+962
+00:24:33,200 --> 00:24:33,940
+one physical
+
+963
+00:24:33,940 --> 00:24:34,700
+memory that
+
+964
+00:24:34,700 --> 00:24:35,400
+will be shared
+
+965
+00:24:35,400 --> 00:24:35,980
+among
+
+966
+00:24:35,980 --> 00:24:37,000
+multiple
+
+967
+00:24:37,000 --> 00:24:37,720
+processes,
+
+968
+00:24:37,720 --> 00:24:41,040
+right,
+
+969
+00:24:41,140 --> 00:24:41,600
+so this
+
+970
+00:24:41,600 --> 00:24:43,920
+basically is
+
+971
+00:24:43,920 --> 00:24:44,800
+for
+
+972
+00:24:44,800 --> 00:24:45,820
+this
+
+973
+00:24:45,820 --> 00:24:46,460
+video
+
+974
+00:24:46,460 --> 00:24:47,040
+recording
+
+975
+00:24:47,040 --> 00:24:47,840
+of
+
+976
+00:24:47,840 --> 00:24:48,780
+this part
+
+977
+00:24:48,780 --> 00:24:49,360
+of lecture,
+
+978
+00:24:49,720 --> 00:24:49,880
+right,
+
+979
+00:24:49,940 --> 00:24:50,180
+so it's
+
+980
+00:24:50,180 --> 00:24:50,940
+mainly focused
+
+981
+00:24:50,940 --> 00:24:52,020
+on the
+
+982
+00:24:52,020 --> 00:24:52,620
+introduction
+
+983
+00:24:52,620 --> 00:24:53,640
+of the
+
+984
+00:24:53,640 --> 00:24:54,060
+memory
+
+985
+00:24:54,060 --> 00:24:54,540
+management
+
+986
+00:24:54,540 --> 00:24:56,120
+and in
+
+987
+00:24:56,120 --> 00:24:56,700
+particular
+
+988
+00:24:56,700 --> 00:24:57,700
+address
+
+989
+00:24:57,700 --> 00:24:58,020
+binding
+
+990
+00:24:58,020 --> 00:24:58,520
+issues.
+
+991
+00:24:59,520 --> 00:25:00,140
+In the
+
+992
+00:25:00,140 --> 00:25:00,880
+next video
+
+993
+00:25:00,880 --> 00:25:01,440
+recording,
+
+994
+00:25:02,000 --> 00:25:02,320
+we will
+
+995
+00:25:02,320 --> 00:25:02,860
+look at
+
+996
+00:25:02,860 --> 00:25:04,440
+contiguous
+
+997
+00:25:04,440 --> 00:25:05,160
+memory
+
+998
+00:25:05,160 --> 00:25:05,800
+management
+
+999
+00:25:05,800 --> 00:25:06,600
+techniques.
+

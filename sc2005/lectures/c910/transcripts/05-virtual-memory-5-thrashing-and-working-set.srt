@@ -1,0 +1,448 @@
+1
+00:00:00,000 --> 00:00:05,000
+This recording is about the thrashing.
+
+2
+00:00:05,000 --> 00:00:11,000
+As shown in the figure here, and as what we have already explained,
+
+3
+00:00:11,000 --> 00:00:16,000
+the page for handling involves a lot of overheads.
+
+4
+00:00:16,000 --> 00:00:22,000
+Now let's consider what happens if a process does not have enough frames.
+
+5
+00:00:22,000 --> 00:00:35,000
+And such as if it does not have the minimum number of frames, the process needs to support all pages required during the current stage of execution.
+
+6
+00:00:35,000 --> 00:00:40,000
+So in this case, the process will quickly page forward.
+
+7
+00:00:40,000 --> 00:00:47,000
+And at this time, at this prompt, it must replace some pages.
+
+8
+00:00:47,000 --> 00:00:57,000
+If all pages are in active use, then this will cause either this process or some other processes to have page forward again.
+
+9
+00:00:57,000 --> 00:01:07,000
+So this kind of cumulative effect may cause high paging activities.
+
+10
+00:01:07,000 --> 00:01:12,000
+And when this happens, then the system is in the thrashing stage.
+
+11
+00:01:12,000 --> 00:01:25,000
+When thrashing happens, so the system then may spend most of its time paging in and paging out,
+
+12
+00:01:25,000 --> 00:01:32,000
+and rather than executing instructions, so the CPU utilization will be very low.
+
+13
+00:01:32,000 --> 00:01:41,000
+A common wisdom to improve CPU utilization is to increase the degree of multiprogramming.
+
+14
+00:01:41,000 --> 00:01:50,000
+But under this kind of subtraction situation, if we load more processes into memory for execution,
+
+15
+00:01:50,000 --> 00:01:54,000
+it will only make the memory contention even worse.
+
+16
+00:01:54,000 --> 00:02:01,000
+So we will observe the CPU utilization will drop even further.
+
+17
+00:02:01,000 --> 00:02:07,000
+As shown in the figure here.
+
+18
+00:02:07,000 --> 00:02:20,000
+So initially, when we increase the degree of multiprogramming, the CPU utilization will be increased because there's less chance that all processes are blocked.
+
+19
+00:02:20,000 --> 00:02:30,000
+So the writing process will become more, and the chance to keep CPU busy will be higher.
+
+20
+00:02:30,000 --> 00:02:40,000
+However, upon its reach, at which the average number of frames allocated to each process is inadequate.
+
+21
+00:02:40,000 --> 00:02:49,000
+At this point, then the number of page force rises dramatically and CPU utilization collapses.
+
+22
+00:02:49,000 --> 00:02:52,000
+So this is when the thrashing happens.
+
+23
+00:02:52,000 --> 00:03:03,000
+So when thrashing happens, basically we observe, so the CPU utilization is very low, and there are a lot of paging in, paging out activities.
+
+24
+00:03:03,000 --> 00:03:10,000
+So there are two approaches to deal with the stretching situation.
+
+25
+00:03:10,000 --> 00:03:17,000
+So by using working side model, or by using a page for frequency scheme.
+
+26
+00:03:17,000 --> 00:03:27,000
+As we explained before, the diagram here shows the logical address space of a process.
+
+27
+00:03:27,000 --> 00:03:31,000
+So logical address space of process is always contiguous.
+
+28
+00:03:31,000 --> 00:03:39,000
+So if you're using paging, so this contiguous logical address space will be divided into pages.
+
+29
+00:03:39,000 --> 00:03:47,000
+Then the pages of a process will be loaded into available frames in the physical memory.
+
+30
+00:03:47,000 --> 00:03:52,000
+They are not necessarily to be contiguous.
+
+31
+00:03:52,000 --> 00:04:05,000
+However, the content within a page, no matter is data or instruction, will remain contiguous in the physical memory.
+
+32
+00:04:05,000 --> 00:04:07,000
+The search space is also going to be loaded into the physical memory.
+
+33
+00:04:07,000 --> 00:04:15,000
+To prevent the thrashing, we must provide a process with as many frames as the process required.
+
+34
+00:04:15,000 --> 00:04:21,000
+But how do we know how many frames the process may need?
+
+35
+00:04:21,000 --> 00:04:32,000
+So one strategy is to look at how many frames a process is actually using by using the locality of references.
+
+36
+00:04:32,000 --> 00:04:38,080
+so there are two different types of locality so temporal locality and a special locality
+
+37
+00:04:39,120 --> 00:04:49,760
+so temporal locality means locations referenced to just before are likely to be referenced again
+
+38
+00:04:51,360 --> 00:05:00,240
+so for example except for branch and procedure function calls program execution is sequential
+
+39
+00:05:00,880 --> 00:05:09,520
+and therefore in most cases the last instruction to be fetched immediately follow the last instruction
+
+40
+00:05:09,520 --> 00:05:20,400
+as quoted so another example so most of iterative constructs consist of relatively small number of
+
+41
+00:05:20,400 --> 00:05:27,360
+instructions repeated many times so for the duration of iteration then computation is therefore
+
+42
+00:05:27,360 --> 00:05:38,640
+confined running to a small continuous portion of a program and a special locality means
+
+43
+00:05:39,360 --> 00:05:49,040
+code and data are usually clustered physically so for instance for a short period of time references
+
+44
+00:05:49,040 --> 00:05:58,160
+two instructions tend to be localized to a few procedures and the code of a procedure is most
+
+45
+00:05:58,160 --> 00:06:08,560
+likely placed contiguously in process address space in many programs much of the computation involves a
+
+46
+00:06:08,560 --> 00:06:17,280
+processing data structure such as arrays and a sequence of records and in many cases successful
+
+47
+00:06:18,400 --> 00:06:25,440
+references to these data structures require access to closely located data items
+
+48
+00:06:27,200 --> 00:06:35,200
+with this principle of locality and therefore the assumption that only a few pages of a process
+
+49
+00:06:35,200 --> 00:06:45,600
+a process will be required over a short period of time is valid in addition it should be possible to make
+
+50
+00:06:45,600 --> 00:06:53,760
+intelligent guess about which pages a process will be needed in the near future in order to avoid
+
+51
+00:06:53,760 --> 00:06:59,840
+thrashing so these observations lead to the working site model
+
+52
+00:06:59,840 --> 00:07:14,240
+details arelt here are two examples to illustrate the concept of locality so in this small code fragment so that generates a sum of elements in an array
+
+53
+00:07:14,880 --> 00:07:28,880
+they're both temporal and a special locality so for temporal locality so variable sum is referenced in each iteration
+
+54
+00:07:29,840 --> 00:07:39,680
+during the loop execution and this instruction is also executed in every iteration during the loop
+
+55
+00:07:40,640 --> 00:07:52,480
+execution for special locality so elements of this array are exercised in consecutive manner
+
+56
+00:07:52,480 --> 00:08:01,200
+in the code and are placed contiguously in present address space and instructions in this code fragment
+
+57
+00:08:02,560 --> 00:08:07,760
+are also placed contiguously in process logical address space
+
+58
+00:08:12,640 --> 00:08:21,280
+so one way to confirm the principle of locality is to look at the logical memory access pattern of
+
+59
+00:08:21,280 --> 00:08:30,320
+a process so this figure illustrates the concept of locality and how a process locality change over time
+
+60
+00:08:31,520 --> 00:08:39,520
+so at the time a the locality of this process is this side of pages
+
+61
+00:08:41,920 --> 00:08:50,480
+and the locality will change to a different set of pages at time b but notice that
+
+62
+00:08:50,480 --> 00:08:59,840
+there are some overlaps as some pages for example page 18 19 and 20 are part of both locality
+
+63
+00:09:01,440 --> 00:09:10,400
+so this figure showing on this slide is a quite famous diagram that dramatically illustrates the
+
+64
+00:09:10,400 --> 00:09:17,520
+principle of locality and you can find this diagram in almost all the os textbooks
+
+65
+00:09:17,520 --> 00:09:27,280
+the right there is a direct relationship between the working side of process and its page forward rate
+
+66
+00:09:28,000 --> 00:09:38,080
+so typically the working side of process changes over time as references to data and code sections move from
+
+67
+00:09:38,080 --> 00:09:41,280
+one locality to another locality
+
+68
+00:09:43,520 --> 00:09:48,320
+assuming there is a sufficient memory to store the working side of process
+
+69
+00:09:49,280 --> 00:09:56,720
+the page forward rate of a process will transit between peak and the values over time
+
+70
+00:09:56,720 --> 00:10:08,640
+a peak in the page forward rate occurs when we begin demand paging of a new locality
+
+71
+00:10:09,520 --> 00:10:17,680
+however once the working side of this new locality is in the memory the page forward rate will fall
+
+72
+00:10:17,680 --> 00:10:39,360
+the page forward rate rise towards the peak again and return to a low rate once the new working side is loaded into the memory
+
+73
+00:10:39,360 --> 00:10:52,640
+the span of the time between the start of one peak to the start of the next peak representing the transition
+
+74
+00:10:53,600 --> 00:10:58,400
+from the previous working side to the current working side
+
+75
+00:10:58,400 --> 00:11:10,880
+a working side is defined using a working side window so which is a fixed number of page references
+
+76
+00:11:12,400 --> 00:11:16,400
+and for example if the working side window is 10
+
+77
+00:11:17,440 --> 00:11:25,600
+then we can define the determine the pages in the working side using the last 10 page references
+
+78
+00:11:25,600 --> 00:11:34,560
+so at the time t1 if you look at the last 10 page references in the working side window
+
+79
+00:11:35,120 --> 00:11:43,920
+then we know the working side at this time instance will consist of page 1 2 5 6 and 7
+
+80
+00:11:45,200 --> 00:11:52,560
+so the process may changing locality from time to time so at time t2 for instance
+
+81
+00:11:52,560 --> 00:12:05,040
+so if you look at the last 10 page references then the page reference within this time window will only consist of page 3 and 4
+
+82
+00:12:07,760 --> 00:12:12,960
+now let's look at how the working side can be used to control thrashing
+
+83
+00:12:12,960 --> 00:12:23,120
+so let's define the working side size of a process pi by using the total number of pages
+
+84
+00:12:23,120 --> 00:12:36,480
+referenced in the most recent working side window and d there is a summation of all the working side size of all the processes
+
+85
+00:12:36,480 --> 00:12:45,200
+that's currently in the memory so d basically will specify the total memory demand for
+
+86
+00:12:46,240 --> 00:12:53,840
+all the current processes in the memory right so that's basically the total number of active pages
+
+87
+00:12:54,400 --> 00:13:03,200
+required by the processes at the current stage of execution and i am is the total number of frames
+
+88
+00:13:03,200 --> 00:13:18,880
+so if d is larger than m meaning if the total demand to accommodate all the active pages of all the processes that's currently in the memory
+
+89
+00:13:19,440 --> 00:13:28,320
+is larger than the available frames in the physical memory then we know the system is currently thrashing
+
+90
+00:13:28,320 --> 00:13:40,800
+when d is greater than m the system is thrashing then what os can do is to suspend some of the processes
+
+91
+00:13:41,680 --> 00:13:51,840
+by suspending a process may mean to swap out the processes when we swap out a process then the frames
+
+92
+00:13:51,840 --> 00:13:59,600
+occupied by the process will become available then can be reassigned to other processes
+
+93
+00:14:00,960 --> 00:14:08,240
+the main problem of working side model is the optimal value of the working side window is unknown
+
+94
+00:14:09,600 --> 00:14:18,000
+if the size of working side window is too small it will not encompass the entire locality
+
+95
+00:14:18,000 --> 00:14:27,840
+the size of the working side window is too large then it will contain several localities
+
+96
+00:14:30,880 --> 00:14:39,600
+the second approach to deal with the threshing is to use page frequency scheme so using this scheme
+
+97
+00:14:39,600 --> 00:14:51,280
+the first establish an acceptable page for read for a process lower bound page for read and upper bound for the page for read
+
+98
+00:14:52,480 --> 00:15:03,360
+then os maintain the list of three available frames if actual page for read of the process is lower than the lower bound
+
+99
+00:15:03,360 --> 00:15:17,200
+the frame for the process the frame for the process will be removed and added to the free available frame list
+
+100
+00:15:18,800 --> 00:15:28,320
+if actual page for read is higher than the upper bound so that indicating the process requires more frames
+
+101
+00:15:28,320 --> 00:15:34,000
+it will be removed and added to the position of the process for read it will be removed and added to the process
+
+102
+00:15:34,000 --> 00:15:36,960
+from the free available frame list
+
+103
+00:15:39,120 --> 00:15:47,920
+if the free available frame list is empty then this case then os need to swap out a process
+
+104
+00:15:48,640 --> 00:15:52,720
+to free up the frames occupied by that process
+
+105
+00:15:52,720 --> 00:16:02,560
+In summary, thrashing happens when there are too many processes loaded into memory for execution.
+
+106
+00:16:03,840 --> 00:16:10,960
+A system under thrashing will spend more time paging than execution, and the thrashing can
+
+107
+00:16:10,960 --> 00:16:17,360
+be handled by using either working site model or page for frequency scheme.
+
+108
+00:16:17,360 --> 00:16:25,680
+A locality represents a site of pages that are actively used together.
+
+109
+00:16:26,720 --> 00:16:32,160
+As a process executes it moves from one locality to another.
+
+110
+00:16:32,960 --> 00:16:43,120
+A working site is based on locality and is defined as a site of pages currently in use by a process.
+
+111
+00:16:43,120 --> 00:16:53,680
+No matter using working site model or page for frequency scheme, ORS may need to swap out
+
+112
+00:16:53,680 --> 00:17:05,440
+some processes in order to free up memory space occupied by this process.
+

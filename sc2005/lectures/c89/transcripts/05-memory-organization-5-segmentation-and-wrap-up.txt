@@ -1,0 +1,162 @@
+[00:00] This is the last part of the lecture, memory organization. So in this part of lecture, we look at
+memory allocation by using segmentation approach. So using segmentation, a logical address space
+consists of a collection of segments. So this is different from paging. So for paging, a logical
+address space basically is a sequence of bytes, one dimensional sequence of bytes. But for
+segmentation, a logical address space consists of a collection of segments. So what is a segment? A
+segment basically is a logical unit of a program. For instance, a segment can be a subroutine, a
+segment can be a specific data structure used in your program.
+
+[01:04] A segment can be the main program. So each segment is a sequence of bytes. So different from paging,
+different segments may have different sizes. So segments can be of variable size. And to do the
+memory allocation, then we need to do the memory allocation for all the segments in the logical
+address space. So these segments may not be located contiguously in the physical memory. They can be
+at different places in the physical memory. So that's why this segmentation scheme is also under the
+non-contiguous memory allocation category. Now let's look at an example. So for instance, in this
+case, so we have this logical address space.
+
+[02:02] So this logical address space consists of four segments. Then to load this logical address space,
+this process into the memory. Then we need to locate the memory space for every segment in this
+logical address space. So these segments are not located contiguously in the physical memory. So
+segment one is here, and two is here, three is here, and four is here. Then if you're using this
+segmentation scheme, then what will be the logical address format? So for instance, if we try to
+locate this particular position in the logical address space, then first of all, we need to know, so
+this position is in which segment?
+
+[03:00] And second, then we need to know what is the offset of this position within that segment. So that's
+basically means, so for logical address format, by using the segmentation scheme, the format will be
+in this form, right? So the logical address will consist of two components, the segment number and
+offset. So similar to paging scheme, right? So under segmentation scheme, then there's a segment
+table, right? So the segment table basically will keep track. So which segment is located in which
+part of memory? So the number of entries in the segment table is equal to the number of segments in
+the logical address space, right?
+
+[03:59] So for instance, in this example, there are four segments in the logical address space. So there
+were four entries in the segment table. So each entry that contains two pieces of information, base
+and the limit. So base is the starting address of the segment. So where is that segment located in
+the physical memory, the starting address of that segment in the physical memory, right? And the
+limit, so limit basically is the size of the segment, right? So how big that segment is, so how much
+memory space that segment occupies. So again, similar to the page table, this segment table is also
+in the memory, also stored in the memory, right?
+
+[04:56] To locate where the segment table is for the process in the running state, then these two system
+registers will be used, right? The segment table base register and the segment table lens register.
+So segment table base register will point into the beginning address, starting address of where
+segment table is located in the physical memory. And the segment table lens register will indicate
+the size of the segment table, right? So this is for the process in the running state. When the
+process is not in the running state, then these two values will be saved in the process control
+block, PCB, right? Now let's look at the address translation for segmentation, right?
+
+[05:53] So given our logical address, right? So in this format, so segment number and offset, right? And
+first of all, we use the segment number to index into the segment table to locate a corresponding
+entry. So from the entry, so we obtain the base and the limit. And first of all, we use the base and
+limit. We use the limit, right? To check against the offset, right? To check. So what's not offset
+is less than the limit. If offset is larger than or equal to the limit. So that's basically means,
+so the corresponding address is illegal, right? So in this case, so the address refers to some
+mirrors all side, that segment, right?
+
+[06:51] Then it's illegal, right? So if this condition is not true, right? So offset is larger than or equal
+to limit. Then the address is an illegal address in this case. So it's an error, right? Then a trap
+will be generated. So this will be handled by OS. If this condition is true, right? Offset is less
+than the limit. Then address is a valid address. If this is a valid address, then to generate the
+physical address, we add the offset to the base. So that will give you the physical address, right?
+Now, so illustrate this, right? So this is the base, right? So that's where the segment is located
+in the physical memory, right?
+
+[07:42] And this is the limit, right? And this is the offset. This is the offset, right? Then the physical
+address basically is the base plus the offset. So that gives you the physical address, right? So
+that's how the address translation is done, using the segmentation scheme. So we'll go back to the
+laser puncture, right? Okay, now let's look at the specific example, right? So again, in this
+example, so we have four segments in the logical address space, right? So segment 0 is here, and 1,
+2, 3, and 4, right? So to load this logical address space, to load this preset into the physical
+memory, then we need to do memory allocation for every segment in this logical address space, right?
+
+[08:47] Then we have a segment table, so that we keep track where the segment is in the physical memory. So
+segment 0, so the base is 1, 4, 0, 0, right? So the beginning address of this segment is 1, 4, 0, 0,
+and the size of this segment is 1,000. And segment 1, the base address is 3, 0, 0, so segment 1 is
+here. So that's the base address. And the size of this segment is 400, and so on and so forth. So
+there's 1 entry per segment in the segment table. Now, give this logical address, right? So this
+logical address refers to this specific location in the logical address space. So it's segment 3,
+segment 3 is here, right?
+
+[09:42] And offset, 1, 2, 8, right? So this segment 3, and the offset here is 1, 2, 8, right? So this
+logical address refers to this particular location, right? And the segment 3 is mapped into the
+physical memory, mapped to here. So this segment 3 is here, right? So the position, the location
+which we try to access is here, in the physical memory, right? So this is offset, 1, 2, 8, right?
+And this is the base, okay? Now let's look at how we translate from this logical address to the
+physical address in this case. Right? Okay? Now, first of all, given this logical address, we know,
+so this address is inside segment 3, right?
+
+[10:52] So we do the segment table lookup. So this is entry we need to access. From this entry, then we
+obtain the base and the limit. Right? So we have base and the limit. Now, we need to use the limit
+to check against the offset. So in this case, the offset is 1, 2, 8, which is less than the limit.
+So that means the address which we try to access is within the segment is legal. Right? So it's
+legal. So then we will proceed to do the address translation, but adding the offset to the base to
+form the physical address. Right? So again, if I write, okay, the pin, okay, so this is the position
+we try to access, right?
+
+[11:53] So this position in the physical memory, so it's base 3200, plus the offset 128. Right? So that's
+where this location is in the physical memory. Right? So that's the place which we try to access.
+You have to get as a data or instruction, right? In the physical memory. All right. So that's the
+address translation for the segmentation scheme. Right? Right. Then to assign a memory space for a
+segment. So recall, to do the memory allocation using the segmentation, then we need to assign the
+memory space for every single segment in the logical address space. Right? So the logical address
+space is a collection of segment.
+
+[12:52] Right? Then to assign a memory location for a specific segment. Then what we need to do? Basically
+is we need to find a large enough hole in the physical memory for that segment. To locate a large
+enough hole in the physical memory. So recall, so the last lecture, so we cover, right? So the,
+right, as actually it's in the first lecture, when we cover the contiguous memory location, the
+variable partitioning, then we have a storage allocation policies, also best fit, worse-speed, first
+fit, right? And so on. So these storage allocation policies, then in this case, can be used, right?
+To find a large enough hole for a given segment, right?
+
+[13:42] To do the memory allocation for a specific segment. So similar to the variable partitioning, under
+the contiguous memory allocation, right? For segmentation, so in this case, it's also suffered from
+internal fragmentation, right? So when process created and terminated, then the memory will become
+fragmented, right? There may be holes that are too small to be useful. So this holes in between
+allocated memory space. So that's external fragmentation. All right, so that's for basically for the
+segmentation, right? Now let's wrap up this part of OS, the memory allocation, right? So we have to
+do the memory allocation, right?
+
+[14:37] So for memory allocation, so under this part of lecture, so we cover different approaches. So we
+cover the fixed partitioning and the dynamic partitioning, and the contiguous allocation schemes.
+Then we also cover the paging and segmentation and then non-contiguous memory allocation schemes. So
+in particular, we also covered this specific issue. So that's fragmentation issue. So we have two
+different types of fragmentations. So internal versus external fragmentation. So internal
+fragmentation refers to the memory space that's allocated to a process that's not really in use.
+That's visited. So that's internal fragmentation.
+
+[15:36] So this happens if you're using fixed partitioning or paging. And internal fragmentation refers to
+the unusable memory space in between allocated partitions. So that's holes, the memory holes, that's
+too small to be useful. So this happens, the internal fragmentation happens when we're using either
+dynamic partitioning or segmentation. So to execute instructions, the CPU may generate memory
+references. So those references will refer to the logical address space of a process. So there's one
+logical address space for every process. So when CPU is getting instruction, the references,
+location references generated,
+
+[16:40] so that's refers to the logical address space of a process. Then in order to access the physical
+memory, to get the required data or instruction, then this logical address space must translate into
+the physical address space. This logical address must translate into the physical address. So how
+this logical address can be translated into the physical address? So that's depending on the memory
+allocation approach. So we covered under the contiguous allocation. So this translation from logical
+to physical address basically rely on this relocation register. Then for paging, we also covered the
+number of address translation schemes.
+
+[17:32] So we covered the basic scheme. So given a logical address, then we divide it into page number and
+offset. So we used the page number to index into the page table, locate entry. From entry, we have
+frame number and frame number together with the offset to form the physical address. Then we also
+covered all the address translation can be carried out if you're using the translation look-aside
+buffer. So we didn't cover multi-level paging. So if you're interested, then you can look at the
+textbook to get more information regarding all this multi-level paging can be carried out. But we do
+cover the inverted page table.
+
+[18:19] So using inverted page table, then in this case, instead of one page table for each process, then in
+this case, so this system only maintain one inverted page table. So this single inverted page table,
+then will be shared among all the processes. And using inverted page table, then in this case, given
+a logical address, then we prefix that logical address with the PID, process ID. Then we use the
+process ID and page number to search the inverted page table to locate matching entry. If a matching
+entry is located at entry i, so that means the page of this process is mapped in frame i. Then we
+use this i together with the offset to form the physical address.
+
+[19:17] All right, so that's basically all for the memory allocation. Right. And the next part of lecture
+will be on the virtual memory support.
