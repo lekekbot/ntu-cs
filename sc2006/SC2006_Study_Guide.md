@@ -1,6 +1,6 @@
-# SC2006 / CE2006 / CZ2006 — Software Engineering: Complete Study Guide
+# SC2006 / CE2006 / CZ2006 — Software Engineering: Study Guide
 
-> Built from the SC2006 lecture decks (L1–L9, L12–L18, 2026 versions), the tutorial set (T1–T9), the
+> Built from the supplied SC2006 lecture decks (L1–L6, L8–L9, L12–L18, including 2026 versions), the tutorial set (T1–T9), the
 > Grain Elevator System (GES) case-study supplement, the SRS notes, and the UML specification notes.
 > Assessment context: tutorials 5% · group project 45% (labs 3×5%, demo 15%, docs 15%) · **exam 50%**.
 
@@ -30,18 +30,29 @@
 19. [Sample questions — Challenging / exam-style](#19-sample-questions--challenging--exam-style)
 20. [The trap compendium](#20-the-trap-compendium)
 21. [Last-24-hours revision sheet](#21-last-24-hours-revision-sheet)
-22. [Appendix: the guest lectures (AI engineering — context, likely non-core)](#22-appendix-the-guest-lectures-ai-engineering--context-likely-non-core)
+22. [Appendix: AI engineering and agentic development](#22-appendix-ai-engineering-and-agentic-development)
+23. [Source map and audit notes](#23-source-map-and-audit-notes)
 
 ---
 
 ## 0. How to use this guide
 
-### What SC2006 exam questions actually look like
+**Source check (28 October 2026).** Core explanations follow the local lecture decks, the nine
+Tutorial Questions and the two-page GES supplement. Section 23 maps topics to source pages and
+records source conflicts. Tutorial solutions and practice answers are reasoned examples, not official
+model answers. The supplied files do not establish exam frequency, guaranteed marks or exclusions.
 
-The course is **diagram + judgement**, not memorisation. Nearly every topic reduces to one of five
-question shapes:
+**Conventions.** Use course terminology when answering course questions. Historical Scrum wording
+and the course's reduced BV test selection are identified explicitly. Assumptions in worked designs
+are not additional client requirements. All visual diagrams use Mermaid; where Mermaid cannot show
+exact UML notation, the accompanying text specifies what to draw in UML.
 
-| Shape                    | Typical wording                                                                                            | What earns marks                                                                                                 |
+### Practice question shapes
+
+The lectures and tutorials combine definitions, modelling, design judgement and test design.
+Use these five question shapes for practice; they are not a prediction of the exam:
+
+| Shape                    | Typical wording                                                                                            | What to include                                                                                                 |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | **Define / distinguish** | "Differentiate requirement elicitation from requirement analysis."                                         | A two-column distinction, then _why it matters_ (artefact produced)                                              |
 | **Atomise / critique**   | "Rewrite this requirement so it is atomic and verifiable."                                                 | Numbered sub-requirements, measurable thresholds, no banned words                                                |
@@ -49,13 +60,13 @@ question shapes:
 | **Apply a pattern**      | "Identify the design problem and apply the appropriate pattern; draw the class diagram and explain roles." | Problem statement in _their_ vocabulary, pattern name, correct arrow/diamond notation, role table, trade-off     |
 | **Design tests**         | "Determine ECs and BVs and systematically design test cases."                                              | Full partition (incl. out-of-universe inputs), boundary triplets, **exactly one invalid per row**, oracle column |
 
-### Answer template that scores
+### Suggested pattern-answer structure
 
 For any "design problem → pattern" question, write in this fixed order:
 
 1. **Symptom** — name the smell ("the client is tightly coupled to N concrete classes").
 2. **Force** — what must stay flexible ("new protocols must be addable without editing the client").
-3. **Pattern** — name it (+ GoF category).
+3. **Pattern** — name it (+ GoF category where applicable; Simple Factory is not a GoF entry).
 4. **Structure** — class diagram with the _abstract_ role names (Context/Strategy/ConcreteStrategy…).
 5. **Roles** — one line per class.
 6. **Consequence** — one pro, one con, and the principle it satisfies (usually OCP / low coupling).
@@ -64,24 +75,12 @@ For any "design problem → pattern" question, write in this fixed order:
 
 ## 1. The spine of the course: SDLC → artefacts
 
-Everything in this course is one pipeline. Learn the pipeline before the details.
-
-```
-Requirements            Design                     Build      Verify        Evolve
-─────────────           ──────────────────────     ─────      ──────        ──────
-Elicitation  ──►  Analysis  ──►  System Design ──► Object Design ──► Impl ──► Testing ──► Maintenance
-   │                  │                │                  │              │           │
-   ▼                  ▼                ▼                  ▼              ▼           ▼
-  PMS, SRS       conceptual model   architecture      detailed      source     test cases
-  use case model class diagram      (components +     class diagram  code      (EC/BV tables,
-  data dictionary sequence diagram   connectors)      + patterns               CFG, basis paths)
-  UI prototype    state machine      layers/styles     sequence diag
-                  activity diagram
-```
+The SDLC diagram connects activities and work products. Activities iterate in practice; the SRS
+results from **elicitation and analysis**, and test design begins before test execution.
 
 ```mermaid
 flowchart LR
-    E["<b>1 Elicitation</b><br/>PMS, SRS<br/>use case model<br/>data dictionary<br/>UI prototype"] --> A["<b>2 Analysis</b><br/>conceptual model<br/>class diagram<br/>sequence diagram<br/>state machine<br/>activity diagram"]
+    E["<b>1 Elicitation</b><br/>PMS, draft requirements<br/>use case model<br/>data dictionary<br/>UI prototype"] --> A["<b>2 Analysis</b><br/>SRS with analysis model<br/>class diagram<br/>sequence diagram<br/>state machine<br/>activity diagram"]
     A --> SD["<b>3 System Design</b><br/>architecture<br/>(components +<br/>connectors)<br/>layers / styles"]
     SD --> OD["<b>4 Object Design</b><br/>detailed<br/>class diagram<br/>+ patterns<br/>sequence diagrams"]
     OD --> IM["<b>5 Implementation</b><br/>source code"]
@@ -89,14 +88,14 @@ flowchart LR
     T --> M["<b>7 Maintenance</b><br/>change requests<br/>patches, upgrades"]
 ```
 
-### Milestones and work products (L1, examinable table)
+### Milestones and work products (L1 work-product table)
 
 | Phase                      | Work products / milestones                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------- |
 | Requirements specification | SRS, prototype, requirements review                                                             |
-| Design                     | Software Design Document, Interface Design Document, models, preliminary & final design reviews |
+| Design | Software Design Document, Interface Design Document, models, **test cases**; preliminary & final design reviews |
 | Implementation             | Source code, system build, technical documentation, user manual                                 |
-| Testing                    | Test cases, test report, user acceptance test                                                   |
+| Testing                    | Test execution, test report, user acceptance test                                                   |
 | Maintenance                | Change request, bug report, patch release, upgrade                                              |
 
 ### Definition to memorise
@@ -114,14 +113,9 @@ Four testable clauses: **maintainable**, **fault-free**, **meets requirements**,
 > ⚠️ **Trap:** the SDLC _activities_ and the _process models_ are different things. Waterfall /
 > incremental / reuse-oriented are **models** (arrangements of the activities). MVC / layered /
 > client–server are **architectures**. Design patterns are **micro-architectures**. Mixing these
-> three vocabularies is the single most common way to lose easy marks.
+> three vocabularies is a terminology mistake; distinguish these levels.
 
 ### Requirement → analysis → design traceability chain
-
-```
-Functional requirement ──► Use case ──► Sequence diagram ──► Operation on a class ──► Test case
-Non-functional req.    ──► Architecture / pattern choice ──► Design rationale ──► Performance test
-```
 
 ```mermaid
 flowchart LR
@@ -146,8 +140,8 @@ Two or three sentences that define:
 > approved for release by the FactFinding Organisation. This project supports the International
 > Travel Watchdogs objective to ensure air passengers can openly compare airlines."_
 
-**Trap:** a mission statement is **not** the SRS purpose statement and **not** a list of features.
-If you write features, you have answered the wrong question.
+**Distinction:** a mission statement summarises purpose, stakeholders and benefits, rather than listing detailed features.
+The SRS product-description section can include that mission statement (Writing SRS, pp. 7–8).
 
 ### 2.2 Elicitation techniques (six — memorise the list)
 
@@ -186,7 +180,7 @@ prototype). Both are correct; state the purpose.
 | The system must verify membership with the University Account System before a loan   | **FR**                               | Interface with another system                            |
 | 80% of first-time users must enter a simple search query within 2 minutes            | **NFR** (usability)                  | Measurable quality target                                |
 | The system must log the event when the email server is unreachable                   | **FR**                               | Functionality (though see §3 — may be an exception flow) |
-| The system must be user-friendly                                                     | **Neither** — it is _not verifiable_ | No threshold, no oracle                                  |
+| The system must be user-friendly | **NFR, but not verifiable as written** | Usability intent; needs a measurable criterion |
 
 > ⚠️ **Trap:** the "control up to six robot arms" example is **functional** (number of controllable
 > devices is a capability), while "response within 2 seconds" is **performance/NFR**. Do not classify
@@ -222,6 +216,8 @@ to track dependencies among requirements, system functions and system components
 > (modifiability); traceability is the **link** forwards (to design/code/test) and backwards (to source).
 
 ### 2.5 Data dictionary (problem-domain glossary)
+
+The table below is the lecture's **illustrative university domain**, not a statement of NTU's academic calendar.
 
 - Ensures _consistent, unambiguous terminology_ that all stakeholders agree on.
 - Defines **problem-domain** terms (Programme of Study, Course, Lecture, Tutorial, Class, Laboratory,
@@ -269,7 +265,7 @@ Repeat 1–2 **until** all uncertainties and ambiguities in functional, non-func
 data-dictionary terms are agreed with the client. A prototype may be produced to show intended
 functionality. **Minimise the number of meetings by making meetings productive.**
 
-> ⚠️ **Trap:** "Do not guess the user requirements" is explicitly examinable — the correct answer to
+> ⚠️ **Trap:** "Do not guess the user requirements" is an explicit lecture instruction — the correct answer to
 > a missing requirement is **TBD + ask the client**, not "assume a sensible default".
 
 ---
@@ -280,24 +276,25 @@ functionality. **Minimise the number of meetings by making meetings productive.*
 
 UML = _a graphical notation with textual annotation for specifying, documenting and communicating
 structure, functionality and dynamic behaviour of complex software systems._ Booch + Jacobson +
-Rumbaugh, 1996; v1.1 adopted by OMG 1997; latest 2.5 (2015).
+Rumbaugh; the lecture gives UML 1.1 adoption in 1997 and refers to UML 2.5 (2015). These are
+historical references in the supplied slides, not a claim about the current UML release.
 
 | Category                                       | Diagrams                                                                                                     |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| **Structure** (static, "irrespective of time") | Class, Object, Package, Component, Composite Structure, Deployment                                           |
+| **Structure** (static, "irrespective of time") | Class, Object, Package, Component, Composite Structure, Deployment (L3 list)                                           |
 | **Behaviour** (dynamic)                        | **Use Case**, **Activity**, **State Machine**, **Sequence**, **Communication**, Interaction Overview, Timing |
 
-Course focus (the ones you will be asked to draw): **use case, class, sequence, state machine,
+Course modelling focus: **use case, class, sequence, state machine,
 activity** (communication/object appear in the SRS figure list).
 
 **Trap:** UML is **not** a programming language and **not** a method. "Only use the diagrams that are
-useful and necessary to define the system" — drawing all 14 is a _negative_ signal.
+useful and necessary to define the system" — select diagrams for the modelling need rather than drawing every diagram type.
 
 ### 3.2 Use case model = static + dynamic
 
 > **Use case model = Use case diagram (static) + Use case descriptions (dynamic).**
 
-The diagram alone is worth little; the description carries the marks.
+The diagram identifies relationships; the description specifies the behaviour. Supply both when requested.
 
 ### 3.3 Diagram elements
 
@@ -311,7 +308,7 @@ The diagram alone is worth little; the description carries the marks.
 | **«include»**       | Dashed arrow from base → included                      | Base **always** performs the included behaviour                                      |
 | **«extend»**        | Dashed arrow from extending → base                     | Extending behaviour is **optional/conditional**                                      |
 
-### 3.4 «include» vs «extend» — the highest-frequency exam pair
+### 3.4 «include» vs «extend» — decomposition, reuse and optional behaviour
 
 |                 | **«include»**                                                                                                            | **«extend»**                                        |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- |
@@ -325,7 +322,8 @@ The diagram alone is worth little; the description carries the marks.
 > **"include points to the helper; extend points to the host."**
 >
 > ⚠️ **Trap #2 (exclusive use).** If the behaviour _always_ happens, it is **include**, not extend.
-> If it happens _only sometimes_ (help requested, insufficient funds, network down), it is **extend**.
+> If behaviour is conditional, first decide whether it belongs in an alternative/exception flow or a
+> separate extending use case. Conditional behaviour alone does not require **extend**.
 >
 > ⚠️ **Trap #3.** "A includes B" is read as _"an instance of A performs all the behaviour of B —
 > A delegates to B."_ It is **not** "B is part of A's name".
@@ -413,11 +411,11 @@ Use the Library Management System drill (L3):
    reasoning.
 5. **Write the description** for the use cases the question names.
 
-**Trap — "verify membership" is a _sub-goal_, not always a top-level UC.** The lecture deliberately
-shows three valid diagrams: (1) Verify Member as a standalone UC associated with the Member;
-(2) Login as an «include» of Select Courses / Manage Curriculum / Find Course Schedule;
-(3) Verify Member as an «include» of Loan Material. All are defensible; **state your choice and why**
-(usually "reuse: several use cases need it"). Marks are for justification, not for a single blessed answer.
+**Lecture comparison.** L3, pp. 20–22, shows three candidate library diagrams, including different
+choices of actor and authentication behaviour. Do not treat every candidate as an approved solution.
+Trace each element to the stated requirements: membership verification is required before a loan;
+Login is not stated for the library example. L4, pp. 12–16, separately uses Login in the course
+registration example. Explain the system boundary and reuse choice.
 
 **Trap — actors vs system internals.** "Database", "Sensor" (if part of the system's own hardware),
 "UI" are **not** actors. But an **external** University Account System, CITS Email Server, Billing
@@ -431,7 +429,7 @@ Do not draw duplicate Logins.
 
 ## 4. Requirements analysis: conceptual model & class diagrams (L5)
 
-### 4.1 Elicitation vs analysis (a guaranteed 2–4 mark question)
+### 4.1 Elicitation vs analysis (L5 distinction)
 
 |             | **Requirements elicitation**                                     | **Requirements analysis**                                                                            |
 | ----------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -455,17 +453,6 @@ Documented in a **class diagram**: Object → Class; Roles of the object → Att
 the class.
 
 ### 4.3 Class notation
-
-```
-┌──────────────────────────┐
-│        TarifSchedule     │   ← name (only mandatory element)
-├──────────────────────────┤
-│ zone2price: Table        │   ← attributes, each with a TYPE
-├──────────────────────────┤
-│ getZones(): Enumeration  │   ← operations WITH SIGNATURES
-│ getPrice(Zone): Price    │
-└──────────────────────────┘
-```
 
 ```mermaid
 classDiagram
@@ -517,8 +504,8 @@ classDiagram
     direction LR
     class Person
     class Course
-    Person -- Course : non-navigable
-    note for Course "small x at this end: Course cannot reach Person"
+    Person -- Course : see non-navigability note
+    note for Course "UML x at Course end: Person cannot navigate to Course. Mermaid cannot draw that x."
 ```
 
 ```mermaid
@@ -566,15 +553,15 @@ classDiagram
 ```mermaid
 classDiagram
     direction LR
-    Person "1" -- "*" Head : has
+    Person "1" -- "1" Head : has
 ```
 
 </div>
 
 With multiplicities, the same relationship becomes more precise:
 
-The diagram means that one `Person` has zero or more `Head` objects, and each `Head` belongs to
-exactly one `Person`.
+The diagram follows L5, p. 11: one `Person` has exactly one `Head`, and each `Head` belongs to
+exactly one `Person`. The same slide shows `Polygon "1" -- "*" Point` for one-to-many.
 
 Course reminders: the Mermaid diagrams above show `Car` aggregation with `Engine`, `Book`
 composition with `Page`, and `Lottery` dependency on `Random`.
@@ -591,15 +578,19 @@ composition with `Page`, and `Lottery` dependency on `Random`.
 | `1..6`        | Between one and six    |
 
 **How to read a multiplicity correctly:** the number is written **at the end near the class it
-counts**. In the Mermaid diagram, `Person "1" -- "*" Head` reads as _"one Person has many
-(0.._) Heads"_ and _"each Head belongs to exactly 1 Person"_. The `_`is next to`Head` ⇒
-**many Heads per Person**.
+counts**. `Person "1" -- "1" Head` means one Head per Person and one Person per Head.
+`Polygon "1" -- "*" Point` means zero or more Points per Polygon and one Polygon per Point.
+
+**Notation conflict in sources:** L5, p. 13, draws a filled arrowhead for a concrete superclass.
+The supplied UML specification notes use the UML hollow triangle for generalization. Use a solid
+line and hollow triangle for class inheritance, and a dashed line and hollow triangle for interface
+realisation. Abstract class names are italicised or marked `{abstract}`; Mermaid uses an annotation.
 
 #### One line, two ends — read both ends against the same relationship
 
 Every line is **one** relationship with **two** ends, and each relationship type permits only its
 own adornments. Importing an adornment from a different relationship produces a diagram that is
-not valid UML (a frequent exam deduction).
+not valid UML (a notation error).
 
 | Rule                                                                                                                                                 | Why it matters                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -623,14 +614,15 @@ Worked reading, using the sketches above:
 > write `Engine ◆— Car`, you have said "an Engine is made of Cars".
 >
 > ⚠️ **Trap #2 (aggregation vs composition).** Only composition implies **lifetime dependency** and
-> **exclusive ownership (a part is in at most one composite at a time)**. A `Page` cannot exist
-> without its `Book` ⇒ composition. An `Engine` can be moved to another `Car` ⇒ aggregation.
+> **exclusive ownership (a part is in at most one composite at a time)**. L5 uses Book/Page for
+> composition and Car/Engine for aggregation. Reassignment alone does not distinguish them: a
+> composite part can be detached before deletion. State ownership and lifetime assumptions.
 >
 > ⚠️ **Trap #3 (association vs dependency).** Association = structural, persists in state.
 > Dependency = temporary use (parameter, local variable, return type). "Lottery uses Random" ⇒ dependency.
 >
 > ⚠️ **Trap #4 (multiplicity direction).** Write the multiplicity at **both** ends of every
-> association in the exam; missing multiplicities are marked as incomplete.
+> association in the exam; omitted multiplicities leave the intended counts unspecified.
 >
 > ⚠️ **Trap #5 (generalization drawn as an association).** Multiplicity at **both** ends means the
 > relationship is an **association**. A generalization may **not** carry multiplicities (or role
@@ -639,7 +631,7 @@ Worked reading, using the sketches above:
 >
 > ⚠️ **Trap #6 (triangle direction).** The hollow triangle is attached to the **general** class and
 > the plain end to the **specialised** class: `SavingsAccount ―▷ Account` = "a savings account is a
-> kind of account". A triangle at `SavingsAccount` claims the reverse and scores zero.
+> kind of account". A triangle at `SavingsAccount` reverses the intended meaning.
 >
 > ⚠️ **Trap #7 (plain solid line ≠ bidirectional).** A solid line with no adornment at either end
 > **does not convey navigability** — the direction is unspecified, not "both ways". Navigability is
@@ -649,7 +641,7 @@ Worked reading, using the sketches above:
 
 | Stereotype     | Role                                           | Typical examples                                                 |
 | -------------- | ---------------------------------------------- | ---------------------------------------------------------------- |
-| **«entity»**   | Information tracked by the system (persistent) | `Account`, `Silo`, `Shipment`                                    |
+| **«entity»**   | Information tracked by the system | `Account`, `Silo`, `Shipment`                                    |
 | **«boundary»** | Interaction between an actor and the system    | `LoginForm`, `EntryGate`, `FingerprintReader`                    |
 | **«control»**  | Logic that realises a use case (coordination)  | `FacilityAccessSystem`, `SheetManager`, `RegistrationController` |
 
@@ -657,15 +649,15 @@ Worked example — **EnterSecureFacility**:
 
 > 1. User presses finger on FingerprintReader. 2. FingerprintReader scans and sends image to
 >    FacilityAccessSystem. 3. FacilityAccessSystem validates fingerprint and unlocks EntryGate.
-> 2. EntryGate signals the system it has opened. 5. FacilityAccessSystem locks EntryGate, logs the
+> 4. EntryGate signals the system it has opened. 5. FacilityAccessSystem locks EntryGate, logs the
 >    entry event and increments occupant count.
 
 Classes: `Employee` («entity»), `Fingerprint` («entity»), `FingerprintReader` («boundary»),
 `EntryGate` («boundary»), `FacilityAccessSystem` («control»).
 Relations with stereotypes: `<<read>>`, `<<call>>`, `<<signal>>` (usage dependencies between them).
 
-**Trap:** in the L15 Excel example, the question "Boundary? Control? Entity?" has the answer
-**View + Controller = boundary-ish presentation, Model = entity/control**. The course's mapping is:
+**L15 mapping:** UI event handling is in the presentation boundary; business coordination and
+data are inside the Model. The course's mapping is:
 **(View, Controller) ↔ boundary; Model ↔ entity + control (app logic + data)**.
 
 ### 4.6 Four-step analysis procedure
@@ -712,51 +704,39 @@ at a time (a state) with defined conditions to move (transitions), dialog maps:
 - find **missing or incorrect navigation pathways early**, when they are cheap to fix;
 - spot **reuse opportunities and redundancies** without premature screen design.
 
-**Vending machine dialog map (learn the shape):**
-
-```
-   ● ──► Idle
-Idle         ── insert(c:Coin) ─────────────────────────────► Accumulate
-Accumulate   ── select(i:item) [amount is enough for i] ────► Vend
-Accumulate   ── [amount = 0] ────────────────────────────────► Idle
-Vend         ── [amount > 0] ────────────────────────────────► ReturnChange
-Vend         ── [amount = 0] ────────────────────────────────► Idle
-ReturnChange ── insert(c:Coin) ─────────────────────────────► Accumulate
-```
+**Vending machine dialog map (L6, p. 7):**
 
 ```mermaid
 stateDiagram-v2
     [*] --> Idle : Power On / Reset
-    Idle --> Accumulate : insert(c:Coin)
-    Accumulate --> Vend : select(i:item) [amount is enough for i]
-    Accumulate --> Idle : [amount = 0]
+    Idle --> Accumulate : insert(coin)
+    Accumulate --> Accumulate : insert(coin)
+    Accumulate --> Vend : select(item) [amount is enough for i]
     Vend --> ReturnChange : [amount > 0]
     Vend --> Idle : [amount = 0]
-    ReturnChange --> Accumulate : insert(c:Coin)
+    ReturnChange --> Idle : change returned
     Idle --> [*] : Power Off
 ```
 
-| State        | Entry action                  | Do activity                     |
-| ------------ | ----------------------------- | ------------------------------- |
-| Idle         | `amount := 0`                 | `display(greeting)`             |
-| Accumulate   | `amount := amount + c.amount` | `display(amount)`               |
-| Vend         | `amount := amount − i.cost`   | `dispense(i); display(vending)` |
-| ReturnChange | —                             | `return(amount)`                |
+| State | Entry action | Do activity |
+| --- | --- | --- |
+| Idle | `amount := 0` | `display(greeting)` |
+| Accumulate | `amount := amount + c.amount` | `display(amount)` |
+| Vend | `amount := amount − i.cost` | `dispense(i); display(vending)` |
+| ReturnChange | — | `return(amount)` |
 
-Plus `Power On / Reset → Idle` and `Power Off` (leaves the state machine).
+The lecture types the events as `insert(c:Coin)` and `select(i:item)`; Mermaid labels shorten them
+to avoid a colon parsing limitation. The self-transition on Accumulate re-enters the state and adds the next coin. ReturnChange returns
+to Idle after returning change; the slide leaves that completion transition unlabelled.
 
-Stopwatch practice (from L6): `Ready —Click Start→ Continuous Update (do/Display time elapsed)
-—Click Stop→ Time Paused —Click Start→ Continuous Update —Click Reset→ Ready`, plus `Click Close
-Window` transitions to exit and `entry/Reset time`.
+Stopwatch practice (L6, p. 9): Ready enters with `Reset time`; Start moves Ready to Continuous Update;
+Stop moves Continuous Update to Time Paused; Start resumes. Reset moves **Time Paused to Ready**.
+Close Window exits from each state. Do not invent a Reset transition from Continuous Update.
 
-> ⚠️ **Trap #1.** Do **not** model **actions** as states. "Dispense item" is a `do/` activity inside
-> `Vend`, not a box called _Dispense_.
->
-> ⚠️ **Trap #2.** Every transition out of a decision must carry a **guard**, and guards must be
-> **mutually exclusive** (and collectively exhaustive, or have an `[else]`).
->
-> ⚠️ **Trap #3.** Entry/exit actions run **once**; `do/` runs **while** in the state. Mixing them up
-> is a classic 1-mark loss.
+**State/activity distinction:** a state is a condition; its `do/` activity describes work performed
+while active. An activity may finish before the state is exited. `entry/` and `exit/` execute on each
+entry and exit, including repeated entries. A decision's guards should be mutually exclusive and
+cover the intended cases, with `[else]` where needed.
 
 ### 5.2 Activity diagram
 
@@ -771,22 +751,28 @@ Laundry example: `Sort Clothes in Whites and Darks` → **fork** → (`Wash Whit
 **join** → `Dry Clothes`. Drying loop: `Run Dryer —[still wet]→ Run Dryer`, `Run Dryer —[else]→ Fold Clothes`.
 
 ```mermaid
-flowchart LR
-    S([start]) --> Sort[Sort Clothes in Whites and Darks]
-    Sort --> F1[Fork]
-    F1 --> WW[Wash Whites]
-    F1 --> WD[Wash Darks]
-    WW --> J1[Join]
-    WD --> J1
-    J1 --> Dry[Run Dryer]
-    Dry -->|still wet| Dry
-    Dry -->|else| Fold[Fold Clothes]
-    Fold --> E([end])
+stateDiagram-v2
+    state LaundryFork <<fork>>
+    state LaundryJoin <<join>>
+    state DryCheck <<choice>>
+    [*] --> SortClothes
+    SortClothes --> LaundryFork
+    LaundryFork --> WashWhites
+    LaundryFork --> WashDarks
+    WashWhites --> LaundryJoin
+    WashDarks --> LaundryJoin
+    LaundryJoin --> RunDryer
+    RunDryer --> DryCheck
+    DryCheck --> RunDryer : [still wet]
+    DryCheck --> FoldClothes : [else]
+    FoldClothes --> [*]
 ```
 
-_Mermaid has no thick bar for fork/join, so `Fork` and `Join` are labelled nodes standing in for the bars._
+This Mermaid state-diagram rendering supplies fork/join bars for the **activity workflow**. In UML,
+use action nodes, an activity initial/final node, and guarded decision/merge diamonds. A join
+synchronises concurrent branches; a merge combines alternatives without waiting for every input.
 
-### 5.3 State machine vs activity diagram (guaranteed comparison)
+### 5.3 State machine vs activity diagram (L6 comparison)
 
 |              | **State machine**                                         | **Activity**                                  |
 | ------------ | --------------------------------------------------------- | --------------------------------------------- |
@@ -795,38 +781,39 @@ _Mermaid has no thick bar for fork/join, so `Fork` and `Join` are labelled nodes
 | Focus        | Event-driven **reactive** behaviour                       | Procedural **control flow**, concurrency      |
 | Typical use  | UI navigation (dialog map), protocol/device states        | Business process, algorithm, use-case flow    |
 
-> ⚠️ **Trap:** fork/join are **bars**; decision/merge are **diamonds**. Drawing a diamond for
-> concurrency (or a bar for a branch) loses the mark even if the logic is right.
+> ⚠️ **Trap:** fork/join are **bars**; decision/merge are **diamonds**. A diamond for concurrency
+> or a bar for a conditional branch uses the wrong notation.
 
 ### 5.4 The requirements elicitation & analysis activity diagram (memorise the loop)
 
-1. Study client's initial specification.
-2. Generate initial use case diagram + descriptions + data dictionary + list of
-   uncertainties/ambiguities + functional/non-functional requirements.
-3. **Review requirements with client** (interview, observation, workshop, legacy product study,
-   competitive product study, prototype).
-4. Refine use case diagram/descriptions, data dictionary, uncertainty list.
-   → _[Initial requirements elicitation agreed]_
-5. Identify classes and draw initial class diagrams.
-6. Add associations and multiplicities; add sequence diagrams, state diagrams, activity diagrams and
-   other diagrams; list any new uncertainties.
-7. **Review requirements with client**.
-8. → _[Use case affected]_ → update use cases → 9. Refine class diagrams and other affected diagrams.
-9. → _[Requirements agreed]_ → **Agree and sign off the SRS**.
+1. Study the client's initial specification.
+2. Generate the initial use case diagram/descriptions, data dictionary, FRs/NFRs and uncertainties.
+3. Review requirements with the client.
+4. If elicitation is not agreed, refine those artefacts and repeat the review.
+5. Once initial elicitation is agreed, identify classes and draw initial class diagrams.
+6. Add associations/multiplicities and dynamic diagrams; record new uncertainties.
+7. Review the analysis and requirements with the client.
+8. If use cases are affected, update them.
+9. Refine class diagrams and other affected diagrams; repeat the review.
+10. When requirements are agreed, sign off the SRS.
 
 ```mermaid
 flowchart TD
-    A[1 Study client's initial specification] --> B[2 Generate initial use case diagram + descriptions<br/>+ data dictionary + uncertainty list + FR/NFR]
-    B --> C[3 Review requirements with client]
-    C --> D[4 Refine use case diagram / descriptions,<br/>data dictionary, uncertainty list]
-    D -.->|Initial requirements elicitation agreed| E[5 Identify classes, draw initial class diagrams]
-    E --> F["6 Add associations + multiplicities;<br/>add sequence / state / activity diagrams;<br/>list new uncertainties"]
-    F --> G[7 Review requirements with client]
-    G --> Q{Use case affected?}
-    Q -->|yes| H[8 Update use cases,<br/>refine class diagrams + affected diagrams]
-    H --> G
-    Q -->|no| I[9 Requirements agreed]
-    I --> J[Agree and sign off the SRS]
+    A["1 Study initial specification"] --> B["2 Draft use cases, dictionary, FR/NFR and uncertainties"]
+    B --> C["3 Review with client"]
+    C --> D{"Initial elicitation agreed?"}
+    D -->|no| E["4 Refine elicitation artefacts"]
+    E --> C
+    D -->|yes| F["5 Identify classes and draw initial class diagrams"]
+    F --> G["6 Add relationships, dynamic diagrams and uncertainties"]
+    G --> H["7 Review with client"]
+    H --> I{"Requirements agreed?"}
+    I -->|yes| J["10 Agree and sign off SRS"]
+    I -->|no| K{"Use cases affected?"}
+    K -->|yes| L["8 Update use cases"]
+    K -->|no| M["9 Refine class and other affected diagrams"]
+    L --> M
+    M --> H
 ```
 
 ---
@@ -886,20 +873,36 @@ good practice to **involve a technical writer**.
 
 ### 6.5 Word list (memorise both columns)
 
-| ✓ Use               | Meaning                                                             | ✗ Avoid                        | Why                |
-| ------------------- | ------------------------------------------------------------------- | ------------------------------ | ------------------ |
-| **Shall**           | Dictates provision of a functional capability                       | adequate                       | vague threshold    |
-| **Must / Must not** | Establishes performance requirement or constraint                   | as a minimum                   | unbounded          |
-| **Is required to**  | Imperative in SRS statements                                        | be capable of…                 | avoids commitment  |
-| **Are applicable**  | Includes standards/documentation by reference                       | as applicable / as appropriate | optional           |
-| **Responsible for** | Imperative for pre-defined architectures                            | effective                      | unmeasurable       |
-| **Will**            | Cites what the operational/development **environment** will provide | if possible / if practical     | optional           |
-|                     |                                                                     | timely                         | unmeasurable       |
-|                     |                                                                     | normal                         | undefined baseline |
+**✓ Use these words**
+
+| ✓ Use               | Meaning                                                             |
+| ------------------- | ------------------------------------------------------------------- |
+| **Shall**           | Dictates provision of a functional capability                       |
+| **Must / Must not** | Establishes performance requirement or constraint                   |
+| **Is required to**  | Imperative in SRS statements                                        |
+| **Are applicable**  | Includes standards/documentation by reference                       |
+| **Responsible for** | Imperative for pre-defined architectures                            |
+| **Will**            | Cites what the operational/development **environment** will provide |
+
+**✗ Avoid these words**
+
+| ✗ Avoid                        | Why                |
+| ------------------------------ | ------------------ |
+| adequate                       | vague threshold    |
+| as a minimum                   | unbounded          |
+| be capable of…                 | avoids commitment  |
+| as applicable / as appropriate | optional           |
+| effective                      | unmeasurable       |
+| if possible / if practical     | optional           |
+| timely                         | unmeasurable       |
+| normal                         | undefined baseline |
+
+> The two lists are **independent** — the lecture presents them side by side, so a row on the left
+> is not the "opposite" of the row on the right.
 
 > ⚠️ **Trap (shall vs will).** **Shall** binds the _system_; **will** describes what the
 > _environment_ supplies. "The system **shall** …" is a requirement; "The user **will** provide a
-> valid card" is an assumption about the environment. Swapping them creates an untestable SRS.
+> valid card" is an assumption about the environment. Swapping them blurs responsibility for the behaviour.
 >
 > ⚠️ **Trap (SRS ≠ design).** If your SRS contains "we will use a Singleton factory", you have
 > violated definition 6. Design decisions belong in the SDD.
@@ -979,8 +982,7 @@ Prepare a _reasoned_ answer, not a slogan:
 - **Costs**: requirements churn, integration of heterogeneous components, testing effort grows
   super-linearly with interfaces, coordination cost in teams, environment/tooling/long lifetimes.
 - **Maintenance**: software is soft — it _can_ change, so it _must_ change (new requirements, new
-  platforms, bug fixes). Systems live for decades; 60%+ of lifecycle cost typically sits after first
-  release. Unlike hardware, there is no manufacturing cost, so evolution dominates total cost.
+  platforms, bug fixes). Systems can live for decades; ongoing fixes and adaptation accumulate over that lifetime. Unlike hardware, there is no manufacturing cost, so evolution dominates total cost.
 - **Characteristics affecting development**: size (source/binary/users/developers/lifetime/versions),
   complexity (environment, technologies, hardware), cost and schedule constraints, non-functional
   requirements (performance, availability, security, scalability, extensibility).
@@ -1020,7 +1022,7 @@ Agile development characteristics:
 > That is, while there is value in the items on the right, we value the items on the left more.
 
 **Trap:** it does **not** say "no documentation". Both sides have value; the left is _valued more_.
-Saying "agile means no documentation" is a mark-losing answer.
+Saying "agile means no documentation" is inconsistent with the manifesto.
 
 ### 8.3 The five agile principles
 
@@ -1044,7 +1046,7 @@ wide skill range; cultural resistance where conventional processes are entrenche
 Extreme approach: new versions possibly **several times per day**; increments delivered **every 2
 weeks**; **all tests run for every build**, and the build is accepted only if tests pass.
 
-**Twelve practices (a/b lists):**
+**Ten practices in L9, pp. 15–16:**
 
 | Practice                   | Description                                                                                                                                    |
 | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1059,22 +1061,23 @@ weeks**; **all tests run for every build**, and the build is accepted only if te
 | **Sustainable pace**       | Large amounts of overtime unacceptable — reduces quality and medium-term productivity                                                          |
 | **On-site customer**       | A representative end-user available **full time**; a member of the team, responsible for bringing requirements                                 |
 
-Plus: **user stories for specification** and **automated test harness**.
+Related lecture topics: **user stories for specification** and **automated test harnesses**.
+These are not two extra entries in the ten-row practice table.
 
 **Key influential practices (4):** user stories for specification, refactoring, test-first
 development, pair programming.
 
-**Refactoring — the examinable argument.** Conventional wisdom: _design for change_ — spend effort
+**Refactoring — the lecture argument.** Conventional wisdom: _design for change_ — spend effort
 anticipating change. XP: **changes cannot be reliably anticipated**, so instead do **constant code
 improvement** so that change is cheap when it arrives. Benefits: improves understandability, reduces
 the need for documentation, makes change easier. Cost: **architecture refactoring is much more
 expensive**. Examples: reorganise a class hierarchy to remove duplicate code; rename/tidy attributes
 and methods; replace inline code with library method calls.
 
-**Pair programming — the examinable argument.** Dynamic pairs (everyone works with everyone) →
+**Pair programming — the lecture argument.** Dynamic pairs (everyone works with everyone) →
 knowledge sharing reduces project risk when people leave; develops common ownership; acts as an
-**informal review** (every line seen by ≥2 people); encourages refactoring. Empirically, a pair is
-often **more efficient** than two programmers working separately.
+**informal review** (every line seen by ≥2 people); encourages refactoring. The lecture cites **some evidence** that a pair can be more efficient than two programmers working
+separately; this is not a guaranteed productivity gain.
 
 **Test-first development (TDD).** Writing tests before code **clarifies the requirements**; tests are
 programs, not data, so they run automatically and self-check (JUnit); all previous + new tests run on
@@ -1090,6 +1093,9 @@ every addition → regression safety.
 ### 8.5 Scrum
 
 Scrum focuses on **managing iterative development** rather than on specific technical practices.
+The following describes the supplied L9 slides; do not treat their historical terminology as a
+statement of the current Scrum standard. The slides themselves contain variants: p. 32 says no more
+than 7 developers; p. 41 says 5–9. Neither is needed to infer the headcount in Tutorial 5 Q6.
 
 **Three phases:**
 
@@ -1125,8 +1131,35 @@ problems, and plans for the next day → everyone knows what is going on and can
 do not hold up progress; whole team has visibility → communication improves; customers see on-time
 delivery and give feedback; trust is established and a positive culture created.
 
-**Backlog characteristics** (T5): estimated (size estimate = effort) and **prioritised** (PO uses
-estimates as one input to prioritisation; near-term items prioritised most).
+**Practical Scrum material (L9, pp. 38–61; some pages are image-only):**
+
+- **Product backlog:** owned by the PO; ordered requirements/features/tasks for the product.
+- **Sprint backlog:** selected product backlog items **plus the plan** for delivering the increment
+  and Sprint Goal; owned by the Development Team. The slides protect the selected sprint scope and
+  goal, while task estimates and remaining work are updated daily. Unfinished work returns to the
+  product backlog for reconsideration; it earns no completed velocity points.
+- **Product increment:** integrates Done work with previous increments; tested and potentially
+  releasable. Potentially shippable does not mean a release must occur every sprint.
+- **Sprint planning:** PO presents ordered items; developers decide how much fits and how to build it.
+  Tasks are estimated in hours (the slide suggests 1–16 hours); points size backlog items, not hours.
+- **Daily Scrum:** 15-minute time box; yesterday's progress, today's plan and impediments.
+- **Sprint Review:** inspect the product with stakeholders and revise the product backlog. The slide
+  gives a time box of 1 hour per week of sprint length.
+- **Sprint Retrospective:** inspect people, process and tools; agree improvements and actions for the
+  next sprint. The slide gives 45 minutes per week, after the Review.
+- **Burndown chart:** remaining work against time; compare actual progress with planned work.
+
+**Good backlog = DEEP (L9, pp. 54–55; Tutorial 5 Q3):** **Detailed appropriately** (small, detailed
+near-term items; larger, less detailed later items), **Emergent** (continually changes), **Estimated**
+(effort estimates inform prioritisation), **Prioritised** (especially work for upcoming sprints).
+Refinement continuously adds detail, estimates and reprioritises items; p. 56 suggests up to 10% of
+team time as a guideline.
+
+**User stories (L9, pp. 57–61):** “As a [role], I want [action], so that [benefit].” An **epic** is a
+large body of work split into smaller stories. The **3Cs** are **Card** (intent), **Conversation**
+(shared understanding) and **Confirmation** (acceptance criteria). Acceptance criteria define when
+work is finished; they can be functional or non-functional. State intent, remain independent of
+implementation and avoid unnecessary design detail. INVEST below evaluates the story itself.
 
 ### 8.6 INVEST (Tutorial 5 — memorise)
 
@@ -1139,7 +1172,7 @@ estimates as one input to prioritisation; near-term items prioritised most).
 | **S**  | **Small**       | Fits in a sprint                                             |
 | **T**  | **Testable**    | Has an oracle; can be verified                               |
 
-### 8.7 Velocity & cost arithmetic (Tutorial 5 Q6, high-frequency)
+### 8.7 Velocity & cost arithmetic (Tutorial 5 Q6)
 
 > Total backlog = **64 points**. Scrum Team = Product Owner + ScrumMaster + **6** developers = **8**
 > people. Cost per member per sprint = **$2K**. **8 sprints** needed.
@@ -1152,7 +1185,7 @@ Cost      = people × cost per person per sprint × sprints
 
 > ⚠️ **Trap:** do **not** drop the PO and ScrumMaster. The question says _"each member in the Scrum
 > Team"_ and then enumerates them. Dropping them gives 6 × 2K × 8 = **$96,000** (wrong). State your
-> assumption explicitly if you think the question is ambiguous — you will still get method marks.
+> assumption explicitly if you think the question is ambiguous — make the calculation auditable.
 >
 > ⚠️ **Trap:** velocity is **measured from history**, not decreed. "Points per sprint", not "hours".
 > If asked how to _estimate_ velocity for a new team, answer: run a sprint, measure completed points,
@@ -1203,9 +1236,7 @@ discrete elements of the running system.
 > be combined, and one or more semantic models that determine the system's overall properties from the
 > properties of its parts.
 
-What varies between instances of a style: **number of components** (2 filters + 1 pipe vs 20 filters
-
-- 19 pipes), **interaction mechanism** (local vs remote procedure calls), and **function of the
+What varies between instances of a style: **number of components** (2 filters + 1 pipe vs 20 filters + 19 pipes), **interaction mechanism** (local vs remote procedure calls), and **function of the
   components** (the database component may hold different data).
 
 ### 9.4 Style taxonomy (know the 5 families and their members)
@@ -1240,7 +1271,7 @@ higher layers (e.g. `WorkSheet` must tell the views that data changed). A direct
 **Observer pattern** (loose coupling between the two layers).
 
 > ⚠️ **Trap:** the answer to "why does layering break in event-driven systems?" is **up-calls create
-> downward dependencies**, not "layers are slow".
+> dependencies from lower-layer code to concrete higher-layer code**, not "layers are slow".
 
 ### 9.6 Client–server
 
@@ -1260,7 +1291,7 @@ A central data store (repository) is the connector; components read/write it. Gr
 integration and evolvability of producers/consumers; the repository becomes a single point of
 coupling, contention and failure.
 
-### 9.9 Design principles (the vocabulary marks are awarded for)
+### 9.9 Design principles (L12 and L14)
 
 | Principle                                          | Statement                                                     | Fails when…                                                           |
 | -------------------------------------------------- | ------------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -1276,13 +1307,7 @@ coupling, contention and failure.
 | **Identify what varies and separate it**           | Encapsulate the varying part                                  | `switch` on type scattered everywhere                                 |
 | **Modularity / Abstraction / Reusability**         | (L12's headline trio)                                         | Monolith                                                              |
 
-### 9.10 Design rationale frame (used in every architecture question)
-
-```
-Why?  ──► Functional requirement (dynamic models, analysis object model)
-What? ──► Non-functional requirements (efficiency, reliability, robustness, security, maintainability)
-How?  ──► Design principles + design patterns + constraints (languages, libraries, communications)
-```
+### 9.10 Design rationale frame (design rationale)
 
 ```mermaid
 flowchart LR
@@ -1291,7 +1316,7 @@ flowchart LR
     HOW[How?] --> DPC["Design principles + design patterns + constraints<br/>(languages, libraries, communications)"]
 ```
 
-> ⚠️ **Trap:** an architecture question almost always wants a **trade-off**, not a verdict. End with
+> ⚠️ **Trap:** an architecture question should explain its **trade-offs** and assumptions. End with
 > "…at the cost of X (e.g. lower performance / harder debugging / requirements compromise)".
 
 ### 9.11 The design process (descriptive model)
@@ -1321,31 +1346,20 @@ new solution on mismatch) → elaborate solution → compare solutions → selec
 
 ### 10.2 Why patterns at all?
 
-```
-Good design: maintainability, extensibility, scalability, testability, reusability
-        ▲
-        │ enabled by
-Design principles: program to an interface · high cohesion · low coupling ·
-                   open–closed · separation of concerns
-        ▲
-        │ codified as
-Design patterns: Singleton · Abstract Factory · DAO · Strategy · Decorator · Observer · Factory · Façade
-```
-
 ```mermaid
 flowchart BT
     PAT["Design patterns<br/>Singleton · Abstract Factory · DAO · Strategy<br/>Decorator · Observer · Factory · Façade"]
     PRI["Design principles<br/>program to an interface · high cohesion · low coupling<br/>open–closed · separation of concerns"]
     GOOD["Good design<br/>maintainability · extensibility · scalability · testability · reusability"]
-    PAT -->|codified as| PRI
-    PRI -->|enabled by| GOOD
+    PAT -->|apply| PRI
+    PRI -->|support| GOOD
 ```
 
 > **Design pattern** = _a proven solution to a problem in a context_; it **abstracts a recurring design
 > structure** — a template with class and/or object dependencies, structures, interactions or
 > conventions. (GoF, 1996)
 
-### 10.3 The four elements (guaranteed recall question)
+### 10.3 The four elements (L13 definition)
 
 | Element          | Describes                                                                                              | Answers                         |
 | ---------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------- |
@@ -1367,13 +1381,6 @@ flowchart BT
 **Problem:** a set of algorithms or objects should be **interchangeable**.
 **Solution:** `Context` holds a `Strategy` reference; `ConcreteStrategyA/B` implement the interface;
 behaviour can change at runtime.
-
-```
-Context ──uses──► «interface» Strategy
-                     ▲        ▲
-        implements ──┘        └── implements
-        ConcreteStrategyA     ConcreteStrategyB
-```
 
 ```mermaid
 classDiagram
@@ -1401,7 +1408,7 @@ classDiagram
 **Use when:** the mobile device must speak LAN/WiFi/Bluetooth/3G/4G and _further protocols with minimal
 impact_ (Tutorial 6). The variable part is the **network access protocol**; encapsulate it.
 
-### 10.6 Observer (the most examined pattern in this course)
+### 10.6 Observer (L13; Tutorial 7)
 
 **Problem (say it this way):**
 
@@ -1410,20 +1417,6 @@ impact_ (Tutorial 6). The variable part is the **network access protocol**; enca
 > observers cannot poll because they do not know when the change will occur.
 
 Also called **Subscriber–Publisher** or **Consumer–Producer**.
-
-```
-«interface» Subject                        «interface» Observer
----------------------------------          ----------------------
-+ attach(o: Observer)                      + update()
-+ detach(o: Observer)                             ▲
-+ notify()                                        │ implements
-+ getData(): Details                  ┌───────────┼───────────┐
-       ▲                          LineChart   BarChart   YourAccount
-       │ implements               (drawLine)  (drawBar)  (newAnnouncement)
- ConcreteSubject
- (WorkSheet, SC2006NTU, Silo…)
-   - observers: Observer[*]
-```
 
 ```mermaid
 classDiagram
@@ -1454,7 +1447,7 @@ classDiagram
     Observer <|.. LineChart : implements
     Observer <|.. BarChart : implements
     Observer <|.. YourAccount : implements
-    Subject --> Observer : notifies
+    ConcreteSubject "1" --> "0..*" Observer : registered observers
     note for ConcreteSubject "WorkSheet, SC2006NTU, Silo"
 ```
 
@@ -1470,7 +1463,8 @@ Contract: `notify()` does `for each o in observers: o.update()`.
 | Efficiency    | Observer fetches only if interested      | Wastes data when observer is uninterested            |
 
 **Selective notification:** observers register **interests** (e.g. `register(account, tutorial)`), and
-the subject notifies only those with a matching interest. Combine with pull for maximum decoupling.
+the subject notifies only those with a matching interest. Either push or pull can be used; choose
+based on payload needs and communication cost.
 
 **Pros:** abstracts coupling between Subject and Observer; supports **broadcast** communication;
 enables reusability of subjects and observers independently.
@@ -1478,8 +1472,8 @@ enables reusability of subjects and observers independently.
 are notified in unspecified order; risk of update storms / memory leaks if observers are not detached.
 
 **Answer to "what kind of coupling is preferred and why?"** → **Loose coupling**, because:
-subject does not know observer identities or count; observers can be added/removed at runtime; both
-sides can be reused independently; and neither must be recompiled when the other changes.
+subject holds registered observer references but does not depend on their concrete classes; observers can be added/removed at runtime; both
+sides can be reused independently; and implementation changes behind stable interfaces need not affect the other side.
 
 ### 10.7 Factory (Static Factory)
 
@@ -1488,17 +1482,10 @@ instantiate until runtime**; you want to keep creation logic out of the client.
 
 **Solution:**
 
-```
-DataStoreFactory
-+ getDatastore() : DataStoreInterface   ← static/creational
-        └─creates─► «interface» DataStoreInterface
-                        ▲ FlatFileImpl · MySQLImpl · DB2Impl
-```
-
 ```mermaid
 classDiagram
     class DataStoreFactory {
-        +getDatastore() DataStoreInterface
+        +getDatastore()$ DataStoreInterface
     }
     class DataStoreInterface {
         <<interface>>
@@ -1511,6 +1498,10 @@ classDiagram
     DataStoreInterface <|.. MySQLImpl
     DataStoreInterface <|.. DB2Impl
 ```
+
+**Naming:** the lecture's **Static/Simple Factory** centralises creation. It is not itself one of
+the GoF 23 patterns. **Factory Method** uses a creation operation overridden by subclasses;
+**Abstract Factory** creates families of related products. Do not use those names interchangeably.
 
 **What it does for you:**
 
@@ -1580,9 +1571,10 @@ classDiagram
 | "undo/redo"                                                                           | **Command**          |
 | "decouple persistence from domain"                                                    | **DAO**              |
 
-> ⚠️ **Trap:** "Strategy + Factory" is a **pair**, not a choice. Almost every "we must support new X
-> with minimal impact" requirement needs Strategy **for the behaviour** and Factory **for creating the
-> right concrete X**. If you only draw Strategy, expect the follow-up "what is missing?".
+> **Tutorial sequence:** T6 Q2 asks for interchangeable behaviour (**Strategy**); T7 Q2 adds
+> concrete-object creation (**Factory**). A separate factory is useful when selection/creation needs
+> isolation; not every Strategy design requires a new factory class. A switch-based factory still
+> needs an edit for a new product. Dynamic loading moves class selection into configuration.
 
 ---
 
@@ -1611,26 +1603,11 @@ Model via one View's Controller, **all other Views** depending on that data refl
 
 | Component      | Responsibility                                                                                                                                                                                               | Stereotype           | Example                     |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------- | --------------------------- |
-| **Model**      | Contains the **processing (operations) and the data**                                                                                                                                                        | «entity»             | `WorkSheet`, `SheetManager` |
+| **Model**      | Contains the **processing (operations) and the data**                                                                                                                                                        | «control» + «entity»             | `WorkSheet`, `SheetManager` |
 | **View**       | Defines and manages **how data is presented**; each View provides a specific presentation of the same Model; each View **observes** the Model                                                                | «boundary»           | `LineChart`, `BarChart`     |
 | **Controller** | Manages **user interaction**: captures input (mouse clicks, key presses) and passes interactions to View and Model; each View is associated with a Controller; user interacts **solely through Controllers** | «boundary»/«control» | `EditWS`, `EditWSCtrler`    |
 
 ### 11.3 The triangular structure (know the arrows by heart)
-
-```
-             ┌─────────────┐
-             │    Model    │
-             └─────────────┘
-               ▲         │
-  subscribe    │         │  notify() → update()
-  (Observer)   │         ▼
-          ┌─────────────┐   handleEvent()   ┌──────────────┐
-          │    View     │ ────────────────► │  Controller  │
-          └─────────────┘    (Strategy)     └──────────────┘
-                ▲                                 │
-                └──── getData() (pull) ◄──────────┘
-                       service() / update model
-```
 
 ```mermaid
 flowchart TB
@@ -1642,9 +1619,10 @@ flowchart TB
     V -->|"handleEvent() — Strategy"| C
     C -->|"service() / update model"| M
     V -->|"getData() — pull"| M
+    C -->|"select / update view where needed"| V
 ```
 
-Precise edge list (use this if the ASCII is unclear):
+Call relationships in the basic view-notification flow:
 
 | From       | To         | Call                                  | Mechanism                                     |
 | ---------- | ---------- | ------------------------------------- | --------------------------------------------- |
@@ -1664,7 +1642,7 @@ Precise edge list (use this if the ASCII is unclear):
 
 | Relationship                           | Pattern              | Why                                                                                                              |
 | -------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **View ↔ Model**                       | **Observer**         | Multiple views, loose coupling, automatic update                                                                 |
+| **View ↔ Model; subscribed Controller ↔ Model** | **Observer**         | Multiple views, loose coupling, automatic update                                                                 |
 | **View ↔ Controller**                  | **Strategy**         | View delegates interface behaviour; controller swappable → different responses to input; also View ↔ Look & Feel |
 | **Controller creation / Look & Feel**  | **Abstract Factory** | Create a controller or LAF for a view                                                                            |
 | **Nested views**                       | **Composite**        | Panel contains Button; nested Panels                                                                             |
@@ -1698,8 +1676,9 @@ the same presentation with different look-and-feel and different reactions to in
 > all may know each other through abstractions); layers are **hierarchical** (upper calls lower only).
 >
 > ⚠️ **Trap #2:** the **Controller** modifies the **Model**; the **Model** notifies the **View**; the
-> **View** reads from the Model (`getData`). The View does **not** ask the Controller to redraw, and
-> the Model does **not** talk to the Controller.
+> **View** reads from the Model (`getData`). Controllers can select/update views. The lecture also
+> permits Controllers to observe the Model; notifications can therefore reach subscribed Controllers
+> through the Observer abstraction (L15, pp. 22, 25).
 >
 > ⚠️ **Trap #3:** "View observes Model" ≠ "View observes Controller". Observers are on the **Model**
 > (or on a `WSSubject` abstraction of it), which is why multiple views stay in sync.
@@ -1713,7 +1692,7 @@ the same presentation with different look-and-feel and different reactions to in
 > A **software bug** is _an error, flaw, failure or fault in a computer program or system that causes it
 > to produce an incorrect or unexpected result, or to behave in unintended ways._
 
-(Historical: 1947, Harvard, Mark II — a moth on a relay. Good one-line opener, no marks.)
+(Lecture anecdote: the 1947 Harvard Mark II moth incident.)
 
 > **Software testing** is _an investigation conducted to provide stakeholders with information about the
 > quality of the software product or service under test._
@@ -1736,7 +1715,7 @@ The lecture's buggy program:
 
 ```java
 int blech(int input) {      // spec: add 1, then divide by 30000
-    input = input – 1;      // BUG: subtracts instead of adds
+    input = input - 1;      // BUG: subtracts instead of adds
     return input/30000;
 }
 ```
@@ -1752,7 +1731,7 @@ int blech(int input) {      // spec: add 1, then divide by 30000
 | Example requirement | "The income of an applicant must be between $1500 and $8000 per month"                                    | —                                                              |
 | Techniques          | **Equivalence class testing, boundary value testing**, state-based testing                                | **Control flow testing** (CFG, basis paths), data flow testing |
 | Pros                | Directs the tester to a **very small subset** of inputs likely to find bugs; applicable at **all levels** | Gives a **coverage** notion                                    |
-| Cons                | **Cannot know how much of the implementation has been tested**; no coverage notion                        | Needs code; misses "missing requirement" bugs                  |
+| Cons                | **Cannot infer code coverage from black-box inputs alone**; EC/requirement coverage can still be tracked                        | Needs code; misses "missing requirement" bugs                  |
 
 ### 12.4 Levels of testing (4)
 
@@ -1774,14 +1753,15 @@ int blech(int input) {      // spec: add 1, then divide by 30000
 | **Log**      | **Actual** output produced by the test  |
 
 JUnit mapping: `@Test public void testQualifiedApplication()` = **Name**; the class/package = **Location**;
-the arguments to `analyzeApplication(...)` = **Input**; `assertEquals(result, Approval)` = **Oracle**;
-the JUnit report = **Log**.
+the arguments to `analyzeApplication(...)` = **Input**; the expected argument in
+`assertEquals(ApplicationResult.Approval, result)` = **Oracle**;
+the recorded actual `result` and test report = **Log**.
 
-> ⚠️ **Trap:** _oracle_ = expected; _log_ = actual. Reversing them costs a mark in a "name the
-> components of this test case" question.
+> ⚠️ **Trap:** _oracle_ = expected; _log_ = actual. Keep this distinction when naming test-case components.
 >
-> ⚠️ **Trap:** an "oracle" is not "the output of the program". If you derive the oracle from the code,
-> you test the code against itself and can never detect a wrong requirement.
+> **Oracle:** expected behaviour comes from requirements, not the observed implementation result.
+> Testing code against its own output can hide implementation faults; wrong requirements need
+> separate validation with stakeholders.
 
 ### 12.6 Execution order: cascading vs independent tests
 
@@ -1794,7 +1774,7 @@ the JUnit report = **Log**.
 ### 12.7 Basis path testing (white box)
 
 > **Basis path testing** (structured testing) is a white-box method for designing test cases intended to
-> examine **all possible paths of execution at least once**.
+> exercise a **basis set of linearly independent control-flow paths**.
 
 Process:
 
@@ -1807,12 +1787,15 @@ Process:
 
 ```
 CC = E − N + 2        (E = edges, N = nodes; per connected component, P components → +2P)
-CC = number of predicates (decision points) + 1
+CC = number of binary decision nodes + 1   (one connected CFG)
 CC = number of bounded regions + 1
 ```
 
-CC gives the **minimum number of test cases** for basis-path coverage, and bounds the number of
-independent paths.
+For a connected, single-entry/single-exit CFG, CC is the number of paths in a **graph basis**.
+It is **not** a minimum for statement or branch coverage. Some graph paths are infeasible because of
+program data, so a structural basis is not automatically an executable test suite. L16, p. 10, loosely
+says “all possible paths”; p. 11 illustrates a basis set instead. Loops can create infinitely many
+execution paths, so these are different coverage goals.
 
 **Lecture example:**
 
@@ -1827,22 +1810,6 @@ independent paths.
  8    a++;
  9  }
 10  return;
-```
-
-```
-       1
-       │
-       2 ◄────────────┐
-      / \             │
-  true  false         │
-   │      │           │
-   3     10           │
-  / \                 │
-t/f  │                │
- │    │               │
- 4    6               │
-  \  /                │
-    8 ────────────────┘
 ```
 
 ```mermaid
@@ -1863,12 +1830,13 @@ CC = 3 (nodes 2, 3 are the two predicates; 2 + 1 = 3).
 | ---- | -------------------- | ---------- |
 | 1    | 1, 2, 10             | `n = 0`    |
 | 2    | 1, 2, 3, 4, 8, 2, 10 | `n = 1`    |
-| 3    | 1, 2, 3, 6, 8, 2, 10 | `n = 4`    |
+| 3 | 1, 2, 3, 6, 8, 2, 10 (**schematic, infeasible literally**) | `n = 4` reaches the new Y branch; full trace below |
 
 > Note the lecture's point: the **real** execution path for `n = 4` is
 > `1,2,3,4,8,2,3,4,8,2,3,4,8,2,3,6,8,2,10` — the basis path `1,2,3,6,8,2,10` is a
-> **path in the basis set**, not a literal run of the program. Test cases must be chosen so that the
-> real run **covers** the basis path's decisions.
+> **schematic structural path**, not a literal run of the program. It is **infeasible as an exact
+> execution**: `a` starts at 0, so the first iteration cannot print Y. Use the shown full `n = 4`
+> trace when reporting an executable path; it introduces the Y branch after three X iterations.
 
 ### 12.8 Coverage criteria
 
@@ -1877,7 +1845,7 @@ CC = 3 (nodes 2, 3 are the two predicates; 2 + 1 = 3).
 | **Statement coverage**         | Every **node** executed at least once                                 | Weakest; misses branch-only bugs                     |
 | **Branch (decision) coverage** | Every **edge** (true and false of every decision) taken at least once | **100% branch ⇒ 100% statement**, but not vice versa |
 | **Path coverage**              | Every **path** executed                                               | Usually infeasible (loops ⇒ infinite paths)          |
-| **Basis-path coverage**        | Each of the CC linearly independent paths executed                    | Practical middle ground                              |
+| **Basis-path coverage**        | A feasible independent path set exercised; report infeasible structural paths                    | Practical middle ground                              |
 
 > ⚠️ **Trap:** "statement coverage implies branch coverage" is **false** (a `if` with no `else` whose
 > body always executes gives 100% statement but not 100% branch). The reverse _is_ true.
@@ -1907,22 +1875,6 @@ public int sum(int n, int upperbound){
 
 **CFG** — 12 nodes (1, 2, 3, 4, 5, 7, 8, 9, 11, 12, 14, 16); the compound `while` guard is **one** node:
 
-```
-            1 → 2 → 3 → 4 ──true──► 5
-                        │           │
-                        │ false     │
-                        ▼           ▼
-                        7 ◄─────────┘     7 = while(i<n && result<=upperbound)
-                      ／   ＼
-             true   ／       ＼  false
-                   ▼           ▼
-              8 → 9 ──┐       11 ──true──► 12 ──┐
-                      │        │                 │
-                      └──► 7   │ false           │
-                               ▼                 │
-                               14 ───────────────┴──► 16
-```
-
 ```mermaid
 flowchart TD
     N1((1)) --> N2((2)) --> N3((3)) --> N4((4))
@@ -1944,31 +1896,40 @@ Exact edge list: `1→2, 2→3, 3→4, 4→5, 4→7, 5→7, 7→8, 7→11, 8→9
 **N = 12, E = 14 ⇒ CC = E − N + 2 = 14 − 12 + 2 = 4.**
 _(Cross-check by predicates: `if(n<0)`, the `while`, `if(result <= upperbound)` = 3 decisions ⇒ 3 + 1 = 4.)_
 
-**Basis set (CC = 4 ⇒ 4 paths):**
+**One feasible basis set for the combined-guard CFG (CC = 4):**
 
 | #   | Path                       | Covering input   | Expected output                           |
 | --- | -------------------------- | ---------------- | ----------------------------------------- |
 | 1   | 1,2,3,4,7,11,12,16         | n = 0, ub = 100  | prints "The sum is 0", returns 0          |
 | 2   | 1,2,3,4,7,8,9,7,11,12,16   | n = 1, ub = 100  | prints "The sum is 1", returns 1          |
 | 3   | 1,2,3,4,5,7,8,9,7,11,12,16 | n = −1, ub = 100 | prints "The sum is 1", returns 1          |
-| 4   | 1,2,3,4,7,8,9,7,11,14,16   | n = 5, ub = 1    | prints "The sum is too large!", returns 3 |
+| 4   | 1,2,3,4,7,8,9,7,11,14,16   | n = 1, ub = 0    | prints "The sum is too large!", returns 1 |
 
-**100% statement coverage** requires nodes 5, 8, 9, 12 and 14 ⇒ all four tests are needed
-(path 3 covers node 5, path 2 covers 8 and 9, path 1 covers 12, path 4 covers 14).
-**100% branch coverage** requires both outcomes of `if(n<0)` (paths 3 / 1), both outcomes of the `while`
-(path 2 / path 1) and both outcomes of `if(result<=…)` (path 1 / path 4) ⇒ again the same four tests.
-Because CC = 4, **four tests is the minimum** for either criterion.
+**Statement and branch coverage need only two tests**, not four:
 
-> ⚠️ **Trap (compound condition — there are two defensible answers, so state your convention).**
-> If you **split** `i<n && result <= upperbound` into two sequential decision nodes (7a, 7b), you get
-> N = 13, E = 15, and **CC = 5**. The graph-based `E − N + 2` always agrees with the drawing you made —
-> so **draw the graph first, then compute**, and write one line saying which convention you used. Never
-> quote "5" with a graph that has 12 nodes (or "4" with a graph that splits the `&&`); that is the
-> inconsistency markers look for.
->
-> ⚠️ **Trap:** `n = 4` does **not** give path 3 literally — `n = 4` loops three times and leaves via
-> `7→11` only after the 4th check. If you need a _single_ iteration (`7→8→9→7→11`), pick `n = 1` or
-> `n = 2`. Basis paths are **edge sequences you must cover**, not literal runs.
+| Input | Executed path | Expected print / return |
+| --- | --- | --- |
+| `n = −1, upperbound = 100` | `1,2,3,4,5,7,8,9,7,11,12,16` | `The sum is 1` / `1` |
+| `n = 5, upperbound = 1` | `1,2,3,4,7,8,9,7,8,9,7,11,14,16` | `The sum is too large!` / `3` |
+
+Together these cover all executable statements and both outcomes of each of the three combined
+decisions. Two is minimal because the final `if` takes only one outcome per call. Four paths are
+needed for the **illustrated basis set**, a stronger, different target. The method returns the sum
+**after** it has crossed the bound; it does not clamp the return value to `upperbound`.
+
+**Compound-condition convention:** treating the whole `while` guard as node 7 gives **N = 12,
+E = 14, CC = 4**. Splitting short-circuit `&&` into nodes 7a (`i<n`) and 7b
+(`result<=upperbound`) gives **N = 13, E = 16, CC = 5**. In the split graph, 7a false skips 7b;
+7a true reaches 7b; either false exits to 11. State the convention and make the formula match the graph.
+
+The same two coverage tests above also exercise both outcomes of both operands in the split graph:
+the first ends with `i<n` false; the second ends with `i<n` true and `result<=upperbound` false.
+If a fifth basis path is requested for that graph, add `n = 1, upperbound = −1`: it skips the body
+because 7b is false immediately, prints `The sum is too large!` and returns `0`.
+
+**Trace carefully:** `n = 4` with a large bound executes four iterations. A single iteration can be
+obtained with `n = 1` and a non-negative bound; `n = 2` needs a bound that stops the loop after the first
+addition. A claimed basis path must either match its stated input exactly or be labelled schematic.
 
 ---
 
@@ -2010,7 +1971,8 @@ Worked partitions:
 | Hiring age                          | 0–15 (no hire) ; 16–17 (part) ; 18–54 (full) ; 55–99 (no hire) | age ≤ −1 ; age ≥ 100             |
 
 > ⚠️ **Trap:** counting the _hiring_ rule as "one valid EC" is wrong — there are **four** valid ECs
-> because each range produces a **different output**.
+> because the lecture partitions **four contiguous ranges**. The two “no hire” ranges share an
+output but have different boundaries; four ranges do not mean four distinct output values.
 
 ### 13.4 Designing test cases from ECs — the two golden rules
 
@@ -2025,7 +1987,7 @@ you nothing about which input caused it — and error handling may mask each oth
 
 **Why enumerate small ECs?** If a valid EC has few values (e.g. #mortgage ∈ {0,1,2,3,4,5};
 property type ∈ {HDB, Condo}) you may create test cases for **all** of them. You would not do this for
-income (80 000 values) or password characters.
+income (78 501 integer-dollar values) or password characters.
 
 **Testing by contract vs defensive testing**
 
@@ -2040,9 +2002,11 @@ income (80 000 values) or password characters.
 > For **each boundary of each range-of-values EC**, choose **three** values: one **on-the-boundary**,
 > one **just-below**, one **just-above**. The size of the "just" step depends on the **unit** of the value.
 
-**BVs are computed only for range-of-values ECs. Discrete values have NO boundary values.**
+**In the lecture's terminology**, range-of-values parameters include integer counts. “Discrete
+values” means **unordered categories** such as Person/Company and HDB/Condo, which have no numeric
+BVs. Integer quantities such as mortgage count **do** have BVs.
 
-**Worked BVs:**
+**Worked BVs (full triplets, with the lecture's reduced valid/invalid selection):**
 
 | Requirement         | Lower boundary       | Upper boundary          | Valid BVs                  | Invalid BVs   |
 | ------------------- | -------------------- | ----------------------- | -------------------------- | ------------- |
@@ -2054,18 +2018,20 @@ income (80 000 values) or password characters.
 | Hiring age 18–54    | 17, **18**, 19       | 53, **54**, 55          | …                          | …             |
 | Hiring age 55–99    | 54, **55**, 56       | 98, **99**, 100         | …                          | …             |
 
-For hiring, the **deduplicated** sets are: **valid BVs = {0, 15, 16, 17, 18, 54, 55, 99}**;
+Following the **course's reduced BV selection**, the hiring sets are: **valid BVs = {0, 15, 16, 17, 18, 54, 55, 99}**;
 **invalid BVs = {−1, 100}**.
 
-**The duplicate-removal rule (this is the subtlest rule in the course):**
+**The course's test-reduction rule (L18, pp. 11–15):**
 
 > Remove the just-below / just-above value from an EC's BVs (do **not** create a duplicate test case) if
 > that value **falls into another EC** — including the _current_ EC.
 
 Concretely: a just-below/just-above value is used as an **invalid test value only if it lies outside
 all valid ECs**. If it lands in another valid EC, that EC's own on-the-boundary value already covers
-it. (For 0–15, the value 1 lies inside the same EC, and 16 lies in the next EC — both are covered
-elsewhere, so only 0 and 15 remain as valid BVs for that EC.)
+it. (For 0–15, 1 is omitted because it stays inside the same EC; 16 is already a boundary of the next
+EC.) This is **more than removing equal duplicate values**: the slides also omit distinct interior
+neighbours. State the full triplets when asked for BVs, then identify the reduced test selection.
+Keeping all distinct triplet values is a valid stronger test suite; do not claim those values are duplicates.
 
 ### 13.6 Designing test cases from BVs
 
@@ -2076,7 +2042,7 @@ Same two rules as ECs, with BVs supplying the values:
 - **Invalid test cases:** **one** just-below/just-above (invalid) value per test case, with valid
   values for all other parameters.
 
-For two range parameters _A_ and _B_, the three shapes are:
+For two range parameters _A_ and _B_, the lecture uses these three test shapes:
 
 1. **Valid A + Valid B** → combination of valid inputs.
 2. **Valid A + Invalid B** → one invalid.
@@ -2086,7 +2052,7 @@ For two range parameters _A_ and _B_, the three shapes are:
 
 **Requirements**
 
-- Income must be **$1500–$80000/month**.
+- Income must be **$1500–$80000/month** (L17/L18 worked problem, not L16's separate $8000 example).
 - Number of mortgages per applicant must be **0–5**.
 - Only **Person** applicants are approved.
 - Only **HDB** and **Condo** properties are approved.
@@ -2125,7 +2091,7 @@ For two range parameters _A_ and _B_, the three shapes are:
 | 11  | $12345     | 3         | **Company** | HDB            | Reject   |
 | 12  | $76543     | 4         | Person      | **Mobilehome** | Reject   |
 
-**Anti-pattern (loss of marks):**
+**Anti-pattern for isolated invalid EC tests:**
 
 | Income   | #mortgage | Applicant   | Property       | Expected |
 | -------- | --------- | ----------- | -------------- | -------- |
@@ -2146,8 +2112,9 @@ Four invalid inputs ⇒ if it rejects you have learned **nothing** about which c
 > ⚠️ **Trap #2.** The **upper** boundary of `0–5` takes **4, 5, 6**, not 5, 6, 7. "Just-below" refers
 > to being below **5**, i.e. 4.
 >
-> ⚠️ **Trap #3.** An on-the-boundary value is a **VALID** test value; just-below/just-above are
-> **INVALID** test values. Do not label 1500 as invalid because "it is at the edge".
+> ⚠️ **Trap #3.** An endpoint of an inclusive valid range is a **VALID** test value; just-below/just-above are
+> **INVALID** only when outside all valid ranges. For 1500–80000, 1501 and 79999 are valid
+> neighbours. Do not label every just-below/just-above value invalid; classify against the specification.
 >
 > ⚠️ **Trap #4.** For **adjacent** range ECs (e.g. hiring 0–15 / 16–17 / 18–54 / 55–99) the
 > just-above value of one EC is the on-the-boundary value of the next. Take it **once**; do not
@@ -2162,208 +2129,279 @@ Four invalid inputs ⇒ if it rejects you have learned **nothing** about which c
 
 ### 13.9 Worked example — GES silo (Tutorial 8)
 
-**Requirement.** A silo cannot accept more grain if its **temperature or humidity exceeds normal
-levels**. Humidity ranges **0–100 %**; normal humidity is **35–50 %**. Temperature ranges **−10–100 °C**;
-normal temperature is **40–60 °C**.
+**Given:** humidity 0–100%, normal 35–50%; temperature −10–100 °C, normal 40–60 °C. The question
+says a silo cannot accept grain if either reading “exceeds normal levels”.
 
-**ECs**
+**State the interpretation:** the solution below permits acceptance only when **both readings are
+inside their inclusive normal ranges**. The wording does not explicitly resolve below-normal
+readings. Confirm that interpretation with the client; if “exceeds” means only above the upper bound,
+the below-normal oracle changes. Assume integer percentage points and whole degrees for ±1 BVs.
+Real-valued sensors require a specified resolution; −10 °C here is a stated input limit, not a
+universal physical minimum.
 
-| Parameter   | Meaning                               | ECs               |
-| ----------- | ------------------------------------- | ----------------- |
-| Humidity    | **Accept** (normal)                   | 35 ≤ h ≤ 50       |
-|             | Reject (below normal)                 | 0 ≤ h ≤ 34        |
-|             | Reject (above normal)                 | 51 ≤ h ≤ 100      |
-|             | Invalid input (out of physical range) | h ≤ −1 ; h ≥ 101  |
-| Temperature | **Accept** (normal)                   | 40 ≤ t ≤ 60       |
-|             | Reject (below normal)                 | −10 ≤ t ≤ 39      |
-|             | Reject (above normal)                 | 61 ≤ t ≤ 100      |
-|             | Invalid input (out of physical range) | t ≤ −11 ; t ≥ 101 |
+| Parameter | Valid normal input: permit acceptance | Valid sensor input: block acceptance | Outside stated sensor range |
+| --- | --- | --- | --- |
+| Humidity | 35–50 | 0–34; 51–100 | ≤−1; ≥101 |
+| Temperature | 40–60 | −10–39; 61–100 | ≤−11; ≥101 |
 
-**BVs**
+“Valid sensor input” and “eligible to accept grain” are different predicates. The three in-range ECs
+have specified business outcomes under the stated interpretation. Out-of-range input needs a
+validation policy; the tutorial does **not** specify an error code, message or recovery action.
 
-| Parameter   | Boundary  | BVs          | Valid | Invalid |
-| ----------- | --------- | ------------ | ----- | ------- |
-| Humidity    | lower 35  | 34, 35, 36   | 35    | 34      |
-|             | upper 50  | 49, 50, 51   | 50    | 51      |
-|             | range 0   | −1, 0, 1     | —     | −1      |
-|             | range 100 | 99, 100, 101 | —     | 101     |
-| Temperature | lower 40  | 39, 40, 41   | 40    | 39      |
-|             | upper 60  | 59, 60, 61   | 60    | 61      |
-|             | range −10 | −11, −10, −9 | —     | −11     |
-|             | range 100 | 90, 100, 101 | —     | 101     |
+**Full boundary triplets for all in-range ECs:**
 
-**Test cases** (each row: humidity, temperature, expected)
+| Parameter | Lower/upper boundaries of its ECs | Triplets (on ±1) |
+| --- | --- | --- |
+| Humidity | 0, 34, 35, 50, 51, 100 | (−1,0,1); (33,34,35); (34,35,36); (49,50,51); (50,51,52); (99,100,101) |
+| Temperature | −10, 39, 40, 60, 61, 100 | (−11,−10,−9); (38,39,40); (39,40,41); (59,60,61); (60,61,62); (99,100,101) |
 
-| #   | Humidity | Temp    | Expected      | Note                        |
-| --- | -------- | ------- | ------------- | --------------------------- |
-| 1   | 35       | 40      | Accept        | both lower boundaries       |
-| 2   | 50       | 60      | Accept        | both upper boundaries       |
-| 3   | 42       | 55      | Accept        | mid-range                   |
-| 4   | **34**   | 45      | Reject        | one invalid (humidity low)  |
-| 5   | **51**   | 45      | Reject        | one invalid (humidity high) |
-| 6   | 45       | **39**  | Reject        | one invalid (temp low)      |
-| 7   | 45       | **61**  | Reject        | one invalid (temp high)     |
-| 8   | **−1**   | 45      | Invalid input | out of physical range       |
-| 9   | **101**  | 45      | Invalid input | out of physical range       |
-| 10  | 45       | **−11** | Invalid input | out of physical range       |
-| 11  | 45       | **101** | Invalid input | out of physical range       |
+Following the lecture's reduced BV selection gives humidity
+`{−1,0,34,35,50,51,100,101}` and temperature `{−11,−10,39,40,60,61,100,101}`.
+Interior neighbours may additionally be retained for stronger boundary checks.
 
-> ⚠️ **Note the "OR".** Because the rule is _temperature **or** humidity out of normal_, a **single**
-> invalid parameter is enough to reject. That is a second, independent reason why one-invalid-per-row
-> is correct here: it isolates which sensor triggered the rejection.
+| # | Humidity | Temperature | Expected outcome under the stated interpretation |
+| --- | --- | --- | --- |
+| 1 | 35 | 40 | Permit acceptance: both lower normal boundaries |
+| 2 | 50 | 60 | Permit acceptance: both upper normal boundaries |
+| 3 | 0 | 45 | Block: humidity below normal, valid sensor input |
+| 4 | 34 | 45 | Block: humidity just below normal |
+| 5 | 51 | 45 | Block: humidity just above normal |
+| 6 | 100 | 45 | Block: humidity above normal, at sensor limit |
+| 7 | 45 | −10 | Block: temperature below normal, at sensor limit |
+| 8 | 45 | 39 | Block: temperature just below normal |
+| 9 | 45 | 61 | Block: temperature just above normal |
+| 10 | 45 | 100 | Block: temperature above normal, at sensor limit |
+| 11 | −1 | 45 | Out-of-range humidity; validation response TBD |
+| 12 | 101 | 45 | Out-of-range humidity; validation response TBD |
+| 13 | 45 | −11 | Out-of-range temperature; validation response TBD |
+| 14 | 45 | 101 | Out-of-range temperature; validation response TBD |
+
+Rows 3–10 isolate one abnormal reading; rows 11–14 isolate one invalid sensor input. Acceptance
+also depends on capacity/type/grade in the complete GES, but Tutorial 8 isolates the sensor rule.
 
 ---
 
 ## 14. The Grain Elevator System (GES) walkthrough
 
-**You must know this case study — Tutorials 2, 3, 6, 7, 8 all use it.**
+Tutorials 2, 3, 6, 7 and 8 use this case. Facts below come from the scanned two-page supplement;
+proposed model structures are example solutions, not additional requirements.
 
-### 14.1 Domain facts (memorise the numbers)
+### 14.1 Domain facts
 
-| Fact                       | Value                                                                                                                          |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Grains accepted            | wheat, barley, long grain rice, short grain rice, oats, hops                                                                   |
-| Grades per grain           | **2** (high, low)                                                                                                              |
-| Rule for a silo with grain | Can only store **the same type and grade**                                                                                     |
-| Empty silo rule            | May store **any** kind of grain                                                                                                |
-| Silos                      | **12**: silos **1–6 hold 8 000 bushels**, silos **7–12 hold 12 000 bushels**                                                   |
-| Truck capacity             | **150–180 bushels**                                                                                                            |
-| Rail car capacity          | **2 000 bushels**                                                                                                              |
-| Inbound                    | Trucks from **growers/sellers** only                                                                                           |
-| Outbound                   | Rail cars to **processing plants/buyers** only                                                                                 |
-| Truck data                 | plate number, driver, seller                                                                                                   |
-| Rail car data              | serial number, conductor, buyer                                                                                                |
-| Monitoring                 | humidity and temperature sensors per silo send data periodically                                                               |
-| Alert                      | If temp/humidity exceed normal → alert to system **and to an external grain dryer**; silo **cannot accept grain** until normal |
+| Fact | Value |
+| --- | --- |
+| Grain types | Wheat, barley, long grain rice, short grain rice, oats, hops |
+| Grades | High and low for each grain type |
+| Non-empty silo | Stores only one grain type and grade |
+| Empty silo | May be assigned any accepted grain type and grade |
+| Silos | 12: 1–6 hold 8 000 bushels each; 7–12 hold 12 000 each |
+| Total capacity (derived) | 6 × 8 000 + 6 × 12 000 = **120 000 bushels** |
+| Truck load | 150–180 bushels |
+| Rail car capacity | 2 000 bushels |
+| Arrival | Trucks from growers/sellers only; plate number, driver and seller recorded |
+| Departure | Rail cars to processing plants/buyers only; serial number, conductor and buyer recorded |
+| Monitoring | Humidity and temperature sensors send readings periodically |
+| Abnormal alert | **Sensors** alert both GES and an external grain dryer; affected silo cannot accept more grain until both readings return to normal |
 
-### 14.2 Requirements A–K → model mapping
+The supplement supplies no numeric normal ranges; **Tutorial 8** supplies those thresholds.
 
-| Req | Statement (abridged)                                                                                                                                | Model element                                                                       |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| A   | Grain trucked in, stored in silos, shipped out in rail cars                                                                                         | Context; actors Grower, Buyer                                                       |
-| B   | 6 grain types × 2 grades; silo stores one type+grade                                                                                                | Classes `GrainType`, `Grade`, `Silo`; invariant on `Silo`                           |
-| C   | 12 silos, capacities; truck 150–180; rail car 2 000                                                                                                 | Attributes/constraints; **test data source**                                        |
-| D   | Truck: plate, driver, seller; rail car: serial, conductor, buyer                                                                                    | `Truck`, `RailCar`, `Driver`, `Seller`, `Conductor`, `Buyer`                        |
-| E   | Monitor temp/humidity; alert; block acceptance                                                                                                      | `Sensor`, `Alert`; **state machine on Silo** (Normal / TooHumid / TooHot / Blocked) |
-| F   | Transaction log: quantity, type, grade, time/date, manager, shipment type, truck/railcar id, driver/conductor, seller/buyer                         | `TransactionLogEntry`; **report K**                                                 |
-| G   | On arrival: manager informs type/grade/quantity; system allocates one or more silos and quantities; may accept part or none                         | Use case **Accept Arrival / Allocate Silos**; sequence diagram                      |
-| H   | Manager may **accept or overrule** the allocation; enters actual deposits and truck/driver/seller data; system acknowledges                         | **Alternative flow** in the use case ("overrule")                                   |
-| I   | On loading: manager tells grain removed per silo, rail cars loaded, conductor, buyer; system acknowledges                                           | Use case **Record Departure / Load Train**                                          |
-| J   | On request: complete state report (per silo: type, amount, remaining capacity; total remaining capacity per grain type; total uncommitted capacity) | Use case **Produce Elevator Report**                                                |
-| K   | On request: chronological listing of the transaction log                                                                                            | Use case **Produce Transaction Log**                                                |
+### 14.2 Requirements A–K mapped to models
 
-### 14.3 Likely actor / use case set
+| Requirement | Required behaviour / constraint | Example model element |
+| --- | --- | --- |
+| A | Track grain arriving, stored and departing | Arrival, Silo, Departure |
+| B | Accepted types/grades; homogeneous contents per non-empty silo | Silo attributes and invariants |
+| C | Silo capacities, truck loads and rail car capacity | Numeric constraints and test inputs |
+| D | Truck/rail car identifiers and people/organisations | Truck, RailCar, Driver, Seller, Conductor, Buyer |
+| E | Periodic readings, sensor alerts to GES and dryer, block intake until normal | Sensor boundary; Silo condition state machine |
+| F | Log quantity, type, grade, date/time, manager, direction, vehicle ID, driver/conductor, seller/buyer for each shipment | Shipment and TransactionLogEntry |
+| G | Propose one or more silos and amount per silo; accept all, part or none | Accept Grain Arrival, Allocate Silos |
+| H | Manager accepts or overrules proposal; **always reports actual deposits and truck/driver/seller details**; system acknowledges | Normal confirmation/reporting; optional overrule flow |
+| I | Record removals per silo, loaded rail cars, conductor and buyer; acknowledge | Record Grain Departure |
+| J | Report per-silo type, amount, remaining capacity; remaining capacity by currently stored type; uncommitted capacity | Produce Elevator Report |
+| K | Chronological transaction log on manager request | Produce Transaction Log |
 
-**Actors:** Elevator Manager (primary human), Grower/Seller, Processing Plant/Buyer, Truck Driver,
-Conductor, **Grain Dryer** (external system), **Temperature/Humidity Sensors** (external devices),
-possibly **Billing/Accounting** (from requirement F's "accounting purposes").
+### 14.3 Actors, use cases and arrival description (Tutorial 2)
 
-**Use cases:**
+**System boundary:** GES is the tracking software. Elevator Manager and external temperature/humidity
+sensors directly interact with it. Seller, Buyer, Driver and Conductor are recorded domain entities;
+the supplement does **not** say they operate GES. “For accounting purposes” does not establish an
+external Billing System. Sensors alert the dryer directly; do not invent a GES-to-dryer command.
+The dryer is in the environment but is not a direct GES actor under this boundary.
 
-- Accept Grain Arrival (≈ includes Allocate Silos)
-- Allocate Silos
-- Record Actual Deposit (extend of Accept Grain Arrival — manager overrules)
-- Load Rail Car / Record Grain Departure
-- Monitor Silo Conditions
-- Notify Grain Dryer («extend» on Monitor Silo Conditions — only when abnormal)
-- Produce Elevator Report
-- Produce Transaction Log
-
-**Include/extend justifications you should be able to state:**
-
-- _Allocate Silos_ is **included** by _Accept Grain Arrival_ — it always happens and is a coherent
-  sub-goal reusable by any inbound flow.
-- _Notify Grain Dryer_ **extends** _Monitor Silo Conditions_ — only when a level is exceeded.
-- _Record Actual Deposit_ **extends** _Accept Grain Arrival_ — only when the manager overrules.
-- _Produce Transaction Log_ and _Produce Elevator Report_ are **separate** use cases, not includes —
-  they are independently triggered goals.
-
-### 14.4 Likely conceptual classes
-
-`Silo` (id, capacity, currentAmount, grainType, grade, humidity, temperature),
-`GrainType` (name), `Grade` (HIGH/LOW), `Shipment` (quantity, dateTime, type),
-`Arrival`/`Departure` (subclasses of `Shipment`), `Truck` (plateNo), `RailCar` (serialNo),
-`Person`→`Driver`/`Seller`/`Conductor`/`Buyer`, `ElevatorManager`, `TransactionLogEntry`,
-`Sensor`, `Alert`, `Allocation` (association class between `Arrival` and `Silo` carrying the amount).
-
-> **Why `Allocation` as a class?** Requirement G produces "how much grain goes in each silo" for a
-> **many-to-many** relation between shipment and silo. The quantity belongs to the _relationship_, not
-> to either side — the textbook example of an **association class**.
-
-### 14.5 State machine for a Silo (requirement E)
-
+```mermaid
+flowchart LR
+    Manager["Actor: Elevator Manager"]
+    Sensors["Actor: Temperature / humidity sensors"]
+    Dryer["External grain dryer"]
+    subgraph GES["Grain Elevator System"]
+        Arrival([Accept Grain Arrival])
+        Allocate([Allocate Silos])
+        Overrule([Overrule Proposed Allocation])
+        Departure([Record Grain Departure])
+        Monitor([Monitor Silo Conditions])
+        Report([Produce Elevator Report])
+        Log([Produce Transaction Log])
+    end
+    Manager --- Arrival
+    Manager --- Overrule
+    Manager --- Departure
+    Manager --- Report
+    Manager --- Log
+    Sensors --- Monitor
+    Arrival -.->|«include»| Allocate
+    Overrule -.->|«extend»: manager rejects proposal| Arrival
+    Sensors -.->|direct alert outside GES| Dryer
 ```
-                                 (humidity/temperature exceeds normal)
-        ● ──► [ Empty ] ──► [ Normal ] ──────────────────────────────┐
-                  ▲             ▲                                    │
-                  │             │  (levels restored)                ▼
-                  │             └────────────────────────────── [ Abnormal ]
-                  │                                              entry / send alert to
-                  └────────── (all grain shipped out) ──────────   system + grain dryer
-                                                                 do / reject incoming grain
+
+This is a **Mermaid use-case sketch**: actor boxes stand for UML stick figures. The sensor-to-dryer
+line shows environment context, not a use-case relationship. Use hollow-triangle generalization only
+where a real specialisation is identified; the question does not require inventing one.
+
+**Include:** Accept Grain Arrival uses Allocate Silos to obtain the system proposal.
+**Extend:** Overrule Proposed Allocation optionally changes that proposal. **Record Actual Deposit is
+required whether the manager accepts or overrules**; it is part of the main use case.
+Reports J and K are separate manager-triggered goals.
+
+**Use case: Accept Grain Arrival / Allocate Silos**
+
+- **Participating/initiating actor:** Elevator Manager.
+- **Entry:** a truck arrives with a load of an accepted grain type and grade; manager provides its quantity.
+- **Exit:** GES acknowledges actual deposited amounts and shipment details and records the shipment;
+  alternatively, it reports that no grain can be accepted. A proposal alone does not change stock.
+- **Main flow:** (1) Manager enters grain type, grade and offered quantity. (2) GES checks compatible,
+  available silos and proposes silo IDs and quantities, identifying any unaccepted remainder.
+  (3) Manager accepts the proposal. (4) After unloading, manager reports **actual amount per silo**,
+  truck plate, driver and seller. (5) GES records actual stock changes and the F transaction fields,
+  including manager, direction and date/time. (6) GES acknowledges receipt.
+- **Alternative flow (overrule):** at step 3, manager supplies a revised choice; return to actual-deposit
+  reporting at step 4. Checking that the revision respects B/C/E is a design safeguard, not permission
+  to ignore those requirements.
+- **Alternative flow (partial capacity):** step 2 proposes only the quantity that fits; continue at step 3.
+- **Terminal outcome (no capacity):** step 2 reports no grain accepted. Do not invent an error message
+  or claim that a zero-quantity transaction must/must not be logged; that policy is TBD.
+- **Exceptions/TBD:** invalid quantity, sensor failure, cancellation and communication failure need
+  agreed recovery behaviour. Invalid input is not automatically a terminal exception; a correction
+  prompt could instead return to the flow.
+
+**Data dictionary examples:** Silo = a numbered storage container with capacity and current contents;
+Bushel = the volume unit used in the specification; Shipment = grain arriving by truck or leaving by
+rail; Allocation = proposed quantity per silo for an arrival; Actual deposit = quantity actually
+placed in a silo; Grade = high or low for a grain type; Transaction log = chronological shipment
+records containing F's fields; Uncommitted capacity = capacity not currently committed to a grain
+type. Define numeric normal levels using Tutorial 8 and record its wording ambiguity (§13.9).
+
+### 14.4 Conceptual classes and associations (Tutorial 3 Q1)
+
+For the **arrival/allocation** scope, distinguish proposed amounts from actual deposits. One arrival
+can use several silos; each silo can receive many arrivals over time. An association class Allocation
+can carry the amount for each arrival/silo pair. The diagram uses an ordinary class linked to both
+ends, which Mermaid supports directly.
+
+```mermaid
+classDiagram
+    class Arrival {
+        dateTime
+        grainType
+        grade
+        offeredQuantity
+    }
+    class Allocation {
+        proposedAmount
+        actualDepositedAmount
+    }
+    class Silo {
+        id
+        capacity
+        currentAmount
+        grainType
+        grade
+        temperature
+        humidity
+    }
+    class Truck {
+        plateNumber
+    }
+    class TransactionLogEntry
+    class ElevatorManager
+    class Driver
+    class Seller
+    Arrival "1" -- "0..*" Allocation : allocations
+    Silo "1" -- "0..*" Allocation : receives
+    Truck "1" -- "0..*" Arrival : carries
+    Driver "1" -- "0..*" Arrival : drives for
+    Seller "1" -- "0..*" Arrival : supplies
+    ElevatorManager "1" -- "0..*" Arrival : records
+    Arrival "1" -- "0..1" TransactionLogEntry : recorded as
 ```
+
+The log multiplicity allows a pending arrival before recording; assume one completed shipment per
+log entry. An allocation can be zero if its proposed silo is not used. For full-system modelling,
+introduce Shipment with Arrival/Departure specialisations, RailCar, Buyer and Conductor. Do not
+associate every Shipment with **both** a Truck and a RailCar. Seller/Buyer may be organisations, so
+making all such roles subclasses of Person is an unsupported restriction.
+
+### 14.5 Silo condition state machine (requirement E)
+
+Model **environmental condition separately from empty/non-empty/full**. An empty silo can be abnormal;
+unloading does not itself restore normal conditions. Sensors, rather than GES, send the dryer alert.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Empty : silo created
-    Empty --> Normal : grain deposited
-    Normal --> Abnormal : humidity / temperature exceeds normal
-    Abnormal --> Normal : levels restored to normal
-    Normal --> Empty : all grain shipped out
-    note right of Abnormal
-        entry / send alert to system + grain dryer
-        do / reject incoming grain
+    [*] --> Normal : assume initial readings are normal
+    Normal --> Blocked : sensor alert [humidity or temperature abnormal]
+    Blocked --> Normal : readings [humidity and temperature normal]
+    Blocked --> Blocked : deposit requested / refuse intake
+    note right of Blocked
+        Intake disabled regardless of occupancy.
+        Sensors also alert external grain dryer.
     end note
 ```
 
-Transition table (write this if the diagram is uncertain):
+The initial normal reading is a stated model assumption. Unknown initial readings and sensor-failure
+policy remain TBD. “Intake disabled” is a constraint; `refuse intake` is an event response, not a
+continuously running `do/` activity. Returning to Normal removes the sensor block; capacity and
+type/grade constraints still apply.
 
-| From           | Event / guard                          | To       | Action                                              |
-| -------------- | -------------------------------------- | -------- | --------------------------------------------------- |
-| ● (start)      | silo created                           | Empty    | —                                                   |
-| Empty          | grain deposited                        | Normal   | —                                                   |
-| Normal         | humidity or temperature exceeds normal | Abnormal | **entry/** send alert to system **and** grain dryer |
-| Abnormal       | levels restored to normal              | Normal   | —                                                   |
-| Abnormal       | (while in state)                       | Abnormal | **do/** reject incoming grain                       |
-| Normal / Empty | all grain shipped out                  | Empty    | —                                                   |
-
-**Key point:** `Abnormal` has a **do/ reject incoming grain** activity and an **entry/ send alert**
-action — this is exactly what requirement E states, and it demonstrates you know entry vs do.
-
-### 14.6 Sequence sketch for "Accept Arrival" (requirement G–H)
-
-```
-Manager      :ArrivalUI      :AllocationController    :Silo        :TransactionLog
-   │  type/grade/qty │                │                  │                │
-   ├────────────────►│                │                  │                │
-   │                 ├───allocate()──►│                  │                │
-   │                 │                ├──findSilo()─────►│                │
-   │                 │                │◄──capacity───────┤                │
-   │                 │◄─[alloc list]──┤                  │                │
-   │  overrule / qty │                │                  │                │
-   ├────────────────►├───deposit()───►│                  │                │
-   │                 │                ├──store(amount)──►│                │
-   │                 │                ├──log(entry)──────────────────────►│
-   │◄──acknowledge───┤                │                  │                │
-```
+### 14.6 Sequence for arrival and actual recording (requirements G–H)
 
 ```mermaid
 sequenceDiagram
     actor Manager
     participant UI as ArrivalUI
     participant AC as AllocationController
-    participant S as Silo
+    participant S as Silos
     participant TL as TransactionLog
-    Manager->>UI: type / grade / qty
-    UI->>AC: allocate()
-    AC->>S: findSilo()
-    S-->>AC: capacity
-    AC-->>UI: [alloc list]
-    Manager->>UI: overrule / qty
-    UI->>AC: deposit()
-    AC->>S: store(amount)
-    AC->>TL: log(entry)
-    UI-->>Manager: acknowledge
+    Manager->>UI: grain type, grade, offered quantity
+    UI->>AC: proposeAllocation(type, grade, quantity)
+    activate AC
+    AC->>S: get compatible capacity and condition
+    S-->>AC: eligible silos and available quantities
+    AC-->>UI: proposed silo quantities and unaccepted remainder
+    deactivate AC
+    UI-->>Manager: show proposal
+    alt no grain can be accepted
+        UI-->>Manager: report no grain accepted
+        Note over Manager,TL: Zero-quantity logging policy is TBD
+    else some or all grain can be accepted
+        alt manager accepts
+            Manager->>UI: accept proposal
+        else manager overrules
+            Manager->>UI: revised silo selection
+        end
+        Note over Manager,S: Manager arranges physical unloading outside GES
+        Manager->>UI: actual amounts per silo, truck, driver, seller
+        UI->>AC: recordActualDeposit(actuals, shipment details)
+        activate AC
+        loop each silo receiving grain
+            AC->>S: record actual deposited amount
+        end
+        AC->>TL: append F shipment fields with date/time and manager
+        TL-->>AC: recorded
+        AC-->>UI: acknowledge receipt
+        deactivate AC
+        UI-->>Manager: acknowledgement
+    end
 ```
 
 ---
@@ -2384,74 +2422,76 @@ sequenceDiagram
 > date of each assignment. If a user is not assigned a computer or a computer not assigned to a user,
 > this is reported.
 
-Rewrite as numbered, atomic, verifiable statements — e.g.
+Rewrite as numbered, atomic, verifiable statements:
 
 ```
 1.1 The system shall accept a query containing a user number.
-1.2 The system shall accept a query containing a serial number.
-1.3 When the query contains a user number, the system shall report all equipment assigned to that user.
-1.4 When the query contains a serial number, the system shall report the assignment for that computer.
-1.5 Every query result shall show, per user: name; office; user number.
-1.6 Every query result shall show, for each computer assigned to that user: serial number; type;
-    date of assignment.
-1.7 If a queried user has no computer assigned, the system shall report this condition.
-1.8 If a queried computer is not assigned to a user, the system shall report this condition.
+1.2 The system shall accept a query containing a computer serial number.
+1.3 For a user-number query, the system shall report all equipment assigned to that user.
+1.4 For a serial-number query, the system shall report the assignment for that computer.
+1.5.1 The user details in a result shall include the user's name.
+1.5.2 The user details in a result shall include the user's office.
+1.5.3 The user details in a result shall include the user's user number.
+1.6.1 The computer details shall include the serial number of each computer assigned to that user.
+1.6.2 The computer details shall include the type of each computer assigned to that user.
+1.6.3 The computer details shall include the assignment date for each such computer.
+1.7 The result shall present user details before computer details.
+1.8 If the queried user has no computer assigned, the system shall report that condition.
+1.9 If the queried computer has no user assigned, the system shall report that condition.
 ```
+
+**TBD:** treatment of unknown identifiers, both identifiers in one query, exact report format and
+message wording. Do not invent these. For an unassigned computer, no user details exist; the
+unassigned result is the specified exception to the user-details format.
 
 **Mark-earning points:** one assertion per line; use **shall**; keep the _condition_ and the
 _response_ together; make "reported" concrete (which fields, in which order).
 
-**Q2. NFRs.** Performance (query response time), capacity (max assets/users), availability,
-security/authorisation (who may query which user's assets — a privacy NFR), reliability/backup,
-usability, portability, maintainability, auditability.
+**Q2. Example NFR proposals — agree targets with the client:**
+
+- Performance: at least 95% of queries shall complete within 2 seconds with 100 concurrent users
+  and 100 000 recorded assets.
+- Availability: the service shall be available for at least 99.5% of each calendar month's minutes,
+  measured by a defined service health check.
+- Recovery: after a restart, query service shall be restored within 5 minutes.
+- Usability: at least 80% of first-time authorised users shall run a user-number query within
+  2 minutes without assistance.
+
+These are proposed measurable qualities, not thresholds in the tutorial. Access-control **functions**
+such as checking permission are functional requirements; privacy/security constraints can be NFRs.
 
 ### Tutorial 2 — GES use cases
 
-- (a) Actors + use cases + diagram → see §14.3–14.4.
-- (b) Use case description for shipment arrival + allocation → use the 6 mandatory fields and alternate
-  **actor step / system step**; the overrule case (H) is an **alternative flow**; "no space at all"
-  (G: "none of it") is an **alternative flow** with expected output "no grain accepted"; entering
-  invalid quantity is an **exception**.
-- (c) Data dictionary → define **Silo, Capacity, Bushel, Shipment, Arrival, Departure, Grade,
-  Allocation, Transaction Log, Normal level, Exceeds normal**, and _avoid_ implementation words.
+- **(a)** Actor boundary, Mermaid use-case sketch and include/extend rationale: §14.3.
+- **(b)** Arrival/allocation use-case description, including required actual-deposit reporting: §14.3;
+  interaction sequence: §14.6. State unknown recovery policies as TBD.
+- **(c)** Data dictionary examples: §14.3; separate proposals from actual deposits.
 
 ### Tutorial 3 — Conceptual model + projector state machine
 
-- **(a) Classes:** from the use case description of arrival/allocation → `Silo`, `Grain`, `Shipment`,
-  `Truck`, `RailCar`, `Seller`, `Buyer`, `ElevatorManager`, `Allocation`, `TransactionLogEntry`.
-- **(b) Associations:** `Silo 1 — * Allocation`, `Shipment 1 — * Allocation`, `Truck 1 — * Shipment`,
-  `RailCar 1 — * Shipment`, `Silo 1 — 1 GrainType/Grade (when non-empty)`.
-- **Q2 projector state machine:** model **states**, not actions:
-
-```
-Off ──press ON──► WarmingUp ──beep; indicator red blinking; ready──► Ready
-                     entry/ beep (once), do/ blink red              entry/ indicator green
-                                                                    do/ accept PC input (default)
-Ready ──press LAPTOP──► Laptop      Laptop ──press OFF──► Off
-Laptop ──press OFF──► Off           Ready  ──press OFF──► Off
-```
+- **Q1(a–b):** classes, attributes, associations and multiplicities for arrival/allocation: §14.4.
+- **Q2:** projector states follow the supplied interaction, without automatic shutdown:
 
 ```mermaid
 stateDiagram-v2
     [*] --> Off
     Off --> WarmingUp : press ON
-    WarmingUp --> Ready : beep, indicator red blinking, ready
-    Ready --> Laptop : press LAPTOP
-    Ready --> Off : press OFF
+    WarmingUp --> ReadyPC : ready / indicator green
+    ReadyPC --> Laptop : press LAPTOP
+    ReadyPC --> Off : press OFF
     Laptop --> Off : press OFF
     note right of WarmingUp
-        entry / beep (once)
+        entry / beep once
         do / blink red
     end note
-    note right of Ready
-        entry / indicator green
-        do / accept PC input (default)
+    note right of ReadyPC
+        Default source is PC.
     end note
 ```
 
-Notes that earn marks: no auto-off transition (Jane deliberately leaves it on); the beep is an
-**entry/do** action inside `WarmingUp`, not a state; `Ready` has a **default** input = PC, so pressing
-LAPTOP is the only transition needed to reach `Laptop`.
+The beep belongs on entry to WarmingUp. Readiness triggers the next transition; beep and blinking
+are not extra readiness events. Assume OFF is modelled from the ready states shown in the scenario;
+OFF during warm-up and a PC button are not specified. Jane may leave the projector in Laptop.
 
 ### Tutorial 4 — Software processes
 
@@ -2462,14 +2502,30 @@ reduces need for documentation; architecture refactoring is expensive).
 
 ### Tutorial 5 — Scrum
 
-See §8.5–8.7. INVEST table. Product increment must be **potentially shippable** so that value can be
-released at any sprint boundary, feedback arrives early, risk is retired early, and the customer sees
-on-time delivery.
+1. **Adoption:** assess requirement volatility, customer availability, team size/skills/location,
+   integration needs, regulation and required documentation. Mix plan-driven and agile practices
+   where the constraints require it (§8.3).
+2. **Velocity:** use completed points from several comparable sprints and average them; for a new team,
+   run a trial sprint or make an explicitly provisional forecast using relevant prior experience.
+   A mandated completion date does not measure velocity. Re-estimate when capacity changes.
+3. **Good backlog:** all four DEEP properties in §8.5, not only Estimated and Prioritised.
+4. **INVEST:** see §8.6.
+5. **Increment:** tested, integrated and potentially shippable software gives usable value, earlier
+   feedback and visible progress. “Potentially” does not require a release every sprint.
+6. **Arithmetic:** §8.7 gives 8 points/sprint and $128 000, counting all eight Scrum Team members.
 
 ### Tutorial 6 — Architecture + Strategy
 
 **Q1.** Model dependencies among boundary/control/entity with a **layered architecture**:
-presentation (boundary) → control → entity, arrows only **downwards**.
+presentation (boundary) → control → entity, arrows only **downwards**. This is a logical
+responsibility layout; entity objects need not each be separate deployment tiers. The tutorial's
+reference to “Tutorial #4” appears to mean the conceptual model in **Tutorial 3 Q1**.
+
+```mermaid
+flowchart TD
+    UI["Boundary: ArrivalUI / SensorBoundary"] --> C["Control: AllocationController / MonitoringController"]
+    C --> E["Entity: Silo / Arrival / Allocation / TransactionLogEntry"]
+```
 
 **Q2.** Mobile device + many network protocols (LAN, WiFi, Bluetooth, 3G, 4G) + "further protocols with
 minimal impact":
@@ -2482,6 +2538,29 @@ minimal impact":
 - **Class diagram + roles:** Context delegates `connect()/send()` to the strategy; adding a protocol
   = adding a class, no client change (**OCP**).
 
+```mermaid
+classDiagram
+    class NetworkContext {
+        -strategy : NetworkStrategy
+        +connect()
+        +send(data)
+    }
+    class NetworkStrategy {
+        <<interface>>
+        +connect()
+        +send(data)
+    }
+    NetworkContext "1" --> "1" NetworkStrategy : delegates to
+    NetworkStrategy <|.. LANStrategy
+    NetworkStrategy <|.. WiFiStrategy
+    NetworkStrategy <|.. BluetoothStrategy
+    NetworkStrategy <|.. ThreeGStrategy
+    NetworkStrategy <|.. FourGStrategy
+```
+
+Context is the application using the network; the Strategy interface is the stable contract;
+concrete strategies implement each protocol. Runtime selection/construction is added in T7 Q2.
+
 ### Tutorial 7 — Observer + Factory
 
 **Q1.** GES notifies processing plants on grain arrival/departure; plants register **interests in
@@ -2492,10 +2571,44 @@ channels **vary over time**; must be **easily extended** to new channels.
   dimensions (interest + channel).
 - **Patterns:** **Observer** (subscription + notification: `attach/detach/notify`, `update` with
   interests → **selective notification**) **+ Strategy** for the communication means
-  (`EmailNotifier`, `SMSNotifier`, `CompositeNotifier` for "both") **+ Factory** to create the notifier
+  (`EmailNotifier`, `SMSNotifier`, `CompositeNotifier` for "both") **+ an optional Factory** to create the notifier
   for a plant's current preference.
 - **Trap:** "combination of these means" ⇒ the **Composite** pattern is also defensible for
   email+SMS; say so and justify.
+
+```mermaid
+classDiagram
+    class GrainEventSource {
+        +attach(observer, interests)
+        +detach(observer)
+        +changeInterests(observer, interests)
+        +notify(event)
+    }
+    class PlantObserver {
+        <<interface>>
+        +update(event)
+    }
+    class ProcessingPlantSubscription {
+        interests
+        +update(event)
+        +setChannels(channels)
+    }
+    class NotificationStrategy {
+        <<interface>>
+        +send(event)
+    }
+    GrainEventSource "1" --> "0..*" PlantObserver : selective notification
+    PlantObserver <|.. ProcessingPlantSubscription
+    ProcessingPlantSubscription "1" --> "1..*" NotificationStrategy : preferred channels
+    NotificationStrategy <|.. EmailNotifier
+    NotificationStrategy <|.. SMSNotifier
+```
+
+**Roles:** event source = Subject; subscription object = concrete Observer for a processing plant;
+NotificationStrategy = channel contract; EmailNotifier/SMSNotifier = concrete strategies. Maintain
+one active channel or both; `update(event)` sends through each selected channel. Interests can change
+without replacing GES. This list handles “both” without requiring an extra Composite class. A Factory
+for channel selection is optional; the creation question below explicitly needs one.
 
 **Q2.** "Refer to the design in Tutorial 6 Q2: what is missing?"
 → **Object creation.** Strategy abstracts behaviour but something must decide _which_ concrete
@@ -2504,13 +2617,39 @@ Add a **Factory** (`NetworkFactory.createStrategy(type)`), optionally with dynam
 protocols need no code change. This is exactly the **Strategy + Factory + dynamic loading** trio from
 L14 (Eclipse/JDBC/Swing).
 
+```mermaid
+classDiagram
+    class NetworkFactory {
+        +createStrategy(type)$ NetworkStrategy
+    }
+    class NetworkContext
+    class NetworkStrategy {
+        <<interface>>
+    }
+    NetworkContext ..> NetworkFactory : obtains strategy
+    NetworkFactory ..> LANStrategy : creates
+    NetworkFactory ..> WiFiStrategy : creates
+    NetworkFactory ..> BluetoothStrategy : creates
+    NetworkFactory ..> ThreeGStrategy : creates
+    NetworkFactory ..> FourGStrategy : creates
+    NetworkContext --> NetworkStrategy : uses
+    NetworkStrategy <|.. LANStrategy
+    NetworkStrategy <|.. WiFiStrategy
+    NetworkStrategy <|.. BluetoothStrategy
+    NetworkStrategy <|.. ThreeGStrategy
+    NetworkStrategy <|.. FourGStrategy
+```
+
+The Factory owns selection/creation; Context owns behaviour delegation. A basic factory centralises
+changes; dynamic loading can select registered new implementations through configuration.
+
 ### Tutorial 8 — GES silo EC/BV
 
-See §13.9 — that is the full answer.
+See §13.9 for ECs, BVs, test rows and explicit assumptions about below-normal readings and resolution.
 
 ### Tutorial 9 — CFG/CC/coverage
 
-See §12.9 — that is the full answer.
+See §12.9 for CFG, both CC conventions, basis paths, exact traces and a two-test coverage suite.
 
 ---
 
@@ -2593,11 +2732,12 @@ and costs, subjective to the scenario.
 
 <details><summary>Answer</summary>
 
-1. `CC = E − N + 2` (per connected component; +2P for P components)
-2. `CC = number of decision points (predicates) + 1`
+1. `CC = E − N + 2` for one connected CFG; `E − N + 2P` for P components
+2. `CC = number of binary decision nodes + 1` for one connected CFG
 3. `CC = number of bounded regions in the CFG + 1`
 
-CC = the number of linearly independent paths = the minimum number of test cases for basis-path coverage.
+CC = the size of a structural basis of independent paths. Feasibility must be checked; it is not
+the minimum number of tests for statement or branch coverage.
 
 </details>
 
@@ -2704,20 +2844,25 @@ named, (iv) the two "reported" edge cases made explicit, (v) "shall" used.
 
 ```
 1.1 The system shall accept a query containing a user number.
-1.2 The system shall accept a query containing a serial number.
-1.3 When the query contains a user number, the system shall report every computer assigned to that user.
-1.4 When the query contains a serial number, the system shall report the user to whom that computer is
-    assigned and the date of that assignment.
-1.5 Every query result shall show the user's name, office and user number.
-1.6 Every query result shall show, for each assigned computer, its serial number, its type and the
-    date of assignment.
-1.7 Each query result shall list the user's name, office and user number before the computer details.
-1.8 If the queried user has no computer assigned, the system shall report "no equipment assigned".
-1.9 If the queried computer is not assigned to any user, the system shall report "not assigned".
+1.2 The system shall accept a query containing a computer serial number.
+1.3 For a user-number query, the system shall report all equipment assigned to that user.
+1.4 For a serial-number query, the system shall report the assignment for that computer.
+1.5.1 The user details in a result shall include the user's name.
+1.5.2 The user details in a result shall include the user's office.
+1.5.3 The user details in a result shall include the user's user number.
+1.6.1 The computer details shall include the serial number of each computer assigned to that user.
+1.6.2 The computer details shall include the type of each computer assigned to that user.
+1.6.3 The computer details shall include the assignment date for each such computer.
+1.7 The result shall present user details before computer details.
+1.8 If the queried user has no computer assigned, the system shall report that condition.
+1.9 If the queried computer has no user assigned, the system shall report that condition.
 ```
 
-_What loses marks:_ keeping "maybe queried" (unverifiable), merging 1.5–1.7, omitting the ordering
-requirement (it is stated: "followed by"), or inventing response times.
+**TBD:** treatment of unknown identifiers, both identifiers in one query, exact report format and
+message wording. Do not invent these. For an unassigned computer, no user details exist; the
+unassigned result is the specified exception to the user-details format.
+
+Use §15 Tutorial 1's hierarchy. Preserve every field and the required ordering.
 
 </details>
 
@@ -2744,8 +2889,11 @@ always performed, and it is reused by _Drop Course_ and _View Class List_. (Alte
 **User** actor generalises Student and Lecturer, and `Login` is associated with `User` — also valid;
 justify it.)
 
-**«extend»:** _Offer Place_ **extends** _Join Waitlist_ — a place only frees up within 24 hours in
-_some_ cases, and _Join Waitlist_ is complete (goal achieved: the student is queued) without it.
+**«extend»:** _Join Waitlist_ **extends** _Enrol in Course_ at the “course full” extension point,
+under the explicit modelling choice that enrolment can end with no immediate place. _Offer Place_
+is a **later event-triggered use case**, not an extension executing inside the completed waitlist
+interaction. Authentication may instead be a precondition if a valid session already exists; Login
+is included only if the base actually performs it.
 
 **Traps marked here:** making "System" an actor; listing "Enrol" and "Add Course" as two use cases for
 one goal; using «extend» for something that always happens (Login).
@@ -2760,7 +2908,7 @@ flows and two exceptions.
 <details><summary>Answer</summary>
 
 **AF-1 (book already on loan):** 1. System displays "This copy is on loan; the earliest return date is
-<dd/mm/yyyy>." 2. System returns to the step where the member scans a copy.
+`<dd/mm/yyyy>`." 2. System returns to the step where the member scans a copy.
 **AF-2 (member has reached the loan limit):** 1. System displays "Loan limit reached (5 of 5)." 2. System
 returns to the step where the member scans a copy.
 
@@ -2801,9 +2949,12 @@ the member type is valid.
 | nights     | upper 30 | 29, **30**, 31 | 30       | 31                       |
 | memberType | —        | —              | —        | — (discrete: **no BVs**) |
 
-**(c) EC test set**
+**(c) Minimum EC-only suite:** **6 tests**: one all-valid row and five rows isolating the invalid
+ECs (two rooms, two nights, one member type). Either valid category represents their shared EC.
+The **7-row suite below** additionally enumerates both valid categories and covers both numeric
+endpoints; it is stronger than the minimum EC requirement.
 
-Valid (combine; enumerate the small discrete EC):
+Valid (combine; enumerate the small categorical EC):
 
 | #   | rooms | nights | memberType | Expected |
 | --- | ----- | ------ | ---------- | -------- |
@@ -2820,14 +2971,14 @@ Invalid (exactly one invalid per row):
 | 6   | 5      | **31** | Standard   | Rejected |
 | 7   | 5      | 5      | **Silver** | Rejected |
 
-_Marks:_ two valid ECs per range, one invalid EC per discrete parameter, "no BVs for memberType",
+_Check:_ **one** valid EC and **two** invalid ECs per range, one invalid EC for memberType, "no BVs for memberType",
 exactly one bolded invalid cell per invalid row.
 
 </details>
 
 ---
 
-**M5. CFG and complex complexity.** Draw the CFG for the method below, compute CC, list the basis
+**M5. CFG and cyclomatic complexity.** Draw the CFG for the method below, compute CC, list the basis
 paths, and give a test input for each.
 
 ```java
@@ -2848,19 +2999,32 @@ public int classify(int score) {
 
 <details><summary>Answer</summary>
 
-Nodes: 1, 2, 3, 4, 5, 6, 7, 8, 9, 11 → **N = 10**. Edges: 1→2; 2→3(T), 2→4(F); 3→11; 4→5(T), 4→6(F);
-5→11; 6→7(T), 6→8(F); 7→11; 8→9; 9→11 → **E = 12**.
+Nodes: 1, 2, 3, 4, 5, 6, 7, 9, 11; **N = 9**. The `else` keyword at line 8 is not a separate
+executable statement. **E = 11**, so **CC = 11 − 9 + 2 = 4**, also three decisions + 1.
 
-**CC = E − N + 2 = 12 − 10 + 2 = 4** (also 3 predicates + 1).
+```mermaid
+flowchart TD
+    N1((1)) --> N2{"2: score >= 90?"}
+    N2 -->|true| N3["3: grade = 4"]
+    N2 -->|false| N4{"4: score >= 75?"}
+    N4 -->|true| N5["5: grade = 3"]
+    N4 -->|false| N6{"6: score >= 60?"}
+    N6 -->|true| N7["7: grade = 2"]
+    N6 -->|false| N9["9: grade = 1"]
+    N3 --> N11["11: return grade"]
+    N5 --> N11
+    N7 --> N11
+    N9 --> N11
+```
 
-| Path | Sequence       | Input      | Output |
-| ---- | -------------- | ---------- | ------ |
-| P1   | 1,2,3,11       | score = 95 | 4      |
-| P2   | 1,2,4,5,11     | score = 80 | 3      |
-| P3   | 1,2,4,6,7,11   | score = 65 | 2      |
-| P4   | 1,2,4,6,8,9,11 | score = 50 | 1      |
+| Path | Sequence | Input | Output |
+| --- | --- | --- | --- |
+| P1 | 1,2,3,11 | 95 | 4 |
+| P2 | 1,2,4,5,11 | 80 | 3 |
+| P3 | 1,2,4,6,7,11 | 65 | 2 |
+| P4 | 1,2,4,6,9,11 | 50 | 1 |
 
-**Boundary link (bonus marks):** the CFG proves _branch_ coverage, not _boundary_ correctness. `>= 90`
+**Boundary link:** the CFG proves _branch_ coverage, not _boundary_ correctness. `>= 90`
 must also be tested at **89 and 90**; `>= 75` at **74 and 75**; `>= 60` at **59 and 60**. The path set
 above never tests exactly 90, so a `>` / `>=` bug survives 100% branch coverage — the classic
 white-box blind spot that BVT covers.
@@ -2894,8 +3058,13 @@ claim 100% branch coverage from statement information alone. (This is the intend
 
 <details><summary>Answer</summary>
 
-1. **Strategy** 2. **Observer** 3. **Factory** 4. **Singleton** 5. **Façade**
-2. **Command** 7. **Decorator**
+1. **Strategy**
+2. **Observer**
+3. **Factory**
+4. **Singleton**
+5. **Façade**
+6. **Command**
+7. **Decorator**
 </details>
 
 ---
@@ -2908,18 +3077,6 @@ exceeds the normal level. New display devices are added at runtime; the silo mus
 <details><summary>Answer</summary>
 
 **(a)**
-
-```
-«interface» Subject            «interface» Observer
-+ attach(o:Observer)           + update()
-+ detach(o:Observer)
-+ notify()                     ▲
-      ▲                        │ implements
-      │ implements        ┌────┴────┬──────────┐
-   Silo (concrete)    Dashboard  AlarmSiren  GrainDryer
-   -humidity          (each reads the silo via getData())
-   +getData(): Reading
-```
 
 ```mermaid
 classDiagram
@@ -2944,7 +3101,7 @@ classDiagram
     Observer <|.. Dashboard : implements
     Observer <|.. AlarmSiren : implements
     Observer <|.. GrainDryer : implements
-    Subject --> Observer : notifies
+    Silo "1" --> "0..*" Observer : registered observers
     note for Dashboard "Dashboard, AlarmSiren and GrainDryer each read the silo via getData()"
 ```
 
@@ -2972,9 +3129,9 @@ calls `getData()` and why.
 
 | Class                       | Role                                                  | Stereotype       |
 | --------------------------- | ----------------------------------------------------- | ---------------- |
-| `WorkSheet`, `SheetManager` | **Model** (data + app logic)                          | entity           |
+| `WorkSheet`, `SheetManager` | **Model** (data + app logic)                          | entity for WorkSheet; control for SheetManager           |
 | `LineChart`, `BarChart`     | **View**                                              | boundary         |
-| `EditWS`                    | **Controller** (captures input, calls `updateCell()`) | boundary/control |
+| `EditWS` | Initial combined editing UI, a **boundary**; full MVC splits `EditWSView` and `EditWSCtrler` | boundary / presentation |
 
 Edges: **View ↔ Model = Observer** (view registers, model notifies `update()`);
 **View ↔ Controller = Strategy** (view delegates interface behaviour; controller swappable);
@@ -3000,9 +3157,9 @@ Diagram given: `Customer 1 — 1 Order`; `Order ◇— * OrderLine`; `OrderLine 
 | Error                     | Should be                                                                                                 |
 | ------------------------- | --------------------------------------------------------------------------------------------------------- |
 | `Customer 1 — 1 Order`    | `Customer 1 — * Order` (a customer places many orders)                                                    |
-| `Order ◇— * OrderLine`    | **`Order ◆— 1..* OrderLine`** — composition (lines die with the order), not aggregation                   |
+| `Order ◇— * OrderLine`    | **`Order "1" *-- "0..*" OrderLine`** — composition. Use `1..*` only if empty orders are forbidden by an explicit assumption                   |
 | `OrderLine * — 1 Product` | Correct                                                                                                   |
-| `Customer * — 1 Address`  | `Customer 1 — 1 Address` (each address belongs to one customer; multiplicity is written at the _far_ end) |
+| `Customer * — 1 Address` | **Consistent with the statement**: one Address per Customer; several Customers may share it. Address exclusivity is not specified. |
 
 _Rule to state:_ the number sits at the end **near the class it counts**.
 
@@ -3044,8 +3201,7 @@ models"_ and name the trade-off (agility vs auditability).
 2. "The system shall return search results within 2 seconds for 95% of queries under 500 concurrent users."
 3. "The system shall generate the daily report at 23:00." (remove the optionality — or delete it if not required)
 4. "The system shall authenticate every user by password and shall lock the account after 3 failed attempts."
-5. ⚠️ **Trap:** the sentence is already fine _syntactically_ but wrong in **modal verb**: the user is
-the environment, so "will" is correct here ("The user **will** provide a valid card number" is an
+5. The sentence is an **environment assumption**, and **will** is the correct modal verb here ("The user **will** provide a valid card number" is an
 assumption). The _requirement_ would be "The system **shall** validate the card number before
 accepting the payment."
 </details>
@@ -3073,12 +3229,13 @@ R5. The system must not hire too-young or too-old people.
 | --- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | R1  | **Two requirements in one**, neither verifiable ("fast", "easy")  | R1.1 "The system shall display the dashboard within 2 s of a valid login (95th percentile)." R1.2 "80% of first-time users shall complete a transfer within 4 minutes without assistance."    |
 | R2  | **Design suggestion** — violates "the SRS contains no design"     | Delete. If persistence is a constraint, state it as an NFR: "The system shall persist data in a relational database supporting standard SQL."                                                 |
-| R3  | **Not atomic** — four actions in one sentence; no oracle for each | Split into R3.1 verify credentials (accept/reject), R3.2 display dashboard, R3.3 load preferences, R3.4 send welcome email (with a measurable condition, e.g. within 60 s, once per account). |
+| R3  | **Not atomic** — four actions in one sentence; no oracle for each | Split into R3.1 verify credentials (accept/reject), R3.2 display dashboard, R3.3 load preferences, R3.4 send welcome email after login. Any timing target needs agreement; do not change “after login” to “once per account”. |
 | R4  | **Unverifiable + vacuous** ("invalid" undefined)                  | Enumerate: "The system shall reject an income value < 1500 or > 80000 with error code E102 and shall not create an application."                                                              |
 | R5  | **Unverifiable** ("too young / too old")                          | "0–15 and 55–99: do not hire; 16–17: part-time; 18–54: full-time."                                                                                                                            |
 
-Mention the two **banned-word** families you removed: vague adjectives (fast, easy, adequate) and
-optionality (if possible, as appropriate). Mention that R3 also violates **modifiability** (you cannot
+The given draft contains vague adjectives, undefined validity and unrequested design decisions.
+Optionality phrases are another SRS risk, but none appears in R1–R5. Numerical targets in these
+example rewrites are proposals for client agreement, not facts recoverable from the draft. Mention that R3 also violates **modifiability** (you cannot
 label or trace individual behaviours).
 
 </details>
@@ -3137,12 +3294,42 @@ missing if you only use Observer? (d) Which principle does your design satisfy?
 creates the strategy from the plant's preference record. `notify()` filters by `interests`
 (**selective notification**).
 
+```mermaid
+classDiagram
+    class GrainEventSource
+    class PlantObserver {
+        <<interface>>
+        +update(event)
+    }
+    class PlantSubscription
+    class NotificationStrategy {
+        <<interface>>
+        +send(event)
+    }
+    class NotifierFactory {
+        +create(preference) NotificationStrategy
+    }
+    GrainEventSource --> PlantObserver : notifies matching interests
+    PlantObserver <|.. PlantSubscription
+    PlantSubscription --> NotificationStrategy : sends through
+    PlantSubscription ..> NotifierFactory : obtains channels
+    NotifierFactory ..> EmailNotifier : creates
+    NotifierFactory ..> SMSNotifier : creates
+    NotificationStrategy <|.. EmailNotifier
+    NotificationStrategy <|.. SMSNotifier
+```
+
+To support both channels, use a list as in Tutorial 7 or an optional composite implementing
+NotificationStrategy. The factory can construct that selection.
+
 **(c)** Observer alone gives you _who to tell_ but not _how to tell them_, and no place to decide the
 concrete channel → add **Strategy** (channel) and **Factory** (creation). If you used only Strategy you
 would still have GES calling a specific plant.
 
-**(d)** **Open–Closed**: new grain types and new channels are new classes; `GrainEventSource` is not
-modified. Also **low coupling** and **single responsibility** (event detection vs channel delivery).
+**(d)** **Open–Closed**: subscribers and notifier implementations depend on interfaces, so the event
+source can stay unchanged. New channels are implementations; new grain types may simply be domain
+values. A switch-based factory still needs updating; a configurable registry/dynamic loader can
+keep that selection out of source code. Also **low coupling** and **single responsibility** (event detection vs channel delivery).
 
 </details>
 
@@ -3157,28 +3344,22 @@ minimum test set and state which class of bug the tests can and cannot catch.
 
 <details><summary>Answer</summary>
 
-**(a)** "The system shall flag a transaction as suspicious and hold it for review when
-`amount > 10 000 SGD`, **or** when `amount > 2 000 SGD` and the transaction occurs between 00:00 and
-05:59, **or** when the payee has not been used in the last 90 days. Held transactions shall not be
-settled." (Pick one unambiguous rule; state the oracle: Flag / Do not flag.)
+**(a)** Proposed rule for client agreement: “For a transaction amount in the supported range
+SGD 0.00–1 000 000.00, the system shall **reject** the transaction when its amount is greater than
+SGD 10 000.00. It shall accept amounts at or below SGD 10 000.00. It shall report out-of-range amounts
+as invalid input.” Assume amounts have two decimal places. This defines an illustrative policy;
+the original word “suspicious” alone does not establish it.
 
-**(b)** Parameter 1 — `amount` (0–1 000 000, 2 dp):
+**(b)** ECs: `0.00 ≤ amount ≤ 10000.00` (Accept),
+`10000.01 ≤ amount ≤ 1000000.00` (Reject), `amount < 0.00` (Invalid),
+`amount > 1000000.00` (Invalid). Around the decision threshold use **9999.99, 10000.00, 10000.01**;
+apply the same ±0.01 step to the supported limits and the adjacent EC endpoint at 10000.01.
 
-- valid ECs (by output): `0 ≤ a ≤ 2000` (never suspicious), `2000 < a ≤ 10000` (suspicious iff night or
-  new payee), `a > 10000` (always suspicious)
-- invalid ECs: `a < 0`, `a > 1 000 000`
-- BVs: `1999, 2000, 2001` and `9999.99, 10000, 10000.01`
-
-Parameter 2 — `time` (00:00–23:59): ECs day (06:00–23:59) / night (00:00–05:59); BVs `05:59, 06:00`
-(and `23:59, 00:00` for the day rollover).
-
-Parameter 3 — `payeeAge` in days (0–3650): ECs new (< 90) / known (≥ 90); BVs `89, 90, 91`.
-
-**(c)** Minimum set: all-valid combinations `(1000, 14:00, 200 days)`, `(5000, 14:00, 200)`,
-`(20000, 14:00, 200)` → Not flag / Not flag / Flag; plus one-invalid rows
-`(−1, …)`, `(1000001, …)`. **Cannot catch:** combinations where two "not suspicious" conditions
-interact (an AND of two near-threshold values), or bugs in the _definition_ of suspicious itself —
-BVT validates boundaries, not policy. That is a **requirements** risk, not a test-design risk.
+**(c)** Minimum EC-only set has **4 tests**: 100.00 / Accept; 20000.00 / Reject; −0.01 / Invalid;
+1000000.01 / Invalid. For BVs add 0.00, 10000.00, 10000.01 and 1000000.00, keeping their expected
+outcomes distinct; retaining all boundary neighbours gives stronger coverage. EC/BV tests can find
+wrong range checks and off-by-one comparisons. They cannot establish whether this invented policy
+matches the customer's intended definition of suspicious; that requires requirements validation.
 
 </details>
 
@@ -3190,21 +3371,22 @@ needed for 100% branch coverage_? (c) does it change _MC/DC_? Answer each with j
 
 <details><summary>Answer</summary>
 
-**(a) No** for the standard `E − N + 2` computation: the compound guard stays **one node**, so the
-tutorial's graph has N = 12, E = 14 and **CC = 4**. Splitting the `&&` into two sequential decisions
-gives N = 13, E = 15 and CC = 5 — a **different graph**, not a different formula. So the answer depends
-on your drawing, never on the short-circuit semantics: **draw it, then compute**, and note the convention.
+**(a)** Short-circuit evaluation affects the graph **when operands are modelled separately**.
+Combined guard: N = 12, E = 14, CC = 4. Split operands: N = 13, E = **16**, CC = 5.
+The formula stays unchanged; the graph abstraction changes. State which one you draw.
 
-**(b) No**: normal branch coverage requires each _decision_ outcome once (true edge / false edge of
-node 7), which is achievable without distinguishing `i<n` from `result<=upperbound`.
+**(b)** Branch coverage is relative to that graph. Combined decision coverage needs true and false
+for the whole expression; split coverage also needs both outcomes of each operand when evaluated.
+It does **not automatically require more test calls**. The two tests in §12.9 cover both graphs.
 
-**(c) Yes**: **MC/DC** (modified condition/decision coverage) requires each simple condition to be shown
-to _independently_ affect the decision. You need extra tests where `i<n` is false while
-`result<=upperbound` is true (loop exits on the **second** condition). That path is
-`7-false` again but reached for a different reason — often missed by students who only test `n = 0`.
-
-_Lesson:_ "100% branch coverage" is not a proof of correctness — it hides compound-condition and
-missing-requirement bugs.
+**(c) Extension beyond the supplied testing lectures:** MC/DC asks whether each condition can
+independently change the decision outcome. Write `A = i<n`, `B = result<=upperbound`. Relevant
+evaluations are `(T,T)` (continue), `(F,T)` (exit because **A** is false; Java skips B), and `(T,F)`
+(exit because **B** is false). With short-circuit code, specify the treatment of skipped operands,
+such as masking MC/DC; merely counting whole-expression branches does not establish MC/DC.
+`n = 1, ub = 100` supplies the first two logical states, and `n = 2, ub = 0` supplies `(T,F)` after
+one addition. Several condition evaluations occur in one run, so do not equate condition combinations
+with the number of test calls.
 
 </details>
 
@@ -3241,48 +3423,10 @@ including the manager overruling the system's allocation.
 
 <details><summary>Answer</summary>
 
-```
-:Manager   :ArrivalUI   :AllocationCtl   :Silo   :TransactionLog
-   |            |              |            |            |
-   | type,grade,|              |            |            |
-   | qty        |              |            |            |
-   |----------->|              |            |            |
-   |            |--allocate() ->|            |            |
-   |            |              |--capacity()->|            |
-   |            |              |<--free------|            |
-   |            |<-allocation[]|            |            |
-   |            |              |            |            |
-   | overrule   |              |            |            |
-   |----------->|--deposit(q)->|            |            |
-   |            |              |--store(q)-->|            |
-   |            |              |--append(entry)---------->|
-   |            |<-ack---------|            |            |
-   |<--ack------|              |            |            |
-```
-
-```mermaid
-sequenceDiagram
-    actor Manager
-    participant UI as ArrivalUI
-    participant AC as AllocationCtl
-    participant S as Silo
-    participant TL as TransactionLog
-    Manager->>UI: type, grade, qty
-    UI->>AC: allocate()
-    AC->>S: capacity()
-    S-->>AC: free
-    AC-->>UI: allocation[]
-    Manager->>UI: overrule
-    UI->>AC: deposit(q)
-    AC->>S: store(q)
-    AC->>TL: append(entry)
-    AC-->>UI: ack
-    UI-->>Manager: ack
-```
-
-Required elements: lifelines, **activation** bars, the synchronous calls, the **return** arrows, the
-`[no capacity]` alternative (allocation empty → "no grain accepted" and the use case ends without a log
-entry), and the **loop** only if the manager deposits into several silos.
+Use the complete Mermaid sequence in §14.6: it includes the proposal, optional override,
+mandatory actual-deposit reporting, no-capacity outcome, per-silo loop, log recording and acknowledgement.
+Keep physical unloading outside the tracking software. Show returned acknowledgements through the
+controller and UI. Zero-quantity logging and unknown validation policies remain TBD.
 
 </details>
 
@@ -3319,7 +3463,7 @@ LAF) — that is the step from Observer to **MVC**.
 
 ## 19. Sample questions — Challenging / exam-style
 
-> Difficulty 4: full-length, multi-artefact, judgement-heavy. These mirror the 15–25 mark questions.
+> Difficulty 4: longer, multi-artefact practice. These are original exercises, not supplied exam questions.
 
 ### C1. End-to-end case: Bicycle Sharing System (BSS)
 
@@ -3341,28 +3485,65 @@ change. Which patterns? Draw the collaboration.
 
 <details><summary>Answer</summary>
 
-**(a) Actors:** Rider · Operations Team · Maintenance Staff · **Payment Gateway** (external) ·
-**Notification Service** (external, e.g. SMS/email provider).
+**(a) Actors:** Rider, Operations Team and Maintenance Staff. A Payment Gateway or Notification
+Service is an external actor **if** the chosen solution delegates those functions outside the system;
+the background does not mandate a provider. Assume Dock hardware is inside the system.
 
 **Use cases:** Register · Rent Bicycle · Return Bicycle · Pay for Trip · Buy Monthly Pass ·
 View Trip History · Monitor Dock Occupancy · Notify Operations Team · Rebalance Bicycles ·
-Flag Bicycle Out of Service · Charge Rider.
+Flag Bicycle Out of Service · Calculate Trip Charge.
 
-**«include»:** _Return Bicycle_ **includes** _Charge Rider_ — every return ends in a charge
-calculation (possibly $0) and _Charge Rider_ is reused by _Pay for Trip_ and _Buy Monthly Pass_.
+**«include»:** _Return Bicycle_ **includes** _Calculate Trip Charge_ under the assumption that the
+system computes a charge when a trip ends. Calculation can return $0. Payment settlement and the
+monthly-pass tariff are unspecified; do not assume every return charges a gateway. Account/payment
+provider interactions require an explicit system-boundary assumption.
 
 **«extend»:** _Notify Operations Team_ **extends** _Monitor Dock Occupancy_ — the notification occurs
 only in the specific condition "dock count reaches 0", while monitoring is meaningful on its own.
 
-_Also acceptable:_ actor generalization `Rider`/`Operations Team`/`Maintenance Staff` → abstract `User`
-with `Login` associated to `User`.
+Do not add Login merely to demonstrate actor generalization; authentication is not specified.
+
+```mermaid
+flowchart LR
+    Rider["Actor: Rider"]
+    Ops["Actor: Operations Team"]
+    Maintenance["Actor: Maintenance Staff"]
+    subgraph BSS["Bicycle Sharing System, including dock hardware"]
+        Register([Register])
+        Rent([Rent Bicycle])
+        Return([Return Bicycle])
+        Calculate([Calculate Trip Charge])
+        Pass([Buy Monthly Pass])
+        History([View Trip History])
+        Monitor([Monitor Dock Occupancy])
+        Notify([Notify Operations Team])
+        Rebalance([Rebalance Bicycles])
+        Flag([Flag Bicycle Out of Service])
+    end
+    Rider --- Register
+    Rider --- Rent
+    Rider --- Return
+    Rider --- Pass
+    Rider --- History
+    Ops --- Notify
+    Ops --- Rebalance
+    Maintenance --- Flag
+    Return -.->|«include»| Calculate
+    Notify -.->|«extend»: count reaches zero| Monitor
+```
+
+Mermaid actor boxes stand for UML actors; use ellipses and proper UML dependency arrows in a
+submitted use-case diagram.
 
 **(b) Return Bicycle**
 
-- **Participating actors:** Rider (**initiating**), Dock (system boundary), Payment Gateway (secondary).
+- **Participating actor:** Rider (**initiating**). Assume Dock hardware is inside the system boundary;
+  it is not an external actor under this choice. Gateway participation depends on a payment policy,
+  which is not specified here.
 - **Entry conditions:** The rider has an active trip; the bicycle is currently rented to that rider.
 - **Exit conditions:** The bicycle is docked and locked at a dock; the trip is closed; the trip charge
-  is computed and settled or added to the rider's account; the trip appears in history.
+  is computed for the stated per-trip tariff; the trip appears in history. Pass entitlements and
+  settlement timing remain TBD.
 
 **Normal flow**
 
@@ -3371,93 +3552,116 @@ with `Login` associated to `User`.
 | 1   | Rides to a dock and inserts the bicycle into an empty slot |                                                              |
 | 2   |                                                            | Detects the bicycle, locks it, records the dock and end time |
 | 3   |                                                            | Computes the trip duration and the charge                    |
-| 4   |                                                            | Includes _Charge Rider_ to obtain payment authorisation      |
+| 4   |                                                            | Includes _Calculate Trip Charge_ for the per-trip tariff      |
 | 5   |                                                            | Closes the trip and displays "Trip closed. Charge: $X."      |
 
 **AF-1 (dock full / no empty slot):** 1. Dock displays "No empty slot. Please use another dock." 2. System keeps the trip open and returns to step 1.
 
-**EX-1 (payment authorisation declined):** 1. System records the charge as outstanding on the rider's
-account. 2. System suspends the rider's ability to rent. 3. System ends the use case; the trip is
-closed but unsettled.
+**EX-1 (proposed recovery policy; confirm with client):** if the dock cannot confirm that the bicycle
+is locked, display a fault and leave the trip open for assistance. The background supplies no failure
+policy, so this is an assumption, not a derived requirement. Do not invent account suspension for a
+failed payment.
 
 **(c) Conceptual classes**
 
-| Class               | Key attributes                              | Associations                                                                                  |
-| ------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `Rider`             | email, mobile, dateOfBirth, status          | `1 — * Trip`; `1 — 0..1 Pass`                                                                 |
-| `Bicycle`           | id, status                                  | `1 — 0..1 Dock` (current); `1 — * Trip`                                                       |
-| `Dock`              | dockId, capacity                            | `* — 1 Station`; `1 — * Bicycle`                                                              |
-| `Station`           | name, location                              | `1 — * Dock`                                                                                  |
-| `Trip`              | startTime, endTime, durationMinutes, charge | `* — 1 Rider`; `1 — 1 Bicycle`; `1 — 1 Dock` (start) / `1 — 1 Dock` (end); `1 — 0..1 Payment` |
-| `Payment`           | amount, method, status                      | `* — 1 Rider`                                                                                 |
-| `Pass`              | validFrom, validTo                          | `1 — 1 Rider`                                                                                 |
-| `MaintenanceRecord` | reason, timestamp                           | `* — 1 Bicycle`; `1 — 1 MaintenanceStaff`                                                     |
+A minimal conceptual model treats Dock as a location containing several bicycles. An active Trip
+has no endDock yet; a dock may be shared across many trips over time.
 
-Multiplicities to state explicitly: `Rider 1 — * Trip`, `Bicycle 1 — * Trip`, `Trip 1 — 1 Bicycle`,
-`Station 1 — * Dock`, `Dock 1 — * Bicycle`, `Rider 1 — 0..1 Pass`.
-Add `Trip`→`Dock` twice with role names `startDock` / `endDock` (a nice mark-earning detail).
+```mermaid
+classDiagram
+    class Rider {
+        email
+        mobile
+        dateOfBirth
+    }
+    class Bicycle {
+        id
+        outOfService
+    }
+    class Dock {
+        id
+        capacity
+    }
+    class Trip {
+        startTime
+        endTime
+        charge
+    }
+    class Pass {
+        validFrom
+        validTo
+    }
+    Rider "1" -- "0..*" Trip : takes
+    Bicycle "1" -- "0..*" Trip : used in
+    Dock "0..1" -- "0..*" Bicycle : current location
+    Dock "1" -- "0..*" Trip : startDock
+    Dock "0..1" -- "0..*" Trip : endDock
+    Rider "1" -- "0..*" Pass : purchase history
+```
+
+Assume a bicycle has at most one current dock and one active trip; those are separate invariants.
+Do not draw both `Bicycle 1 — * Trip` and `Trip 1 — 1 Bicycle`: the latter incorrectly limits each
+bicycle to one trip. The prompt does not require a separate Station or impose one pass per lifetime.
 
 **(d) Bicycle state machine**
-
-```
-   ●──► InDock ──rent()──► InUse ──return()──► InDock
-          │                   │
-          │ flagOutOfService  │ duration > 24h
-          ▼                   ▼
-     OutOfService            Lost
-     do/ not rentable        entry/ notify operations, charge penalty
-          │
-          │ repair(), clear()
-          └──────────► InDock
-```
 
 ```mermaid
 stateDiagram-v2
     [*] --> InDock
-    InDock --> InUse : rent()
+    InDock --> InUse : rent() [not outOfService]
     InUse --> InDock : return()
-    InDock --> OutOfService : flagOutOfService
-    InUse --> Lost : duration > 24h
-    OutOfService --> InDock : repair(), clear()
-    note right of OutOfService
-        do / not rentable
+    note right of InDock
+        Maintenance can set outOfService.
+        Renting requires outOfService = false.
     end note
-    note right of Lost
-        entry / notify operations, charge penalty
+    note right of InUse
+        An outOfService flag does not itself end a trip.
     end note
 ```
 
-Marks: `do/ not rentable` is an **activity while in state**; `entry/ notify` runs **once**; `Lost` is
-reachable only from `InUse`; `OutOfService` is **not** reachable from `InUse` (a rented bike cannot be
-flagged in this model — say why: it must be returned first).
+Use **location state** plus an **outOfService attribute**: the prompt does not forbid maintenance
+flagging a rented bicycle. No 24-hour lost-bike rule, repair workflow or automatic penalty on loss is
+specified. Initial placement at a dock is a model assumption.
 
 **(e) Trip duration ECs and BVs**
 
-| EC  | Range          | Charge                      | Kind    |
-| --- | -------------- | --------------------------- | ------- |
-| E1  | 0 ≤ d ≤ 30     | $0                          | valid   |
-| E2  | 31 ≤ d ≤ 240   | ⌈(d − 30)/30⌉ dollars       | valid   |
-| E3  | 241 ≤ d ≤ 1440 | $50 flat                    | valid   |
-| E4  | d ≤ −1         | invalid input (clock error) | invalid |
-| E5  | d ≥ 1441       | bike treated as lost        | invalid |
+Assume duration is measured in **whole minutes**, and use the **per-trip** tariff. The prompt does
+not give a maximum duration or monthly-pass charging policy. Negative duration needs a validation
+policy; do not invent a named error code.
 
-BVs: lower 0 → **−1, 0, 1**; 30 → **29, 30, 31**; 240 → **239, 240, 241**; 1440 → **1439, 1440, 1441**.
+| EC | Duration (minutes) | Charge |
+| --- | --- | --- |
+| E1 | 0–30 | $0 |
+| E2 | 31–60 | $1 |
+| E3 | 61–90 | $2 |
+| E4 | 91–120 | $3 |
+| E5 | 121–150 | $4 |
+| E6 | 151–180 | $5 |
+| E7 | 181–210 | $6 |
+| E8 | 211–240 | $7 |
+| E9 | ≥241 | $50 flat, replacing the per-block charge |
+| Invalid | <0 | Validation response TBD |
 
-| #   | d (min) | Expected charge  | Note                             |
-| --- | ------- | ---------------- | -------------------------------- |
-| 1   | 29      | $0               | just-below 30, still free        |
-| 2   | 30      | $0               | on boundary                      |
-| 3   | 31      | $1               | just-above 30 → first paid block |
-| 4   | 239     | $7               | ⌈209/30⌉                         |
-| 5   | 240     | $7               | on boundary                      |
-| 6   | 241     | $50              | just-above 240 → penalty         |
-| 7   | 1439    | $50              | just-below max                   |
-| 8   | 1440    | $50              | on boundary                      |
-| 9   | 1441    | Lost-bike flow   | just-above max → invalid         |
-| 10  | −1      | Error E_DURATION | just-below min                   |
+`31–240` is **not one same-output EC**: the price changes at each block. For `30 < d ≤ 240`, use
+`ceil((d−30)/30)` dollars; for `d > 240`, use $50. Derive full ±1 triplets at each finite EC boundary.
+The reduced course selection uses each interval endpoint; this table checks both sides of every
+price change and the zero lower limit:
 
-Also add an age BV pair (**15, 16, 17**) for the "at least 16" registration rule — an easy mark that
-students routinely forget because it is a _different_ parameter.
+| Durations | Expected charges in matching order |
+| --- | --- |
+| −1, 0, 1 | TBD invalid handling, $0, $0 |
+| 29, 30, 31 | $0, $0, $1 |
+| 59, 60, 61 | $1, $1, $2 |
+| 89, 90, 91 | $2, $2, $3 |
+| 119, 120, 121 | $3, $3, $4 |
+| 149, 150, 151 | $4, $4, $5 |
+| 179, 180, 181 | $5, $5, $6 |
+| 209, 210, 211 | $6, $6, $7 |
+| 239, 240, 241 | $7, $7, $50 |
+| 1440, 1441 | $50, $50: no upper duration limit is stated |
+
+The separate registration age boundary is 15/16/17 for whole-year input. For elapsed-time inputs
+with seconds, use the specified resolution rather than silently rounding a part-minute down.
 
 **(f) Extensibility**
 
@@ -3471,24 +3675,17 @@ students routinely forget because it is a _different_ parameter.
 
 Collaboration sketch:
 
-```
-Rider ──► BookingCtl ──uses──► «interface» PaymentStrategy ◄── CardPayment / WalletPayment
-                    │                                   ▲
-                    └──creates via──► PaymentStrategyFactory
-Dock (Subject) ──notify()──► «interface» Observer ◄── OperationsTeam / Dashboard
-```
-
 ```mermaid
 flowchart LR
     R[Rider] --> BC[BookingCtl]
     BC -->|uses| PS["«interface» PaymentStrategy"]
-    CP[CardPayment] --> PS
-    WP[WalletPayment] --> PS
+    CP[CardPayment] -.->|implements| PS
+    WP[WalletPayment] -.->|implements| PS
     BC -->|creates via| PF[PaymentStrategyFactory]
     PF --> PS
     DK["Dock (Subject)"] -->|"notify()"| OB["«interface» Observer"]
-    OT[OperationsTeam] --> OB
-    DB[Dashboard] --> OB
+    OT[OperationsTeam] -.->|implements| OB
+    DB[Dashboard] -.->|implements| OB
 ```
 
 </details>
@@ -3518,12 +3715,6 @@ original make impossible?
 
 **(b)** **Strategy**:
 
-```
-ReportGenerator (Context) ──uses──► «interface» ReportRenderer
-                                        ▲  ▲  ▲
-                                   Pdf  Csv  Html
-```
-
 ```mermaid
 classDiagram
     class ReportGenerator {
@@ -3549,13 +3740,15 @@ centralises the one place that knows the mapping (and is the only place to edit 
 
 **(c)** Someone must still map `"PDF"` → `PdfRenderer`. With **Strategy only**, that switch moves to
 the _client_ (`new PdfReport()` at call sites) — the OCP violation relocates rather than disappears.
-The complete fix is **Strategy + Factory** (or a registry keyed by type, which is the same idea with
-data instead of code).
+A Factory centralises construction; a registry/dynamic loader can move type selection to
+configuration. A switch-based Factory still changes when a new renderer is added, so it does not
+make the whole application automatically closed to modification.
 
 **(d)** Testing: inject a **fake/stub** `ReportRenderer` and assert `generate` calls `render()` exactly
 once — no file system, no PDF library. The original's `new PdfReport()` **hard-wires construction**, so
-you cannot substitute a test double: the only way to test it is to produce real PDFs and inspect the
-bytes. This is the **testability** consequence of the DIP violation.
+you cannot substitute a test double through ordinary injection: ordinary dependency injection cannot substitute a renderer without changing the code.
+Integration tests remain possible; instrumentation/mocking of construction is an additional tooling
+option, not something this course example needs. This is the **testability** consequence of the DIP violation.
 
 </details>
 
@@ -3588,12 +3781,13 @@ and short-circuits), and `age = 30` takes the `member == true` edge. So the "not
 senior/child" combination is never exercised. _(This is the short-circuit trap: the second operand of
 `||` is not evaluated when the first is true.)_
 
-**(c) The full-price path** — an adult non-member paying $100 — is never asserted. A mutation such as
-`price = price * 0.9` moved into the wrong branch, or an inverted `member` test, would survive.
+**(c) The full-price path** — an adult non-member paying $100 — is never asserted. A fault that
+returns 90 instead of 100 **only when `member` is false** survives these tests. Inverting the member
+test would **not** survive: `(30, true)` would fail.
 
 **(d)** Add `(30, false) → 100`.
 
-EC/BV for `age` (0–120):
+EC/BV for `age` under the **additional assumption** that supported ages are 0–120:
 
 | EC      | Range          | Output band     |
 | ------- | -------------- | --------------- |
@@ -3603,8 +3797,8 @@ EC/BV for `age` (0–120):
 | invalid | age ≤ −1       | invalid input   |
 | invalid | age ≥ 121      | invalid input   |
 
-BVs: **11, 12, 13** and **64, 65, 66**; plus **−1** and **121**.
-De-duplicated valid BVs: {0?, 11, 12, 64, 65, 120} — state the boundary triplets, and note that the
+State triplets at 0, 11, 12, 64, 65 and 120. The course's reduced valid BV set is
+**{0, 11, 12, 64, 65, 120}**, with invalid values **{−1, 121}** under that age-range assumption. The
 `<` / `>=` operators in the code make **12** and **65** the decisive values.
 
 **Lesson to write down:** 100% statement ≠ 100% branch ≠ correct. Use white-box for structure,
@@ -3633,7 +3827,8 @@ _But MVC does not lose the benefits of layering_ because:
 
 1. The up-call is made **through an abstraction owned by the lower layer** (`Observer` interface), so
    the Model has no compile-time knowledge of any concrete View. This is **dependency inversion**, and
-   the dependency graph remains acyclic at the _class_ level.
+   this removes the Model-to-concrete-View dependency. Acyclicity of the entire class graph still
+   depends on how all interfaces and references are arranged; MVC alone does not guarantee it.
 2. The **separation of concerns** that layering is _for_ — presentation vs logic vs data — is preserved
    and strengthened: that is exactly why the course says MVC gives **high cohesion** and **low
    coupling**.
@@ -3664,7 +3859,7 @@ verdict with the trade-off (more indirection, harder navigation / learning curve
    (C) composition, diamond at the part (D) generalization
 4. BVs for `0 ≤ x ≤ 5` are …
    (A) 0,1,5,6 (B) −1,0,1,4,5,6 (C) 0,2.5,5 (D) −1,0,5,6
-5. An invalid test case may contain …
+5. In the lecture's isolated-invalid-input EC method, an invalid test case should contain …
    (A) any number of invalid inputs (B) at most one invalid input (C) exactly two (D) none
 6. Which is true?
    (A) statement coverage ⇒ branch coverage (B) branch coverage ⇒ statement coverage
@@ -3681,7 +3876,7 @@ verdict with the trade-off (more indirection, harder navigation / learning curve
     (D) interface requirements
 11. A use case triggered by a system event has …
     (A) the system as actor (B) a NULL initiating actor (C) no description (D) two initiating actors
-12. A CFG has 12 nodes and 15 edges. CC is …
+12. A connected, single-entry/single-exit CFG has 12 nodes and 15 edges. CC is …
     (A) 3 (B) 4 (C) 5 (D) 6
 
 <details><summary>Answers</summary>
@@ -3691,7 +3886,8 @@ verdict with the trade-off (more indirection, harder navigation / learning curve
    Customer.
 3. **B** — filled diamond = composition, drawn at the **whole**.
 4. **B** — triplets (−1,0,1) and (4,5,6).
-5. **B** — exactly one, so the failing check is identifiable.
+5. **B** — use exactly one invalid input in each invalid row to isolate that invalid class.
+   A rejection alone still does not prove which internal check executed.
 6. **B** — branch ⇒ statement; the converse fails (e.g. `if (c) {S1;}` with `c` always true).
 7. **B**.
 8. **B**.
@@ -3712,7 +3908,7 @@ verdict with the trade-off (more indirection, harder navigation / learning curve
 > uses CPU. Observer is also loosely coupled and supports multiple views, so it is a good design.
 > Observer is used in MVC."
 
-<details><summary>Model marking scheme</summary>
+<details><summary>Illustrative marking rubric — not an official scheme</summary>
 
 | Criterion                                                                                        | Marks | Awarded here | Comment                                                                  |
 | ------------------------------------------------------------------------------------------------ | ----- | ------------ | ------------------------------------------------------------------------ |
@@ -3732,7 +3928,7 @@ why coupling improves → cost**.
 
 ## 20. The trap compendium
 
-> Every row is a mistake that has cost marks before. Read this the night before the exam.
+> Common mistakes derived from these topics. This is a revision checklist, not evidence of past marking.
 
 ### 20.1 Requirements
 
@@ -3759,9 +3955,9 @@ why coupling improves → cost**.
 | 14  | One use case per sentence                            | One use case per **goal**                                                  |
 | 15  | Omitting the **initiating actor**                    | State it; **NULL** if system-triggered                                     |
 | 16  | Treating an alternative flow as an exception         | AF **returns to a step**; EX **fails** the use case                        |
-| 17  | Drawing the diagram and skipping the description     | The description carries most of the marks                                  |
-| 18  | Forgetting **external systems** as actors            | University Account System, CITS Email, Billing, Grain Dryer **are** actors |
-| 19  | Not justifying include/extend                        | One sentence of reasoning = 1 mark                                         |
+| 17  | Drawing the diagram and skipping the description     | Supply the behaviour description when requested                                  |
+| 18  | Forgetting **external systems** as actors            | External systems are actors **when they directly interact with the chosen system**; see GES boundary in §14.3 |
+| 19  | Not justifying include/extend                        | Explain the relationship using the required behaviour                                         |
 
 ### 20.3 Class & state modelling
 
@@ -3778,7 +3974,7 @@ why coupling improves → cost**.
 | 28  | Modelling **actions** as states                                                   | Actions go in `entry/`, `exit/`, `do/`                                        |
 | 29  | Using a **diamond** for fork/join                                                 | fork/join = **bars**; decision/merge = **diamonds**                           |
 | 30  | Guard-less decision branches                                                      | Guards must be **mutually exclusive** (and exhaustive, or `[else]`)           |
-| 31  | Putting `do/` where `entry/` belongs                                              | `entry`/`exit` run **once**; `do` runs **while in state**                     |
+| 31  | Putting `do/` where `entry/` belongs                                              | `entry`/`exit` run on each entry/exit; `do` can run while active and may complete                     |
 | 32  | Forgetting the **start node** (or adding an end node to a non-terminating system) | Start always; end only if the system terminates                               |
 
 ### 20.4 Process / agile
@@ -3816,16 +4012,16 @@ why coupling improves → cost**.
 | 51  | Swapping **oracle** and **log**                              | Oracle = expected; log = actual                                |
 | 52  | Deriving the oracle from the code                            | Derive it from the **requirement**                             |
 | 53  | Putting several invalid values in one row                    | **Exactly one** invalid per test case                          |
-| 54  | Giving boundary values to a **discrete** parameter           | Discrete ECs have **NO** BVs                                   |
+| 54  | Giving boundary values to a **discrete** parameter           | Unordered categorical ECs have no numeric BVs; integer ranges do                                   |
 | 55  | `0–5` BVs as 5,6,7                                           | **−1, 0, 1** and **4, 5, 6**                                   |
-| 56  | Calling the on-the-boundary value invalid                    | It is **valid**; just-below/just-above are invalid             |
+| 56  | Calling the on-the-boundary value invalid                    | An inclusive valid endpoint is valid; classify each neighbour against the ranges             |
 | 57  | Duplicating values where two ECs are adjacent                | De-duplicate (e.g. hiring: valid {0,15,16,17,18,54,55,99})     |
 | 58  | Only creating "sensible" ECs                                 | Also model **out-of-universe** inputs (humidity < 0, age < 0)  |
 | 59  | Claiming statement ⇒ branch coverage                         | **Branch ⇒ statement**, not the reverse                        |
-| 60  | Confusing CC with the number of paths                        | CC = number of **linearly independent** paths = min test cases |
+| 60  | Confusing CC with the number of paths                        | CC = structural basis size; not the minimum for statement/branch coverage |
 | 61  | Forgetting `P` in `E − N + 2P` for multiple components       | Use `+2P`                                                      |
 | 62  | Ignoring **short-circuit** evaluation in compound conditions | Branch coverage may hide an untested operand                   |
-| 63  | Assuming a rejected row proves which check fired             | With 1 invalid per row it does; with 4 it does not             |
+| 63  | Assuming a rejected row proves which check fired             | One invalid isolates the invalid class; execution evidence is needed to prove which check fired             |
 | 64  | Sampling randomly and calling it testing                     | Random inputs rarely hit boundaries; use EC/BV                 |
 
 ---
@@ -3849,8 +4045,8 @@ why coupling improves → cost**.
 
 ```
 CC = E − N + 2            (or +2P for P components)
-CC = decisions + 1
-CC = regions + 1
+CC = binary decision nodes + 1   (one connected CFG)
+CC = bounded regions + 1
 Velocity = points delivered ÷ sprints
 Cost = people × cost/person/sprint × sprints
 Charge/effort = ceil((value − threshold) / blockSize)   [for "per started block" rules]
@@ -3869,15 +4065,16 @@ Charge/effort = ceil((value − threshold) / blockSize)   [for "per started bloc
 ### 21.4 The four-sentence pattern answer
 
 > "**Problem:** [name the smell]. **Force:** [what must vary / stay stable]. **Pattern:** [name +
-> > category], which [mechanism in one clause]. **Consequence:** it satisfies [OCP / low coupling /
-> > SRP] at the cost of [complexity / indirection / performance]."
+> category], which [mechanism in one clause]. **Consequence:** it satisfies [OCP / low coupling /
+> SRP] at the cost of [complexity / indirection / performance]."
 
 ### 21.5 The three test-design rules
 
-1. **Partition first** — 1+ valid EC, 2 invalid ECs (range) or 1 valid / 1 invalid (discrete).
+1. **Partition first** — use the lecture's range/category rules, then refine for distinct behaviour.
+   Out-of-range inputs have no exact oracle until their handling is specified.
 2. **One invalid per row** — everything else valid.
-3. **Boundary triplets** — on / just-below / just-above, for **range** parameters only; de-duplicate
-   at adjacent boundaries.
+3. **Boundary triplets** — on / just-below / just-above for ordered ranges, using the stated unit.
+   Distinguish the full triplets from the course's reduced test selection (§13.5).
 
 ### 21.6 Common-word decoder for exam prompts
 
@@ -3895,11 +4092,12 @@ Charge/effort = ceil((value − threshold) / blockSize)   [for "per started bloc
 
 ---
 
-## 22. Appendix: the guest lectures (AI engineering — context, likely non-core)
+## 22. Appendix: AI engineering and agentic development
 
-Two decks in `lectures/` are **industry guest lectures** (Dell APJ AI Innovation Hub), not classic
-SC2006 examinable material. They are included here for completeness and because the **project
-competition** explicitly scores _"Effective Use of AI"_.
+Three local decks cover related industry material: **Understanding AI Engineering**, **AI Engineering
+as a practice - NTU**, and **20260818_NTU Agentic Software Engineering**. Their exam status is **not
+established by the supplied files**. The project competition separately weights Effective Use of
+Artificial Intelligence at 30%; that competition rubric is not the course assessment breakdown.
 
 ### 22.1 AI engineering vocabulary
 
@@ -3907,7 +4105,7 @@ competition** explicitly scores _"Effective Use of AI"_.
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **AI engineering**                   | The discipline of **building, deploying and maintaining AI-powered systems** in the real world; it fuses AI research (what is possible), software engineering (what works reliably) and domain expertise (what matters) |
 | **AI vs ML vs DL**                   | AI = broad science of mimicking human abilities; ML = algorithms that improve through experience; DL = multi-layer neural networks for complex patterns                                                                 |
-| **AI engineering vs ML engineering** | ML engineering **trains models from scratch**; AI engineering **builds applications on top of foundation models**                                                                                                       |
+| **AI engineering vs ML engineering** | The guest decks contrast traditional model development/training with applications built on foundation models; treat this as a focus distinction, not an exclusive definition                                                                                                       |
 | **LLM pipeline**                     | Tokenisation → embeddings → attention → next-token prediction → (training adjusted the weights)                                                                                                                         |
 | **RAG**                              | Retrieval-augmented generation: fetch relevant documents, then generate grounded on them                                                                                                                                |
 | **Agent**                            | Plans and executes a **sequence of actions** to achieve a goal — plans across steps, keeps state/memory, uses tools, loops until done (vs a stateless, one-shot chatbot)                                                |
@@ -3950,9 +4148,92 @@ every submitted change. Anti-pattern: _vibe coding_ — vague request → plausi
 
 The deck's core claim is a software-engineering claim: _"the agent is a function of its context window
 — output = f(context); what you know but haven't written down is invisible."_ That is the same argument
-as **"requirements must be explicit, atomic and verifiable"** — an unwritten requirement is a
-requirement that does not exist.
+as **"requirements must be explicit, atomic and verifiable"** — an unwritten customer need cannot be reliably implemented or verified until captured.
+A need can still exist before it is documented.
 
 ---
+
+### 22.4 AI engineering practice: adapting, evaluating and operating systems
+
+The practice deck develops three layers: **application development** (interface, prompts, context,
+evaluation), **model development** (adaptation/training, datasets, inference optimisation,
+evaluation) and **infrastructure** (compute/data management, serving, monitoring).
+
+- **Prompt engineering:** specify task, instructions, examples and context. Fast to change; it does
+  not update the model's weights or make unsupported output automatically correct.
+- **RAG:** retrieve relevant external documents and supply them as generation context. Useful for
+  private or changing knowledge; retrieval quality, latency and document maintenance still matter.
+- **Fine-tuning:** adapt model weights using suitable labelled examples for a narrow task or desired
+  behaviour. It needs data and training effort; distinguish it from adding context at inference time.
+- **Evaluation:** use representative tests and quantitative/qualitative review throughout development,
+  including component tests and end-to-end behaviour. The Understanding deck also covers fairness,
+  privacy, hallucination, prompt injection and monitoring after deployment.
+- **Operations:** the practice deck includes REST APIs, containerised dependencies, Kubernetes for
+  orchestration, and CI/CD/continuous training. Architecture combines the application, model,
+  retrieval/data and serving layers; no single tool guarantees quality.
+
+The agentic-development deck adds **automated**, **observed** and **human** evaluation evidence:
+unit/integration tests, type checks/lint/builds; runtime/UI behaviour and logs; requirements
+traceability, diff review, security/privacy/maintainability. It advocates short feedback loops,
+enforced checks and searchable structured logs. Passing those checks establishes only what the
+checks cover, not absence of bugs.
+
+### 22.5 Architecture extension in the Thursday system-design deck
+
+`Lecture_12_System_Design_2026_Thursday.pdf`, pp. 8–14, discusses intelligence, a three-level capability
+system (**foundational, integrative, applied**), LLM agent architecture and brain-inspired agent
+architecture. These are exploratory architecture examples, not new GES requirements or additional
+GoF patterns. Their assessment status is not stated in the files.
+
+---
+
+## 23. Source map and audit notes
+
+Page numbers below are **PDF page numbers**, including title pages. Links refer to this repository's
+source files. Lecture numbering follows topic headings: the file named
+`Lecture_13_System_Design_2026.pdf` actually opens with **Lecture 13: Object Design**.
+
+| Guide topic | Primary local evidence |
+| --- | --- |
+| §1 SE definition, SDLC, assessment | [L1](lectures/1%20-%20Introduction.pdf), pp. 4, 8–14 |
+| §2 elicitation, FR/NFR, atomisation, dictionary | [L2](lectures/2%20-%20Requirements%20Elicitation%201.pdf), pp. 6–18 |
+| §3 use cases and relationships | [L3](lectures/3%20-%20Requirements%20Elicitation%202.pdf), pp. 3–22; [L4](lectures/4%20-%20Requirements%20Elicitation%203.pdf), pp. 3–22 |
+| §4 conceptual modelling | [L5](lectures/5%20-%20Requirements%20Analysis%20Conceptual%20Models.pdf), pp. 3–21; [UML notes](lectures/UMLSpecNotes.pdf), pp. 2–8 |
+| §5 dynamic models and review loop | [L6](lectures/6%20-%20Dynamic%20models.pdf), pp. 3–18; [UML notes](lectures/UMLSpecNotes.pdf), pp. 19–35 |
+| §6 SRS | [Writing SRS](lectures/Writing%20SRS.pdf), pp. 3–16; L6, pp. 19–22 |
+| §7 process models | [L8](lectures/8%20-%20Software%20Processes%20-%20Basics.pdf), pp. 3–20; Tutorial 4 discussion questions |
+| §8 agile, XP and Scrum | [L9](lectures/9%20-%20Agile%20Software%20Development%20-%20Basics.pdf), pp. 3–36, **38–61 image slides**, 62–65; Tutorial 5 |
+| §9 architecture | [System Design](lectures/Lecture%2012%20System%20Design.pdf), pp. 7–28; [Thursday deck](lectures/Lecture_12_System_Design_2026_Thursday.pdf), pp. 2–7 |
+| §10 object design and Observer/Strategy | [2026 Object Design](lectures/Lecture_13_System_Design_2026.pdf), pp. 3–38; [other Object Design deck](lectures/Lecture%2013%20Object%20Design.pdf), pp. 5–47 |
+| §10 factory and façade | [L14](lectures/Lecture%2014%20Design%20Patterns.pdf), pp. 4–20 |
+| §11 MVC | [L15, 27-page version](lectures/Lecture%2015%20MVC%20Design%20Patterns%20%281%29.pdf), pp. 4–26; [26-page version](lectures/Lecture%2015%20MVC%20Design%20Patterns.pdf) |
+| §12 testing and basis paths | [2026 Test Fundamentals](lectures/Lecture%2016%20Test%20Fundamentals%202026.pdf), pp. 6–19; [other L16](lectures/Lecture%2016%20Testing%20Introduction.pdf); Tutorial 9 |
+| §13 EC testing | [2026 L17](lectures/Lecture%2017%20Equivalence%20Class%20Testing%202026.pdf), pp. 2–25; [other L17](lectures/Lecture%2017%20Testing%20Equvalence%20Class.pdf) |
+| §13 BV testing | [2026 L18](lectures/Lecture%2018%20Boundary%20Value%20Testing%202026.pdf), pp. 11–16; [other L18](lectures/Lecture%2018%20BV%20Testing%20Lecture.pdf); [summary](lectures/summary%281%29.pdf) |
+| §14 GES facts A–K | [Scanned GES supplement](tutorial/CECZ2006_tutorials_supplement.pdf), pp. 1–2; visually checked because it has no extractable body text |
+| §15 all nine tutorials | [Tutorial Questions](tutorial/Tutorial%20Questions.pdf), one tutorial per PDF page; solutions in this guide are derived, not official |
+| §§16–21 practice and revision | Original exercises/summaries applying the sources above; invented scenarios and illustrative rubrics are not past-paper evidence |
+| §22 guest material | [Understanding AI Engineering](lectures/Understanding%20AI%20Engineering.pdf); [AI Engineering as a practice](lectures/AI%20Engineering%20as%20a%20practice%20-%20NTU.pdf); [Agentic Software Engineering](lectures/20260818_NTU%20Agentic%20Software%20Engineering.pdf) |
+| §22 architecture extension and competition | Thursday deck, pp. 8–14; [competition](lectures/20260821_NTU%20SWE%20Course%20Project%20Competition.pdf), p. 4 |
+
+**Conflicts and limits kept explicit:**
+
+- **Scrum:** L9 gives both ≤7 (p. 32) and 5–9 developers (p. 41). Its 2–4-week sprints,
+  customer-isolation wording and scope rules are course-slide descriptions, not current-standard claims.
+- **UML:** L5 p. 13's concrete-parent arrow differs from the supplied UML specification notes.
+  This guide uses hollow-triangle generalization. An `x` at an association end means that **target
+  end is not navigable**, not that the class at that end cannot navigate in the other direction.
+- **Basis paths:** L16 p. 10's “all possible paths” phrase is too broad; its p. 11 third schematic
+  path is not a literal execution. §12 distinguishes schematic graph paths and feasible traces.
+- **Mortgage income:** L16's illustrative black-box sentence uses $1 500–$8 000, while L17/L18's
+  worked mortgage problem uses **$1 500–$80 000**. Use the numbers in the specific problem.
+  The separate `summary(1).pdf` upper-neighbour value `800001` is a typo; the 2026 L18 gives **80001**.
+- **BV reduction:** L18 omits some interior neighbours even when they are distinct values. Full
+  triplets and the reduced course selection are labelled separately here.
+- **GES:** below-normal handling, measurement resolution, sensor failures and zero-quantity logging
+  are not fully specified. §13.9/§14 state assumptions and TBDs instead of inventing requirements.
+- **Scope:** announcements, competition publicity and the two-page textbook cover/contents PDF do
+  not establish an exam syllabus. Example ZIPs and the mortgage spreadsheet are supporting assets;
+  this audit checks the guide against lectures/tutorials, not execution of those sample projects.
 
 _End of guide._
