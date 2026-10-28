@@ -56,3 +56,10 @@ Transcription: Whisper `large-v3-turbo` (MLX) on the extracted 16 kHz mono audio
    checking the table.
 3. Do the practice problems in §8 without looking at the solutions.
 4. Read [`NOTES.md`](NOTES.md) last — it is the trap list.
+
+## Relationship to the rest of `lectures/`
+
+This continues [`../c89`](../c89) (memory organization) and is itself continued by
+[`../c11`](../c11) (**file systems**): swapping and demand paging put pages on a backing store, and
+the chapter after this one organises that store — file attributes and directories, block allocation
+(contiguous / linked / indexed), the Unix inode, and free-space management.

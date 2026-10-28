@@ -1,0 +1,1820 @@
+1
+00:00:13,040 --> 00:00:22,400
+in this part of lecture we look at the file system from a user's model view perhaps the file system
+
+2
+00:00:22,400 --> 00:00:26,980
+is one of the most important components of OS.
+
+3
+00:00:28,040 --> 00:00:30,400
+So I'm pretty sure you're using file system
+
+4
+00:00:30,400 --> 00:00:32,280
+on a daily basis.
+
+5
+00:00:33,320 --> 00:00:39,600
+So in general, file system provides a resource abstraction
+
+6
+00:00:39,600 --> 00:00:43,700
+that's typically associated with secondary storage.
+
+7
+00:00:44,240 --> 00:00:47,060
+So for instance, hard disk, right?
+
+8
+00:00:47,060 --> 00:00:51,640
+So related data are put together to form a file
+
+9
+00:00:51,640 --> 00:00:55,240
+and a file is stored on the hard disk.
+
+10
+00:00:56,520 --> 00:01:00,940
+A file has the following two important properties.
+
+11
+00:01:01,740 --> 00:01:05,680
+So the first one is a long-term existence.
+
+12
+00:01:06,560 --> 00:01:07,840
+So that basically means,
+
+13
+00:01:08,240 --> 00:01:09,780
+so once you switch off,
+
+14
+00:01:10,160 --> 00:01:11,620
+after you switch off the computer,
+
+15
+00:01:12,120 --> 00:01:13,080
+and the file will be stored.
+
+16
+00:01:14,200 --> 00:01:15,680
+It will not be gone away,
+
+17
+00:01:15,820 --> 00:01:16,780
+will not be disappeared.
+
+18
+00:01:17,520 --> 00:01:19,760
+Because they are stored on hard disk.
+
+19
+00:01:20,580 --> 00:01:28,260
+and the second property is the file is the shareable right a file can be shared right the file has a name
+
+20
+00:01:28,260 --> 00:01:37,060
+and as a associate protection information so it's a specific by who is that what to do what the file
+
+21
+00:01:39,540 --> 00:01:44,340
+so for this part of lecture right so we look at the file system structure first
+
+22
+00:01:45,220 --> 00:01:52,500
+and followed by looking at the logical file system and file organization module.
+
+23
+00:01:53,060 --> 00:01:57,220
+Now let's understand how the file system is structured.
+
+24
+00:01:58,420 --> 00:02:07,140
+So typically a file system is structured in a layered manner. At the top of the layer,
+
+25
+00:02:07,140 --> 00:02:16,580
+so that's logical file system so this layer so basically managing the file attributes or
+
+26
+00:02:16,580 --> 00:02:26,580
+metadata files right so the file attributes will form a directory entry right and a directory
+
+27
+00:02:26,580 --> 00:02:33,540
+contains multiple entries and the one per file and the logical file system will managing the
+
+28
+00:02:33,540 --> 00:02:41,220
+the directory structure to facilitate searching for files and so on so forth.
+
+29
+00:02:41,220 --> 00:02:49,920
+This layer also responsible for supporting file related operations and as well as directory
+
+30
+00:02:49,920 --> 00:02:51,820
+related operations.
+
+31
+00:02:51,820 --> 00:02:59,420
+So like file creation, file excise, written write and file deletion.
+
+32
+00:02:59,420 --> 00:03:04,640
+And this layer also responsible for protection and security of the file.
+
+33
+00:03:04,640 --> 00:03:08,880
+So specify who is able to do what on the file.
+
+34
+00:03:08,880 --> 00:03:12,220
+So that's a logical file system.
+
+35
+00:03:12,220 --> 00:03:19,860
+And the layer under the logical file system is the file organization module.
+
+36
+00:03:19,860 --> 00:03:25,760
+So this layer, so basically there are two main responsibilities.
+
+37
+00:03:25,760 --> 00:03:32,320
+first one is the file space allocation well we'll do the storage allocation for the files
+
+38
+00:03:33,040 --> 00:03:42,000
+right and the second one is to managing the free available space on hard disk right so since this
+
+39
+00:03:42,000 --> 00:03:49,920
+layer doing the space allocation for file so this layer is also responsible for translating
+
+40
+00:03:49,920 --> 00:03:57,440
+the logic block address to the physical block address right but layer above when issue operation
+
+41
+00:03:57,440 --> 00:04:05,760
+on file the operation is issued in terms of a logical block address right then this layer the
+
+42
+00:04:05,760 --> 00:04:12,720
+file organization module that will translate logical block address to the physical block address
+
+43
+00:04:12,720 --> 00:04:20,880
+the next layer the basic of our system then we're managing the buffer and the caches and it will
+
+44
+00:04:20,880 --> 00:04:32,340
+generate generic instructions or commands right to the appropriate device drivers right to read
+
+45
+00:04:32,340 --> 00:04:38,880
+and write the physical blocks right so so recall the file organization module transit logic block
+
+46
+00:04:38,880 --> 00:04:44,640
+address to physical block address. Then the physical file system that may issue instructions
+
+47
+00:04:44,640 --> 00:04:51,280
+and commands in terms of written write physical blocks to the device driver.
+
+48
+00:04:52,320 --> 00:05:00,160
+And the bottom layer, so that's our control layer. So this layer is the one that's responsible for
+
+49
+00:05:00,160 --> 00:05:08,320
+the actual transfer of the information or data. So this layer will consist of a device driver
+
+50
+00:05:08,320 --> 00:05:16,160
+and interrupt handler so under the file system we will look at the logical file system first
+
+51
+00:05:16,720 --> 00:05:25,360
+followed by the file organization module right and the basic file system and i will control
+
+52
+00:05:25,360 --> 00:05:34,880
+so these will be covered and i.o so for this this lecture then we look at the logical file system
+
+53
+00:05:34,880 --> 00:05:46,160
+File attributes. So a file may have following attributes. The file has a name, and the file
+
+54
+00:05:46,160 --> 00:05:54,560
+may have a type, depending on the information contained in the file. And the files are stored
+
+55
+00:05:54,560 --> 00:06:04,640
+in a particular location on the hard disk. And the file has a specific size. And the file
+
+56
+00:06:04,640 --> 00:06:11,680
+has a social protection information so that's specific who is about to do what on the file
+
+57
+00:06:12,720 --> 00:06:19,360
+and the file is created a particular date time and created by a particular user
+
+58
+00:06:20,400 --> 00:06:28,080
+so these are file attributes so these basically specify what this file is right and the
+
+59
+00:06:28,080 --> 00:06:35,920
+collectively this is also called metadata of the file right so this is not the actual data
+
+60
+00:06:35,920 --> 00:06:44,400
+the file content but i but the data so that specify what the file is right so where file
+
+61
+00:06:44,400 --> 00:06:52,880
+attributes are stored the files attributes are stored in a directory entry so directory
+
+62
+00:06:52,880 --> 00:06:56,700
+is a special kind of a file, right?
+
+63
+00:06:57,200 --> 00:07:00,100
+And a directory contains multiple entries.
+
+64
+00:07:00,640 --> 00:07:02,800
+There's one entry per file, right?
+
+65
+00:07:03,020 --> 00:07:06,840
+So the entry contains the file attributes, right?
+
+66
+00:07:07,140 --> 00:07:09,120
+The metadata of the file, right?
+
+67
+00:07:09,120 --> 00:07:11,960
+So that's specified what the file is.
+
+68
+00:07:13,720 --> 00:07:15,940
+And the directory is a special type of file.
+
+69
+00:07:16,240 --> 00:07:17,420
+So that basically means
+
+70
+00:07:17,420 --> 00:07:22,180
+the directory also needs to be stored on the hard disk, right?
+
+71
+00:07:22,180 --> 00:07:24,900
+So long-term existence, right?
+
+72
+00:07:24,900 --> 00:07:28,960
+So we don't want the resources to disappear
+
+73
+00:07:28,960 --> 00:07:32,000
+after you're switching out the computer, right?
+
+74
+00:07:32,000 --> 00:07:34,840
+So they need to be stored on the hard disk.
+
+75
+00:07:37,060 --> 00:07:39,160
+Now, file, right?
+
+76
+00:07:39,160 --> 00:07:43,120
+So depending on the information, the file contents,
+
+77
+00:07:43,120 --> 00:07:45,300
+the file may have a different time.
+
+78
+00:07:45,300 --> 00:07:47,580
+So in general, logically,
+
+79
+00:07:47,580 --> 00:07:51,600
+the file has a contiguous logical address space,
+
+80
+00:07:51,600 --> 00:07:53,920
+But this continuous logic address space
+
+81
+00:07:53,920 --> 00:07:56,360
+may contain different types of information.
+
+82
+00:07:58,080 --> 00:08:03,080
+One common scheme to indicate what type the file is,
+
+83
+00:08:03,700 --> 00:08:07,080
+is by using the file extension.
+
+84
+00:08:08,080 --> 00:08:10,700
+So for instance, for a SQL file,
+
+85
+00:08:10,700 --> 00:08:15,700
+the common extension used is BSE and CON, BIN.
+
+86
+00:08:15,700 --> 00:08:20,700
+So this is a common extension used for a basketball file.
+
+87
+00:08:23,640 --> 00:08:27,820
+And for text file, for instance, so TST.
+
+88
+00:08:27,820 --> 00:08:31,440
+And for library file, for instance, LIB.
+
+89
+00:08:33,200 --> 00:08:35,140
+Depending on the type of file,
+
+90
+00:08:35,140 --> 00:08:40,140
+the file may have its all internal structure.
+
+91
+00:08:40,140 --> 00:08:47,140
+So logically, a file is a contiguous address space.
+
+92
+00:08:47,140 --> 00:08:54,140
+But the file, depending on the type, it may have its own internal structure.
+
+93
+00:08:54,140 --> 00:09:04,140
+So for instance, for data list file, the file may consist of a collection of records or even child records.
+
+94
+00:09:04,140 --> 00:09:10,140
+in order to support searching for particular data or information.
+
+95
+00:09:12,140 --> 00:09:17,260
+Then to store the file on the hard disk, in this case,
+
+96
+00:09:18,300 --> 00:09:22,300
+so there are two operations that need to be performed.
+
+97
+00:09:22,300 --> 00:09:26,700
+The first one is called record stream translation,
+
+98
+00:09:26,700 --> 00:09:30,460
+and the second one is called stream block translation.
+
+99
+00:09:30,460 --> 00:09:39,340
+right so the record stream translation basically is to flatten the internal structure of the file
+
+100
+00:09:39,340 --> 00:09:47,900
+into a sequence of bytes into a into a sequence of bytes so that's that's called the record stream
+
+101
+00:09:47,900 --> 00:09:56,120
+translation all right so translate the internal structure of the file that can be a sequence of
+
+102
+00:09:56,120 --> 00:10:02,740
+record, a trail record, right, depending on the type of file, and into a sequence of bytes.
+
+103
+00:10:03,960 --> 00:10:11,160
+Now we have a sequence of bytes, the string block translation, so basically we divide this string
+
+104
+00:10:11,160 --> 00:10:20,320
+of bytes into blocks, right, then this blocks, then will be stored in the secondary storage,
+
+105
+00:10:20,320 --> 00:10:23,320
+So for instance, the hard disk.
+
+106
+00:10:23,320 --> 00:10:26,320
+So for hard disk, second is the storage.
+
+107
+00:10:26,320 --> 00:10:31,320
+So typically, these are the block-oriented devices.
+
+108
+00:10:31,320 --> 00:10:37,320
+So to store the file to the block-oriented device,
+
+109
+00:10:37,320 --> 00:10:40,320
+then these two operations need to be performed.
+
+110
+00:10:40,320 --> 00:10:45,320
+So record-stream translation and stream-block translation.
+
+111
+00:10:45,320 --> 00:10:52,720
+And to read the file, then the reverse of the two operations then need to be performed.
+
+112
+00:10:53,660 --> 00:11:02,220
+Now the question is, so this record stream translation, should this done by operating system?
+
+113
+00:11:03,020 --> 00:11:08,940
+To do this, so that basically means, so we need to know the internal structure of the file.
+
+114
+00:11:08,940 --> 00:11:14,700
+In order to flatten this internal structure of the file into SQL supplies,
+
+115
+00:11:14,700 --> 00:11:18,140
+then we need to know this internal structure of the file.
+
+116
+00:11:18,980 --> 00:11:24,160
+So typically, if OS support this operation,
+
+117
+00:11:24,920 --> 00:11:28,640
+then OS need to understand the internal structure
+
+118
+00:11:28,640 --> 00:11:34,420
+of every single application, every single type of file.
+
+119
+00:11:35,540 --> 00:11:39,260
+So then OS need to contain the code to do this.
+
+120
+00:11:39,260 --> 00:11:46,260
+So, in general, we leave this task to the application program.
+
+121
+00:11:46,260 --> 00:11:50,260
+So in general, the OS will not do this.
+
+122
+00:11:50,260 --> 00:11:54,260
+So this task is leave to the application program.
+
+123
+00:11:54,260 --> 00:12:03,260
+So the OS basically will regard the file as unstructured sequence of bytes.
+
+124
+00:12:03,260 --> 00:12:07,300
+Then we divide the sequence of bytes into blocks
+
+125
+00:12:07,300 --> 00:12:11,540
+and then assign the storage space,
+
+126
+00:12:11,540 --> 00:12:14,220
+so hide this space to the file.
+
+127
+00:12:15,960 --> 00:12:20,960
+So in general, OS will regard the file as unstructured.
+
+128
+00:12:22,920 --> 00:12:25,420
+So that's a sequence of bytes.
+
+129
+00:12:25,420 --> 00:12:29,620
+So file is a byte addressable starting from zero.
+
+130
+00:12:29,620 --> 00:12:39,400
+right and so a file basically stream of bytes so each byte is individually addressable right so
+
+131
+00:12:39,400 --> 00:12:47,740
+from beginning of the file as I mentioned starting from zero right so Unix regarding the file as
+
+132
+00:12:47,740 --> 00:12:55,360
+unstructured and the earlier version of Microsoft right so that's also regarding the file as
+
+133
+00:12:55,360 --> 00:12:57,580
+unstructured, secretive solve bias.
+
+134
+00:12:58,200 --> 00:12:59,520
+And this is also
+
+135
+00:12:59,520 --> 00:13:01,600
+assumption which I use
+
+136
+00:13:01,600 --> 00:13:03,700
+in the following discussions.
+
+137
+00:13:05,580 --> 00:13:07,520
+in terms of file access measures,
+
+138
+00:13:09,360 --> 00:13:11,620
+basically the two different kind of measures,
+
+139
+00:13:12,180 --> 00:13:13,520
+one is the sequential
+
+140
+00:13:13,520 --> 00:13:15,420
+access, the other one
+
+141
+00:13:15,420 --> 00:13:16,820
+is the direct access.
+
+142
+00:13:17,760 --> 00:13:19,180
+So sequential access,
+
+143
+00:13:19,400 --> 00:13:21,040
+so that basically means
+
+144
+00:13:21,040 --> 00:13:23,440
+the information
+
+145
+00:13:23,440 --> 00:13:29,840
+the file is accessed sequentially or in other words we regard the file as a sequence of bytes
+
+146
+00:13:29,840 --> 00:13:38,640
+in this case so the byte in this address space will be accessed sequentially by the byte from
+
+147
+00:13:38,640 --> 00:13:47,440
+beginning of the file so that's sequential access and the direct access we also call this random
+
+148
+00:13:47,440 --> 00:13:55,760
+access so that's basically means we're able to access a particular byte, particular location
+
+149
+00:13:55,760 --> 00:14:05,920
+in the file. So the bytes of files in this case can be read in any order by referencing the byte
+
+150
+00:14:05,920 --> 00:14:12,960
+number. We can directly access a particular position in the file, a particular byte of the file.
+
+151
+00:14:12,960 --> 00:14:17,520
+What other operations can be performed?
+
+152
+00:14:17,520 --> 00:14:20,160
+A file, right?
+
+153
+00:14:20,160 --> 00:14:28,240
+So we can create a file, can delete the file, and open, close, and write and read.
+
+154
+00:14:29,920 --> 00:14:34,800
+So to create a file, right, so it's basically to create a file.
+
+155
+00:14:34,800 --> 00:14:40,880
+So that basically means the OIS needs to do the space allocation for the file.
+
+156
+00:14:42,960 --> 00:14:50,960
+and space allocation of file so which i will cover in the next lecture right so i have to do the
+
+157
+00:14:50,960 --> 00:14:58,480
+space allocations file and also need to create a direction entry for the file right recall i just
+
+158
+00:14:58,480 --> 00:15:04,400
+covered right so the direction entry for the file contains the file attributes right so metadata
+
+159
+00:15:05,120 --> 00:15:11,680
+so that's for the file creation and the file deletion so that's a reverse operation of the
+
+160
+00:15:11,680 --> 00:15:19,040
+file creation. So that means we need to do the space deallocation. So the file space assigned
+
+161
+00:15:19,040 --> 00:15:28,080
+to the file on hard disk, in this case, will become available. And we also need to delete
+
+162
+00:15:28,080 --> 00:15:35,360
+the corresponding directory entry of the file. So that's the file deletion. Now before read and
+
+163
+00:15:35,360 --> 00:15:43,120
+write the file the file must be open right so why do we need to open the file first before
+
+164
+00:15:43,120 --> 00:15:50,080
+read and write file right so recall yes the written right file then we need to know where on
+
+165
+00:15:50,080 --> 00:15:58,560
+the hard disk to access the file right so recall the file stored on the hard disk right and where
+
+166
+00:15:58,560 --> 00:16:04,560
+the file is stored on hard disk so that location of file so that's that's one of the attributes
+
+167
+00:16:04,560 --> 00:16:11,120
+right all the file right file has a many attributes so one of the attributes of file is the location
+
+168
+00:16:11,120 --> 00:16:17,200
+of the file on hard disk all right so in other reason right but then we need to know the location
+
+169
+00:16:17,200 --> 00:16:24,240
+of the file on hard disk and the location of the of the file on hard disk is one of the file
+
+170
+00:16:24,240 --> 00:16:30,400
+attributes and the file attributes is stored in the directory entry right and the directory is on
+
+171
+00:16:30,400 --> 00:16:39,440
+hard disk so whenever we read the right file we don't really want to every time to read and write
+
+172
+00:16:39,440 --> 00:16:46,640
+file we we don't really want to access hard disk every time right so whenever we read the right
+
+173
+00:16:46,640 --> 00:16:51,840
+we don't really want to repeatedly access the hardest right so that's that's in order to get
+
+174
+00:16:51,840 --> 00:16:59,520
+the location of the file all right so that's that's that's that's all right then what we do is
+
+175
+00:16:59,520 --> 00:17:06,320
+right so we use the open file table right to catch some information regarding the file right
+
+176
+00:17:07,200 --> 00:17:15,520
+so open file table basically contains the multiple entries for each file that's currently being used
+
+177
+00:17:15,520 --> 00:17:26,320
+by the process right and information associated with open file typically it contains the
+
+178
+00:17:26,320 --> 00:17:33,040
+the following information right so the current position punter so where the file is currently
+
+179
+00:17:33,040 --> 00:17:39,280
+being accessed a written right that's current position content and if i open counter right
+
+180
+00:17:39,280 --> 00:17:42,340
+As I mentioned, file is a charm.
+
+181
+00:17:42,340 --> 00:17:46,220
+So that's a file can be opened by multiple processes.
+
+182
+00:17:46,220 --> 00:17:49,280
+So how many times this file has been opened,
+
+183
+00:17:49,280 --> 00:17:52,420
+or have been opened by how many processes?
+
+184
+00:17:52,420 --> 00:17:53,920
+That's the file open counter.
+
+185
+00:17:55,340 --> 00:17:59,040
+And also some file attributes
+
+186
+00:18:00,000 --> 00:18:03,960
+will be cached in the open file table entry.
+
+187
+00:18:03,960 --> 00:18:07,780
+So one of the attributes is the location of the file
+
+188
+00:18:07,780 --> 00:18:09,020
+on the hard disk.
+
+189
+00:18:09,280 --> 00:18:17,200
+right so these are the information right so in the open file table associated with each open file
+
+190
+00:18:18,080 --> 00:18:25,360
+right so that's basically why we need to open file first before the read written right because
+
+191
+00:18:26,000 --> 00:18:34,080
+for efficiency reason then the next time when we read and write the same file so instead of
+
+192
+00:18:34,080 --> 00:18:42,640
+assessing the directory entry on hard disk then we can obtain the location of the file on hard disk
+
+193
+00:18:43,920 --> 00:18:51,600
+from the open file table entry right so that's basically the reason why we need to open the file
+
+194
+00:18:51,600 --> 00:19:00,720
+first before in the right is more for efficiency not close close is the reverse operation right
+
+195
+00:19:01,360 --> 00:19:06,160
+so that's basically will this open file counter will reduce by one
+
+196
+00:19:07,120 --> 00:19:13,760
+all right so when open file counter becomes zero so that means the file is no longer in use
+
+197
+00:19:13,760 --> 00:19:21,200
+by any of the process then the corresponding entry for the file in the open file table
+
+198
+00:19:21,200 --> 00:19:29,920
+then can be deleted at that time right so that's close and then write so write basically
+
+199
+00:19:29,920 --> 00:19:38,960
+have two attributes right the first attribute is actually the index right so where the corresponding
+
+200
+00:19:38,960 --> 00:19:46,080
+entry for the file is in the open file table so this is called the file descriptor right so that's
+
+201
+00:19:46,080 --> 00:19:53,520
+the index used to index into the open file table right and the second one is the amount of data
+
+202
+00:19:53,520 --> 00:19:55,720
+to write to the file.
+
+203
+00:19:56,940 --> 00:19:59,620
+So given the first attributes,
+
+204
+00:20:00,140 --> 00:20:04,460
+so it's an index into the entry for the file
+
+205
+00:20:04,460 --> 00:20:05,480
+in the open file table,
+
+206
+00:20:06,100 --> 00:20:10,900
+then we locate entry using that index.
+
+207
+00:20:11,440 --> 00:20:12,280
+From the entry,
+
+208
+00:20:12,840 --> 00:20:15,300
+then we obtain the current position puncta.
+
+209
+00:20:15,940 --> 00:20:19,280
+So that's where start to write to the file.
+
+210
+00:20:19,280 --> 00:20:21,920
+and then we write this
+
+211
+00:20:21,920 --> 00:20:24,520
+the data, that one data
+
+212
+00:20:24,520 --> 00:20:26,920
+from that position to the file
+
+213
+00:20:26,920 --> 00:20:29,400
+and where to locate the file
+
+214
+00:20:29,400 --> 00:20:30,460
+on hard disk
+
+215
+00:20:30,460 --> 00:20:32,880
+then we use this disk location
+
+216
+00:20:32,880 --> 00:20:34,160
+so that's cache
+
+217
+00:20:34,160 --> 00:20:36,180
+in the open file table entry
+
+218
+00:20:36,180 --> 00:20:39,340
+to locate where the file is
+
+219
+00:20:39,340 --> 00:20:40,160
+on hard disk
+
+220
+00:20:40,160 --> 00:20:43,540
+so that's for the file operation
+
+221
+00:20:43,540 --> 00:20:46,020
+so write the data
+
+222
+00:20:46,020 --> 00:20:47,420
+to the position puncted
+
+223
+00:20:47,420 --> 00:20:49,020
+by the current position punctor
+
+224
+00:20:49,020 --> 00:20:52,540
+and locate the file by using the disk location
+
+225
+00:20:52,540 --> 00:20:55,380
+that's cache in the open file table entry.
+
+226
+00:20:57,480 --> 00:21:03,140
+So read operation, read operation also contains two attributes.
+
+227
+00:21:03,860 --> 00:21:06,980
+The first attribute is similar to the write operation.
+
+228
+00:21:06,980 --> 00:21:12,340
+The first attribute is the index into the open file table entry.
+
+229
+00:21:12,340 --> 00:21:22,340
+and the second attribute is where the data will be stored in.
+
+230
+00:21:22,340 --> 00:21:25,340
+So amount of data to read.
+
+231
+00:21:25,340 --> 00:21:28,340
+So that's the second attribute.
+
+232
+00:21:28,340 --> 00:21:38,340
+So then OIS will use the first attribute to locate corresponding entry in the open file table.
+
+233
+00:21:38,340 --> 00:21:43,040
+by find the entry, then we have this current position puncture, right?
+
+234
+00:21:43,600 --> 00:21:49,720
+And we'll read the data from the file, from the current position puncture,
+
+235
+00:21:49,720 --> 00:21:59,000
+and install the data into the corresponding location indicated by the second attributes, right?
+
+236
+00:21:59,440 --> 00:22:03,580
+Of this read operation, right?
+
+237
+00:22:03,840 --> 00:22:07,480
+So that's basically the five operations, right?
+
+238
+00:22:08,340 --> 00:22:14,340
+and the directory contains multiple entries, right?
+
+239
+00:22:14,340 --> 00:22:19,340
+So it's basically a sequence of entries, right?
+
+240
+00:22:19,340 --> 00:22:28,340
+And this sequence of entries can be organized in two different minors, right?
+
+241
+00:22:28,340 --> 00:22:31,340
+So this is the first way.
+
+242
+00:22:31,340 --> 00:22:41,340
+So in the first way, basically every entry will contain all the file name and all other attributes.
+
+243
+00:22:41,340 --> 00:22:43,340
+So that's the first way.
+
+244
+00:22:43,340 --> 00:22:47,340
+And the second way, again, the direction has multiple entries.
+
+245
+00:22:47,340 --> 00:22:55,340
+In this case, each entry will contain the file name and the pointer pointing to another data structure.
+
+246
+00:22:55,340 --> 00:23:01,340
+and the data structure will contain all other file attributes.
+
+247
+00:23:01,340 --> 00:23:06,340
+So both this directory is a file stored on hard disk,
+
+248
+00:23:06,340 --> 00:23:11,340
+and this data structure, we have a one per file,
+
+249
+00:23:11,340 --> 00:23:14,340
+so this also needs to be stored on hard disk.
+
+250
+00:23:16,340 --> 00:23:19,340
+So this is called a file control block.
+
+251
+00:23:19,340 --> 00:23:23,340
+So, what's the directory?
+
+252
+00:23:23,340 --> 00:23:28,340
+And the file control blocks are stored in HADISK.
+
+253
+00:23:28,340 --> 00:23:32,340
+There's one file control block for file.
+
+254
+00:23:34,340 --> 00:23:39,340
+Now, the directory basically is a sequence of entries.
+
+255
+00:23:39,340 --> 00:23:43,340
+So, this sequence of entries can be implemented
+
+256
+00:23:43,340 --> 00:23:47,340
+by using different data structures.
+
+257
+00:23:47,340 --> 00:23:58,380
+For instance, this can be implemented by using a linear list or can be implemented by using a hash table.
+
+258
+00:23:59,100 --> 00:24:04,800
+So the major differences in this case basically is performance consideration.
+
+259
+00:24:07,140 --> 00:24:10,380
+So you already learned this structure.
+
+260
+00:24:10,380 --> 00:24:19,100
+so I want to elaborate further here, so you can refer to your lecture notes, data structure,
+
+261
+00:24:20,300 --> 00:24:24,140
+regarding linear list and hash table.
+
+262
+00:24:26,460 --> 00:24:35,020
+Now the directions can organize also into a tree, so in this case if they organize direction into a
+
+263
+00:24:35,020 --> 00:24:42,620
+tree right so this is basically is to facilitate searching for the file right so give them a file
+
+264
+00:24:42,620 --> 00:24:52,140
+name then we're able to locate a file right and efficiently right in this direction uh the rest
+
+265
+00:24:52,140 --> 00:25:00,940
+structure right and also to facilitate naming convenience so in this case so the file can have
+
+266
+00:25:00,940 --> 00:25:05,260
+have the sub name as long as they are in the different direction.
+
+267
+00:25:05,260 --> 00:25:08,620
+So I will show you some later on.
+
+268
+00:25:08,620 --> 00:25:14,380
+And also to support the grouping characteristic.
+
+269
+00:25:14,380 --> 00:25:20,700
+So similar files in this case can be grouped together to form a sub direction.
+
+270
+00:25:20,700 --> 00:25:26,460
+For instance, all the C program files can form together,
+
+271
+00:25:26,460 --> 00:25:31,460
+put together to form a subdirectory for state programs.
+
+272
+00:25:31,460 --> 00:25:36,580
+And all the Java program files can be put together
+
+273
+00:25:36,580 --> 00:25:39,620
+to form a subdirectory for Java programs.
+
+274
+00:25:42,100 --> 00:25:47,100
+So if you're organizing this directories
+
+275
+00:25:47,100 --> 00:25:50,100
+into a tree structure,
+
+276
+00:25:50,100 --> 00:25:54,520
+so in this case, for every file,
+
+277
+00:25:54,520 --> 00:25:59,520
+the file can be uniquely identified by a path name.
+
+278
+00:26:01,000 --> 00:26:04,520
+So path name of file basically is starting
+
+279
+00:26:04,520 --> 00:26:07,000
+we can start from the root,
+
+280
+00:26:07,000 --> 00:26:12,000
+by following the passes until you reach a particular file.
+
+281
+00:26:13,080 --> 00:26:17,620
+So notation wise, in this case,
+
+282
+00:26:17,620 --> 00:26:21,700
+the rectangle here, so that representing a directory,
+
+283
+00:26:21,700 --> 00:26:26,300
+and the circle here represents a file.
+
+284
+00:26:27,340 --> 00:26:28,900
+And the path name,
+
+285
+00:26:29,180 --> 00:26:30,780
+so starting from the root,
+
+286
+00:26:30,780 --> 00:26:35,780
+by following the path until you reach a particular file.
+
+287
+00:26:36,220 --> 00:26:41,620
+So the path name basically contains a sequence of directory names
+
+288
+00:26:41,780 --> 00:26:43,660
+and by the file name.
+
+289
+00:26:44,860 --> 00:26:47,020
+So for instance, for this particular file,
+
+290
+00:26:47,380 --> 00:26:50,940
+so this file is under directory PRT,
+
+291
+00:26:50,940 --> 00:26:54,140
+and the PRT is under directory mail,
+
+292
+00:26:54,140 --> 00:26:57,020
+and directory mail is under directory spell,
+
+293
+00:26:57,020 --> 00:26:59,740
+and directory spell is under directory root.
+
+294
+00:26:59,740 --> 00:27:02,940
+So this gives you a unique
+
+295
+00:27:02,940 --> 00:27:05,140
+pass name for the file.
+
+296
+00:27:05,140 --> 00:27:08,140
+If the pass name is starting from the root,
+
+297
+00:27:08,140 --> 00:27:10,740
+so this is called absolute pass name.
+
+298
+00:27:10,740 --> 00:27:13,140
+So this is absolute pass name.
+
+299
+00:27:13,140 --> 00:27:16,140
+And the pass name can also start from
+
+300
+00:27:16,140 --> 00:27:18,740
+current working directory.
+
+301
+00:27:18,740 --> 00:27:25,360
+For instance, this is a path name starting from this working directory.
+
+302
+00:27:26,140 --> 00:27:29,600
+If this directory mail is current working directory,
+
+303
+00:27:30,520 --> 00:27:37,940
+the path name of the same file relative to the current working directory will be this one.
+
+304
+00:27:38,700 --> 00:27:42,500
+This is file first under directory PRT,
+
+305
+00:27:42,500 --> 00:27:47,500
+and PRT is directory under the current working directory.
+
+306
+00:27:47,500 --> 00:27:59,500
+So for the same file, we can identify this file uniquely, either by the absolute past name or by a relative past name.
+
+307
+00:27:59,500 --> 00:28:16,500
+And if you're using this tree structure, as just mentioned, then the different files may have the same file name, as long as they are under different directions.
+
+308
+00:28:16,500 --> 00:28:26,420
+right so for instance we have a file named list under this direction here we have another file
+
+309
+00:28:26,420 --> 00:28:33,620
+also named the list under another direction right so these two files they have the same name
+
+310
+00:28:33,620 --> 00:28:39,460
+but they are different files right because they under the different direction
+
+311
+00:28:39,460 --> 00:28:44,260
+they're under different direction meaning so they have a different path name
+
+312
+00:28:46,500 --> 00:28:50,940
+So that's how we can organize direction into trees, right?
+
+313
+00:28:50,940 --> 00:28:55,540
+So in order to facilitate searching a particular file, right?
+
+314
+00:28:55,540 --> 00:28:58,320
+In order for the naming convenience,
+
+315
+00:28:58,320 --> 00:29:03,180
+so in order to have this kind of a grouping capability, right?
+
+316
+00:29:05,000 --> 00:29:07,380
+Now, if they
+
+317
+00:29:09,060 --> 00:29:15,660
+Supporting this the file sharing, right? By creating a kind of a link, right?
+
+318
+00:29:15,660 --> 00:29:20,400
+then this directory, the tree, structured directory,
+
+319
+00:29:20,400 --> 00:29:21,900
+is no longer a tree, right?
+
+320
+00:29:21,900 --> 00:29:25,520
+So if we have this kind of links, right,
+
+321
+00:29:25,520 --> 00:29:28,420
+then this no longer a tree, right?
+
+322
+00:29:28,420 --> 00:29:32,420
+So in this case, so this become a cyclic graph.
+
+323
+00:29:32,420 --> 00:29:35,240
+It's a graph, it's also a cycle.
+
+324
+00:29:36,580 --> 00:29:41,580
+So we can introduce this link in two different ways, right?
+
+325
+00:29:42,440 --> 00:29:45,120
+The reason for introducing this kind of link
+
+326
+00:29:45,120 --> 00:29:49,780
+is to facilitate file sharing.
+
+327
+00:29:49,780 --> 00:29:54,780
+Then we can assign the same physical file
+
+328
+00:29:54,940 --> 00:29:57,680
+from different directory entries.
+
+329
+00:29:57,680 --> 00:30:02,460
+So if I link here, then for this physical file,
+
+330
+00:30:02,460 --> 00:30:06,100
+we can either assign from this directory
+
+331
+00:30:06,100 --> 00:30:09,600
+or from this directory here.
+
+332
+00:30:10,740 --> 00:30:13,060
+So we can assign the same physical file
+
+333
+00:30:13,060 --> 00:30:14,780
+from different directories.
+
+334
+00:30:15,840 --> 00:30:19,720
+So if these two direction belong to two different users,
+
+335
+00:30:20,880 --> 00:30:25,300
+so that's basically means that the two different users
+
+336
+00:30:25,300 --> 00:30:28,720
+can conveniently access the center
+
+337
+00:30:28,720 --> 00:30:31,120
+from their own direction, entry.
+
+338
+00:30:32,320 --> 00:30:37,460
+So this kind of link is to facilitate
+
+339
+00:30:38,520 --> 00:30:40,960
+sharing physical files.
+
+340
+00:30:40,960 --> 00:30:44,960
+How this link can be created?
+
+341
+00:30:44,960 --> 00:30:48,960
+So this link can be created in two different ways.
+
+342
+00:30:48,960 --> 00:30:52,960
+The first one is called symbolic link
+
+343
+00:30:52,960 --> 00:30:56,960
+and the second one is called hard link.
+
+344
+00:30:56,960 --> 00:31:00,960
+Let's look at that. So there's symbolic link and hard link.
+
+345
+00:31:00,960 --> 00:31:04,960
+Now let's look at
+
+346
+00:31:04,960 --> 00:31:08,960
+how the symbolic link can be created.
+
+347
+00:31:08,960 --> 00:31:16,960
+Alright, symbolic link can be created by creating a special directory entry.
+
+348
+00:31:16,960 --> 00:31:19,960
+This is a special directory entry.
+
+349
+00:31:19,960 --> 00:31:23,960
+Then this entry will contain...
+
+350
+00:31:23,960 --> 00:31:28,960
+So this entry is a special directory entry.
+
+351
+00:31:28,960 --> 00:31:37,960
+And this entry then will contain the path name of the original entry for the file.
+
+352
+00:31:37,960 --> 00:31:43,960
+the file right so we create a special direction tree then this entry will contain the past name
+
+353
+00:31:43,960 --> 00:31:55,000
+right so this slash a slash b slash c and slash d so that's real contents in the entry here right
+
+354
+00:31:55,960 --> 00:32:05,160
+then if if you try to access this physical file by using this symbolic link so this is basically
+
+355
+00:32:05,160 --> 00:32:15,640
+shortcut right then what os need to do is os need to follow the information in the entry which is
+
+356
+00:32:15,640 --> 00:32:25,960
+the past name this past name to locate the original entry of the file from the original entries from
+
+357
+00:32:25,960 --> 00:32:34,840
+from the file of the file then ois will obtain all the file attributes including the the location of
+
+358
+00:32:34,840 --> 00:32:42,120
+the file under hard disk right so this is a symbolic link right so in this case so the file
+
+359
+00:32:42,120 --> 00:32:49,560
+access time will be increased right so because ois need to follow this past name to locate original
+
+360
+00:32:49,560 --> 00:32:58,280
+entry from here obtain the file attributes and assess the file right so that's the
+
+361
+00:32:59,960 --> 00:33:03,800
+symbolic link right now let's look at hotlink
+
+362
+00:33:06,600 --> 00:33:16,920
+right so hot link basically is created by what by duplicating whatever here in the original entry to
+
+363
+00:33:16,920 --> 00:33:24,840
+this new entry. So duplicating the information in the entry. So the file
+
+364
+00:33:24,840 --> 00:33:34,440
+attributes are duplicated. So in here and also here. The file attributes are
+
+365
+00:33:34,440 --> 00:33:45,680
+duplicated. So in this case, if you're using this kind of hot link to
+
+366
+00:33:45,680 --> 00:33:59,920
+access the file. So in this case if you use the hardlink to access the file, because all the file
+
+367
+00:33:59,920 --> 00:34:07,440
+attributes are here, then we will be able to access the file directly. It does not rely on
+
+368
+00:34:07,440 --> 00:34:11,160
+the information in the original entry.
+
+369
+00:34:12,020 --> 00:34:15,180
+Now the problem is because
+
+370
+00:34:15,180 --> 00:34:19,420
+the entry, the actual entry
+
+371
+00:34:19,420 --> 00:34:23,100
+information are duplicated. So when the file is modified,
+
+372
+00:34:23,960 --> 00:34:27,320
+the file actually will need to modify accordingly.
+
+373
+00:34:28,260 --> 00:34:31,560
+In this case, then we also
+
+374
+00:34:31,560 --> 00:34:34,660
+need to modify the duplicated entries.
+
+375
+00:34:34,660 --> 00:34:46,660
+How to maintain the consistency among all those duplicated directory entries, so that will become an issue.
+
+376
+00:34:46,660 --> 00:34:55,660
+So that's basically how to create a link in order to share one physical file.
+
+377
+00:34:55,660 --> 00:35:00,660
+So in order to assign the same physical file from different directory entries.
+
+378
+00:35:00,660 --> 00:35:06,740
+right so i put one physical file because either i size from this direction tree or from the other
+
+379
+00:35:06,740 --> 00:35:18,180
+direction so that's the symbolic link and and hot link and how they can be created right now what's
+
+380
+00:35:18,180 --> 00:35:25,220
+the problem here all right so if you using either symbolic link or hot links so what will be the
+
+381
+00:35:25,220 --> 00:35:32,660
+problem. The problem is right so if they try to traverse the file system meaning we try to access
+
+382
+00:35:32,660 --> 00:35:41,140
+every directory and every entry in a directory right. In this case so this the the shared file
+
+383
+00:35:41,140 --> 00:35:47,940
+that will be visited more than once right because the multiple direction entry is pointing to the
+
+384
+00:35:47,940 --> 00:35:56,580
+the same file. So the solution in this case basically is ignore all the link entries when
+
+385
+00:35:56,580 --> 00:36:05,220
+traversing the file system. Another issue is so what happens when delete a file? So when delete
+
+386
+00:36:05,220 --> 00:36:16,820
+a sharp file then may leave the dunkling punctus to a 9-16 file. So again if you look at the
+
+387
+00:36:16,820 --> 00:36:26,120
+picture here right so if we delete this file right without delete this link so
+
+388
+00:36:26,120 --> 00:36:32,820
+this link will left dunkling rather leave then this link then we're pointing
+
+389
+00:36:32,820 --> 00:36:41,720
+to a nice thing file right so how to how to deal with this issue okay so yes
+
+390
+00:36:41,720 --> 00:36:45,080
+try to get a pointer
+
+391
+00:36:46,820 --> 00:36:48,820
+So how to deal with this issue?
+
+392
+00:36:49,720 --> 00:36:51,820
+So basically the solution is
+
+393
+00:36:51,820 --> 00:36:53,520
+right, so either
+
+394
+00:36:53,520 --> 00:36:56,620
+right, so we search for all these dunkling links.
+
+395
+00:36:56,620 --> 00:36:58,620
+We delete a shared file
+
+396
+00:36:58,620 --> 00:37:00,020
+and in the meantime
+
+397
+00:37:00,020 --> 00:37:02,520
+then we search for any links to the file
+
+398
+00:37:02,520 --> 00:37:04,920
+and remove all the links at some time.
+
+399
+00:37:04,920 --> 00:37:06,420
+So that's the first solution.
+
+400
+00:37:07,420 --> 00:37:10,020
+then we just simply leave the link dunkling,
+
+401
+00:37:10,920 --> 00:37:13,620
+And only delete the link
+
+402
+00:37:13,620 --> 00:37:17,220
+when the link is used again.
+
+403
+00:37:17,220 --> 00:37:18,680
+Right, at that time,
+
+404
+00:37:18,680 --> 00:37:22,760
+then OS realize the link parking to a nice setting file
+
+405
+00:37:22,760 --> 00:37:24,120
+and then delete the link.
+
+406
+00:37:24,120 --> 00:37:26,020
+Right, so that's the second way.
+
+407
+00:37:26,020 --> 00:37:30,460
+And the last way is, so we don't delete the file.
+
+408
+00:37:30,460 --> 00:37:31,980
+We only delete the file
+
+409
+00:37:31,980 --> 00:37:35,740
+when all the links are deleted.
+
+410
+00:37:35,740 --> 00:37:38,380
+Right, so that's basically the solution
+
+411
+00:37:38,380 --> 00:37:40,160
+how to deal with this.
+
+412
+00:37:40,160 --> 00:37:42,780
+Right, but for the second solution,
+
+413
+00:37:42,780 --> 00:37:46,320
+So if we leave the link duckling when deleted the file,
+
+414
+00:37:46,320 --> 00:37:51,320
+and unlink deleted the link when the link is used again,
+
+415
+00:37:51,320 --> 00:37:56,320
+this may cause some problem, right?
+
+416
+00:37:56,760 --> 00:38:00,540
+And we will further elaborate.
+
+417
+00:38:00,540 --> 00:38:05,300
+So what problem did this may cause during the tutorial?
+
+418
+00:38:08,460 --> 00:38:10,780
+Now let's look at what operations, right?
+
+419
+00:38:10,780 --> 00:38:15,780
+So can be performed on a directory, right?
+
+420
+00:38:15,920 --> 00:38:18,540
+So similar to file, right?
+
+421
+00:38:18,540 --> 00:38:20,820
+So we can create a directory,
+
+422
+00:38:20,820 --> 00:38:22,540
+we can delete the directory, right?
+
+423
+00:38:22,540 --> 00:38:26,440
+So recall the directory is special kind of file.
+
+424
+00:38:26,440 --> 00:38:29,860
+So then they delete to create a directory.
+
+425
+00:38:29,860 --> 00:38:31,420
+So that's basically means
+
+426
+00:38:31,420 --> 00:38:34,880
+when the OIS needs to do the space allocation
+
+427
+00:38:34,880 --> 00:38:37,420
+for the directory, right?
+
+428
+00:38:37,420 --> 00:38:47,740
+and create a entry for directory in the current direction right and in particular for unix
+
+429
+00:38:48,540 --> 00:38:55,580
+when a direction is created the two special entries will be created automatically
+
+430
+00:38:55,580 --> 00:39:03,740
+by single dot and the double dot so single dot refers to the current directory and double dot
+
+431
+00:39:03,740 --> 00:39:05,760
+refers to the parent
+
+432
+00:39:05,760 --> 00:39:07,820
+directory. So that's
+
+433
+00:39:07,820 --> 00:39:09,240
+in particular to Unix.
+
+434
+00:39:10,300 --> 00:39:11,560
+And the delete directory,
+
+435
+00:39:12,000 --> 00:39:13,400
+similar to delete file,
+
+436
+00:39:14,400 --> 00:39:15,600
+so space allocated
+
+437
+00:39:15,600 --> 00:39:17,720
+to the directory, that need
+
+438
+00:39:17,720 --> 00:39:18,760
+to be deleted.
+
+439
+00:39:21,200 --> 00:39:23,760
+the entry for directory, that need to be
+
+440
+00:39:23,760 --> 00:39:25,220
+deleted as well
+
+441
+00:39:25,220 --> 00:39:27,240
+from the current directory.
+
+442
+00:39:29,540 --> 00:39:32,080
+again, in particular to Unix,
+
+443
+00:39:32,080 --> 00:39:36,080
+so only empty directory can be deleted, right?
+
+444
+00:39:36,080 --> 00:39:41,080
+And the directory contains only the special entries,
+
+445
+00:39:41,680 --> 00:39:43,900
+single dot and double dot.
+
+446
+00:39:43,900 --> 00:39:47,080
+So that's considered as empty directory.
+
+447
+00:39:49,260 --> 00:39:51,580
+And the next operation is the list.
+
+448
+00:39:51,580 --> 00:39:56,480
+So list basically to list all the directory entries, right?
+
+449
+00:39:56,480 --> 00:40:00,660
+So in a directory, so that's the list, right?
+
+450
+00:40:00,660 --> 00:40:01,940
+And the search,
+
+451
+00:40:02,080 --> 00:40:09,580
+So search basically is given a file name and try to locate the direction entry for that file.
+
+452
+00:40:09,580 --> 00:40:11,880
+So that's a search operation.
+
+453
+00:40:11,880 --> 00:40:15,280
+And the traverse, which I just mentioned.
+
+454
+00:40:15,280 --> 00:40:22,480
+So traverse basically is trying to access every entry in every direction.
+
+455
+00:40:22,480 --> 00:40:24,480
+So that's the traverse operation.
+

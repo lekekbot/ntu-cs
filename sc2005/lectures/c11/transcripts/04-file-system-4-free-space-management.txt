@@ -1,0 +1,72 @@
+[00:00] This video recording is on disk space management. One important issue in file space allocation is to
+determine the block size. Block size affects both data read and disk space utilization. There is a
+trade-off between data read and space utilization. If block size is large, a file will occupy less
+number of blocks. To read the file, in this case, will require less number of IOs. This translates
+to fast data read. However, it is waste space since the last data block of the file may not occupy
+the entire disk block. So recall, no matter which file allocation method is used, they all suffer
+from internal fragmentation. And this happened to the last block. If the block size is small, then a
+file will occupy many blocks.
+
+[01:11] Then to read the file, for example, that will require a large number of disk IOs. So the data read
+is slow, but the wastage on the last block will be small. The trade-off between the data read and
+space utilization is graphically illustrated on this slide. So there are two curves. One for the
+data read and the other one is for utilization. So you can clearly see the opposite trend of the
+curve when the block size increases. So to deal with this trade-off, some OS actually use two block
+sizes for file allocation. And this will be further discussed in a tutorial question. Just as the
+space that is allocated to the file must be managed, so the space that is not currently in use,
+right, not currently allocated to any file must also be managed. To perform any of the file
+allocation techniques described previously, then it is necessary to know which blocks on the disk
+are currently available.
+
+[02:34] So another major responsibility of the file organization module is to keep track of the free space
+on the hard disk. So in general, there are two different approaches. So the bitmap or the linked
+list. So using a bitmap, each block on the hard disk is represented by one bit. So if a block is
+free, then the corresponding bit will be zero. However, if the block is occupied, allocated to a
+file, then the corresponding bit for the block will be one. So this is the same block. However, the
+bitmap also occupies storage space and can be quite big. So for instance, given the block size of
+2^9 bytes, so that's 512 bytes. So given this block size, and given the hard disk size is 2^34
+bytes, so this is a 16GB byte.
+
+[03:50] So this is a 16GB byte. It's quite small, right. Then the number of blocks in this hard disk will be
+2^34 divided by 2^9. So this gives you a number of blocks. In other words, the number of bits
+required. So 8 bits per byte. So divided by 8, then we have 2^22 bytes. So for this small hard disk,
+then it will require 2^22 bytes storage space for the bitmap. So this is a 4 megabyte. Bitmap is
+usually kept in a fixed location on the hard disk. So to improve performance, it can be cached in
+memory. So the example discussed in the last slide. The size of bitmap is 4 megabytes. Now the
+question is, can we spare 4 megabyte of memory for this bitmap? So if so, then the bitmap can be
+searched without need for accessing the hard disk.
+
+[05:01] So we can cache the entire bitmap in the memory. So if we keep a copy of the bitmap in the memory,
+then in order to keep the copy of this bitmap on hard disk, right, consistent. Then the bitmap in
+the memory needs to be written back to the hard disk occasionally. So recall the concept of cache,
+right? So we have 2 copies of bitmap. One on hard disk, the other one is in the memory. So whenever
+the version in the memory is updated, then we also need to update the version on the hard disk to
+maintain consistency. So even when the bitmap is in the memory, an exhaustive search of the map can
+also introduce considerable overhead. Considering what needs to be done when a file is created or
+deleted. So for example, so assuming contiguous file allocation, so to create a file, then it
+requires n blocks.
+
+[06:11] Operating system then needs to search the bitmap to locate n consecutive bits whose value is 1. So n
+three available blocks. Then to delete the file, the OS also needs to change the bits of the blocks,
+right, a census file from 1 to 0. So to reduce the overhead, the many OS maintains some additional
+disk structures to minimize this search operation. The other way to keep track free space on the
+hard disk is to use the link list approach. So free disk blocks are chained together by using a link
+list. So this method has a negligible space overhead. So unlike the bitmap, it doesn't require
+additional data structure. So what OS need to maintain just a pointer, pointer to the starting
+block, the first block that's currently available on the hard disk.
+
+[07:21] Then that block contains the pointer, pointer to the next available block on the hard disk, and so
+on and so forth. So if a location is a block at the time, right, for example, if you're using the
+link or index location, then it can be done by simply choosing the free block at the height of the
+chain and adjust the first pointer, right, or the length value accordingly. However, if a location
+is contiguous, right, for instance, if you're using a first-fit policy to locate the large enough
+hole on the hard disk to assign to the file, right, then in this case, right, so we have to search
+the entire chain in order to locate the required number of contiguous free blocks. So again, the
+pointer and the length value need to be adjusted and the link list of a free block need to be
+modified. So this approach saves the space, but also has its own problem, right.
+
+[08:37] So every time OS allocate a block, then OS need to read the block first to recover the pointer to
+the next free block before writing data to that block. If many individual blocks need to be
+allocated at one time for a file operation, then this greatly slows down the operation. So
+similarly, deleting a file whose blocks are at different places at the hard disk is also very, very
+time consuming, because free up the block need to be added into the linked list in the order.

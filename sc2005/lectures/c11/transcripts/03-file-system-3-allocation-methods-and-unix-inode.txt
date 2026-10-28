@@ -1,0 +1,296 @@
+[00:00] So this is the second lecture, file system. So under this lecture, we will focus on the file
+organization module. So in particular, so we will look at different ways how to allocate the storage
+space for files and also look at the translation from the logical block address to physical block
+address. For file allocation method, so we will introduce three methods, so contiguous allocation,
+link allocation and index allocation. Right, so recall logically we view a file as a sequence of
+bytes. So file is a byte addressable, right? So logically, right? But for hard disk, so it's a
+block-oriented device, right?
+
+[01:10] So hard disk consists of a sequence of blocks, right? Then to allocate space for the file and hard
+disk, then first of all we need to divide this sequence of bytes into blocks. So divide the sequence
+of bytes into blocks. So these are called logical blocks. The logical blocks. The blocks on hard
+disk are called physical blocks. So this is logical. Then block on hard disk is called physical
+block. then to allocate space for the file then we need to find out the free available physical
+blocks on the hard disk and load the logical block of the file onto the available physical blocks on
+the hard disk then how to translate the logical block number to the physical block number
+
+[02:21] So how do we know? So the logical block is in which physical block? So that depends on the file
+allocation method. Now let's look at the first method. It's called contiguous allocation. So for
+contiguous allocation, basically the file will remain contiguous on the hard disk. So each file
+occupies a set of contiguous blocks on the hard disk. Right. So in this case, so if we know the
+logical block zero of the file is mapped to the physical block B on the hard disk, then we will know
+for logical block I of the file, then we will be located in the physical block B plus I. Right. So
+because the contiguous physical block are located to the SIM file. So in this case, so we can easily
+support random access, right? So if you try to locate a particular block of the file on hard disk,
+so that should be quite straightforward.
+
+[03:35] Now what's the problem here? Right, so the problem here is basically to assign the space to the
+file. then what we need to do is we need to find a large enough hole right to allocate the file. The
+hole here refers to a sequence of available physical blocks right. So given a file, so given this
+number of logical blocks in the file, then we need to find a large enough hole right. A large
+sequence available physical blocks on hard disk to assign to the file. To find this large enough
+hole then there are different approaches right so we can use the first fit, best fit or even the
+worst fit right to to find this large enough hole on hard disk to assign to the file right. But the
+problem is as the files are created and deleted, the hard disk may become fragmented.
+
+[04:45] The hole may become too small to be useful. So that's a waste of space. And another issue is, the
+free blocks that both end of file may be limited. So the available free blocks at both end of the
+file may be limited. So this will constrain the size of the file. To further extend the file, to add
+more data into the file, then we require to assign more blocks to the file. In this case, we may
+need to move the file to a larger hole. On the other hand, if we try to over-allocate, assign more
+physical blocks to the file than what actually required by the file. In this case, so that will lead
+to the internal fragmentation. So that's the problem for the last allocation.
+
+[05:55] So that's the problem for the contiguous allocation. Now let's look at how the logical block number
+can be translated into the physical block number. So again, as I just mentioned, the file logically
+is a sequence of bytes. bytes so this is divided into logical blocks and logical blocks right right
+the file is a byte addressable right so given a particular location of the file which we try to
+access for example this particular byte right then the first step is we need to figure out so this
+position in the file is in which logical block right so after we know despite this position in which
+logical block then the next step is depending on the file allocation miser then we figure out this
+logical block is in which physical block right so that's basically the position so how to do the
+logical
+
+[07:13] block address translation to the physical block address right now how to figure out right so for
+contiguous allocation so given a particular position in the file which we try to access and how to
+figure out so this position is in which logical block right so this can be done basically is by so
+given the back location which we try to access in the file then we divide this by the block size
+right so for instance if you're assuming the block size is 512 right so given a particular location
+of the file we try to access, right, then we divide this by 512, right, and we will able to obtain
+quotient and remainder. So quotient then will give us the logical block number, so which we try
+access. Right. Now let's look at a particular example. Right. So in this specific example,
+
+[08:27] we look at this particular file. So if you're using count equals location in the directory entry, so
+what we need to keep track basically is the starting physical block number of the file on the hard
+disk right so for instance in this case so for file mail the starting physical block number assigned
+to this file is 19 and this file consists of six blocks right so block logical block zero is in
+physical block 19 and logical block one is in 20 and two in 21 and so on and so forth right so this
+file is contiguously allocated on the hard disk right so it's occupied contiguous physical blocks on
+the hard disk. Now given a particular position of the file which we try to access so this is called
+a logical address right then we divide this by the block number
+
+[09:39] by the block size, so that's 512. So 2, 3, 3, 3, divide 512, then we obtain Q4 and the remainder to
+8, 5. Right, so again, graphically, so this is how it looks like, right? So logical file, sequence
+of bytes, we divide into blocks, right? So divide into blocks, Right, so 0, 1, 2, 3, 4, 5. And given
+this particular back location, so 2, 3, 3, 3, right, so we use this to divide 512, then we'll obtain
+quotient 4, and remainder 285. So this position is here, in logical block 4, right, displacement
+within this block, is 285. So that's the first step. So we figure out, so given a logical address,
+position which we try to access,
+
+[10:51] then we figure out, so this position is in which logical block? So in this specific example, it's in
+logical block 4. Now the next step is, so then we need to figure out, so this logical block 4 is in
+which physical block. Right, so we know the logical block zero, so we know logical block zero is in
+physical block 19. So then logical block four, so because this is contiguous allocation, then
+logical block four will be in physical block four plus 19. So that's block 23. Alright, so again, so
+it's logical block of 0 is 19, and 1 is 22 is in 21, 3, 3 is in again. So 3 is in 22 and 4 is in 23.
+
+[12:06] Right, so that's basically how to do the logical block address to physical block address
+translation. Right, so by using the cantikas allocation. Right. So this approach is run straight
+forward. right but however as what I just mentioned then we have this problem here right so we may
+have an internal fragmentation right and if we do that over allocation then we may have an internal
+fragmentation right now let's look at the next approach so next approach is called the link
+allocation approach so basically in this case So each file is a linked list of disk blocks. And the
+physical block assigned to the file can be anywhere on the hard disk. So those physical block
+assigned to the same file are linked together by a linked list. So basically, in this case, the
+directory entry of the file contains the file name
+
+[13:19] and the first physical block assigned to the file. Then in each physical block assigned to the file,
+then the first byte, right, the first few bytes, basically contains a link, link into the next
+physical block assigned to the same file. So in this way, so all the blocks, physical blocks
+assigned to the same file, are linked together in a linked list. So again, this approach is quite
+simple and straightforward. So we only need to keep track. The first physical block assigned to the
+file. And no waste of space. So as long as a physical block is available, it can be assigned to the
+file. So any physical block can be in use. as long as it's free. And there's no constraint on the
+file size. So we can always locate available physical block sent to the file as needed.
+
+[14:31] So in this case, then we overcome the issue so it says exists in the contiguous allocation. Now,
+what's the problem? The problem here is to support random access in this case, right? By using this
+link allocation approach, then it's inefficient, right? So you can consider it, right? So if you try
+to access, for instance, right, the logical block 2 of the file, right? In this case, then we need
+to locate the logical block 0 by looking at the directory entry of the file. So locate where it is.
+Then once we locate the logical block 0 on the hard disk, then we follow the information in the
+physical block to locate where the logical block 1 is on the hard disk. then after we locate where
+the logical block 1 is on hard disk then we follow the link in the block itself to locate where the
+logical
+
+[15:41] block 2 is on hard disk so that's inefficient because each of these will require a disk guy right
+now again so let's look at how to do the address translation so the logical to physical address So
+in this case, again, we assume the block size is 512. And we also assume the first four bytes is
+used for a pointer, pointing to the next block in the list. So because the first four bytes are used
+as a pointer, pointing to the next block assigned to some file, then effectively the block size will
+be 512 minus 4. So that's the effective block size. Then given a logical address, there's a
+particular location in the file which we try to access. To figure out the logical block number, then
+we use this logical address,
+
+[16:51] divide the effective block size, 508, 508, then we obtain the quotient and the remainder. So the
+quotient again, in this case, is the logical block number. So Q, so now we need to access logical
+block Q. Then displacement in this case, so will be R plus 4, because the first four bytes are used
+as a pointer, punting to the next physical block assigned to the file. Now let's look at a specific
+example to further illustrate this approach. Right, so by using link allocation, right, so in this
+case, so in the directoryal entry, so we keep track the physical block assigned to the first logical
+block of the file. So for this particular file, logical block 0 is in physical block 9. So the first
+field bytes in the physical block 9,
+
+[18:06] contents are puncted, pointing to the next physical block assigned to the same file. Then again, so
+this block, first field bias contains a pointer, pointer to the next physical block assigned to the
+same file, and so on and so forth. So block 0 is in physical block 9, block 1 is in physical block
+16, and the two is in physical block one and the three is in physical block 10 and the four is in
+physical block 25. So that's the link allocation. So again, that's planned. So you can imagine. So
+random access is inefficient. If you're using this approach. So if you try to, right, so I bring
+back the laser pointer. If you try to access logical block two,
+
+[19:16] right, then from the actual entry, we know logical block zero is in physical block nine. Then from
+this physical block, then we know logical block one is in physical block 16. Then from this physical
+block, then we know logical block two is in physical block one. So in order to access this logical
+block 2, we also need to access logical block 0 and logical block 1. So that's include additional
+IOs. Now let's look at the address translation. So given this specific position in the file which we
+try to access, size, we divide this number by the effective block size 508, then we obtain the
+quotient and the remainder. So quotient is 4, then we know this position is logical block 4, right
+logical block 4. Then from the actual entry, we know logical block 0 is in physical block 9, then by
+following the link and then finally then we can locate where the logical block 4 is. So logical
+block 4 is in
+
+[20:31] physical block 25. So that's how to do the logical block to physical block translation in this case
+by using link allocation approach. Right, so link allocation approach doesn't support random access
+effectively right now let's look at the next approach so this approach is called index allocation
+right so in this location basically so every file we have a index block right so index block
+basically is that contains multiple entries right there's one entry per block for the file, right,
+for logical block of the file, all right. So what entry contains? The entry basically just contains
+the physical block number, so that's where the corresponding logical block is on hard disk, right.
+So that's just the index block, right. Then if you're using this index allocation then the directory
+entry basically will contains the index block number all right
+
+[21:48] so in this case if you're using this index allocation approach right so we should be able to support
+random access very effectively right so we just need to search index block to locate the entry for
+the corresponding logical block. From the entry, then we will obtain the physical block number. So
+that's where the logical block is on the hard disk. And similar to the link allocation, so every
+single block that can be used as long as it's available. So this is not an external fragmentation
+issue. Now the only problem is, this index block itself also occupies space. So this is the overhead
+of keeping the index block. And of course, this address mapping. So the address mapping. So it's
+required to access the index block. So that's also the overhead. Now again, so let's look at address
+translation, so logical to physical address mapping.
+
+[23:05] Now in this particular case, assuming the maximum size of a file is 128 kilobytes. So 128 kilobytes,
+that's 2^17. and the block size is 512 so that's 2^9 so given this assumption for this particular
+example so in this case so we actually require two blocks to keep the index so why? so I leave this
+to you to think about so why? so given this assumption here then we need two blocks to keep track
+the index, to keep the index. So if I'm assuming, so four bytes are used for each pointer. Now,
+given a logical address, that particular location in the file, which we try to access, so similarly,
+we divide this by 512,
+
+[24:15] then we obtain the quotient and the remainder, then we use this Q, the quotient, to index into the
+index block to locate a required entry. From the entry, then we're able to obtain the physical block
+number. So R is the displacement into the block. Now let's look at a specific example. So if you're
+using index allocation, the directory, the directory entry contains the file name and an index block
+number. And for the index block, there's one entry per logical block. So, run out the pen. So,
+multiple entries. There's one entry per logical block. So this is 0, 1, 2, 3, and 4. Alright, so
+this one entry per logical block, go back to the laser pointer.
+
+[25:25] All right, so logical block zero of the file is in block nine, right, so logical block zero is in
+block nine, logical block one is in physical block 16, and so on and so forth, right, so again, So,
+logical block zero is in physical block nine. Logical block one is in physical block sixteen. So,
+physical block sixteen, so that's one. And the logical block two is in physical block one. And the
+logical block three is in physical block ten. and finally logical block 4 is in physical block 5.
+right so that's how we keep track right so where the data block the blocks of files are on the hard
+disk right now so given a particular position of the file which we try to access so the same
+position
+
+[26:43] 2333 then we divide this by 512 then we obtain the quotient and the remainder right so quotient so
+give us the logical block number which we try to access right so in this case this is the entry
+required right from the entry we know this logical block 4 is in physical block 25 So that's how to
+do the address translation in this case, by using the index allocation approach. Now let's look at
+the space allocation of the file used by the Unix. So Unix actually uses what is called the inode.
+So inode is basically an extension of the index allocation approach. So for Unix, for every file,
+then there's an inode. inode is the short for index block. So what's the inode format? So inode
+contains the following information.
+
+[27:55] So the file attributes, and the twelve pointers, they're pointing to the data block of the file
+directly. This pointer is basically the physical plot numbers. And in addition to this 12 pointers,
+this is called direct pointers. So inode also contains three indirect pointers. They are pointing to
+index block. So there's a single indirect pointer. Single indirect pointer is pointing to index
+block. So indirect block, right. So this indirect block again contains multiple entries then each
+entry contains a pointer that's pointing to the data block, right. So that's a single indirect and a
+double indirect. So indirect is two levels, right. So this pointer pointer to indirect block or
+indirect block. And this indirect block contains multiple entries. Each entry contains a pointer,
+yet pointing to another indirect block.
+
+[29:08] In this second level indirect block, it contains multiple entries, then each entry contains a
+pointer, finally pointing to a data block of the file, that's a logical block. Right, so this double
+indirect pointer, so indirect is the two levels, and triple indirect pointer, then indirect is the
+three levels. So graphically, that's how it looks like. So the inode contains the file attributes,
+and have 12 indirect pointers. So each indirect pointer basically is a physical block number. So
+each pointer to a data block of the file, so that's a logical block of the file. and a single
+indirect pointer pointing to indirect block or index block. So this indirect block contains multiple
+entries, each entry contains a pointer and pointing to the data block. So double indirect basically
+is the indirect two levels. So in this case, the block 0, 1, 2, and data block 11,
+
+[30:27] so can't be located directly by the direct pointer. But for data block 12 onwards, then this needs
+to be located by either single indirect or double indirect, or even the triple indirect. So
+depending on which data block we try to access. So this is the data structure used by Unix for the
+file allocation. And what's the benefits of using this kind of structure? The benefit of using this
+structure is we were able to support a file of a very large size. Now let's try to figure out what's
+the file size we're able to support by using this disk structure. So, okay, let me bring back the
+laser pointer. So let's attribute that, right, So the block pointer occupies four bytes, right?
+
+[31:40] And the block size is 4K bytes. So given the block pointer occupies four bytes and the block size is
+4K bytes, the number of entries in the indirect block, right? So how many entries here? So will be,
+okay, so I'll bring out the pen. So block size is 4K, okay? And pointer size is 4, right? So the
+number of entries in the indirect block or index block will be 2^10. Okay, so that's how many
+entries here. So we have 2^10 entries, right? Back to get a little pointer. Right, so if we just use
+the direct pointers, we have 12 of these direct pointers, each pointing to a data block, the size of
+data block is 4K. So the file size can be supported then is 48K. And if you're using files, direct
+and single indirect pointers. So direct pointer support file of this size and fence for single
+indirect.
+
+[32:50] So single indirect, so this index block contains this number of pointers. So each pointer pointing
+to a data block, the size of data block is 4K. Right, the size of data block is 4K. So if you're
+using this single indirect pointer, right, so we have 2^10 entries, 2^10 pointers, each pointing
+data block, the size of data block is 4K. Right, so the file size that can be supported by just
+using single indirect block, single indirect pointer will be this. Right, so put together, right, so
+two put together. So if you're using direct plus single indirect pointer, the file size can be
+supported, will be 48K plus 2^22. Right, so again, so this, all we obtain is 2^22 is by using this,
+right. So this is number of pointers in the indirect block, and this is size of data block. the size
+of each block.
+
+[34:02] So if you're using a direct pointer together with a single indirect and also double indirect, so the
+total file size that can be supported will be this. You can see this is extremely large. So that's
+the advantage of using an inode. So if you're using an inode, if you're using an inode, then what
+directory entry contains? Right, so directory entry, so in this case, will contain the file name,
+right? And the inode assigned to the file, right? So it contains file name and the inode number. So
+for every file in Unix, there's the inode assigned to the file, right? So inode itself also stored
+on the hard disk. Now again, let's look at specific examples. So let's try to figure out why. So
+you're using this, the inode, right? So how to locate the required data block on hard disk. So given
+this simplified inode structure,
+
+[35:14] so in this case, so I have six direct pointers, then we have one single indirect pointer. Right, so
+given this very simple structure, and given this very simple structure, right, so the question is
+how to determine which physical block to access, right? So if we want to read 200 bytes from current
+position in the file, right? Now let's look at this. Right, so assuming we make the following
+assumptions here, right? So assuming that the block size is 1,000 bytes, right? And the current
+position is at 5,900. And the amount of data to read is 200 bytes. Right, so let's assume this. Now
+the first step is what we need to do. Right, so the first step is, okay, So given the current
+position pointer and amount data to read, then we need to figure out which logical block we need to
+access.
+
+[36:29] So recall, well, logically, it's a sequence of bytes. So this is divided into logical blocks. Divide
+into logical blocks. Right, so zero, one, two, three, four, five, and six. All right, then the
+current position is here in block five. That's five, nine, zero, zero. So that's the current
+position. All right, then we try to read 200 bytes from the current position. Right, so recall the
+block size is 1000, right? Then in this case, if we read 200 bytes from fact 900, then the first 100
+bytes is in block 5, and the second 100 bytes then will be in block 6. Right, so that's the first
+time, right?
+
+[37:41] So given the current position, and given the amount of data to read, Then we need to figure out
+which logical blocks we need to access. That's the first step. So the next step, after we know we
+need to access these two logical blocks, 5 and 6, then we need to figure out where they are on the
+hard disk. Now let's go back to look at the structure here. So where they are on hard disk. So this
+can be determined by looking at this structure here. So in this particular case, there are six
+direct pointers. So we can locate logical block 0, 1, 2, 3, 4, 5 directly, where they are on high
+disk. But from logical block 6 onwards, then we have to use a single indirect pointer. Right, so now
+we need to access logical block 5 and 6. For block 5, then we can use the last direct pointer to
+locate where it is on the hard disk.
+
+[38:53] And for block 6, then we need to use the single indirect pointer. By single indirect pointer, then
+we'll pointer to this indirect block or indirect block. and the fourth entry in this indirect block
+contains pointer, so it's pointing to block 6 where block 6 is on the hard disk. So that's basically
+how to use inode to translate from the logical block number to the physical block number.

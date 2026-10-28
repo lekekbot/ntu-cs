@@ -1,0 +1,93 @@
+[00:00] This video recording is file protection and open file table. File protection is also a
+responsibility of a logical file system. One issue related to file sharing is access right
+management. File owner or the creator of the file should be able to control what can be done and by
+who. The file system should provide a number of options so that the way in which a particular file
+is accessed can be controlled. Typically, a group of users are granted certain access right to a
+file. We illustrate the file protection using Unix as an example. In Unix, each file has a primary
+group. When a file is created, it is initially associated with the user's primary group. Groups are
+created by the Unix system administrator.
+
+[01:12] In Unix, there are three classes of users. Owner who create the file. And other users within the
+same group as the owner. And all the rest. So we have owner, group and public. So owner, as a site,
+is the user who create the file. And group refers to users who are in the same group as the owner.
+And the public refers to the rest of the users. Then for each class of user, owner, group and
+public, there are three protection bits. Read, write and execute. For instance, for this particular
+file. So this is the protection bits for the file. And for the user, the owner who created the file
+will be able to read, write and execute the file. However, for other users within the same group as
+the owner, they can only read and execute the file.
+
+[02:22] And for all the rest, public, they can only execute the file. And the directory is a special kind of
+file. So like file, each directory also has nine protection bits. So for directory, read permission
+means operation to list the content of directory is permitted. And the right permission means
+operation to modify the content of a directory. Right. For instance, insert an entry in the
+directory or delete the entry of a directory is permitted. So recall directory consists of multiple
+entries. There's one entry per file and entry contains the file attributes or metadata of the file.
+So however, there's something unique to the directory. To access a directory, then the execution
+permission is essential. What does that mean? That basically means if there's no execution
+permission, then corresponding read and write operation on the directory cannot be performed.
+
+[03:34] Right. So even though read and write permission is set. Again, to this particular example, so this
+indicating this is a directory file. And for this directory file, then the user will be able to read
+and write the directory. The execution permission is set. So read means able to list the content of
+the directory. And then write means able to delete or insert a content entry in the directory. And
+for other users within the same group, then can only read the directory. Right. So list the content
+of the directory. Right. Again, the execution is set. Right. So for all others, they cannot do, they
+cannot perform read or write operation on the directory. Right. That's the last part of the logical
+file system. Let's look at the open file table. Data structure maintained by operating system to
+support file operations. So in the following discussion, we assume the directory is structured in
+this manner.
+
+[04:47] So there actually have multiple entries. Each entry contains a file name and a pointer pointer to a
+data structure. So that's called the file control block. Right. A typical example of a control block
+is Unix. So we're going to do a file. Just as planned, when introducing the file operations, to
+avoid constant searching of directory, so many systems require an open system call to be made before
+a file is read or write. So I assume current directory is in memory. So given the file name, right.
+So using cached directory structure, right. Given the file name, using cached directory structure,
+then OS will be able to locate the file control block on the hard disk. So given the file name,
+right. So assuming that the current directory is cached in the memory,
+
+[05:57] then OS will be able to locate the corresponding entry for the file. And from the entry, the entry
+contains the pointer pointer to the file control block. So OS is able to locate the file control
+block on the hard disk. To implement the implementation of the open file operation, right. So
+actually it's quite complicated. So in particular, in an environment where several processes may
+open the file at the same time. So to deal with this, so typically, OS uses two levels of open file
+table. So process level open file table and a system wide open file table. So the process open file
+table will keep track all files that process that's currently using. Has already opened by the
+process. Installed in this table is a process related information. So for instance, the current
+position pointer.
+
+[07:10] So let's see. For instance, the current position pointer. And the permission information. So how
+this process is permitted to operate on this particular file. And each entry in the process open
+file table. So the system wide open file table. So that information shared by all the processes who
+open the same file. So for example, a cache copy of a file control block. And how many times the
+file has been opened to the same file. So once a file has been opened by one process. When another
+process issues an open system call on the same file. Then a new entry is simply opened. So the
+system wide open file table. So we'll keep track. As I mentioned, how many times the file has been
+opened by the system wide open file table.
+
+[08:28] So we'll keep track. So there's a one entry for each file. So open. The system wide open file table.
+So there's one entry for file. That's opened. No matter how many times the file may open by the
+processes. And similarly, there's a one entry for each file. Open by a process. In the per-process
+open file table.
+
+[09:38] So what will be returned by the open system call. So is the index of the entry in the per-process
+open file table. So it's actually it's an integer. And this is called file descriptor. So again, if
+you look at the diagram here. So for the entry in the system wide open file table. It's basically
+maintains a copy of the file control block. And the content that remember how many times the file
+opened by different processes. Then you input process open file table. The entry contains per
+process related information. The position where the file is currently being accessed by the process.
+And the permission operation for the process to operate on the file. Then what will be returned is
+this index. In the index of this entry in the per process open file table. So this is called file
+descriptor. Now let's look at.
+
+[10:51] So after open system call. So open system call returns an entry index of the per process open file
+table. And the read and write system call. Then we'll take this index as a parameter. Then OS
+kernel. We use this index to locate corresponding entry. We use this index to locate the
+corresponding entry in the per process open file table. From this entry. Then by following the back
+pointer. Then the OS will be able to locate the file control block for the file. And the current
+position pointer in the entry of the per process open file table. So current position pointer in the
+entry in the per process open file table. Together with the amount of data. To be right. Can be used
+to determine. So what are the logical. File blocks that need to be accessed.
+
+[12:01] Then the information in the file control block. And the file allocation measure. So then can be used
+to determine. So where the corresponding physical blocks are. On the hard disk.

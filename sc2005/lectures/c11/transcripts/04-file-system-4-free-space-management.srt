@@ -1,0 +1,304 @@
+1
+00:00:00,000 --> 00:00:06,000
+This video recording is on disk space management.
+
+2
+00:00:06,000 --> 00:00:13,000
+One important issue in file space allocation is to determine the block size.
+
+3
+00:00:13,000 --> 00:00:19,000
+Block size affects both data read and disk space utilization.
+
+4
+00:00:19,000 --> 00:00:24,000
+There is a trade-off between data read and space utilization.
+
+5
+00:00:24,000 --> 00:00:30,000
+If block size is large, a file will occupy less number of blocks.
+
+6
+00:00:30,000 --> 00:00:37,000
+To read the file, in this case, will require less number of IOs.
+
+7
+00:00:37,000 --> 00:00:41,000
+This translates to fast data read.
+
+8
+00:00:41,000 --> 00:00:50,000
+However, it is waste space since the last data block of the file may not occupy the entire disk block.
+
+9
+00:00:50,000 --> 00:00:59,000
+So recall, no matter which file allocation method is used, they all suffer from internal fragmentation.
+
+10
+00:00:59,000 --> 00:01:02,000
+And this happened to the last block.
+
+11
+00:01:02,000 --> 00:01:11,000
+If the block size is small, then a file will occupy many blocks.
+
+12
+00:01:11,000 --> 00:01:18,000
+Then to read the file, for example, that will require a large number of disk IOs.
+
+13
+00:01:18,000 --> 00:01:25,000
+So the data read is slow, but the wastage on the last block will be small.
+
+14
+00:01:25,000 --> 00:01:33,000
+The trade-off between the data read and space utilization is graphically illustrated on this slide.
+
+15
+00:01:33,000 --> 00:01:35,000
+So there are two curves.
+
+16
+00:01:35,000 --> 00:01:41,000
+One for the data read and the other one is for utilization.
+
+17
+00:01:41,000 --> 00:01:49,000
+So you can clearly see the opposite trend of the curve when the block size increases.
+
+18
+00:01:49,000 --> 00:01:57,000
+So to deal with this trade-off, some OIs actually use two block sizes for file allocation.
+
+19
+00:01:57,000 --> 00:02:04,000
+And this will be further discussed in a tutorial question.
+
+20
+00:02:04,000 --> 00:02:20,000
+Just as the space that is allocated to the file must be managed, so the space that is not currently in use, right, not currently allocated to any file must also be managed.
+
+21
+00:02:20,000 --> 00:02:34,000
+To perform any of the file allocation techniques described previously, then it is necessary to know which blocks on the disk are currently available.
+
+22
+00:02:34,000 --> 00:02:46,000
+So another major responsibility of the file organization module is to keep track of the free space on the hard disk.
+
+23
+00:02:46,000 --> 00:02:49,000
+So in general, there are two different approaches.
+
+24
+00:02:49,000 --> 00:02:53,000
+So the bitmap or the linked list.
+
+25
+00:02:53,000 --> 00:03:03,000
+So using a bitmap, each block on the hard disk is represented by one bit.
+
+26
+00:03:03,000 --> 00:03:09,000
+So if a block is free, then the corresponding bit will be zero.
+
+27
+00:03:09,000 --> 00:03:21,000
+However, if the block is occupied, allocated to a file, then the corresponding bit for the block will be one.
+
+28
+00:03:21,000 --> 00:03:23,000
+So this is the same block.
+
+29
+00:03:23,000 --> 00:03:30,000
+However, the bitmap also occupies storage space and can be quite big.
+
+30
+00:03:31,000 --> 00:03:40,000
+So for instance, given the block size of 2.9 bytes, so that's 512 bytes.
+
+31
+00:03:41,000 --> 00:03:50,000
+So given this block size, and given the hardware size is 2.34 bytes, so this is a 16GB byte.
+
+32
+00:03:50,000 --> 00:03:51,000
+So this is a 16GB byte.
+
+33
+00:03:51,000 --> 00:03:52,000
+It's quite small, right.
+
+34
+00:03:52,000 --> 00:03:57,000
+Then the number of blocks in this hard disk will be 2.34 divided by 2.9.
+
+35
+00:03:57,000 --> 00:04:02,000
+So this gives you a number of blocks.
+
+36
+00:04:02,000 --> 00:04:07,000
+In other words, the number of bits required.
+
+37
+00:04:07,000 --> 00:04:09,000
+So 8 bits per byte.
+
+38
+00:04:09,000 --> 00:04:13,000
+So divided by 8, then we have 2.22 bytes.
+
+39
+00:04:13,000 --> 00:04:22,000
+So for this small hard disk, then it will require 2.22 bytes storage space for the bitmap.
+
+40
+00:04:22,000 --> 00:04:24,000
+So this is a 4 megabyte.
+
+41
+00:04:24,000 --> 00:04:33,000
+Bitmap is usually kept in a fixed location on the hard disk.
+
+42
+00:04:33,000 --> 00:04:39,000
+So to improve performance, it can be cached in memory.
+
+43
+00:04:40,000 --> 00:04:43,000
+So the example discussed in the last slide.
+
+44
+00:04:44,000 --> 00:04:47,000
+The size of bitmap is 4 megabytes.
+
+45
+00:04:47,000 --> 00:04:53,000
+Now the question is, can we spare 4 megabyte of memory for this bitmap?
+
+46
+00:04:53,000 --> 00:05:00,000
+So if so, then the bitmap can be searched without need for accessing the hard disk.
+
+47
+00:05:01,000 --> 00:05:04,000
+So we can cache the entire bitmap in the memory.
+
+48
+00:05:04,000 --> 00:05:16,000
+So if we keep a copy of the bitmap in the memory, then in order to keep the copy of this bitmap on hard disk, right, consistent.
+
+49
+00:05:16,000 --> 00:05:22,000
+Then the bitmap in the memory needs to be written back to the hard disk occasionally.
+
+50
+00:05:22,000 --> 00:05:24,000
+So recall the concept of cache, right?
+
+51
+00:05:24,000 --> 00:05:27,000
+So we have 2 copies of bitmap.
+
+52
+00:05:27,000 --> 00:05:32,000
+One on hard disk, the other one is in the memory.
+
+53
+00:05:33,000 --> 00:05:42,000
+So whenever the version in the memory is updated, then we also need to update the version on the hard disk to maintain consistency.
+
+54
+00:05:43,000 --> 00:05:54,000
+So even when the bitmap is in the memory, an exhaustive search of the map can also introduce considerable overhead.
+
+55
+00:05:54,000 --> 00:06:00,000
+Considering what needs to be done when a file is created or deleted.
+
+56
+00:06:00,000 --> 00:06:11,000
+So for example, so assuming contiguous file allocation, so to create a file, then it requires n blocks.
+
+57
+00:06:11,000 --> 00:06:19,000
+Operating system then needs to search the bitmap to locate n consecutive bits whose value is 1.
+
+58
+00:06:19,000 --> 00:06:21,000
+So n three available blocks.
+
+59
+00:06:22,000 --> 00:06:31,000
+Then to delete the file, the OS also needs to change the bits of the blocks, right, a census file from 1 to 0.
+
+60
+00:06:31,000 --> 00:06:41,000
+So to reduce the overhead, the many OS maintains some additional disk structures to minimize this search operation.
+
+61
+00:06:41,000 --> 00:06:53,000
+The other way to keep track free space on the hard disk is to use the link list approach.
+
+62
+00:06:53,000 --> 00:06:59,000
+So free disk blocks are chained together by using a link list.
+
+63
+00:07:00,000 --> 00:07:04,000
+So this method has a negligible space overhead.
+
+64
+00:07:04,000 --> 00:07:09,000
+So unlike the bitmap, it doesn't require additional data structure.
+
+65
+00:07:10,000 --> 00:07:21,000
+So what OS need to maintain just a puncture, puncture to the starting block, the first block that's currently available on the hard disk.
+
+66
+00:07:21,000 --> 00:07:29,000
+Then that block contains the puncture, puncture to the next available block on the hard disk, and so on and so forth.
+
+67
+00:07:29,000 --> 00:07:36,000
+So if a location is a block at the time, right, for example, if you're using the link or index location,
+
+68
+00:07:36,000 --> 00:07:52,000
+then it can be done by simply choosing the free block at the height of the chain and adjust the first puncture, right, or the length value accordingly.
+
+69
+00:07:52,000 --> 00:08:05,000
+However, if a location is contiguous, right, for instance, if you're using a first feed policy to locate the large enough hole on the hard disk to assign to the file,
+
+70
+00:08:05,000 --> 00:08:18,000
+right, then in this case, right, so we have to search the entire chain in order to locate the required number of contiguous free blocks.
+
+71
+00:08:18,000 --> 00:08:27,000
+So again, the puncture and the length value need to be adjusted and the link list of a free block need to be modified.
+
+72
+00:08:27,000 --> 00:08:37,000
+So this approach saves the space, but also has its own problem, right.
+
+73
+00:08:37,000 --> 00:08:51,000
+So every time OS allocate a block, then OS need to read the block first to recover the puncture to the next free block before writing data to that block.
+
+74
+00:08:51,000 --> 00:09:03,000
+If many individual blocks need to be allocated at one time for a file operation, then this greatly slows down the operation.
+
+75
+00:09:03,000 --> 00:09:13,000
+So similarly, deleting a file whose blocks are at different places at the hard disk is also very, very time consuming,
+
+76
+00:09:13,000 --> 00:09:23,000
+because free up the block need to be added into the linked list in the order.
+

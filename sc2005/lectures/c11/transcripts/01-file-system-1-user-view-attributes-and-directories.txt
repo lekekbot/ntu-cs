@@ -1,0 +1,316 @@
+[00:13] in this part of lecture we look at the file system from a user's model view perhaps the file system
+is one of the most important components of OS. So I'm pretty sure you're using file system on a
+daily basis. So in general, file system provides a resource abstraction that's typically associated
+with secondary storage. So for instance, hard disk, right? So related data are put together to form
+a file and a file is stored on the hard disk. A file has the following two important properties. So
+the first one is a long-term existence. So that basically means, so once you switch off, after you
+switch off the computer, and the file will be stored. It will not be gone away, will not be
+disappeared. Because they are stored on hard disk. and the second property is the file is the
+shareable right a file can be shared right the file has a name
+
+[01:28] and as a associate protection information so it's a specific by who is that what to do what the file
+so for this part of lecture right so we look at the file system structure first and followed by
+looking at the logical file system and file organization module. Now let's understand how the file
+system is structured. So typically a file system is structured in a layered manner. At the top of
+the layer, so that's logical file system so this layer so basically managing the file attributes or
+metadata files right so the file attributes will form a directory entry right and a directory
+contains multiple entries and the one per file and the logical file system will managing the the
+directory structure to facilitate searching for files and so on so forth.
+
+[02:41] This layer also responsible for supporting file related operations and as well as directory related
+operations. So like file creation, file access, write and file deletion. And this layer also
+responsible for protection and security of the file. So specify who is able to do what on the file.
+So that's a logical file system. And the layer under the logical file system is the file
+organization module. So this layer, so basically there are two main responsibilities. first one is
+the file space allocation well we'll do the storage allocation for the files right and the second
+one is to managing the free available space on hard disk right so since this layer doing the space
+allocation for file so this layer is also responsible for translating the logical block address to
+the physical block address right but layer above when issue operation
+
+[03:57] on file the operation is issued in terms of a logical block address right then this layer the file
+organization module that will translate logical block address to the physical block address the next
+layer the basic of our system then we're managing the buffer and the caches and it will generate
+generic instructions or commands right to the appropriate device drivers right to read and write the
+physical blocks right so so recall the file organization module transit logical block address to
+physical block address. Then the physical file system that may issue instructions and commands in
+terms of write physical blocks to the device driver. And the bottom layer, so that's our control
+layer. So this layer is the one that's responsible for the actual transfer of the information or
+data. So this layer will consist of a device driver
+
+[05:08] and interrupt handler so under the file system we will look at the logical file system first
+followed by the file organization module right and the basic file system and I/O control so these
+will be covered and i.o so for this this lecture then we look at the logical file system File
+attributes. So a file may have following attributes. The file has a name, and the file may have a
+type, depending on the information contained in the file. And the files are stored in a particular
+location on the hard disk. And the file has a specific size. And the file has a social protection
+information so that's specific who is about to do what on the file and the file is created a
+particular date time and created by a particular user
+
+[06:20] so these are file attributes so these basically specify what this file is right and the collectively
+this is also called metadata of the file right so this is not the actual data the file content but i
+but the data so that specify what the file is right so where file attributes are stored the files
+attributes are stored in a directory entry so directory is a special kind of a file, right? And a
+directory contains multiple entries. There's one entry per file, right? So the entry contains the
+file attributes, right? The metadata of the file, right? So that's specified what the file is. And
+the directory is a special type of file. So that basically means the directory also needs to be
+stored on the hard disk, right? So long-term existence, right? So we don't want the resources to
+disappear after you're switching out the computer, right?
+
+[07:32] So they need to be stored on the hard disk. Now, file, right? So depending on the information, the
+file contents, the file may have a different type. So in general, logically, the file has a
+contiguous logical address space, But this continuous logical address space may contain different
+types of information. One common scheme to indicate what type the file is, is by using the file
+extension. So for instance, for a executable file, the common extension used is .exe, .com and .bin.
+So this is a common extension used for a executable file. And for text file, for instance, so TST.
+And for library file, for instance, LIB. Depending on the type of file, the file may have its all
+internal structure. So logically, a file is a contiguous address space.
+
+[08:47] But the file, depending on the type, it may have its own internal structure. So for instance, for
+data list file, the file may consist of a collection of records or even child records. in order to
+support searching for particular data or information. Then to store the file on the hard disk, in
+this case, so there are two operations that need to be performed. The first one is called record
+stream translation, and the second one is called stream block translation. right so the record
+stream translation basically is to flatten the internal structure of the file into a sequence of
+bytes into a into a sequence of bytes so that's that's called the record stream translation all
+right so translate the internal structure of the file that can be a sequence of record, a trail
+record, right, depending on the type of file, and into a sequence of bytes.
+
+[10:03] Now we have a sequence of bytes, the stream-block translation, so basically we divide this stream of
+bytes into blocks, right, then this blocks, then will be stored in the secondary storage, So for
+instance, the hard disk. So for hard disk, second is the storage. So typically, these are the block-
+oriented devices. So to store the file to the block-oriented device, then these two operations need
+to be performed. So record-stream translation and stream-block translation. And to read the file,
+then the reverse of the two operations then need to be performed. Now the question is, so this
+record stream translation, should this done by operating system? To do this, so that basically
+means, so we need to know the internal structure of the file. In order to flatten this internal
+structure of the file into SQL supplies,
+
+[11:14] then we need to know this internal structure of the file. So typically, if OS support this
+operation, then OS need to understand the internal structure of every single application, every
+single type of file. So then OS need to contain the code to do this. So, in general, we leave this
+task to the application program. So in general, the OS will not do this. So this task is leave to
+the application program. So the OS basically will regard the file as unstructured sequence of bytes.
+Then we divide the sequence of bytes into blocks and then assign the storage space, so assign this
+space to the file. So in general, OS will regard the file as unstructured. So that's a sequence of
+bytes.
+
+[12:25] So file is a byte addressable starting from zero. right and so a file basically stream of bytes so
+each byte is individually addressable right so from beginning of the file as I mentioned starting
+from zero right so Unix regarding the file as unstructured and the earlier version of Microsoft
+right so that's also regarding the file as unstructured, secretive solve bias. And this is also
+assumption which I use in the following discussions. in terms of file access measures, basically the
+two different kind of measures, one is the sequential access, the other one is the direct access. So
+sequential access, so that basically means the information the file is accessed sequentially or in
+other words we regard the file as a sequence of bytes in this case so the byte in this address space
+will be accessed sequentially by the byte from
+
+[13:38] beginning of the file so that's sequential access and the direct access we also call this random
+access so that's basically means we're able to access a particular byte, particular location in the
+file. So the bytes of files in this case can be read in any order by referencing the byte number. We
+can directly access a particular position in the file, a particular byte of the file. What other
+operations can be performed? A file, right? So we can create a file, can delete the file, and open,
+close, and write and read. So to create a file, right, so it's basically to create a file. So that
+basically means the OS needs to do the space allocation for the file. and space allocation of file
+so which i will cover in the next lecture right so i have to do the
+
+[14:50] space allocations file and also need to create a directory entry for the file right recall i just
+covered right so the directory entry for the file contains the file attributes right so metadata so
+that's for the file creation and the file deletion so that's a reverse operation of the file
+creation. So that means we need to do the space deallocation. So the file space assigned to the file
+on hard disk, in this case, will become available. And we also need to delete the corresponding
+directory entry of the file. So that's the file deletion. Now before read and write the file the
+file must be open right so why do we need to open the file first before read and write file right so
+recall yes the write file then we need to know where on the hard disk to access the file right so
+recall the file stored on the hard disk right and where the file is stored on hard disk so that
+location of file so that's that's one of the attributes
+
+[16:04] right all the file right file has a many attributes so one of the attributes of file is the location
+of the file on hard disk all right so in other reason right but then we need to know the location of
+the file on hard disk and the location of the of the file on hard disk is one of the file attributes
+and the file attributes is stored in the directory entry right and the directory is on hard disk so
+whenever we read the right file we don't really want to every time to read and write file we we
+don't really want to access hard disk every time right so whenever we read the right we don't really
+want to repeatedly access the hard disk right so that's that's in order to get the location of the
+file all right so that's that's that's that's all right then what we do is right so we use the open
+file table right to catch some information regarding the file right so open file table basically
+contains the multiple entries for each file that's currently being used
+
+[17:15] by the process right and information associated with open file typically it contains the the
+following information right so the current position pointer so where the file is currently being
+accessed a write that's current position content and if i open counter right As I mentioned, file is
+shared. So that's a file can be opened by multiple processes. So how many times this file has been
+opened, or have been opened by how many processes? That's the file open counter. And also some file
+attributes will be cached in the open file table entry. So one of the attributes is the location of
+the file on the hard disk. right so these are the information right so in the open file table
+associated with each open file right so that's basically why we need to open file first before the
+read and write right because
+
+[18:26] for efficiency reason then the next time when we read and write the same file so instead of
+accessing the directory entry on hard disk then we can obtain the location of the file on hard disk
+from the open file table entry right so that's basically the reason why we need to open the file
+first before in the right is more for efficiency not close close is the reverse operation right so
+that's basically will this open file counter will reduce by one all right so when open file counter
+becomes zero so that means the file is no longer in use by any of the process then the corresponding
+entry for the file in the open file table then can be deleted at that time right so that's close and
+then write so write basically have two attributes right the first attribute is actually the index
+right so where the corresponding
+
+[19:38] entry for the file is in the open file table so this is called the file descriptor right so that's
+the index used to index into the open file table right and the second one is the amount of data to
+write to the file. So given the first attributes, so it's an index into the entry for the file in
+the open file table, then we locate entry using that index. From the entry, then we obtain the
+current position puncta. So that's where start to write to the file. and then we write this the
+data, that one data from that position to the file and where to locate the file on hard disk then we
+use this disk location so that's cache in the open file table entry to locate where the file is on
+hard disk so that's for the file operation so write the data to the position puncted by the current
+position pointer
+
+[20:49] and locate the file by using the disk location that's cache in the open file table entry. So read
+operation, read operation also contains two attributes. The first attribute is similar to the write
+operation. The first attribute is the index into the open file table entry. and the second attribute
+is where the data will be stored in. So amount of data to read. So that's the second attribute. So
+then OS will use the first attribute to locate corresponding entry in the open file table. by find
+the entry, then we have this current position pointer, right? And we'll read the data from the file,
+from the current position pointer, and store the data into the corresponding location indicated by
+the second attributes, right?
+
+[21:59] Of this read operation, right? So that's basically the five operations, right? and the directory
+contains multiple entries, right? So it's basically a sequence of entries, right? And this sequence
+of entries can be organized in two different minors, right? So this is the first way. So in the
+first way, basically every entry will contain all the file name and all other attributes. So that's
+the first way. And the second way, again, the directory has multiple entries. In this case, each
+entry will contain the file name and the pointer pointing to another data structure. and the data
+structure will contain all other file attributes. So both this directory is a file stored on hard
+disk, and this data structure, we have a one per file,
+
+[23:11] so this also needs to be stored on hard disk. So this is called a file control block. So, what's the
+directory? And the file control blocks are stored in hard disk. There's one file control block for
+file. Now, the directory basically is a sequence of entries. So, this sequence of entries can be
+implemented by using different data structures. For instance, this can be implemented by using a
+linear list or can be implemented by using a hash table. So the major differences in this case
+basically is performance consideration. So you already learned this structure. so I want to
+elaborate further here, so you can refer to your lecture notes, data structure, regarding linear
+list and hash table.
+
+[24:26] Now the directorys can organize also into a tree, so in this case if they organize directory into a
+tree right so this is basically is to facilitate searching for the file right so give them a file
+name then we're able to locate a file right and efficiently right in this directory uh the rest
+structure right and also to facilitate naming convenience so in this case so the file can have have
+the sub name as long as they are in the different directory. So I will show you some later on. And
+also to support the grouping characteristic. So similar files in this case can be grouped together
+to form a sub directory. For instance, all the C program files can form together, put together to
+form a subdirectory for C programs. And all the Java program files can be put together
+
+[25:36] to form a subdirectory for Java programs. So if you're organizing this directories into a tree
+structure, so in this case, for every file, the file can be uniquely identified by a path name. So
+path name of file basically is starting we can start from the root, by following the passes until
+you reach a particular file. So notation wise, in this case, the rectangle here, so that
+representing a directory, and the circle here represents a file. And the path name, so starting from
+the root, by following the path until you reach a particular file. So the path name basically
+contains a sequence of directory names and by the file name. So for instance, for this particular
+file,
+
+[26:47] so this file is under directory PRT, and the PRT is under directory mail, and directory mail is
+under directory spell, and directory spell is under directory root. So this gives you a unique pass
+name for the file. If the pass name is starting from the root, so this is called absolute pass name.
+So this is absolute pass name. And the pass name can also start from current working directory. For
+instance, this is a path name starting from this working directory. If this directory mail is
+current working directory, the path name of the same file relative to the current working directory
+will be this one. This is file first under directory PRT, and PRT is directory under the current
+working directory. So for the same file, we can identify this file uniquely, either by the absolute
+past name or by a relative past name.
+
+[27:59] And if you're using this tree structure, as just mentioned, then the different files may have the
+same file name, as long as they are under different directorys. right so for instance we have a file
+named list under this directory here we have another file also named the list under another
+directory right so these two files they have the same name but they are different files right
+because they under the different directory they're under different directory meaning so they have a
+different path name So that's how we can organize directory into trees, right? So in order to
+facilitate searching a particular file, right? In order for the naming convenience, so in order to
+have this kind of a grouping capability, right? Now, if they
+
+[29:09] Supporting this the file sharing, right? By creating a kind of a link, right? then this directory,
+the tree, structured directory, is no longer a tree, right? So if we have this kind of links, right,
+then this no longer a tree, right? So in this case, so this become a cyclic graph. It's a graph,
+it's also a cycle. So we can introduce this link in two different ways, right? The reason for
+introducing this kind of link is to facilitate file sharing. Then we can assign the same physical
+file from different directory entries. So if I link here, then for this physical file, we can either
+assign from this directory or from this directory here. So we can assign the same physical file from
+different directories. So if these two directory belong to two different users,
+
+[30:20] so that's basically means that the two different users can conveniently access the center from their
+own directory, entry. So this kind of link is to facilitate sharing physical files. How this link
+can be created? So this link can be created in two different ways. The first one is called symbolic
+link and the second one is called hard link. Let's look at that. So there's symbolic link and hard
+link. Now let's look at how the symbolic link can be created. Alright, symbolic link can be created
+by creating a special directory entry. This is a special directory entry. Then this entry will
+contain... So this entry is a special directory entry. And this entry then will contain the path
+name of the original entry for the file.
+
+[31:37] the file right so we create a special directory entry then this entry will contain the past name
+right so this slash a slash b slash c and slash d so that's real contents in the entry here right
+then if if you try to access this physical file by using this symbolic link so this is basically
+shortcut right then what os need to do is os need to follow the information in the entry which is
+the past name this past name to locate the original entry of the file from the original entries from
+from the file of the file then OS will obtain all the file attributes including the the location of
+the file under hard disk right so this is a symbolic link right so in this case so the file access
+time will be increased right so because OS need to follow this past name to locate original
+
+[32:49] entry from here obtain the file attributes and assess the file right so that's the symbolic link
+right now let's look at hard link right so hard link basically is created by what by duplicating
+whatever here in the original entry to this new entry. So duplicating the information in the entry.
+So the file attributes are duplicated. So in here and also here. The file attributes are duplicated.
+So in this case, if you're using this kind of hard link to access the file. So in this case if you
+use the hardlink to access the file, because all the file
+
+[33:59] attributes are here, then we will be able to access the file directly. It does not rely on the
+information in the original entry. Now the problem is because the entry, the actual entry
+information are duplicated. So when the file is modified, the file actually will need to modify
+accordingly. In this case, then we also need to modify the duplicated entries. How to maintain the
+consistency among all those duplicated directory entries, so that will become an issue. So that's
+basically how to create a link in order to share one physical file. So in order to assign the same
+physical file from different directory entries. right so i put one physical file because either i
+size from this directory entry or from the other directory so that's the symbolic link and and hard
+link and how they can be created right now what's
+
+[35:18] the problem here all right so if you using either symbolic link or hard links so what will be the
+problem. The problem is right so if they try to traverse the file system meaning we try to access
+every directory and every entry in a directory right. In this case so this the the shared file that
+will be visited more than once right because the multiple directory entry is pointing to the the
+same file. So the solution in this case basically is ignore all the link entries when traversing the
+file system. Another issue is so what happens when delete a file? So when delete a shared file then
+may leave the dangling pointer to a non-existent file. So again if you look at the picture here
+right so if we delete this file right without delete this link so this link will left dangling
+rather leave then this link then we're pointing
+
+[36:32] to a non-existent file right so how to how to deal with this issue okay so yes try to get a pointer
+So how to deal with this issue? So basically the solution is right, so either right, so we search
+for all these dangling links. We delete a shared file and in the meantime then we search for any
+links to the file and remove all the links at some time. So that's the first solution. then we just
+simply leave the link dangling, And only delete the link when the link is used again. Right, at that
+time, then OS realize the link parking to a non-existent file and then delete the link. Right, so
+that's the second way. And the last way is, so we don't delete the file. We only delete the file
+when all the links are deleted. Right, so that's basically the solution how to deal with this.
+Right, but for the second solution,
+
+[37:42] So if we leave the link duckling when deleted the file, and unlink deleted the link when the link is
+used again, this may cause some problem, right? And we will further elaborate. So what problem did
+this may cause during the tutorial? Now let's look at what operations, right? So can be performed on
+a directory, right? So similar to file, right? So we can create a directory, we can delete the
+directory, right? So recall the directory is special kind of file. So then they delete to create a
+directory. So that's basically means when the OS needs to do the space allocation for the directory,
+right? and create a entry for directory in the current directory right and in particular for unix
+when a directory is created the two special entries will be created automatically
+
+[38:55] by single dot and the double dot so single dot refers to the current directory and double dot refers
+to the parent directory. So that's in particular to Unix. And the delete directory, similar to
+delete file, so space allocated to the directory, that need to be deleted. the entry for directory,
+that need to be deleted as well from the current directory. again, in particular to Unix, so only
+empty directory can be deleted, right? And the directory contains only the special entries, single
+dot and double dot. So that's considered as empty directory. And the next operation is the list. So
+list basically to list all the directory entries, right? So in a directory, so that's the list,
+right? And the search, So search basically is given a file name and try to locate the directory
+entry for that file.
+
+[40:09] So that's a search operation. And the traverse, which I just mentioned. So traverse basically is
+trying to access every entry in every directory. So that's the traverse operation.
