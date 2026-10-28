@@ -191,23 +191,51 @@ efficiently; **linked** allocation does not (part 03).
 
 ### 2.3 Why `open()` exists (01 @ 16:04)
 
-The **location of the file on the disk is one of its attributes**, and attributes live in the
-directory entry, which lives **on the disk**. If every `read`/`write` went back to the directory,
-you would pay a disk access *just to find out where the data is*, on every operation.
+The slide's reasoning is a chain of four facts:
 
-So the system requires an **open** before read/write, purely **for efficiency**:
+1. To read or write a file, the OS must know **where the file is on the disk**.
+2. The disk location is one of the file's **attributes**.
+3. The attributes are stored in the file's **directory entry**.
+4. The directory is itself stored **on the disk**.
 
+Therefore, a naive implementation would need to consult the directory on the disk every time a
+`read` or `write` is issued, just to rediscover the file's location. That would add a repeated disk
+access before the access that actually reads or writes the file. The purpose of `open()` is to do
+this lookup once and cache the result for later operations. The lecture explicitly gives
+**efficiency**, rather than permission checking, as the reason for opening a file first.
+
+Conceptually:
+
+```text
+without open:
+    read/write -> access the directory on disk -> find file location -> access file data
+    read/write -> access the directory on disk -> find file location -> access file data
+    ...
+
+with open:
+    open(name) -> find the directory entry -> cache file information in the open file table
+    read/write -> use the cached table entry -> access file data
+    read/write -> use the cached table entry -> access file data
+    ...
 ```
-open(name):
-   directory entry (in memory/cached)  ->  disk location of the file
-   create an entry in the OPEN FILE TABLE holding:
-        * current position pointer      (where the next read/write happens)
-        * file open counter             (how many processes have it open)
-        * cached file attributes        (notably the disk location)
-```
 
-`close()` decrements the counter; when it reaches **zero** the file is no longer in use and the
-open-file-table entry can be discarded.
+An open-file-table entry contains information associated with the file while it is in use:
+
+| Cached information | Why it is needed |
+|---|---|
+| **Disk location** (a cached file attribute) | tells the OS where to access the file data |
+| **Current-position pointer** | tells the next `read` or `write` where to begin |
+| **Open counter** | records how many processes currently have the file open |
+
+`open(name)` returns a **file descriptor**, which is an index used to locate this entry later.
+Consequently, a `read` or `write` does not need to search the directory again: it uses the file
+descriptor to find the open-file-table entry, obtains the current position and cached disk
+location, and then performs the data operation. The later two-level design splits these fields
+between a per-process table and a system-wide table; see §5.
+
+`close()` is the reverse bookkeeping operation. It decrements the open counter. When the counter
+reaches **zero**, no process is using the file, so the corresponding open-file-table entry can be
+deleted.
 
 ### 2.4 What actually happens on a write (01 @ 19:38)
 
@@ -456,18 +484,25 @@ That is the whole subject of part 03.
 
 Every method uses the same two-step procedure (03 @ 05:55):
 
-```
-GIVEN: byte offset x inside the file  (the "logical address")
+Given a byte offset \(x\) inside the file, let \(S\) be the block size (or the effective
+block size for linked allocation):
 
-STEP 1 — which logical block?
-        q = x div S            (S = block size, or effective block size)
-        r = x mod S            -> displacement inside that block
+$$
+\begin{aligned}
+q &= \left\lfloor \frac{x}{S} \right\rfloor
+&&\text{logical block number} \\
+r &= x \bmod S
+&&\text{displacement inside that block}
+\end{aligned}
+$$
 
-STEP 2 — which physical block?  (depends on the method)
-        contiguous : physical = start + q
-        linked     : walk the chain q times from the first block
-        indexed    : look up entry q of the index block / inode
-```
+The allocation method then determines the physical block:
+
+| Method | Physical-block lookup |
+|---|---|
+| **Contiguous** | \(\text{start} + q\) |
+| **Linked** | Walk the chain \(q\) times from the first block |
+| **Indexed** | Look up entry \(q\) in the index block or inode |
 
 **Exam habit:** write `q = x div S, r = x mod S` first, *always*. Every worked example in the three
 methods starts with the same division.
@@ -832,30 +867,65 @@ create("mail")
 
 ## 10. Formula sheet
 
-```
---- translation (all methods) ---
-q = x div S                       logical block number
-r = x mod S                       displacement inside the block
+Let \(x\) be a byte offset, \(S\) a block size, \(p\) a pointer size, and \(B\) an inode block
+size.
 
-contiguous   : physical = start + q
-linked       : S_eff = S - pointer_size ;  q = x div S_eff ;  disp = (x mod S_eff) + pointer_size
-indexed      : physical = index_block[q]
-inode        : q < 12            -> direct[q]
-               q < 12 + E        -> indirect[q - 12]
-               q < 12 + E + E^2  -> double[(q - 12 - E) div E][(q - 12 - E) mod E]
+### Translation
 
---- sizes ---
-E (entries per index/indirect block) = block_size / pointer_size
-index blocks needed for a file       = ceil(file_blocks / E)
-inode capacity = 12*B + E*B + E^2*B + E^3*B          (B = block size)
+$$
+\begin{aligned}
+q &= \left\lfloor \frac{x}{S} \right\rfloor
+&\qquad r &= x \bmod S \\
+S_{\mathrm{eff}} &= S-p
+&\qquad d_{\mathrm{linked}} &= (x\bmod S_{\mathrm{eff}})+p
+\end{aligned}
+$$
 
---- free space ---
-bitmap bits  = disk_size / block_size
-bitmap bytes = disk_size / block_size / 8
+| Method | Physical-block lookup |
+|---|---|
+| **Contiguous** | \(\text{start}+q\) |
+| **Linked** | Walk the chain \(q\) times from the first block |
+| **Indexed** | \(\text{index\_block}[q]\) |
+| **Inode** | \(q<12\): direct[\(q\)]; otherwise use the appropriate indirect level |
 
---- protection ---
-9 bits = (owner rwx)(group rwx)(public rwx)      octal digit = 4r + 2w + 1x
-```
+For the first two inode ranges:
+
+$$
+\begin{aligned}
+q < 12 &\Rightarrow \text{direct}[q] \\
+12 \le q < 12+E &\Rightarrow \text{indirect}[q-12] \\
+\end{aligned}
+$$
+
+For the double-indirect range, let \(t=q-12-E\):
+
+$$
+12+E \le q < 12+E+E^2
+\quad\Rightarrow\quad
+\text{double}\!\left[\left\lfloor \frac{t}{E}\right\rfloor\right][t\bmod E]
+$$
+
+where \(E=B/p\).
+
+### Sizes and free space
+
+$$
+\begin{aligned}
+E &= \frac{B}{p}
+&&\text{entries per index or indirect block} \\
+\text{index blocks needed} &= \left\lceil \frac{\text{file blocks}}{E} \right\rceil \\
+C_{\mathrm{inode}} &= 12B + EB + E^2B + E^3B \\
+\text{bitmap bits} &= \frac{\text{disk size}}{B} \\
+\text{bitmap bytes} &= \frac{\text{disk size}}{8B}
+\end{aligned}
+$$
+
+### Protection
+
+$$
+9\text{ bits}=(\text{owner rwx})(\text{group rwx})(\text{public rwx}),
+\qquad \text{octal digit}=4r+2w+1x
+$$
 
 ---
 

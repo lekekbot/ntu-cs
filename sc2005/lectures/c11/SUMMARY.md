@@ -54,17 +54,49 @@ size.
 
 ## Formulas
 
-```
-q = x div S ,  r = x mod S                    (S = block size or effective block size)
+Let \(x\) be the byte offset, \(S\) the block size, \(p\) the pointer size, and
+\(B\) the block size used by an inode.
 
-contiguous : physical = start + q
-linked     : S_eff = S - pointer_size ; q = x div S_eff ; disp = (x mod S_eff) + pointer_size
-indexed    : physical = index_block[q]
+### Logical-to-physical translation
 
-E = block_size / pointer_size                            entries per index/indirect block
-inode cap. = 12*B + E*B + E^2*B + E^3*B                   (B = block size)
-bitmap bytes = disk_size / block_size / 8
-```
+$$
+\begin{aligned}
+q &= \left\lfloor \frac{x}{S} \right\rfloor
+&\qquad r &= x \bmod S
+\end{aligned}
+$$
+
+| Allocation | Translation |
+|---|---|
+| **Contiguous** | \(\text{physical block} = \text{start} + q\) |
+| **Linked** | Walk the chain \(q\) times; each block has \(S-p\) data bytes |
+| **Indexed** | \(\text{physical block} = \text{index\_block}[q]\) |
+
+For linked allocation:
+
+$$
+\begin{aligned}
+S_{\mathrm{eff}} &= S-p \\
+q &= \left\lfloor \frac{x}{S_{\mathrm{eff}}} \right\rfloor
+&\qquad \text{displacement} &= (x\bmod S_{\mathrm{eff}})+p
+\end{aligned}
+$$
+
+### Inode and bitmap sizing
+
+$$
+\begin{aligned}
+E &= \frac{B}{p}
+&&\text{entries per index or indirect block} \\
+C_{\mathrm{inode}} &= 12B + EB + E^2B + E^3B
+&&\text{maximum inode data capacity} \\
+\text{bitmap bytes} &= \frac{\text{disk size}}{8B}
+&&\text{one bit per disk block}
+\end{aligned}
+$$
+
+The inode formula assumes 12 direct pointers plus single-, double-, and triple-indirect
+pointers.
 
 ---
 
