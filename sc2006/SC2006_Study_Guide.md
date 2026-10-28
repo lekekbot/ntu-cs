@@ -37,6 +37,17 @@
 
 ## 0. How to use this guide
 
+### Visual reading route
+
+**Start with the visual summary at the top of each topic, then read details only where you need them.**
+These are learning aids based on the audited material; exact UML notation and source caveats remain
+in the sections below.
+
+- **Requirements:** [FR or NFR?](#visual-classify-a-requirement) · [Include or extend?](#visual-decide-between-include-and-extend) · [Class responsibilities](#visual-assign-each-class-a-responsibility)
+- **Models and specification:** [Which dynamic diagram?](#visual-choose-the-diagram-that-answers-the-question) · [SRS compartments](#visual-see-the-srs-as-five-compartments)
+- **Process and design:** [Process comparison](#visual-compare-how-the-work-is-arranged) · [Scrum loop](#visual-follow-one-sprint-through-its-feedback-loops) · [Architecture families](#visual-recognise-the-architectural-organisation) · [Pattern selector](#visual-match-the-design-problem-to-a-pattern) · [MVC edit sequence](#visual-watch-one-edit-update-every-view)
+- **Testing and application:** [Test selection](#visual-separate-test-selection-from-code-coverage) · [EC/BV workflow](#visual-build-tests-in-the-right-order) · [Boundary example](#visual-see-the-mortgage-income-partitions-and-their-edges) · [GES arrival flow](#visual-distinguish-a-proposal-from-the-grain-actually-stored)
+
 **Source check (28 October 2026).** Core explanations follow the local lecture decks, the nine
 Tutorial Questions and the two-page GES supplement. Section 23 maps topics to source pages and
 records source conflicts. Tutorial solutions and practice answers are reasoned examples, not official
@@ -126,6 +137,24 @@ flowchart LR
 ---
 
 ## 2. Requirements elicitation (L2–L4)
+
+### Visual: classify a requirement
+
+Read what the statement asserts, then check whether you can verify it.
+
+```mermaid
+flowchart TD
+    R["Read the requirement"] --> Q{"What does it describe?"}
+    Q -->|Behaviour, information or interaction| F["Functional requirement<br/>Example: search the catalogue"]
+    Q -->|Quality or constraint| N["Non-functional requirement<br/>Example: detect a book within 2 seconds"]
+    F --> V{"Specific enough to verify?"}
+    N --> V
+    V -->|yes| A["Keep one assertion per numbered requirement"]
+    V -->|no| T["Clarify with the client<br/>Record missing details as TBD"]
+```
+
+**Remember:** “user-friendly” is a vague NFR, not a third requirement category. A number alone does
+not make a requirement non-functional; follow the lecture's examples below.
 
 ### 2.1 Project mission statement
 
@@ -271,6 +300,24 @@ functionality. **Minimise the number of meetings by making meetings productive.*
 ---
 
 ## 3. Use case modelling (L3–L4)
+
+### Visual: decide between include and extend
+
+First identify a meaningful unit of behaviour; do not turn every sentence into a use case.
+
+```mermaid
+flowchart TD
+    U["Consider separating behaviour B from base use case A"] --> Q{"Is B a separate, useful unit<br/>of behaviour?"}
+    Q -->|no| D["Describe B inside A's flow"]
+    Q -->|yes| M{"Must A perform B<br/>as part of its behaviour?"}
+    M -->|yes| I["INCLUDE<br/>Dependency points from A to B"]
+    M -->|no| O{"Does B optionally add behaviour<br/>at an extension point in A?"}
+    O -->|yes| E["EXTEND<br/>Dependency points from B to A"]
+    O -->|no| S["Keep independent goals separate<br/>Do not invent a dependency"]
+```
+
+**Arrow memory:** include points to the helper; extend points to the host. Conditional behaviour can
+also stay in an alternative or exception flow. This is a reasoning aid, not a new UML rule.
 
 ### 3.1 UML in one table
 
@@ -428,6 +475,21 @@ Do not draw duplicate Logins.
 ---
 
 ## 4. Requirements analysis: conceptual model & class diagrams (L5)
+
+### Visual: assign each class a responsibility
+
+```mermaid
+flowchart TD
+    O["What responsibility does this class have?"]
+    O -->|Interaction with an actor| B["BOUNDARY<br/>FingerprintReader / EntryGate"]
+    O -->|Coordination of a use case| C["CONTROL<br/>FacilityAccessSystem"]
+    O -->|Information tracked by the system| E["ENTITY<br/>Employee / Account"]
+    B -->|passes input to| C
+    C -->|uses or updates| E
+```
+
+The bottom links illustrate a common collaboration, not a complete restriction on allowed class
+relationships. Derive classes from the use case and domain; then assign responsibilities.
 
 ### 4.1 Elicitation vs analysis (L5 distinction)
 
@@ -683,6 +745,19 @@ How to find classes:
 
 ## 5. Dynamic models: state machine & activity diagrams (L6)
 
+### Visual: choose the diagram that answers the question
+
+```mermaid
+flowchart LR
+    Q["What do you need to understand?"]
+    Q -->|Which conditions can an object be in?| S["STATE MACHINE<br/>Off, warming up, ready"]
+    Q -->|Which work happens, branches or runs concurrently?| A["ACTIVITY DIAGRAM<br/>Sort, wash in parallel, dry"]
+    Q -->|Who sends which messages, and in what order?| I["SEQUENCE DIAGRAM<br/>Manager, UI, controller, silos"]
+```
+
+**Memory cue:** state = condition; activity = work; sequence = messages over time. The sequence
+example is worked through in §14.6; state/activity notation is explained below.
+
 ### 5.1 State machine diagram (a.k.a. statechart, finite state automaton, **dialog map**)
 
 - Models a system/object by the **states** it can be in.
@@ -820,6 +895,31 @@ flowchart TD
 
 ## 6. The SRS (L4, L6, "Writing SRS")
 
+### Visual: see the SRS as five compartments
+
+```mermaid
+mindmap
+    root((SRS))
+        Product description
+            Purpose and scope
+            Stakeholders
+            Assumptions and constraints
+        Functional requirements
+            What the system does
+            Supporting analysis models
+        Non-functional requirements
+            Required qualities and constraints
+        Interface requirements
+            User
+            Hardware
+            Software
+        Data dictionary
+            Shared terms and definitions
+```
+
+**Remember:** this records required behaviour and constraints. Selecting implementation patterns
+belongs in design. The nine quality checks in §6.4 apply across the document.
+
 ### 6.1 What the SRS is (six definitions that get paraphrased into exam questions)
 
 1. The **output of requirements elicitation and analysis**.
@@ -911,6 +1011,32 @@ good practice to **involve a technical writer**.
 
 ## 7. Software processes (L8)
 
+### Visual: compare how the work is arranged
+
+```mermaid
+%%{init: {"flowchart": {"nodeSpacing": 20, "rankSpacing": 25}}}%%
+flowchart TB
+    subgraph W["Waterfall"]
+        direction LR
+        W1["Requirements"] --> W2["Design"] --> W3["Build<br/>Unit test"] --> W4["Integrate<br/>System test"] --> W5["Operate<br/>Maintain"]
+    end
+    subgraph I["Incremental"]
+        direction LR
+        I1["Specify<br/>one useful increment"] --> I2["Develop<br/>and validate"] --> I3["Deliver<br/>and get feedback"]
+        I3 --> I1
+    end
+    subgraph R["Reuse-oriented"]
+        direction LR
+        R1["Specify<br/>requirements"] --> R2["Discover and evaluate<br/>existing software"] --> R3["Refine<br/>requirements"] --> R4["Configure, adapt<br/>and integrate"]
+    end
+    W ~~~ I
+    I ~~~ R
+```
+
+**Trade-offs:** waterfall makes later changes costly; incremental delivery needs structural care;
+reuse reduces new development but can compromise requirements and control over evolution.
+Incremental development can be plan-driven or agile.
+
 ### 7.1 Definitions
 
 > A **software process** is _a structured set of activities required to develop a software system._
@@ -993,6 +1119,25 @@ Prepare a _reasoned_ answer, not a slogan:
 ---
 
 ## 8. Agile, XP and Scrum (L9)
+
+### Visual: follow one sprint through its feedback loops
+
+```mermaid
+flowchart TD
+    P["Product backlog<br/>Product Owner orders the work"] --> PL["Sprint planning<br/>Developers select feasible work and plan it"]
+    PL --> S["Sprint backlog<br/>Selected items plus delivery plan"]
+    S --> B["Build, integrate and test<br/>toward a Done increment"]
+    B --> D["Daily Scrum<br/>Inspect progress and impediments"]
+    D -->|adapt the work plan| B
+    B --> N["Done product increment"]
+    N --> R["Sprint Review<br/>Inspect the product with stakeholders"]
+    R -->|product feedback| P
+    R --> T["Retrospective<br/>Improve people, process and tools"]
+    T -->|process improvements| PL
+```
+
+**Do not mix the reviews:** Review examines the **product**; Retrospective examines **how the team
+works**. This map follows the course material; historical Scrum wording and conflicts are noted in §8.5.
 
 ### 8.1 Why agile emerged
 
@@ -1196,6 +1341,22 @@ Cost      = people × cost per person per sprint × sprints
 
 ## 9. System design & architecture (L12)
 
+### Visual: recognise the architectural organisation
+
+```mermaid
+flowchart LR
+    A["Architectural style families"]
+    A --> I["Independent components<br/>Client-server; event systems"]
+    A --> F["Data flow<br/>Batch sequential; pipe-and-filter"]
+    A --> D["Data-centred<br/>Repository; blackboard"]
+    A --> V["Virtual machine<br/>Interpreter; rule-based system"]
+    A --> C["Call and return<br/>Main program/subroutine; OO; layered"]
+```
+
+**Recognition cue:** streams suggest data flow; shared storage suggests data-centred organisation;
+service levels suggest layering. These are clues, not automatic answers: justify components,
+connectors, constraints and trade-offs. A system can combine styles.
+
 ### 9.1 Why design is hard here
 
 Scale and complexity are increasing: source/binary size, number of users and inputs, number of
@@ -1329,6 +1490,21 @@ new solution on mismatch) → elaborate solution → compare solutions → selec
 ---
 
 ## 10. Object design & design patterns (L13, L14)
+
+### Visual: match the design problem to a pattern
+
+```mermaid
+flowchart LR
+    P["What design problem must be solved?"]
+    P -->|Interchangeable algorithms or behaviour| S["STRATEGY<br/>Swap the behaviour behind an interface"]
+    P -->|Subscribers need updates when something changes| O["OBSERVER<br/>Subscribe, notify and update"]
+    P -->|Hide concrete-object selection and creation| F["FACTORY<br/>Centralise construction"]
+    P -->|Make a complex subsystem easier to use| A["FACADE<br/>Offer one simpler interface"]
+```
+
+**Combine when the problems combine:** Tutorial 6 uses Strategy for network protocols; Tutorial 7
+adds Factory for their creation. Observer can use a Strategy for notification channels. The course's
+Static/Simple Factory is distinct from GoF Factory Method and Abstract Factory (§10.7).
 
 ### 10.1 What object design adds over system design
 
@@ -1580,6 +1756,37 @@ the GoF 23 patterns. **Factory Method** uses a creation operation overridden by 
 
 ## 11. MVC (L15)
 
+### Visual: watch one edit update every view
+
+```mermaid
+%%{init: {"sequence": {"width": 100, "actorMargin": 20, "diagramMarginX": 10}}}%%
+sequenceDiagram
+    actor User
+    participant V as Editing View
+    participant C as Controller
+    participant M as Model
+    participant O as Other Views
+    Note over V,O: Views already subscribed
+    User->>V: enter(value)
+    V->>C: handleEvent(value)
+    C->>M: service(value)
+    M->>M: change data
+    M->>V: update()
+    V->>M: getData()
+    M-->>V: current data
+    V->>V: redraw
+    loop each View
+        M->>O: update()
+        O->>M: getData()
+        M-->>O: current data
+        O->>O: redraw
+    end
+```
+
+**Follow the responsibility:** Controller changes Model; Model notifies subscribers; Views read and
+redraw. This illustrates pull updates. Some lecture variants also let Controllers observe the Model;
+the sequence shows the basic view-notification flow, not every permitted MVC interaction.
+
 ### 11.1 The problem MVC solves
 
 Interactive event-driven systems:
@@ -1686,6 +1893,23 @@ the same presentation with different look-and-feel and different reactions to in
 ---
 
 ## 12. Testing fundamentals & basis path testing (L16)
+
+### Visual: separate test selection from code coverage
+
+```mermaid
+flowchart TD
+    T["How will you select tests?"]
+    T -->|Start from requirements| B["BLACK BOX<br/>Partition inputs into ECs; check boundaries"]
+    T -->|Start from implementation| W["WHITE BOX<br/>Draw CFG; analyse decisions and paths"]
+    B --> O["Set the oracle<br/>Expected behaviour for each input"]
+    W --> O
+    O --> E["Execute and record actual results"]
+    E --> C["Compare expected with actual<br/>Investigate mismatches"]
+```
+
+**Coverage cue:** branch coverage implies statement coverage; statement coverage does not imply
+branch coverage. CC measures a structural basis, **not** the minimum tests for either criterion.
+For Tutorial 9, the combined-guard basis has four paths, but two calls achieve both coverage criteria.
 
 ### 12.1 Definitions
 
@@ -1935,6 +2159,22 @@ addition. A claimed basis path must either match its stated input exactly or be 
 
 ## 13. Equivalence class & boundary value testing (L17, L18)
 
+### Visual: build tests in the right order
+
+```mermaid
+flowchart TD
+    R["Read a verifiable requirement<br/>Identify the input unit and expected behaviour"] --> P["Partition each input into ECs<br/>Separate distinct behaviours and invalid inputs"]
+    P --> V["Choose representative valid inputs<br/>Combine them across parameters"]
+    P --> I["Choose invalid inputs<br/>One invalid parameter per test row"]
+    V --> B["For ordered ranges, examine boundaries<br/>On, just below and just above"]
+    I --> B
+    B --> O["Write the expected outcome for every test<br/>Use TBD if the requirement does not specify it"]
+    O --> E["Execute tests and compare with the oracle"]
+```
+
+**EC asks:** which region behaves alike? **BV asks:** where does that behaviour change? Keep full
+boundary triplets separate from the lecture's reduced selection (§13.5).
+
 ### 13.1 Two assumptions behind black-box testing
 
 1. **A verifiable requirement / API specification exists** — make software testable from inception.
@@ -1998,6 +2238,22 @@ income (78 501 integer-dollar values) or password characters.
 | Preferred by | —                                                 | **Testers** (if it breaks, the tester is blamed)                                                 |
 
 ### 13.5 Boundary value testing (BVT)
+
+#### Visual: see the mortgage-income partitions and their edges
+
+```mermaid
+flowchart TD
+    I["Income requirement<br/>1500 to 80000 inclusive; integer dollars"]
+    I --> L["LOW INVALID EC<br/>1499 and below"]
+    I --> V["VALID EC<br/>1500 through 80000"]
+    I --> H["HIGH INVALID EC<br/>80001 and above"]
+    L --> LB["Just outside lower edge<br/>1499: Reject"]
+    V --> VB["Lower triplet: 1499 / 1500 / 1501<br/>Upper triplet: 79999 / 80000 / 80001"]
+    H --> HB["Just outside upper edge<br/>80001: Reject"]
+```
+
+Hold all other mortgage inputs valid. Within these triplets, 1500, 1501, 79999 and 80000 are valid;
+1499 and 80001 are invalid. The course's reduced valid selection retains 1500 and 80000.
 
 > For **each boundary of each range-of-values EC**, choose **three** values: one **on-the-boundary**,
 > one **just-below**, one **just-above**. The size of the "just" step depends on the **unit** of the value.
@@ -2182,6 +2438,26 @@ also depends on capacity/type/grade in the complete GES, but Tutorial 8 isolates
 ---
 
 ## 14. The Grain Elevator System (GES) walkthrough
+
+### Visual: distinguish a proposal from the grain actually stored
+
+```mermaid
+flowchart TD
+    M["Manager enters grain type, grade and quantity"] --> E["Check eligible silos<br/>Compatible contents, free capacity, permitted conditions"]
+    E --> Q{"Can any grain be accepted?"}
+    Q -->|no| N["Report no grain accepted<br/>Zero-quantity logging policy is TBD"]
+    Q -->|yes| P["Propose silo quantities<br/>Identify any unaccepted remainder"]
+    P --> D{"Manager accepts the proposal?"}
+    D -->|yes| U["Manager arranges physical unloading"]
+    D -->|no| O["Manager overrules silo selection<br/>B, C and E constraints still apply"]
+    O --> U
+    U --> A["Manager reports ACTUAL deposits<br/>Plus truck, driver and seller details"]
+    A --> R["GES records actual stock changes and shipment log<br/>Then acknowledges receipt"]
+```
+
+**The important distinction:** a proposed allocation does not change stock. Actual-deposit reporting
+is required after accepting **or** overruling the proposal. Detailed boundary choices and unspecified
+recovery policies remain in §14.3.
 
 Tutorials 2, 3, 6, 7 and 8 use this case. Facts below come from the scanned two-page supplement;
 proposed model structures are example solutions, not additional requirements.
