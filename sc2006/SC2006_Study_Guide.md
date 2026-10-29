@@ -1,7 +1,7 @@
 # SC2006 / CE2006 / CZ2006 — Software Engineering: Study Guide
 
 > Built from the supplied SC2006 lecture decks (L1–L6, L8–L9, L12–L18, including 2026 versions), the tutorial set (T1–T9), the
-> Grain Elevator System (GES) case-study supplement, the SRS notes, and the UML specification notes.
+> Grain Elevator System (GES) case-study supplement, the SRS notes, the UML specification notes, and eight supplied AY2022/23–AY2025/26 examination papers.
 > Assessment context: tutorials 5% · group project 45% (labs 3×5%, demo 15%, docs 15%) · **exam 50%**.
 
 ---
@@ -24,10 +24,10 @@
 13. [Equivalence class & boundary value testing (L17, L18)](#13-equivalence-class--boundary-value-testing-l17-l18)
 14. [The Grain Elevator System (GES) walkthrough](#14-the-grain-elevator-system-ges-walkthrough)
 15. [Tutorial answer sketches (T1–T9)](#15-tutorial-answer-sketches-t1t9)
-16. [Sample questions — Easy](#16-sample-questions--easy)
-17. [Sample questions — Medium](#17-sample-questions--medium)
-18. [Sample questions — Hard](#18-sample-questions--hard)
-19. [Sample questions — Challenging / exam-style](#19-sample-questions--challenging--exam-style)
+16. [Past-year papers — AY2022/23](#16-past-year-papers--ay202223)
+17. [Past-year papers — AY2023/24](#17-past-year-papers--ay202324)
+18. [Past-year papers — AY2024/25](#18-past-year-papers--ay202425)
+19. [Past-year papers — AY2025/26](#19-past-year-papers--ay202526)
 20. [The trap compendium](#20-the-trap-compendium)
 21. [Last-24-hours revision sheet](#21-last-24-hours-revision-sheet)
 22. [Appendix: AI engineering and agentic development](#22-appendix-ai-engineering-and-agentic-development)
@@ -48,10 +48,10 @@ in the sections below.
 - **Process and design:** [Process comparison](#visual-compare-how-the-work-is-arranged) · [Scrum loop](#visual-follow-one-sprint-through-its-feedback-loops) · [Architecture families](#visual-recognise-the-architectural-organisation) · [Pattern selector](#visual-match-the-design-problem-to-a-pattern) · [MVC edit sequence](#visual-watch-one-edit-update-every-view)
 - **Testing and application:** [Test selection](#visual-separate-test-selection-from-code-coverage) · [EC/BV workflow](#visual-build-tests-in-the-right-order) · [Boundary example](#visual-see-the-mortgage-income-partitions-and-their-edges) · [GES arrival flow](#visual-distinguish-a-proposal-from-the-grain-actually-stored)
 
-**Source check (28 October 2026).** Core explanations follow the local lecture decks, the nine
+**Source check (29 October 2026).** Core explanations follow the local lecture decks, the nine
 Tutorial Questions and the two-page GES supplement. Section 23 maps topics to source pages and
-records source conflicts. Tutorial solutions and practice answers are reasoned examples, not official
-model answers. The supplied files do not establish exam frequency, guaranteed marks or exclusions.
+records source conflicts. Tutorial solutions and past-paper answers are reasoned examples, not official
+model answers. Sections 16–19 record observed question structures and printed marks in the eight supplied papers; these do not guarantee future coverage, marks or exclusions.
 
 **Conventions.** Use course terminology when answering course questions. Historical Scrum wording
 and the course's reduced BV test selection are identified explicitly. Assumptions in worked designs
@@ -2929,1274 +2929,2293 @@ See §12.9 for CFG, both CC conventions, basis paths, exact traces and a two-tes
 
 ---
 
-## 16. Sample questions — Easy
+## 16. Past-year papers — AY2022/23
 
-> Difficulty 1: recall and classify. Target: 2–3 minutes each, no notes.
+> **Unofficial worked answers.** Sections 16–19 replace the original easy/medium/hard exercises with all four questions from each of the eight supplied papers. Prompts are faithful summaries, not verbatim transcriptions; use the linked PDFs for the full wording and Appendix A. Question numbers and printed marks are retained. Designs are defensible examples, not unique model answers. Proposed design details and ambiguous input rules are identified explicitly.
+>
+> **Verified format in all eight papers:** 2 hours; open book; answer all four questions; 25 marks per question, 100 total. A planning allowance is about 30 minutes per question, including reading and checking. Historical format is evidence, not a guarantee for a future examination.
 
-**E1.** Define software engineering in one sentence and name its four testable clauses.
+| Paper | Scenario | Main modelling variation |
+| --- | --- | --- |
+| [AY2022/23 S1](pyps/SC2006_AY2223_S1_Questions.pdf) | Car sales | Hold-car use case, conceptual classes, dialog map |
+| [AY2022/23 S2](pyps/SC2006_AY2223_S2_Questions.pdf) | Shopping chatbot | Replacement use case, conceptual classes, activity diagram |
+| [AY2023/24 S1](pyps/SC2006_AY2324_S1_Questions.pdf) | DevSecOps | Security-check use case, classes, activity diagram |
+| [AY2023/24 S2](pyps/SC2006_AY2324_S2_Questions.pdf) | CodeAgent | Reviewer use case, classes, QA-Checker state machine |
+| [AY2024/25 S1](pyps/SC2006_AY2425_S1_Questions.pdf) | Task management | Assignment use case, classes, task lifecycle activity diagram |
+| [AY2024/25 S2](pyps/SC2006_AY2425_S2_Questions.pdf) | Disaster Warning System | Stakeholders/requirements, sensor state machine, linking activity |
+| [AY2025/26 S1](pyps/SC2006_AY2526_S1_Questions.pdf) | Smart home | Guest access use case, controller state machine, voice activity |
+| [AY2025/26 S2](pyps/SC2006_AY2526_S2_Questions.pdf) | Restaurant recommendations | JSON-check activity, recommendation classes, conversation state machine |
 
-<details><summary>Answer</summary>
+**Answer basis.** Use-case and analysis answers apply §§3–5; process answers apply §§7–8; architecture/pattern answers apply §§9–11; testing answers apply §§12–13. AI-related discussion also draws on §22. Case-specific maintenance, integration and responsibility answers are reasoned applications, not claims that the lecture provides an official answer.
 
-The production of **maintainable, fault-free software that meets the user's requirements and is
-delivered on time and within budget**. Clauses: maintainable · fault-free · meets requirements ·
-on time and within budget.
+**Reading the answers.** Attempt a question before opening its answer. Every paper tests equivalence classes, boundaries and defensive tests. Q2 also tests process/agile reasoning; Q3 tests architecture/design judgement, sometimes responsibility or LLM trade-offs. None of these eight papers asks for critical-path scheduling or a CFG calculation; that does not remove topics from the current syllabus.
 
-</details>
+**Diagram conventions.** Mermaid has no native UML use-case or activity diagram. Rounded nodes approximate use cases; dotted arrows labelled `«include»` point from base to included use case, and `«extend»` from optional behaviour to base. Activity swimlanes are approximated with subgraphs; in exact UML use a filled initial node, an activity-final node and guarded decision edges. Class stereotypes are shown as Mermaid annotations; copy them as `«boundary»`, `«control»`, `«entity»` in an exam. Authentication is generally a precondition for protected actions, not a compulsory fresh login on every action.
 
----
+### 16.1 AY2022/23 Semester 1 — Car selling system X
 
-**E2.** Classify each statement as **functional (F)** or **non-functional (N)**.
+**Source:** [Question paper](pyps/SC2006_AY2223_S1_Questions.pdf), Q1–Q4 on PDF pp. 1–3; Appendix A on p. 4.
 
-1. The system shall display the current time in 24-hour format.
-2. The system shall restore full functionality within 5 minutes after a reboot.
-3. The system shall communicate all transactions with the client's secure database over WiFi.
-4. Help messages shall be displayed in the user's local language.
-5. The database shall be replaceable with any commercial product supporting standard SQL queries.
-6. The system shall control up to six robot arms simultaneously.
+**Case facts.** Visitors browse/search new and used cars. A registered, logged-in user can hold one car by paying a deposit through the dealer's payment system. A car has only one holder at a time; another user cannot hold or buy it. Cancellation/expiry causes a refund. A buyer completes purchase with dealer staff. Staff log in, view car information, manage orders and complete delivery only after full-payment confirmation. A sales manager additionally manages car listings and generates sales reports.
 
-<details><summary>Answer</summary>
+#### Q1 — Use cases (25 marks)
 
-1. **F** — information to be processed (output format).
-2. **N** — reliability/recoverability (a property, not an interaction).
-3. **F** — interface with another system.
-4. **N** — usability (localisation).
-5. **N** — supportability/portability.
-6. **F** — system functionality (capability). _Trap: the number does not make it an NFR._
-</details>
+**(a) Identify actors/use cases and draw their relationships (17). (b) Describe holding a car: actors, preconditions, flow and alternatives (8).**
 
----
+<details><summary>Worked answer — Q1</summary>
 
-**E3.** State the difference between «include» and «extend», **including arrow direction**.
-
-<details><summary>Answer</summary>
-
-«include»: the base use case **always** performs the included behaviour; used for functional
-decomposition and reuse; base is incomplete without it. Arrow: **base → included**.
-
-«extend»: the extending use case adds **optional/conditional** behaviour to a base that is **complete
-by itself**. Arrow: **extending → base**.
-
-Mnemonic: _include points to the helper; extend points to the host._
-
-</details>
-
----
-
-**E4.** Name the five ingredients of a test case and say which is "expected" and which is "actual".
-
-<details><summary>Answer</summary>
-
-**Name · Location · Input · Oracle (expected output) · Log (actual output).**
-
-</details>
-
----
-
-**E5.** Name the four elements of a design pattern and the question each answers.
-
-<details><summary>Answer</summary>
-
-**Name** — how do we talk about it? **Problem** — when to apply / what is it solving?
-**Solution** — elements, relationships, responsibilities, collaborations. **Consequences** — benefits
-and costs, subjective to the scenario.
-
-</details>
-
----
-
-**E6.** Give the three formulas for cyclomatic complexity.
-
-<details><summary>Answer</summary>
-
-1. `CC = E − N + 2` for one connected CFG; `E − N + 2P` for P components
-2. `CC = number of binary decision nodes + 1` for one connected CFG
-3. `CC = number of bounded regions in the CFG + 1`
-
-CC = the size of a structural basis of independent paths. Feasibility must be checked; it is not
-the minimum number of tests for statement or branch coverage.
-
-</details>
-
----
-
-**E7.** Name the five architectural style families and one member of each.
-
-<details><summary>Answer</summary>
-
-| Family                 | Member                                          |
-| ---------------------- | ----------------------------------------------- |
-| Independent components | Client–server (or event systems)                |
-| Data flow              | Pipe-and-filter (or batch sequential)           |
-| Data-centred           | Repository (or blackboard)                      |
-| Virtual machine        | Interpreter (or rule-based system)              |
-| Call and return        | Layered system (or main program/subroutine, OO) |
-
-</details>
-
----
-
-**E8.** List the five top-level sections of an SRS, in order.
-
-<details><summary>Answer</summary>
-
-1. Product description (purpose/mission, scope, users & stakeholders, assumptions & constraints)
-2. Functional requirements
-3. Non-functional requirements
-4. Interface requirements (user, hardware, software)
-5. Data dictionary
-
-(Standard: IEEE 830-1998.)
-
-</details>
-
----
-
-**E9.** A backlog totals 64 points; the team delivers it in 8 sprints. What is the velocity? If each of
-the 8 Scrum Team members costs $2K per sprint, what is the project cost?
-
-<details><summary>Answer</summary>
-
-Velocity = 64 / 8 = **8 points per sprint**. Cost = 8 people × $2,000 × 8 sprints = **$128,000**.
-
-</details>
-
----
-
-**E10.** Give three XP practices and three Scrum terms with definitions.
-
-<details><summary>Answer</summary>
-
-XP: pair programming, test-first development, refactoring, continuous integration, small releases,
-collective ownership, simple design, sustainable pace, on-site customer, incremental planning,
-user stories, automated test harness (any three).
-
-Scrum: **product backlog** (to-do list of features/requirements/tasks) · **sprint** (2–4-week
-iteration) · **velocity** (backlog effort per sprint) · **product owner** (prioritises the backlog) ·
-**ScrumMaster** (ensures process followed, protects team) · **potentially shippable increment**.
-
-</details>
-
----
-
-**E11.** Name the four generic process activities.
-
-<details><summary>Answer</summary>
-
-**Specification · Design and implementation · Validation · Evolution.**
-
-</details>
-
----
-
-**E12.** Complete the transition label syntax of a state machine, and name the three compartments of
-a state.
-
-<details><summary>Answer</summary>
-
-Label: `event (arguments) [guard] / action`.
-State compartments: **entry / action**, **exit / action**, **do / activity**.
-
-</details>
-
----
-
-## 17. Sample questions — Medium
-
-> Difficulty 2: apply a technique to new material. Target: 8–12 minutes each.
-
-**M1. Atomise and make verifiable.** Rewrite the following as atomic, verifiable requirements.
-
-> The System maybe queried. A query may contain a user number or a serial number. If the query contains
-> a user number, all equipment assigned to that user is reported. If the query contains a serial number,
-> the assignment for that computer is reported. All query results show the name, office and user number
-> of a user, followed by the serial numbers and types of all computers assigned to that user, and the
-> date of each assignment. If a user is not assigned a computer or a computer not assigned to a user,
-> this is reported.
-
-<details><summary>Answer sketch</summary>
-
-Check for: (i) one assertion per numbered line, (ii) explicit condition → response, (iii) all fields
-named, (iv) the two "reported" edge cases made explicit, (v) "shall" used.
-
-```
-1.1 The system shall accept a query containing a user number.
-1.2 The system shall accept a query containing a computer serial number.
-1.3 For a user-number query, the system shall report all equipment assigned to that user.
-1.4 For a serial-number query, the system shall report the assignment for that computer.
-1.5.1 The user details in a result shall include the user's name.
-1.5.2 The user details in a result shall include the user's office.
-1.5.3 The user details in a result shall include the user's user number.
-1.6.1 The computer details shall include the serial number of each computer assigned to that user.
-1.6.2 The computer details shall include the type of each computer assigned to that user.
-1.6.3 The computer details shall include the assignment date for each such computer.
-1.7 The result shall present user details before computer details.
-1.8 If the queried user has no computer assigned, the system shall report that condition.
-1.9 If the queried computer has no user assigned, the system shall report that condition.
-```
-
-**TBD:** treatment of unknown identifiers, both identifiers in one query, exact report format and
-message wording. Do not invent these. For an unassigned computer, no user details exist; the
-unassigned result is the specified exception to the user-details format.
-
-Use §15 Tutorial 1's hierarchy. Preserve every field and the required ordering.
-
-</details>
-
----
-
-**M2. Actors and use cases.** For the paragraph below, list actors, use cases, and one «include» and
-one «extend» with justification.
-
-> A student logs in with their NTU account and enrols in courses. When a course is full, the system
-> places the student on a waitlist and, if a place frees up within 24 hours, offers it to the student by
-> email. Students may drop courses until the end of week 2. Lecturers view their class list. The
-> timetable system supplies room bookings.
-
-<details><summary>Answer</summary>
-
-**Actors:** Student, Lecturer, **NTU Account System** (external, authentication), **Timetable System**
-(external, room bookings), **Email System** (external, notification).
-
-**Use cases:** Login · Enrol in Course · Join Waitlist · Offer Place · Drop Course · View Class List ·
-(Import Room Bookings, if you model the timetable integration).
-
-**«include»:** _Enrol in Course_ **includes** _Login_ — every enrolment requires authentication, it is
-always performed, and it is reused by _Drop Course_ and _View Class List_. (Alternative: an abstract
-**User** actor generalises Student and Lecturer, and `Login` is associated with `User` — also valid;
-justify it.)
-
-**«extend»:** _Join Waitlist_ **extends** _Enrol in Course_ at the “course full” extension point,
-under the explicit modelling choice that enrolment can end with no immediate place. _Offer Place_
-is a **later event-triggered use case**, not an extension executing inside the completed waitlist
-interaction. Authentication may instead be a precondition if a valid session already exists; Login
-is included only if the base actually performs it.
-
-**Traps marked here:** making "System" an actor; listing "Enrol" and "Add Course" as two use cases for
-one goal; using «extend» for something that always happens (Login).
-
-</details>
-
----
-
-**M3. Alternative flows and exceptions.** For _Borrow Book_ in a library system, write two alternative
-flows and two exceptions.
-
-<details><summary>Answer</summary>
-
-**AF-1 (book already on loan):** 1. System displays "This copy is on loan; the earliest return date is
-`<dd/mm/yyyy>`." 2. System returns to the step where the member scans a copy.
-**AF-2 (member has reached the loan limit):** 1. System displays "Loan limit reached (5 of 5)." 2. System
-returns to the step where the member scans a copy.
-
-**EX-1 (membership suspended):** 1. System displays "Membership suspended. Please contact the library
-counter." 2. System ends the use case without creating a loan.
-**EX-2 (library network unavailable):** 1. System displays "Service unavailable; please use the
-self-service kiosk later." 2. System logs the event and ends the use case.
-
-_Why:_ AFs are recoverable and **return to a step**; EXs are terminal and the goal is **not** achieved.
-
-</details>
-
----
-
-**M4. EC and BV design.** A booking system takes `rooms` (1–10), `nights` (1–30) and `memberType`
-∈ {Standard, Gold}. Rules: bookings are accepted when `rooms` is 1–10 **and** `nights` is 1–30 **and**
-the member type is valid.
-
-(a) Give all ECs. (b) Give all BVs. (c) Design the minimum EC-based test set with correct invalid rows.
-
-<details><summary>Answer</summary>
-
-**(a) ECs**
-
-| Param      | Valid            | Invalid                           |
-| ---------- | ---------------- | --------------------------------- |
-| rooms      | 1 ≤ r ≤ 10       | r ≤ 0 ; r ≥ 11                    |
-| nights     | 1 ≤ n ≤ 30       | n ≤ 0 ; n ≥ 31                    |
-| memberType | {Standard, Gold} | anything else (e.g. Silver, null) |
-
-**(b) BVs** (range params only)
-
-| Param      | Boundary | Triplet        | Valid BV | Invalid BV               |
-| ---------- | -------- | -------------- | -------- | ------------------------ |
-| rooms      | lower 1  | 0, **1**, 2    | 1        | 0                        |
-| rooms      | upper 10 | 9, **10**, 11  | 10       | 11                       |
-| nights     | lower 1  | 0, **1**, 2    | 1        | 0                        |
-| nights     | upper 30 | 29, **30**, 31 | 30       | 31                       |
-| memberType | —        | —              | —        | — (discrete: **no BVs**) |
-
-**(c) Minimum EC-only suite:** **6 tests**: one all-valid row and five rows isolating the invalid
-ECs (two rooms, two nights, one member type). Either valid category represents their shared EC.
-The **7-row suite below** additionally enumerates both valid categories and covers both numeric
-endpoints; it is stronger than the minimum EC requirement.
-
-Valid (combine; enumerate the small categorical EC):
-
-| #   | rooms | nights | memberType | Expected |
-| --- | ----- | ------ | ---------- | -------- |
-| 1   | 1     | 1      | Standard   | Accepted |
-| 2   | 10    | 30     | Gold       | Accepted |
-
-Invalid (exactly one invalid per row):
-
-| #   | rooms  | nights | memberType | Expected |
-| --- | ------ | ------ | ---------- | -------- |
-| 3   | **0**  | 5      | Standard   | Rejected |
-| 4   | **11** | 5      | Standard   | Rejected |
-| 5   | 5      | **0**  | Standard   | Rejected |
-| 6   | 5      | **31** | Standard   | Rejected |
-| 7   | 5      | 5      | **Silver** | Rejected |
-
-_Check:_ **one** valid EC and **two** invalid ECs per range, one invalid EC for memberType, "no BVs for memberType",
-exactly one bolded invalid cell per invalid row.
-
-</details>
-
----
-
-**M5. CFG and cyclomatic complexity.** Draw the CFG for the method below, compute CC, list the basis
-paths, and give a test input for each.
-
-```java
-public int classify(int score) {
-1  int grade;
-2  if (score >= 90) {
-3     grade = 4;
-4  } else if (score >= 75) {
-5     grade = 3;
-6  } else if (score >= 60) {
-7     grade = 2;
-8  } else {
-9     grade = 1;
-10 }
-11 return grade;
-}
-```
-
-<details><summary>Answer</summary>
-
-Nodes: 1, 2, 3, 4, 5, 6, 7, 9, 11; **N = 9**. The `else` keyword at line 8 is not a separate
-executable statement. **E = 11**, so **CC = 11 − 9 + 2 = 4**, also three decisions + 1.
+**(a)** Actors: Visitor, Registered Customer, Dealer Staff, Sales Manager and external Dealer Payment System. Registered Customer can do the visitor's browsing; Sales Manager inherits staff capabilities. The system itself, its database and a car are not actors.
 
 ```mermaid
-flowchart TD
-    N1((1)) --> N2{"2: score >= 90?"}
-    N2 -->|true| N3["3: grade = 4"]
-    N2 -->|false| N4{"4: score >= 75?"}
-    N4 -->|true| N5["5: grade = 3"]
-    N4 -->|false| N6{"6: score >= 60?"}
-    N6 -->|true| N7["7: grade = 2"]
-    N6 -->|false| N9["9: grade = 1"]
-    N3 --> N11["11: return grade"]
-    N5 --> N11
-    N7 --> N11
-    N9 --> N11
+flowchart LR
+    V["Visitor"] --- Browse(["Browse / search cars"])
+    U["Registered customer"] --- Account(["Create account / log in"])
+    V --- Account
+    U --- Browse
+    U --- Hold(["Hold car"])
+    U --- Cancel(["Cancel hold"])
+    U --- Buy(["Complete purchase"])
+    V --- Buy
+    S["Dealer staff"] --- Login(["Staff login"])
+    S --- Info(["View full car information"])
+    S --- Orders(["Create / update / delete<br/>orders"])
+    S --- Buy
+    S --- Deliver(["Complete delivery"])
+    M["Sales manager<br/>also has staff capabilities"] --- Listings(["Add / update / delete listings"])
+    M --- Reports(["Generate period sales report"])
+    Hold -. "«include»" .-> Eligible(["Check availability and hold<br/>conflict"])
+    Buy -. "«include»" .-> Eligible
+    Hold -. "«include»" .-> Deposit(["Pay deposit"])
+    Cancel -. "«include»" .-> Refund(["Return deposit"])
+    Expire(["Expire hold"]) -. "«include»" .-> Refund
+    Deliver -. "«include»" .-> Paid(["Confirm full payment"])
+    P["Dealer payment system"] --- Deposit
+    P --- Refund
+    P --- Paid
 ```
 
-| Path | Sequence | Input | Output |
+In exact UML, draw Customer generalization to Visitor and Sales Manager generalization to Staff, with hollow triangles pointing to the general actor. Expiry is an internally scheduled system action; a timer need not be invented as an external actor. The appendix does not explicitly require an account/deposit for a direct purchase with staff; those requirements apply to holding a car. A failed deposit is an alternative flow, not an `«extend»` use case. The question says use relationships **where appropriate**, so an artificial extension is unnecessary.
+
+**(b) Use case: Hold Car.** Primary actor: Registered Customer. Supporting actor: Dealer Payment System. Preconditions: customer is authenticated; selected car exists, is unsold and is not already under an active hold. Normal flow:
+
+1. Customer selects a car and requests a hold.
+2. System checks current availability and displays deposit/hold terms. The duration and deposit amount come from dealer policy; the paper gives no numbers.
+3. Customer confirms and authorises the deposit through the payment system.
+4. Payment system confirms success. System creates the hold for that customer and marks the car unavailable to other customers until expiry.
+5. System displays the hold reference and expiry time.
+
+Alternatives: failed/cancelled payment creates no active hold; a concurrent hold/purchase causes rejection rather than double allocation; expiry or user cancellation ends the hold and requests a refund. A payment confirmed after an allocation conflict must be compensated/refunded. **Design assumption:** availability checks and allocation are made atomic, with a pending reservation/payment reconciliation mechanism. Do not imply that an initial availability check alone prevents races.
+
+</details>
+
+#### Q2 — Analysis and process (25 marks)
+
+**(a) Hold-car conceptual classes with boundary/control/entity stereotypes (8). (b) Dialog map for holding a car (8). (c) Can customer involvement fix Waterfall's response to changing requirements? (4). (d) Estimate Scrum progress and timely completion (5).**
+
+<details><summary>Worked answer — Q2</summary>
+
+**(a)** A boundary handles interaction, a control coordinates the use case, and entities hold domain information. The external payment system is represented by a payment boundary, not an entity.
+
+```mermaid
+classDiagram
+    class HoldPage {
+        <<boundary>>
+    }
+    class PaymentGateway {
+        <<boundary>>
+    }
+    class HoldController {
+        <<control>>
+    }
+    class Customer {
+        <<entity>>
+    }
+    class Car {
+        <<entity>>
+    }
+    class Hold {
+        <<entity>>
+    }
+    class Deposit {
+        <<entity>>
+    }
+    HoldPage --> HoldController
+    HoldController --> PaymentGateway
+    HoldController --> Car
+    HoldController --> Hold
+    Customer "1" -- "0..*" Hold
+    Car "1" -- "0..*" Hold : historical holds
+    Hold "1" -- "1" Deposit
+```
+
+Constraint: each Car has **at most one active Hold**, even though historical holds are many. Customer may have multiple holds on different cars; Appendix A does not prohibit that. Attributes/operations are deliberately omitted for this analysis question.
+
+**(b)** A dialog map describes interface states/screens, not just the physical car's state.
+
+```mermaid
+stateDiagram-v2
+    [*] --> CarList
+    CarList --> CarDetails : select car
+    CarDetails --> LoginScreen : request hold [not logged in]
+    LoginScreen --> CarDetails : login successful
+    CarDetails --> HoldTerms : request hold [authenticated and available]
+    CarDetails --> CarDetails : unavailable / show reason
+    HoldTerms --> DepositPayment : confirm
+    HoldTerms --> CarDetails : cancel
+    DepositPayment --> HoldConfirmation : payment and allocation succeed
+    DepositPayment --> PaymentError : failed or allocation conflict
+    PaymentError --> DepositPayment : retry after recheck
+    PaymentError --> CarDetails : abandon
+    HoldConfirmation --> RefundStatus : cancel or receive expiry notification
+    RefundStatus --> CarDetails : refund result shown
+```
+
+Terms/error/refund screens are proposed interface details. The business invariants from Q1 still apply.
+
+**(c)** Customer involvement helps discover misunderstandings early and assess changes, but does not remove Waterfall's dependency on baselined requirements and sequential work products. Late changes can invalidate design, implementation, tests, cost and schedule. Use early reviews/prototypes plus formal impact analysis and controlled replanning; choose incremental delivery when changes are frequent.
+
+**(d)** Estimate backlog items in consistent effort units, prioritise them, and measure **completed** effort per sprint (velocity). Track remaining work against sprint/release time, for example with a burndown chart. Forecast remaining sprints as `remaining effort / recent representative velocity`, allowing for capacity, uncertainty and new scope. Review actual progress each sprint and negotiate scope/priorities with the customer. Velocity is a planning measure, not a promise or a target for comparing individuals.
+
+</details>
+
+#### Q3 — Architecture and pattern composition (25 marks)
+
+**(a)(i) Architecture and detailed classes (8); (ii) alternative using a different pattern and its advantages (6). (b)(i) Combined-pattern car-sales scenario and classes (8); (ii) when patterns can be combined/merged, with an example (3).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)(i)** Use a layered architecture: presentation boundaries, application controls, domain entities and persistence/integration boundaries. HoldController enforces allocation/refund rules rather than putting them into the page. Extend Q2's conceptual model as follows:
+
+```mermaid
+classDiagram
+    class HoldPage {
+        +selectedCarId
+        +showTerms()
+        +confirmHold()
+        +showResult()
+    }
+    class HoldController {
+        +requestHold(customerId, carId)
+        +cancelHold(holdId)
+        +expireHold(holdId)
+    }
+    class Car {
+        +id
+        +price
+        +saleStatus
+        +isAvailableFor(customerId)
+    }
+    class Hold {
+        +customerId
+        +carId
+        +expiresAt
+        +status
+        +activate(paymentId)
+        +end(reason)
+    }
+    class HoldRepository {
+        +allocateAtomically(hold)
+        +findActive(carId)
+        +save(hold)
+    }
+    class PaymentGateway {
+        +chargeDeposit(amount)
+        +refund(paymentId)
+        +confirmFullPayment(orderId)
+    }
+    HoldPage --> HoldController
+    HoldController --> Car
+    HoldController --> Hold
+    HoldController --> HoldRepository
+    HoldController --> PaymentGateway
+```
+
+Order/delivery controls similarly require full-payment confirmation before delivery. Persistence must enforce active-hold uniqueness; payment callbacks need reconciliation to avoid recording inconsistent states.
+
+**(a)(ii)** An MVC alternative makes Car/Hold and their services the Model, listing/details/status screens the Views, and HoldController the Controller. Model changes publish notifications to customer and staff views through Observer; views refresh from the Model. Advantages: consistent multiple views, separate display changes from domain rules, and easier independent testing. Costs: notification/lifecycle complexity. MVC and layering are compatible; MVC refines presentation interaction rather than replacing all lower layers.
+
+**(b)(i)** Combine **Strategy** with **Simple Factory** for selecting a dealer payment provider. This is a proposed extension; the appendix only requires integration with the dealer payment system.
+
+```mermaid
+classDiagram
+    class HoldController {
+        +holdCar(provider, amount)
+    }
+    class PaymentFactory {
+        +create(provider) PaymentStrategy
+    }
+    class PaymentStrategy {
+        <<interface>>
+        +charge(amount)
+        +refund(paymentId)
+    }
+    class CardPayment {
+        +charge(amount)
+        +refund(paymentId)
+    }
+    class WalletPayment {
+        +charge(amount)
+        +refund(paymentId)
+    }
+    HoldController --> PaymentFactory : obtains strategy
+    HoldController --> PaymentStrategy : delegates
+    PaymentFactory ..> CardPayment : creates
+    PaymentFactory ..> WalletPayment : creates
+    PaymentStrategy <|.. CardPayment
+    PaymentStrategy <|.. WalletPayment
+```
+
+The factory centralises creation/selection; Strategy makes payment behaviour interchangeable behind a stable interface. Neither pattern replaces validation or transaction handling.
+
+**(b)(ii)** Combine patterns when their responsibilities solve different, compatible forces; a class may play roles in multiple patterns when responsibilities remain clear. MVC commonly combines Observer for Model/View updates with Strategy for controller behaviour. Strategy plus Factory is another composition: one governs behaviour and the other creation. Do not merge classes solely to reduce class count.
+
+</details>
+
+#### Q4 — Input testing, test levels and maintenance (25 marks)
+
+**(a)(i) Derive ECs for Car Model, Price, Manufacturing Date and Color (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (5).**
+
+<details><summary>Worked answer — Q4(a)</summary>
+
+**Input interpretation.** Car Model must be ASCII; Price is a 6-digit integer; Manufacturing Date is between 2010 and 2022; Color is one of `White`, `Black`, `Blue`, `Red`, `Others`. Assume a positive 6-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
+
+**(i) Equivalence classes:**
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Car Model | ASCII text | Text containing non-ASCII characters |
+| Price | Integer 100000…999999 | Integer below 100000; integer above 999999; malformed/non-integer input at the input boundary |
+| Manufacturing Date | Real calendar date 2010-01-01…2022-12-31 | Real date before 2010-01-01; real date after 2022-12-31; malformed/nonexistent date |
+| Color | One EC containing {White, Black, Blue, Red, Others} | Any unlisted value |
+
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
+
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
 | --- | --- | --- | --- |
-| P1 | 1,2,3,11 | 95 | 4 |
-| P2 | 1,2,4,5,11 | 80 | 3 |
-| P3 | 1,2,4,6,7,11 | 65 | 2 |
-| P4 | 1,2,4,6,9,11 | 50 | 1 |
+| Price: minimum | 99999 (reject) | 100000 (accept) | 100001 (accept) |
+| Price: maximum | 999998 (accept) | 999999 (accept) | 1000000 (reject) |
+| Manufacturing Date: earliest | 2009-12-31 (reject) | 2010-01-01 (accept) | 2010-01-02 (accept) |
+| Manufacturing Date: latest | 2022-12-30 (accept) | 2022-12-31 (accept) | 2023-01-01 (reject) |
 
-**Boundary link:** the CFG proves _branch_ coverage, not _boundary_ correctness. `>= 90`
-must also be tested at **89 and 90**; `>= 75` at **74 and 75**; `>= 60` at **59 and 60**. The path set
-above never tests exactly 90, so a `>` / `>=` bug survives 100% branch coverage — the classic
-white-box blind spot that BVT covers.
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Car Model | Price | Manufacturing Date | Color | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `CAR-A` | `100000` | `2010-01-01` | `White` | Accept — valid boundaries / category coverage |
+| `CAR-A` | `100001` | `2010-01-02` | `Black` | Accept — valid boundaries / category coverage |
+| `CAR-A` | `999998` | `2022-12-30` | `Blue` | Accept — valid boundaries / category coverage |
+| `CAR-A` | `999999` | `2022-12-31` | `Red` | Accept — valid boundaries / category coverage |
+| `CAR-A` | `549999` | `2016-07-01` | `Others` | Accept — interior baseline / category coverage |
+| `非ASCII` | `549999` | `2016-07-01` | `White` | Reject — non-ASCII Car Model |
+| `CAR-A` | `99999` | `2016-07-01` | `White` | Reject — Price below minimum |
+| `CAR-A` | `1000000` | `2016-07-01` | `White` | Reject — Price above maximum |
+| `CAR-A` | `549999` | `2009-12-31` | `White` | Reject — Manufacturing Date below minimum |
+| `CAR-A` | `549999` | `2023-01-01` | `White` | Reject — Manufacturing Date above maximum |
+| `CAR-A` | `549999` | `2016-07-01` | `Unknown` | Reject — unlisted Color |
+| `CAR-A` | `12x` | `2016-07-01` | `White` | Reject — malformed integer; extra defensive case |
+| `CAR-A` | `549999` | `2010-02-30` | `White` | Reject — nonexistent calendar date; extra defensive case |
 
 </details>
 
----
+**(b)(i) Give at least two unit/system testing differences (4). (ii) Why might grey-box testing be better in some cases? (6). (iii) When is refactoring needed? (2).**
 
-**M6. Coverage reasoning.** A method has statements S1…S10. Test A executes S1,S2,S3,S5,S7,S8,S10;
-test B executes S1,S2,S3,S4,S6,S7,S9,S10. What coverage has been achieved?
+<details><summary>Worked answer — Q4(b)</summary>
 
-<details><summary>Answer</summary>
+**(i)** Unit testing isolates a small component, such as Hold's expiry rule, often replacing dependencies with test doubles; system testing checks the integrated car-sales system against its requirements. Unit tests localise failures and run cheaply; system tests expose end-to-end failures such as a paid deposit not producing a hold or delivery proceeding without payment.
 
-**100% statement coverage** (all ten statements executed). **Branch coverage is unknown** from
-statement lists — you need the CFG to know whether both outcomes of each decision were taken. Do not
-claim 100% branch coverage from statement information alone. (This is the intended trap.)
+**(ii)** Grey-box tests retain externally observable acceptance criteria while using partial knowledge of database structure, interfaces or state to select stronger cases. Knowing that a hold and payment are stored separately suggests callback-order and reconciliation tests that pure input/output exploration may miss. Compared with implementation-driven white-box tests, independently specified expected results reduce the risk of copying the code's mistake. Grey-box testing may therefore improve fault targeting and cost-effectiveness, but is not universally superior: it neither guarantees structural coverage nor replaces full black-box requirement checks.
+
+**(iii)** Refactor when duplication, excessive coupling, unclear responsibilities or difficult changes make the code costly to maintain. Improve internal structure while preserving observable behaviour, using regression tests to check preservation. Adding a new feature or changing an incorrect requirement is not itself refactoring.
 
 </details>
 
----
+### 16.2 AY2022/23 Semester 2 — Customer-service chatbot
 
-**M7. Name that pattern.** One line each.
+**Source:** [Question paper](pyps/SC2006_AY2223_S2_Questions.pdf), Q1–Q4 on PDF pp. 1–4; Appendix A on p. 5.
 
-1. A mobile app must support LAN, WiFi, Bluetooth, 3G, 4G, and future protocols, with minimal change.
-2. A worksheet must update a line chart and a bar chart whenever a cell changes; charts come and go.
-3. The concrete database implementation is chosen from a config file at start-up.
-4. You need exactly one configuration registry per JVM.
-5. A report generator must call 12 subsystem classes in the right order; clients want one call.
-6. Undo/redo of editor actions.
-7. A scrollbar must be attachable to any view at runtime.
+**Case facts.** The chatbot answers product/pricing/availability queries and helps logged-in customers manage carts, orders, payment/delivery details, status, replacements and refunds. Free replacement/refund is available within seven days of delivery, with item photos, purchase receipt and reasons. The company confirms or rejects the request; the chatbot communicates instructions or rejection.
 
-<details><summary>Answer</summary>
+#### Q1 — Use cases (25 marks)
 
-1. **Strategy**
-2. **Observer**
-3. **Factory**
-4. **Singleton**
-5. **Façade**
-6. **Command**
-7. **Decorator**
+**(a) Actors/use cases and relationships (17). (b) Item-replacement description with actors, preconditions, normal/alternative flows (8).**
+
+<details><summary>Worked answer — Q1</summary>
+
+**(a)** The chatbot is the system being modelled, not an external actor. Customer is the primary actor. Existing Web-Based Shopping System is a supporting actor outside the chatbot boundary; company approval is supplied through that system. If company staff directly operate a chatbot approval interface, they become another actor, but that interface is not specified.
+
+```mermaid
+flowchart LR
+    C["Customer"] --- Query(["Ask product / price /<br/>availability"])
+    C --- Login(["Log in for shopping"])
+    C --- Cart(["Add items to cart"])
+    C --- Order(["Place order"])
+    C --- Status(["Get order status"])
+    C --- Replace(["Request replacement"])
+    C --- Refund(["Request refund"])
+    Order -. "«include»" .-> Details(["Confirm payment and delivery"])
+    Replace -. "«include»" .-> Evidence(["Collect photos, receipt and<br/>reason"])
+    Refund -. "«include»" .-> Evidence
+    Replace -. "«include»" .-> Eligibility(["Check seven-day eligibility"])
+    Refund -. "«include»" .-> Eligibility
+    Replace -. "«include»" .-> Decision(["Submit for company decision"])
+    Refund -. "«include»" .-> Decision
+    W["Existing shopping system"] --- Query
+    W --- Login
+    W --- Cart
+    W --- Order
+    W --- Status
+    W --- Eligibility
+    W --- Decision
+```
+
+A successful decision leads to replacement/refund instructions; rejection is an alternative flow. Neither outcome should be forced into an artificial `«extend»` relationship. Shopping actions require a valid authenticated session, while product enquiries can precede login.
+
+**(b) Use case: Request Item Replacement.** Actors: Customer, Existing Shopping System (including company decision service). Preconditions: customer is logged in; the delivered purchase can be identified. Normal flow:
+
+1. Customer asks for replacement and selects the purchased item/order.
+2. Chatbot retrieves purchase/delivery details and checks the seven-day rule.
+3. Chatbot asks for item photos, receipt and replacement reason; customer supplies them.
+4. Chatbot validates completeness and submits the request to the existing system for company confirmation.
+5. On approval, chatbot sends the company-provided replacement procedure and request reference.
+
+Alternatives: outside the eligibility period, reject the free replacement; missing evidence, request correction; company rejects, communicate rejection; integration failure, report pending/failure without falsely confirming approval. **Assumption:** “within seven days” includes the seventh day; the exact timestamp/timezone policy needs agreement. Company review may be asynchronous, so “submitted/pending” is distinct from “approved”.
+
 </details>
 
----
+#### Q2 — Analysis and development process (25 marks)
 
-**M8. Observer design.** `Silo` must notify `Dashboard`, `AlarmSiren` and `GrainDryer` when its humidity
-exceeds the normal level. New display devices are added at runtime; the silo must not know their types.
+**(a) Replacement conceptual classes with stereotypes (7). (b) Replacement activity with user/chatbot/existing-system participants (8). (c) Why reuse-based integration/configuration can force requirement compromises, and mitigation (4). (d) Scrum Master response to a bug threatening sprint completion (6).**
 
-(a) Draw the class diagram. (b) Choose push or pull and justify. (c) Give one pro and one con.
-
-<details><summary>Answer</summary>
+<details><summary>Worked answer — Q2</summary>
 
 **(a)**
 
 ```mermaid
 classDiagram
-    class Subject {
-        <<interface>>
-        +attach(o:Observer)
-        +detach(o:Observer)
-        +notify()
+    class ChatInterface {
+        <<boundary>>
     }
-    class Observer {
-        <<interface>>
-        +update()
+    class ShoppingSystemGateway {
+        <<boundary>>
     }
-    class Silo {
-        -humidity
-        +getData() Reading
+    class ReplacementController {
+        <<control>>
     }
-    class Dashboard
-    class AlarmSiren
-    class GrainDryer
-    Subject <|.. Silo : implements
-    Observer <|.. Dashboard : implements
-    Observer <|.. AlarmSiren : implements
-    Observer <|.. GrainDryer : implements
-    Silo "1" --> "0..*" Observer : registered observers
-    note for Dashboard "Dashboard, AlarmSiren and GrainDryer each read the silo via getData()"
+    class Customer {
+        <<entity>>
+    }
+    class Purchase {
+        <<entity>>
+    }
+    class ReplacementRequest {
+        <<entity>>
+    }
+    class Evidence {
+        <<entity>>
+    }
+    class CompanyDecision {
+        <<entity>>
+    }
+    ChatInterface --> ReplacementController
+    ReplacementController --> ShoppingSystemGateway
+    ReplacementController --> Purchase
+    ReplacementController --> ReplacementRequest
+    Customer "1" -- "0..*" Purchase
+    Purchase "1" -- "0..*" ReplacementRequest
+    ReplacementRequest "1" -- "1" Evidence
+    ReplacementRequest "1" -- "0..1" CompanyDecision
 ```
 
-`notify()` = `for each o in observers: o.update()`. `Silo` holds `observers: Observer[*]` — note the
-field type is the **interface**, not the concrete classes.
+Decision is absent while pending. Evidence groups photos, receipt and reason; its presence does not imply that an incomplete submission is approved.
 
-**(b) Pull** is preferable here: the reading is a small object but different observers need different
-parts (dashboard wants the trend, siren wants a threshold flag, dryer wants a command), and pull keeps
-the subject ignorant of observer needs. _Push_ is better if updates are rare and all observers want the
-same payload (fewer calls, one-way).
+**(b)** Subgraphs approximate activity swimlanes. Company approval is an activity of the existing system's organisation, not an autonomous chatbot decision.
 
-**(c)** Pro: loose coupling — add/remove observers at runtime without touching `Silo`; enables
-broadcast. Con: slower (indirection + iteration), and notification order is unspecified; if observers
-are not detached, memory leaks.
-
-</details>
-
----
-
-**M9. MVC mapping.** The Excel example has `WorkSheet`, `SheetManager`, `LineChart`, `BarChart`,
-`EditWS`. Assign each to Model / View / Controller, name the pattern for each MVC edge, and explain who
-calls `getData()` and why.
-
-<details><summary>Answer</summary>
-
-| Class                       | Role                                                  | Stereotype       |
-| --------------------------- | ----------------------------------------------------- | ---------------- |
-| `WorkSheet`, `SheetManager` | **Model** (data + app logic)                          | entity for WorkSheet; control for SheetManager           |
-| `LineChart`, `BarChart`     | **View**                                              | boundary         |
-| `EditWS` | Initial combined editing UI, a **boundary**; full MVC splits `EditWSView` and `EditWSCtrler` | boundary / presentation |
-
-Edges: **View ↔ Model = Observer** (view registers, model notifies `update()`);
-**View ↔ Controller = Strategy** (view delegates interface behaviour; controller swappable);
-controller/LAF creation = **Abstract Factory**.
-
-`getData()` is called **by the View on the Model** after `update()` — this is the **pull** protocol. It
-exists so that the model does not have to know what each view needs, and so a view can fetch only the
-data it displays.
-
-</details>
-
----
-
-**M10. Find the multiplicity errors.** A `Customer` places `Order`s; each `Order` has `OrderLine`s that
-cannot exist without the order; an `OrderLine` refers to exactly one `Product`, and a `Product` may
-appear on many order lines; a `Customer` has exactly one `Address`.
-
-Diagram given: `Customer 1 — 1 Order`; `Order ◇— * OrderLine`; `OrderLine * — 1 Product`;
-`Customer * — 1 Address`.
-
-<details><summary>Answer</summary>
-
-| Error                     | Should be                                                                                                 |
-| ------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `Customer 1 — 1 Order`    | `Customer 1 — * Order` (a customer places many orders)                                                    |
-| `Order ◇— * OrderLine`    | **`Order "1" *-- "0..*" OrderLine`** — composition. Use `1..*` only if empty orders are forbidden by an explicit assumption                   |
-| `OrderLine * — 1 Product` | Correct                                                                                                   |
-| `Customer * — 1 Address` | **Consistent with the statement**: one Address per Customer; several Customers may share it. Address exclusivity is not specified. |
-
-_Rule to state:_ the number sits at the end **near the class it counts**.
-
-</details>
-
----
-
-**M11. Process choice.** A bank needs a core ledger replacement, with fixed regulatory sign-off gates,
-an external auditor, and 40 developers across 3 countries. Waterfall, incremental, or agile?
-
-<details><summary>Answer</summary>
-
-**Plan-driven incremental** (waterfall-like gates _inside_ increments) is the defensible answer:
-
-- Regulatory sign-off and auditability demand **documented, pre-planned deliverables** → plan-driven.
-- 40 developers across 3 countries need a **shared plan** for coordination → waterfall's original
-  rationale ("large systems engineering projects developed at several sites").
-- But a pure waterfall cannot absorb 18 months of requirement drift → deliver in **increments**, each
-  with its own requirement/design/build/test/audit gate.
-
-Say explicitly: _"In practice most large systems use a process that incorporates elements of all
-models"_ and name the trade-off (agility vs auditability).
-
-</details>
-
----
-
-**M12. SRS language.** Replace each phrase with an acceptable one.
-
-1. "The system should be as user-friendly as possible."
-2. "The system must respond quickly."
-3. "Reports will be generated if possible."
-4. "The system shall provide adequate security."
-5. "The user will enter a valid card number."
-
-<details><summary>Answer</summary>
-
-1. "80% of first-time users shall complete a booking within 3 minutes without assistance."
-2. "The system shall return search results within 2 seconds for 95% of queries under 500 concurrent users."
-3. "The system shall generate the daily report at 23:00." (remove the optionality — or delete it if not required)
-4. "The system shall authenticate every user by password and shall lock the account after 3 failed attempts."
-5. The sentence is an **environment assumption**, and **will** is the correct modal verb here ("The user **will** provide a valid card number" is an
-assumption). The _requirement_ would be "The system **shall** validate the card number before
-accepting the payment."
-</details>
-
----
-
-## 18. Sample questions — Hard
-
-> Difficulty 3: analyse, critique, design, justify. Target: 15–20 minutes each.
-
-**H1. SRS critique.** A student submits these requirements. Find **five** defects and rewrite each.
-
-```
-R1. The system shall be fast and easy to use.
-R2. The system shall use a Singleton to access the database.
-R3. When a user logs in, the system shall check the password and display the dashboard and load
-    preferences and send a welcome email.
-R4. The system shall not accept invalid input.
-R5. The system must not hire too-young or too-old people.
+```mermaid
+flowchart TD
+    subgraph User
+        U1["Request replacement / identify<br/>item"]
+        U2["Supply photos, receipt and<br/>reason"]
+        U3["Receive procedure or rejection"]
+    end
+    subgraph Chatbot
+        C1["Obtain purchase and delivery<br/>data"]
+        C2{"Within seven days?"}
+        C3["Collect evidence"]
+        C4{"Evidence complete?"}
+        C5["Submit request; show pending"]
+        C6["Communicate decision"]
+    end
+    subgraph ExistingSystem["Existing web-based system"]
+        W1["Retrieve order / delivery"]
+        W2["Company reviews request"]
+        W3{"Approved?"}
+        W4["Provide replacement procedure"]
+        W5["Provide rejection"]
+    end
+    U1 --> C1 --> W1 --> C2
+    C2 -->|No| C6
+    C2 -->|Yes| C3 --> U2 --> C4
+    C4 -->|No| C3
+    C4 -->|Yes| C5 --> W2 --> W3
+    W3 -->|Yes| W4 --> C6
+    W3 -->|No| W5 --> C6
+    C6 --> U3
+    StartNode(("Start")) --> U1
+    U3 --> EndNode(("End"))
 ```
 
-<details><summary>Answer</summary>
+**(c)** Existing products/services have fixed features, interfaces, constraints and licensing; available components may not exactly meet desired requirements. Adapting requirements avoids expensive bespoke development but can reduce fit. Evaluate candidates against prioritised must-have requirements, prototype risky integrations early, and negotiate acceptable compromises. Isolate mismatches behind adapters or build a missing component when a non-negotiable requirement cannot be met.
 
-| #   | Defect                                                            | Rewrite                                                                                                                                                                                       |
-| --- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| R1  | **Two requirements in one**, neither verifiable ("fast", "easy")  | R1.1 "The system shall display the dashboard within 2 s of a valid login (95th percentile)." R1.2 "80% of first-time users shall complete a transfer within 4 minutes without assistance."    |
-| R2  | **Design suggestion** — violates "the SRS contains no design"     | Delete. If persistence is a constraint, state it as an NFR: "The system shall persist data in a relational database supporting standard SQL."                                                 |
-| R3  | **Not atomic** — four actions in one sentence; no oracle for each | Split into R3.1 verify credentials (accept/reject), R3.2 display dashboard, R3.3 load preferences, R3.4 send welcome email after login. Any timing target needs agreement; do not change “after login” to “once per account”. |
-| R4  | **Unverifiable + vacuous** ("invalid" undefined)                  | Enumerate: "The system shall reject an income value < 1500 or > 80000 with error code E102 and shall not create an application."                                                              |
-| R5  | **Unverifiable** ("too young / too old")                          | "0–15 and 55–99: do not hire; 16–17: part-time; 18–54: full-time."                                                                                                                            |
-
-The given draft contains vague adjectives, undefined validity and unrequested design decisions.
-Optionality phrases are another SRS risk, but none appears in R1–R5. Numerical targets in these
-example rewrites are proposals for client agreement, not facts recoverable from the draft. Mention that R3 also violates **modifiability** (you cannot
-label or trace individual behaviours).
+**(d)** Surface the bug's impact during the daily meeting, then let developers investigate with relevant people outside the timeboxed status discussion. Facilitate removing the impediment; do not assign blame or dictate a technical fix. Assess severity, effort and effect on the Sprint Goal with the team/Product Owner. Replan remaining work and, if necessary, negotiate less essential scope while protecting the goal and quality. Keep the sprint timebox; unfinished work is not counted as done and returns to backlog consideration. Review root causes and prevention in the retrospective.
 
 </details>
 
----
+#### Q3 — Chatbot architecture and combined patterns (25 marks)
 
-**H2. Architecture trade-off.** A hospital wants a system that (i) ingests HL7 messages from 20 device
-types, (ii) applies validation and normalisation rules that change monthly, (iii) presents 6 different
-dashboards, (iv) must be auditable and available 24/7. Propose an architecture, name the styles, and
-give two disadvantages you accept.
+**(a)(i) Architecture/detailed classes (8); (ii) alternative pattern and advantages (6). (b)(i) Combined patterns and class diagram (8); (ii) structural method for comparing architectures (3).**
 
-<details><summary>Answer</summary>
+<details><summary>Worked answer — Q3</summary>
 
-**Proposed decomposition**
-
-| Concern                        | Style / pattern                                                                                                           | Why                                                                                                               |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Device ingestion               | **Pipe-and-filter** (or independent-component adapters)                                                                   | Each device message is transformed in stages; filters do not share state, so a new device is a new source adapter |
-| Validation/normalisation rules | **Strategy** + **Factory** (rule engine / virtual-machine style)                                                          | Rules change monthly; Strategy keeps the pipeline closed to modification (OCP); Factory selects the rule set      |
-| Dashboards                     | **MVC** with **Observer**                                                                                                 | 6 synchronised presentations of one model; UI changes are isolated                                                |
-| Audit + persistence            | **Repository** (data-centred) layer under the domain                                                                      | Single auditable store; Report/Audit components read from it                                                      |
-| Overall                        | **Layered** (presentation → control → domain → persistence) with an explicit **publish/subscribe** connector for up-calls | Keeps dependencies one-directional; Observer solves the lower→upper notification                                  |
-
-**Accepted disadvantages:** (1) layered + pipe traversal costs latency and throughput, conflicting with
-24/7 high-volume ingestion; (2) the repository is a single point of contention/failure, requiring
-replication, and rules-as-configuration reduces static analysability (a bad rule is data, not code).
-
-_Marks:_ naming components **and connectors**, matching each non-functional requirement to a
-structure, and admitting the cost.
-
-</details>
-
----
-
-**H3. Multi-pattern.** "GES must notify processing plants when grain arrives or leaves. Plants register
-interests in specific grain types and choose email, SMS, or both; they change interests and channels
-over time; new channels must be addable without touching GES."
-
-(a) Identify **three** design problems. (b) Apply patterns and draw the class diagram. (c) What is
-missing if you only use Observer? (d) Which principle does your design satisfy?
-
-<details><summary>Answer</summary>
-
-**(a) Problems**
-
-1. **One-to-many, runtime-variable notification**: GES must not know who or how many plants are
-   listening (Observer).
-2. **Varying notification channel**: the channel varies independently of the event and must be
-   extensible (Strategy).
-3. **Runtime construction of the channel**: which concrete notifier to use is known only from the
-   plant's current preference (Factory).
-
-**(b)** `GrainEventSource` (Subject) holds `observers: PlantObserver[*]` with
-`attach(observer, interests)/detach/notify(interest)`. `PlantObserver.update(event)` delegates to a
-`NotificationStrategy` (`EmailNotifier`, `SMSNotifier`, `CompositeNotifier` = both). `NotifierFactory`
-creates the strategy from the plant's preference record. `notify()` filters by `interests`
-(**selective notification**).
+**(a)(i)** Use layered boundaries, application controls, entities and a gateway to the existing shop. Keep order/replacement decisions in deterministic services; natural-language interpretation identifies the requested operation.
 
 ```mermaid
 classDiagram
-    class GrainEventSource
-    class PlantObserver {
-        <<interface>>
-        +update(event)
+    class ChatView {
+        +sendMessage(text)
+        +showReply(text)
     }
-    class PlantSubscription
-    class NotificationStrategy {
-        <<interface>>
-        +send(event)
+    class ChatController {
+        +sessionId
+        +handleMessage(text)
+        +dispatch(intent)
     }
-    class NotifierFactory {
-        +create(preference) NotificationStrategy
+    class ReplacementService {
+        +requestReplacement(orderId, evidence)
+        +checkEligibility(deliveredAt, now)
     }
-    GrainEventSource --> PlantObserver : notifies matching interests
-    PlantObserver <|.. PlantSubscription
-    PlantSubscription --> NotificationStrategy : sends through
-    PlantSubscription ..> NotifierFactory : obtains channels
-    NotifierFactory ..> EmailNotifier : creates
-    NotifierFactory ..> SMSNotifier : creates
-    NotificationStrategy <|.. EmailNotifier
-    NotificationStrategy <|.. SMSNotifier
+    class ReplacementRequest {
+        +id
+        +orderId
+        +status
+        +recordDecision(decision)
+    }
+    class ShoppingGateway {
+        +getProduct(id)
+        +getOrder(id)
+        +updateCart(items)
+        +placeOrder(details)
+        +submitReplacement(request)
+    }
+    ChatView --> ChatController
+    ChatController --> ReplacementService
+    ChatController --> ShoppingGateway
+    ReplacementService --> ShoppingGateway
+    ReplacementService --> ReplacementRequest
 ```
 
-To support both channels, use a list as in Tutorial 7 or an optional composite implementing
-NotificationStrategy. The factory can construct that selection.
+**(a)(ii)** An MVC alternative separates conversation/cart/request Models from chat/status Views and input Controllers. Make the Model observable so both the conversation and order-status view refresh when a replacement decision arrives. Benefits: multiple views stay consistent, presentation is replaceable, and business rules can be tested without the UI. Observer adds subscription cleanup and update-order concerns; layering can remain underneath MVC.
 
-**(c)** Observer alone gives you _who to tell_ but not _how to tell them_, and no place to decide the
-concrete channel → add **Strategy** (channel) and **Factory** (creation). If you used only Strategy you
-would still have GES calling a specific plant.
+**(b)(i)** Combine Strategy for handling different intents with Simple Factory for selecting the handler:
 
-**(d)** **Open–Closed**: subscribers and notifier implementations depend on interfaces, so the event
-source can stay unchanged. New channels are implementations; new grain types may simply be domain
-values. A switch-based factory still needs updating; a configurable registry/dynamic loader can
-keep that selection out of source code. Also **low coupling** and **single responsibility** (event detection vs channel delivery).
+```mermaid
+classDiagram
+    class ChatController {
+        +handle(intent, context)
+    }
+    class HandlerFactory {
+        +create(intent) IntentHandler
+    }
+    class IntentHandler {
+        <<interface>>
+        +execute(context)
+    }
+    class ProductQueryHandler {
+        +execute(context)
+    }
+    class ReplacementHandler {
+        +execute(context)
+    }
+    class RefundHandler {
+        +execute(context)
+    }
+    ChatController --> HandlerFactory
+    ChatController --> IntentHandler
+    HandlerFactory ..> ProductQueryHandler
+    HandlerFactory ..> ReplacementHandler
+    HandlerFactory ..> RefundHandler
+    IntentHandler <|.. ProductQueryHandler
+    IntentHandler <|.. ReplacementHandler
+    IntentHandler <|.. RefundHandler
+```
+
+The factory isolates construction; handlers isolate business behaviour. The underlying shop remains the authority for purchase data and approval.
+
+**(b)(ii)** Model each architecture as components/classes and connectors/dependencies. Compare cohesion within modules, coupling across modules, cycles and change propagation. For example, replacing the shopping API should affect its gateway rather than every handler/view. Lower coupling and higher cohesion generally favour maintainability, but raw class/edge counts alone do not prove architectural quality; compare the same requirements and scenarios.
+
+</details>
+
+#### Q4 — Order inputs and AI-assisted maintenance/testing (25 marks)
+
+**(a)(i) Derive ECs for Product ID, Quantity, Payment Date and Shipping method (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (5).**
+
+<details><summary>Worked answer — Q4(a)</summary>
+
+**Input interpretation.** Product ID must be ASCII; Quantity is a 7-digit integer; Payment Date is between 2010 and 2023; Shipping method is one of `Flat rate`, `Express`, `Next-day Delivery`, `Pickup`, `Others`. Assume a positive 7-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
+
+**(i) Equivalence classes:**
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Product ID | ASCII text | Text containing non-ASCII characters |
+| Quantity | Integer 1000000…9999999 | Integer below 1000000; integer above 9999999; malformed/non-integer input at the input boundary |
+| Payment Date | Real calendar date 2010-01-01…2023-12-31 | Real date before 2010-01-01; real date after 2023-12-31; malformed/nonexistent date |
+| Shipping method | One EC containing {Flat rate, Express, Next-day Delivery, Pickup, Others} | Any unlisted value |
+
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
+
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| Quantity: minimum | 999999 (reject) | 1000000 (accept) | 1000001 (accept) |
+| Quantity: maximum | 9999998 (accept) | 9999999 (accept) | 10000000 (reject) |
+| Payment Date: earliest | 2009-12-31 (reject) | 2010-01-01 (accept) | 2010-01-02 (accept) |
+| Payment Date: latest | 2023-12-30 (accept) | 2023-12-31 (accept) | 2024-01-01 (reject) |
+
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Product ID | Quantity | Payment Date | Shipping method | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `P100` | `1000000` | `2010-01-01` | `Flat rate` | Accept — valid boundaries / category coverage |
+| `P100` | `1000001` | `2010-01-02` | `Express` | Accept — valid boundaries / category coverage |
+| `P100` | `9999998` | `2023-12-30` | `Next-day Delivery` | Accept — valid boundaries / category coverage |
+| `P100` | `9999999` | `2023-12-31` | `Pickup` | Accept — valid boundaries / category coverage |
+| `P100` | `5499999` | `2016-07-01` | `Others` | Accept — interior baseline / category coverage |
+| `非ASCII` | `5499999` | `2016-07-01` | `Flat rate` | Reject — non-ASCII Product ID |
+| `P100` | `999999` | `2016-07-01` | `Flat rate` | Reject — Quantity below minimum |
+| `P100` | `10000000` | `2016-07-01` | `Flat rate` | Reject — Quantity above maximum |
+| `P100` | `5499999` | `2009-12-31` | `Flat rate` | Reject — Payment Date below minimum |
+| `P100` | `5499999` | `2024-01-01` | `Flat rate` | Reject — Payment Date above maximum |
+| `P100` | `5499999` | `2016-07-01` | `Unknown` | Reject — unlisted Shipping method |
+| `P100` | `12x` | `2016-07-01` | `Flat rate` | Reject — malformed integer; extra defensive case |
+| `P100` | `5499999` | `2010-02-30` | `Flat rate` | Reject — nonexistent calendar date; extra defensive case |
+
+</details>
+
+**(b)(i) Use requirement understanding to assist testing (3). (ii) Use code summarisation for testing (3). (iii) Give two maintainability uses (6).**
+
+<details><summary>Worked answer — Q4(b)</summary>
+
+**(i)** Turn requirements into a traceable candidate test catalogue: normal/alternative use-case flows, input ECs/BVs and expected results. Review cases against the actual requirements, then implement automated tests. The company-confirmation rule must not disappear merely because a generated test assumes automatic approval.
+
+**(ii)** Summarise branches, state changes and dependencies to identify candidate unit tests, branch/path cases and integration failures. Compare the code's apparent behaviour with the independently specified intended behaviour; a summary of a bug must not become the test oracle. Run tests and inspect coverage rather than treating generated prose as evidence of execution.
+
+**(iii)** Two useful applications: **program comprehension/documentation**, where code summaries explain responsibilities and dependencies to maintainers; and **change/refactoring assistance**, where candidate patches remove duplication or address a change request, accompanied by regression tests and human review. Generated explanations and patches can be wrong, so validate them against code, requirements and tests. These are applied suggestions, not official marking points or guarantees of an AI product's capabilities.
 
 </details>
 
 ---
 
-**H4. Turn a vague requirement into a testable one, then test it.**
+## 17. Past-year papers — AY2023/24
 
-> "The system must reject suspicious transactions."
+### 17.1 AY2023/24 Semester 1 — DevSecOps platform
 
-(a) Rewrite as a verifiable requirement with a concrete rule. (b) Derive ECs and BVs. (c) Give the
-minimum test set and state which class of bug the tests can and cannot catch.
+**Source:** [Question paper](pyps/SC2006_AY2324_S1_Questions.pdf), Q1–Q4 on PDF pp. 1–3; Appendix A on p. 4. Answers follow the unofficial-answer and diagram conventions in §16.
 
-<details><summary>Answer</summary>
+**Case facts.** A developer supplies a local project or GitHub link. The platform analyses security and quality using four external toolsets: SCA, SAST, DAST and IAST. It generates a report and offers mitigation recommendations. Project-selection help is optional. Developers may rerun selected toolsets to verify fixes and generate reports on request.
 
-**(a)** Proposed rule for client agreement: “For a transaction amount in the supported range
-SGD 0.00–1 000 000.00, the system shall **reject** the transaction when its amount is greater than
-SGD 10 000.00. It shall accept amounts at or below SGD 10 000.00. It shall report out-of-range amounts
-as invalid input.” Assume amounts have two decimal places. This defines an illustrative policy;
-the original word “suspicious” alone does not establish it.
+#### Q1 — Use cases (25 marks)
 
-**(b)** ECs: `0.00 ≤ amount ≤ 10000.00` (Accept),
-`10000.01 ≤ amount ≤ 1000000.00` (Reject), `amount < 0.00` (Invalid),
-`amount > 1000000.00` (Invalid). Around the decision threshold use **9999.99, 10000.00, 10000.01**;
-apply the same ±0.01 step to the supported limits and the adjacent EC endpoint at 10000.01.
+**(a) Actors, use cases and relationships (17). (b) Describe the security-check functionality (8).**
 
-**(c)** Minimum EC-only set has **4 tests**: 100.00 / Accept; 20000.00 / Reject; −0.01 / Invalid;
-1000000.01 / Invalid. For BVs add 0.00, 10000.00, 10000.01 and 1000000.00, keeping their expected
-outcomes distinct; retaining all boundary neighbours gives stronger coverage. EC/BV tests can find
-wrong range checks and off-by-one comparisons. They cannot establish whether this invented policy
-matches the customer's intended definition of suspicious; that requires requirements validation.
+<details><summary>Worked answer — Q1</summary>
 
-</details>
-
----
-
-**H5. Compound condition trap.** For `while (i < n && result <= upperbound)` in Tutorial 9:
-(a) does the short-circuit `&&` change the _CFG-based_ CC? (b) does it change the _number of test cases
-needed for 100% branch coverage_? (c) does it change _MC/DC_? Answer each with justification.
-
-<details><summary>Answer</summary>
-
-**(a)** Short-circuit evaluation affects the graph **when operands are modelled separately**.
-Combined guard: N = 12, E = 14, CC = 4. Split operands: N = 13, E = **16**, CC = 5.
-The formula stays unchanged; the graph abstraction changes. State which one you draw.
-
-**(b)** Branch coverage is relative to that graph. Combined decision coverage needs true and false
-for the whole expression; split coverage also needs both outcomes of each operand when evaluated.
-It does **not automatically require more test calls**. The two tests in §12.9 cover both graphs.
-
-**(c) Extension beyond the supplied testing lectures:** MC/DC asks whether each condition can
-independently change the decision outcome. Write `A = i<n`, `B = result<=upperbound`. Relevant
-evaluations are `(T,T)` (continue), `(F,T)` (exit because **A** is false; Java skips B), and `(T,F)`
-(exit because **B** is false). With short-circuit code, specify the treatment of skipped operands,
-such as masking MC/DC; merely counting whole-expression branches does not establish MC/DC.
-`n = 1, ub = 100` supplies the first two logical states, and `n = 2, ub = 0` supplies `(T,F)` after
-one addition. Several condition evaluations occur in one run, so do not equate condition combinations
-with the number of test calls.
-
-</details>
-
----
-
-**H6. Agile under constraint.** A medical-device firmware team wants to adopt Scrum. The regulator
-requires a complete hazard analysis before any code, a documented trace matrix from requirement to
-test, and a design history file. Advise.
-
-<details><summary>Answer</summary>
-
-Adopt **agile practices selectively, inside a plan-driven envelope**:
-
-- Keep **sprints** (2–4 weeks) for the development work, **backlog** with the product owner as the
-  clinical stakeholder, **daily scrums**, **velocity** tracking.
-- Keep **test-first/automated regression** — this strengthens the trace matrix rather than weakening it
-  (each test is executable evidence).
-- **Do not** adopt "minimal documentation": hazards and the trace matrix _are_ the deliverable. Produce
-  the design history file incrementally — one section per sprint — so it is always current.
-- **Hazard analysis must precede code**: make it an acceptance criterion of sprint 0/epic readiness
-  (a "definition of ready" gate).
-- Recognise the course's own warning: _"agile methods seem to work best when team members have a
-  relatively high skill level"_ and large organisations' quality procedures can be incompatible with
-  agile methods. So expect process tailoring, not off-the-shelf Scrum.
-
-_Marks come from:_ naming the tension (embrace-change vs frozen-evidence), not pretending it away.
-
-</details>
-
----
-
-**H7. From description to sequence diagram.** Draw the sequence diagram for _Accept Grain Arrival_,
-including the manager overruling the system's allocation.
-
-<details><summary>Answer</summary>
-
-Use the complete Mermaid sequence in §14.6: it includes the proposal, optional override,
-mandatory actual-deposit reporting, no-capacity outcome, per-silo loop, log recording and acknowledgement.
-Keep physical unloading outside the tracking software. Show returned acknowledgements through the
-controller and UI. Zero-quantity logging and unknown validation policies remain TBD.
-
-</details>
-
----
-
-**H8. Layering broken.** "In the Excel architecture, `WorkSheet` (app logic layer) calls `LineChart`
-(presentation layer) to refresh. Why is this bad, and how do you fix it without giving the View control
-of the model?"
-
-<details><summary>Answer</summary>
-
-**Why bad:** a **lower layer acquires a compile-time dependency on a higher layer**. Consequences:
-
-- the app-logic layer can no longer be reused with a different presentation (it knows `LineChart`);
-- every new view requires editing `WorkSheet` (**violates OCP**);
-- dependency cycles make unit testing `WorkSheet` require the whole UI;
-- the "layered" claim is now false — the architecture is a directed graph with cycles.
-
-**Fix:** invert the dependency. Define an `Observer` interface in the _lower_ layer (or in a neutral
-package): `WorkSheet` holds `observers: Observer[*]` and calls `notify()`; `LineChart`/`BarChart`
-implement `Observer`. Now `WorkSheet` depends only on the **abstraction it owns**, and the concrete
-views depend on `WorkSheet`'s `getData()` — a **Dependency-Inversion** arrangement.
-
-**Why this does not give the View control of the model:** the View can only `getData()` (read), and
-`update()` is called _by_ the model. Mutations still flow through the Controller → Model. Adding a view
-changes no model code.
-
-_Bonus:_ if views also need different look-and-feel and input behaviour, add **Strategy** (controller /
-LAF) — that is the step from Observer to **MVC**.
-
-</details>
-
----
-
-## 19. Sample questions — Challenging / exam-style
-
-> Difficulty 4: longer, multi-artefact practice. These are original exercises, not supplied exam questions.
-
-### C1. End-to-end case: Bicycle Sharing System (BSS)
-
-> **Background.** A city runs a bicycle-sharing system. Riders register with an email address and a
-> mobile number and must be at least 16 years old. A rider rents a bicycle from any dock and returns it
-> to any dock. Riders pay per trip or buy a monthly pass. The first 30 minutes of a trip are free; each
-> additional 30-minute block (or part thereof) costs $1; a trip longer than 4 hours incurs a flat $50
-> penalty instead. Each dock detects how many bicycles it holds; when a dock reaches zero bicycles the
-> system notifies the operations team. The operations team may rebalance bicycles between docks.
-> Maintenance staff can flag a bicycle as out of service. Riders can view their trip history.
-
-**(a)** Identify actors and use cases; draw the use case diagram; justify one «include» and one «extend».
-**(b)** Write the use case description for **Return Bicycle** (flows, one AF, one EX).
-**(c)** Produce a conceptual class diagram with multiplicities.
-**(d)** Model the **Bicycle** lifecycle as a state machine.
-**(e)** Determine ECs and BVs for **trip duration** and design the test set.
-**(f)** The product owner now wants _new payment methods_ and _new notification channels_, with minimal
-change. Which patterns? Draw the collaboration.
-
-<details><summary>Answer</summary>
-
-**(a) Actors:** Rider, Operations Team and Maintenance Staff. A Payment Gateway or Notification
-Service is an external actor **if** the chosen solution delegates those functions outside the system;
-the background does not mandate a provider. Assume Dock hardware is inside the system.
-
-**Use cases:** Register · Rent Bicycle · Return Bicycle · Pay for Trip · Buy Monthly Pass ·
-View Trip History · Monitor Dock Occupancy · Notify Operations Team · Rebalance Bicycles ·
-Flag Bicycle Out of Service · Calculate Trip Charge.
-
-**«include»:** _Return Bicycle_ **includes** _Calculate Trip Charge_ under the assumption that the
-system computes a charge when a trip ends. Calculation can return $0. Payment settlement and the
-monthly-pass tariff are unspecified; do not assume every return charges a gateway. Account/payment
-provider interactions require an explicit system-boundary assumption.
-
-**«extend»:** _Notify Operations Team_ **extends** _Monitor Dock Occupancy_ — the notification occurs
-only in the specific condition "dock count reaches 0", while monitoring is meaningful on its own.
-
-Do not add Login merely to demonstrate actor generalization; authentication is not specified.
+**(a)** Primary actor: Developer. Supporting actors: external SCA/SAST/DAST/IAST services and GitHub for remote project retrieval. The platform's own scanner coordinator and report store are internal components, not actors.
 
 ```mermaid
 flowchart LR
-    Rider["Actor: Rider"]
-    Ops["Actor: Operations Team"]
-    Maintenance["Actor: Maintenance Staff"]
-    subgraph BSS["Bicycle Sharing System, including dock hardware"]
-        Register([Register])
-        Rent([Rent Bicycle])
-        Return([Return Bicycle])
-        Calculate([Calculate Trip Charge])
-        Pass([Buy Monthly Pass])
-        History([View Trip History])
-        Monitor([Monitor Dock Occupancy])
-        Notify([Notify Operations Team])
-        Rebalance([Rebalance Bicycles])
-        Flag([Flag Bicycle Out of Service])
-    end
-    Rider --- Register
-    Rider --- Rent
-    Rider --- Return
-    Rider --- Pass
-    Rider --- History
-    Ops --- Notify
-    Ops --- Rebalance
-    Maintenance --- Flag
-    Return -.->|«include»| Calculate
-    Notify -.->|«extend»: count reaches zero| Monitor
+    D["Developer"] --- Full(["Run full project analysis"])
+    D --- Recheck(["Recheck with selected toolsets"])
+    D --- Report(["Generate / view report"])
+    D --- Mitigate(["Request mitigation<br/>recommendations"])
+    Full -. "«include»" .-> Select(["Specify local project or<br/>GitHub link"])
+    Recheck -. "«include»" .-> Select
+    Help(["Show project-selection help"]) -. "«extend» [help requested]" .-> Select
+    Full -. "«include»" .-> A(["Run SCA"])
+    Full -. "«include»" .-> B(["Run SAST"])
+    Full -. "«include»" .-> C(["Run DAST"])
+    Full -. "«include»" .-> E(["Run IAST"])
+    Full -. "«include»" .-> Report
+    SCA["External SCA"] --- A
+    SAST["External SAST"] --- B
+    DAST["External DAST"] --- C
+    IAST["External IAST"] --- E
+    G["GitHub"] --- Select
 ```
 
-Mermaid actor boxes stand for UML actors; use ellipses and proper UML dependency arrows in a
-submitted use-case diagram.
+Selected reruns invoke only chosen engines; the diagram's four mandatory includes apply to the **full-analysis** use case. GitHub participates only in the remote-source alternative. Mitigation is available after a report; it need not be automatically included in every scan. Selection help is a genuine optional extension.
 
-**(b) Return Bicycle**
+**(b) Use case: Check Project Security.** Actors: Developer; selected external analysis toolsets; GitHub when applicable. Preconditions: project is accessible; required engines are available/configured. Normal flow:
 
-- **Participating actor:** Rider (**initiating**). Assume Dock hardware is inside the system boundary;
-  it is not an external actor under this choice. Gateway participation depends on a payment policy,
-  which is not specified here.
-- **Entry conditions:** The rider has an active trip; the bicycle is currently rented to that rider.
-- **Exit conditions:** The bicycle is docked and locked at a dock; the trip is closed; the trip charge
-  is computed for the stated per-trip tariff; the trip appears in history. Pass entitlements and
-  settlement timing remain TBD.
+1. Developer specifies local source or a GitHub link; platform obtains the project.
+2. Platform runs all four toolsets for an initial full analysis, or the developer selects toolsets for a verification rerun.
+3. Each selected toolset returns its findings; platform associates results with the project/version and combines them.
+4. Platform generates and displays a security/quality report.
+5. On request, platform supplies mitigation recommendations.
 
-**Normal flow**
+Alternatives: developer requests selection help; inaccessible source produces a corrective message; unsupported/failed/timed-out engine is reported with explicit incomplete status, not a clean result; developer fixes issues and reruns selected checks. Version tagging and incomplete-result status are proposed design details needed for trustworthy results. The paper does not specify a login requirement, so do not invent one as a case fact.
 
-| #   | Actor                                                      | System                                                       |
-| --- | ---------------------------------------------------------- | ------------------------------------------------------------ |
-| 1   | Rides to a dock and inserts the bicycle into an empty slot |                                                              |
-| 2   |                                                            | Detects the bicycle, locks it, records the dock and end time |
-| 3   |                                                            | Computes the trip duration and the charge                    |
-| 4   |                                                            | Includes _Calculate Trip Charge_ for the per-trip tariff      |
-| 5   |                                                            | Closes the trip and displays "Trip closed. Charge: $X."      |
+</details>
 
-**AF-1 (dock full / no empty slot):** 1. Dock displays "No empty slot. Please use another dock." 2. System keeps the trip open and returns to step 1.
+#### Q2 — Analysis and agile (25 marks)
 
-**EX-1 (proposed recovery policy; confirm with client):** if the dock cannot confirm that the bicycle
-is locked, display a fault and leave the trip open for assistance. The background supplies no failure
-policy, so this is an assumption, not a derived requirement. Do not invent account suspension for a
-failed payment.
+**(a) Security-check conceptual classes/stereotypes (8). (b) Activity diagram with swimlanes (8). (c) Explain how incremental development can be plan-driven or agile (4). (d) Why may agile struggle with widely varying team skills? (5).**
 
-**(c) Conceptual classes**
+<details><summary>Worked answer — Q2</summary>
 
-A minimal conceptual model treats Dock as a location containing several bicycles. An active Trip
-has no endDock yet; a dock may be shared across many trips over time.
+**(a)**
 
 ```mermaid
 classDiagram
-    class Rider {
-        email
-        mobile
-        dateOfBirth
+    class ProjectScreen {
+        <<boundary>>
     }
-    class Bicycle {
-        id
-        outOfService
+    class ToolsetGateway {
+        <<boundary>>
     }
-    class Dock {
-        id
-        capacity
+    class SecurityCheckController {
+        <<control>>
     }
-    class Trip {
-        startTime
-        endTime
-        charge
+    class Project {
+        <<entity>>
     }
-    class Pass {
-        validFrom
-        validTo
+    class Scan {
+        <<entity>>
     }
-    Rider "1" -- "0..*" Trip : takes
-    Bicycle "1" -- "0..*" Trip : used in
-    Dock "0..1" -- "0..*" Bicycle : current location
-    Dock "1" -- "0..*" Trip : startDock
-    Dock "0..1" -- "0..*" Trip : endDock
-    Rider "1" -- "0..*" Pass : purchase history
+    class Finding {
+        <<entity>>
+    }
+    class Report {
+        <<entity>>
+    }
+    ProjectScreen --> SecurityCheckController
+    SecurityCheckController --> ToolsetGateway
+    SecurityCheckController --> Project
+    SecurityCheckController --> Scan
+    Project "1" -- "0..*" Scan
+    Scan "1" -- "0..*" Finding
+    Scan "1" -- "0..1" Report
+    Report --> Finding : presents
 ```
 
-Assume a bicycle has at most one current dock and one active trip; those are separate invariants.
-Do not draw both `Bicycle 1 — * Trip` and `Trip 1 — 1 Bicycle`: the latter incorrectly limits each
-bicycle to one trip. The prompt does not require a separate Station or impose one pass per lifetime.
+**(b)** The external tool lane represents selected engines, not people inside the platform. Activities may be scheduled in parallel if dependencies permit; that scheduling is not specified by Appendix A.
 
-**(d) Bicycle state machine**
+```mermaid
+flowchart TD
+    subgraph Developer
+        D1["Specify local project or<br/>GitHub link"]
+        D2["Review report"]
+        D3{"Request mitigation?"}
+        D4["Review recommendations / fix<br/>code"]
+    end
+    subgraph Platform
+        P1{"Need selection help?"}
+        P2["Display help"]
+        P3["Retrieve / validate project"]
+        P4["Select all engines or<br/>requested rerun subset"]
+        P5["Dispatch scans"]
+        P6["Combine results and report<br/>incomplete checks"]
+        P7["Generate report"]
+        P8["Generate mitigation<br/>recommendations"]
+        EndNode(("End"))
+    end
+    subgraph Tools["External analysis toolsets"]
+        T1["Run selected SCA / SAST / DAST<br/>/ IAST checks"]
+    end
+    D1 --> P1
+    P1 -->|Yes| P2 --> D1
+    P1 -->|No| P3 --> P4 --> P5 --> T1 --> P6 --> P7 --> D2 --> D3
+    D3 -->|Yes| P8 --> D4
+    D3 -->|No| EndNode
+    D4 -->|Verify fixes| P4
+    StartNode(("Start")) --> D1
+    D4 -->|Finish| EndNode
+```
+
+**(c)** Incremental describes delivering the system in portions. Plan-driven/agile describes how requirements, planning and change are managed. A plan-driven project may specify and schedule all increments in advance; an agile project may reprioritise increment content using frequent feedback. Therefore incremental does not automatically mean agile.
+
+**(d)** Agile relies on collaboration, self-organisation, shared ownership and frequent integration. A large skill gap can produce inconsistent quality, poor estimates, dependence on experts and integration rework; less experienced members may need more guidance than a lightly prescribed process provides. Pairing, mentoring, shared standards, smaller work items and automated tests can reduce these problems. Skill diversity is not inherently incompatible with agile; unsupported differences in capability are the risk.
+
+</details>
+
+#### Q3 — Quality attributes and architecture (25 marks)
+
+**(a)(i) Important NFRs (6); (ii) detailed architecture/classes addressing them (8). (b)(i) Combined-pattern scenario/classes (6); (ii) can AI design software architectures? (5).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)(i)** Defensible priorities are **security/confidentiality** of submitted source and isolated tool execution; **extensibility/interoperability** for different analysis engines; and **performance/reliability** so long-running or failed scans do not freeze the interface or corrupt reports. These are reasoned priorities, not measured requirements supplied by the paper. Agree measurable workload/latency, isolation and failure-recovery criteria with stakeholders rather than inventing guaranteed numbers.
+
+**(a)(ii)** Use layered presentation/application/domain components plus plug-in engine boundaries. A scan coordinator implements a Facade for the UI; a stable Engine interface supports replacement tool adapters. Proposed queued jobs and isolated execution address responsiveness and fault containment.
+
+```mermaid
+classDiagram
+    class ScanView {
+        +submitProject(source)
+        +showStatus(jobId)
+        +showReport(reportId)
+    }
+    class ScanCoordinator {
+        +submit(project, engineNames)
+        +getStatus(jobId)
+        +buildReport(jobId)
+    }
+    class ScanJob {
+        +id
+        +projectVersion
+        +status
+        +recordResult(result)
+    }
+    class Engine {
+        <<interface>>
+        +scan(project) ScanResult
+    }
+    class SCAAdapter {
+        +scan(project)
+    }
+    class SASTAdapter {
+        +scan(project)
+    }
+    class DASTAdapter {
+        +scan(project)
+    }
+    class IASTAdapter {
+        +scan(project)
+    }
+    class Report {
+        +findings
+        +incompleteEngines
+        +render()
+    }
+    ScanView --> ScanCoordinator
+    ScanCoordinator --> ScanJob
+    ScanCoordinator --> Engine
+    ScanJob --> Report
+    Engine <|.. SCAAdapter
+    Engine <|.. SASTAdapter
+    Engine <|.. DASTAdapter
+    Engine <|.. IASTAdapter
+```
+
+Isolate source access and credentials at adapter/execution boundaries; apply timeouts and preserve partial-failure information. Adding an engine should add an adapter rather than change UI or report-domain rules. These choices directly connect the architecture to the proposed NFRs.
+
+**(b)(i)** Combine Strategy and Simple Factory: engines share the Engine contract while an EngineFactory creates configured adapters. ScanCoordinator uses the resulting strategies without knowing their concrete classes.
+
+```mermaid
+classDiagram
+    class ScanCoordinator {
+        +submit(project, engineNames)
+    }
+    class EngineFactory {
+        +create(name) Engine
+    }
+    class Engine {
+        <<interface>>
+        +scan(project)
+    }
+    class SASTAdapter {
+        +scan(project)
+    }
+    class SCAAdapter {
+        +scan(project)
+    }
+    ScanCoordinator --> EngineFactory
+    ScanCoordinator --> Engine
+    EngineFactory ..> SASTAdapter
+    EngineFactory ..> SCAAdapter
+    Engine <|.. SASTAdapter
+    Engine <|.. SCAAdapter
+```
+
+Factory handles construction; Strategy handles interchangeable behaviour. Add DAST/IAST adapters using the same relationships as in Q3(a).
+
+**(b)(ii)** AI can assist: extract candidate requirements/quality attributes, propose architecture alternatives and diagrams, and suggest trade-offs. It cannot establish missing stakeholder priorities or prove that a proposed architecture satisfies security, throughput or integration constraints. It may invent interfaces and overlook failure modes. Supply requirements and constraints, review traceability, compare alternatives, and validate risky decisions with prototypes/tests and responsible human review. Treat the result as a candidate architecture, not authoritative evidence of fitness.
+
+</details>
+
+#### Q4 — Project inputs and testing strategy (25 marks)
+
+**(a)(i) Derive ECs for Project ID, Scan Time Limit (minutes), Last Commit Date and Scan Engines (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (5).**
+
+<details><summary>Worked answer — Q4(a)</summary>
+
+**Input interpretation.** Project ID must be ASCII; Scan Time Limit (minutes) is a 6-digit integer; Last Commit Date is between 2000 and 2023; Scan Engines is one of `SAST`, `SCA`, `DAST`, `IAST`, `All Engines`. Assume a positive 6-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
+
+**(i) Equivalence classes:**
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Project ID | ASCII text | Text containing non-ASCII characters |
+| Scan Time Limit (minutes) | Integer 100000…999999 | Integer below 100000; integer above 999999; malformed/non-integer input at the input boundary |
+| Last Commit Date | Real calendar date 2000-01-01…2023-12-31 | Real date before 2000-01-01; real date after 2023-12-31; malformed/nonexistent date |
+| Scan Engines | One EC containing {SAST, SCA, DAST, IAST, All Engines} | Any unlisted value |
+
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
+
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| Scan Time Limit (minutes): minimum | 99999 (reject) | 100000 (accept) | 100001 (accept) |
+| Scan Time Limit (minutes): maximum | 999998 (accept) | 999999 (accept) | 1000000 (reject) |
+| Last Commit Date: earliest | 1999-12-31 (reject) | 2000-01-01 (accept) | 2000-01-02 (accept) |
+| Last Commit Date: latest | 2023-12-30 (accept) | 2023-12-31 (accept) | 2024-01-01 (reject) |
+
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Project ID | Scan Time Limit (minutes) | Last Commit Date | Scan Engines | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `PROJ1` | `100000` | `2000-01-01` | `SAST` | Accept — valid boundaries / category coverage |
+| `PROJ1` | `100001` | `2000-01-02` | `SCA` | Accept — valid boundaries / category coverage |
+| `PROJ1` | `999998` | `2023-12-30` | `DAST` | Accept — valid boundaries / category coverage |
+| `PROJ1` | `999999` | `2023-12-31` | `IAST` | Accept — valid boundaries / category coverage |
+| `PROJ1` | `549999` | `2011-07-01` | `All Engines` | Accept — interior baseline / category coverage |
+| `非ASCII` | `549999` | `2011-07-01` | `SAST` | Reject — non-ASCII Project ID |
+| `PROJ1` | `99999` | `2011-07-01` | `SAST` | Reject — Scan Time Limit (minutes) below minimum |
+| `PROJ1` | `1000000` | `2011-07-01` | `SAST` | Reject — Scan Time Limit (minutes) above maximum |
+| `PROJ1` | `549999` | `1999-12-31` | `SAST` | Reject — Last Commit Date below minimum |
+| `PROJ1` | `549999` | `2024-01-01` | `SAST` | Reject — Last Commit Date above maximum |
+| `PROJ1` | `549999` | `2011-07-01` | `Unknown` | Reject — unlisted Scan Engines |
+| `PROJ1` | `12x` | `2011-07-01` | `SAST` | Reject — malformed integer; extra defensive case |
+| `PROJ1` | `549999` | `2000-02-30` | `SAST` | Reject — nonexistent calendar date; extra defensive case |
+
+</details>
+
+**(b) Apply unit, integration, system and acceptance testing to the platform (8). (c) Design projects that exercise the four engines (4).**
+
+<details><summary>Worked answer — Q4(b–c)</summary>
+
+**(b)** Unit: test validators, result parsers and report aggregation with tool doubles. Integration: test source retrieval, each real tool adapter, result interchange and timeout/error handling. System: run an end-to-end local/GitHub submission through scans, report and mitigation, including selected reruns and partial failures. Acceptance: developers evaluate agreed workflows and quality criteria on representative projects, checking that reports are useful and findings trace to source/version. Begin test design early and automate regression checks; one level cannot substitute for all others.
+
+**(c)** Prepare controlled projects with known ground truth and clean counterparts: vulnerable dependency/component for SCA; a known insecure code construct for SAST; a safely deployed application with an observable runtime vulnerability for DAST; an instrumented test application exercising a known vulnerable path for IAST. Check detection, location, severity/report mapping and absence of false positives on corrected versions. Include unsupported inputs, tool failure and mixed-engine cases. Run intentionally vulnerable fixtures only in an isolated test environment. “Found at least one issue” alone is not a sufficient oracle.
+
+</details>
+
+### 17.2 AY2023/24 Semester 2 — CodeAgent
+
+**Source:** [Question paper](pyps/SC2006_AY2324_S2_Questions.pdf), Q1–Q4 on PDF pp. 1–4; Appendix A on p. 5.
+
+**Case facts.** Seven internal agents are User, CEO, CPO, CTO, Reviewer, Coder and QA-Checker. The first six correspond to user roles; users log in to interact with the corresponding agents. Code review recognises input modality/language; Reviewer checks commit-message consistency, vulnerability injection and formatting; Coder revises code; Coder/CTO/CEO summarise the work. Paired agents converse under QA-Checker supervision until the answer is appropriate or a dialogue limit is reached. Logs/reports are generated on request.
+
+#### Q1 — Use cases (25 marks)
+
+**(a) Actors/use cases/relationships (19). (b) Reviewer-agent use case description (6).**
+
+<details><summary>Worked answer — Q1</summary>
+
+**(a)** With the **whole CodeAgent platform** as the system boundary, agents are internal software, not external human actors. Model the six corresponding external user roles and their authenticated interactions. Appendix wording is unusual; this boundary/role interpretation is explicit rather than silently treating every program as an actor.
+
+```mermaid
+flowchart LR
+    U["User-role human"] --- Login(["Log in"])
+    U --- Review(["Request code review"])
+    U --- Logs(["Request conversation logs"])
+    U --- Reports(["Request review report"])
+    CEO["CEO-role human"] --- Summary(["Review summary /<br/>supervise review work"])
+    CPO["CPO-role human"] --- Identify(["Recognise input<br/>modality and language"])
+    CTO["CTO-role human"] --- Summary
+    RH["Reviewer-role human"] --- Analyse(["Perform review analysis"])
+    CH["Coder-role human"] --- Revise(["Revise incorrect code"])
+    Review -. "«include»" .-> Identify
+    Review -. "«include»" .-> Analyse
+    Review -. "«include»" .-> Summary
+    Revise -. "«extend» [incorrect snippets]" .-> Review
+```
+
+Detail view of the same **Perform review analysis** use case:
+
+```mermaid
+flowchart TD
+    Analyse(["Perform review analysis"]) -. "«include»" .-> CA(["Check commit / message consistency"])
+    Analyse -. "«include»" .-> VA(["Check vulnerability injection"])
+    Analyse -. "«include»" .-> FA(["Check format consistency"])
+    Analyse -. "«include»" .-> Converse(["Collaborate through<br/>paired conversation"])
+    Converse -. "«include»" .-> QA(["Assess answer and refine<br/>question if needed"])
+```
+
+All six role users can log in, interact with their corresponding agents, and request permitted outputs; show generalization to a common Authenticated User actor in exact UML rather than implying that only User-role humans log in. Internal CEO/CPO/Coder collaboration and Coder/CTO/CEO summarisation occur through agent orchestration; external users need not manually perform every subtask. QA-Checker needs no extra human actor.
+
+**(b) Use case: Review Submitted Code.** Primary actor: authenticated requesting user/Reviewer-role user, according to the interface boundary chosen above. Preconditions: commit, commit message and original files are available; prior input recognition identifies modality/language. Flow: submit review request; Reviewer obtains code/context with Coder's help; analyse commit-message consistency, introduced vulnerabilities and formatting; conduct supervised conversations where needed; create an analysis report with observations and suggested revisions; provide it to Coder/user. Alternatives: missing/unreadable inputs, ask for correction; inappropriate answers, QA-Checker appends instructions and retries within the limit; limit exhausted, report unresolved/incomplete analysis rather than claiming success. Coder's subsequent revision is conditional on finding incorrect snippets.
+
+</details>
+
+#### Q2 — Reviewer analysis, QA states and process (25 marks)
+
+**(a) Reviewer conceptual classes/stereotypes (9). (b) QA-Checker state machine (7). (c) Two ways plan-driven projects can handle changing requirements (4). (d) Importance of Scrum velocity (5).**
+
+<details><summary>Worked answer — Q2</summary>
+
+**(a)**
+
+```mermaid
+classDiagram
+    class ReviewScreen {
+        <<boundary>>
+    }
+    class ReviewController {
+        <<control>>
+    }
+    class ReviewerAgent {
+        <<control>>
+    }
+    class CoderAgent {
+        <<control>>
+    }
+    class QAChecker {
+        <<control>>
+    }
+    class ReviewRequest {
+        <<entity>>
+    }
+    class Conversation {
+        <<entity>>
+    }
+    class AnalysisReport {
+        <<entity>>
+    }
+    ReviewScreen --> ReviewController
+    ReviewController --> ReviewRequest
+    ReviewController --> ReviewerAgent
+    ReviewerAgent --> CoderAgent
+    ReviewerAgent --> QAChecker
+    ReviewRequest "1" -- "0..*" Conversation
+    QAChecker --> Conversation
+    ReviewRequest "1" -- "0..1" AnalysisReport
+```
+
+Agents coordinate behaviour; they are not merely stored domain records. ReviewRequest groups commit, message and original files. Report is absent before completion; unresolved status is possible.
+
+**(b)** Let `n` count answers received and `max` be the configured maximum dialogue count. Assume `max ≥ 1`. On the first received answer set `n=1`.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> InDock
-    InDock --> InUse : rent() [not outOfService]
-    InUse --> InDock : return()
-    note right of InDock
-        Maintenance can set outOfService.
-        Renting requires outOfService = false.
-    end note
-    note right of InUse
-        An outOfService flag does not itself end a trip.
-    end note
+    [*] --> AwaitingFirstAnswer
+    AwaitingFirstAnswer --> Checking : answer received / n = 1
+    Checking --> Accepted : [answer appropriate]
+    Checking --> Refining : [inappropriate and n < max]
+    Refining --> AwaitingNextAnswer : append instructions to original question and send
+    AwaitingNextAnswer --> Checking : answer received / n = n + 1
+    Checking --> LimitReached : [inappropriate and n >= max]
+    Accepted --> [*]
+    LimitReached --> [*]
 ```
 
-Use **location state** plus an **outOfService attribute**: the prompt does not forbid maintenance
-flagging a rented bicycle. No 24-hour lost-bike rule, repair workflow or automatic penalty on loss is
-specified. Initial placement at a dock is a model assumption.
+Accept an appropriate answer even on the last permitted round. LimitReached means unresolved, not accepted. This models supervision of **one conversation**; a new conversation starts a new instance/reset.
 
-**(e) Trip duration ECs and BVs**
+**(c)** First, use prototypes/early reviews to expose changes before costly downstream work and deliver planned increments to get earlier feedback. Second, use change control: record requests, analyse impacts, obtain stakeholder approval, revise baselines/schedule/budget, and update affected design/tests. Simply ignoring changes or accepting them without replanning does not resolve the problem.
 
-Assume duration is measured in **whole minutes**, and use the **per-trip** tariff. The prompt does
-not give a maximum duration or monthly-pass charging policy. Negative duration needs a validation
-policy; do not invent a named error code.
-
-| EC | Duration (minutes) | Charge |
-| --- | --- | --- |
-| E1 | 0–30 | $0 |
-| E2 | 31–60 | $1 |
-| E3 | 61–90 | $2 |
-| E4 | 91–120 | $3 |
-| E5 | 121–150 | $4 |
-| E6 | 151–180 | $5 |
-| E7 | 181–210 | $6 |
-| E8 | 211–240 | $7 |
-| E9 | ≥241 | $50 flat, replacing the per-block charge |
-| Invalid | <0 | Validation response TBD |
-
-`31–240` is **not one same-output EC**: the price changes at each block. For `30 < d ≤ 240`, use
-`ceil((d−30)/30)` dollars; for `d > 240`, use $50. Derive full ±1 triplets at each finite EC boundary.
-The reduced course selection uses each interval endpoint; this table checks both sides of every
-price change and the zero lower limit:
-
-| Durations | Expected charges in matching order |
-| --- | --- |
-| −1, 0, 1 | TBD invalid handling, $0, $0 |
-| 29, 30, 31 | $0, $0, $1 |
-| 59, 60, 61 | $1, $1, $2 |
-| 89, 90, 91 | $2, $2, $3 |
-| 119, 120, 121 | $3, $3, $4 |
-| 149, 150, 151 | $4, $4, $5 |
-| 179, 180, 181 | $5, $5, $6 |
-| 209, 210, 211 | $6, $6, $7 |
-| 239, 240, 241 | $7, $7, $50 |
-| 1440, 1441 | $50, $50: no upper duration limit is stated |
-
-The separate registration age boundary is 15/16/17 for whole-year input. For elapsed-time inputs
-with seconds, use the specified resolution rather than silently rounding a part-minute down.
-
-**(f) Extensibility**
-
-- **Strategy** — `PaymentStrategy` (`CardPayment`, `PayPalPayment`, `WalletPayment`) and
-  `NotificationStrategy` (`SMS`, `Email`, `Push`). Varying behaviour, selected at runtime.
-- **Factory** — `PaymentStrategyFactory`, `NotificationStrategyFactory`; the concrete class is chosen
-  from configuration/preference, and the client never names it.
-- **Observer** — `Dock` (Subject) notifies `OperationsTeam` (Observer) when count reaches 0, so new
-  listeners (dashboard, pager) plug in without touching `Dock`.
-- _(Defensible extras: **Composite** for "SMS + email", **State** for Bicycle lifecycle.)_
-
-Collaboration sketch:
-
-```mermaid
-flowchart LR
-    R[Rider] --> BC[BookingCtl]
-    BC -->|uses| PS["«interface» PaymentStrategy"]
-    CP[CardPayment] -.->|implements| PS
-    WP[WalletPayment] -.->|implements| PS
-    BC -->|creates via| PF[PaymentStrategyFactory]
-    PF --> PS
-    DK["Dock (Subject)"] -->|"notify()"| OB["«interface» Observer"]
-    OT[OperationsTeam] -.->|implements| OB
-    DB[Dashboard] -.->|implements| OB
-```
+**(d)** Velocity measures completed backlog effort per sprint and helps forecast capacity, select feasible sprint scope, estimate remaining sprints and detect planning mismatches. For example, 60 remaining points at a stable 15 points/sprint suggests about four sprints before uncertainty/new scope. It is team-specific and must exclude incomplete work. Inspect trends and capacity changes; increasing point estimates is not increased productivity.
 
 </details>
 
----
+#### Q3 — Extending CodeAgent and architecture (25 marks)
 
-### C2. Spot the design flaws
+**(a)(i) Two additional agent roles (3); (ii) one important NFR (3); (iii) detailed architecture addressing it (8). (b)(i) Combined-pattern scenario/classes (6); (ii) can CodeAgent replace development teams? (5).**
 
-```java
-class ReportGenerator {
-    void generate(String type) {
-        if (type.equals("PDF"))       new PdfReport().render();
-        else if (type.equals("CSV"))  new CsvReport().render();
-        else if (type.equals("HTML")) new HtmlReport().render();
-    }
-}
-```
+<details><summary>Worked answer — Q3</summary>
 
-(a) Which principle is violated, and how? (b) Refactor with a pattern and draw it. (c) After the
-refactor, what problem remains? (d) How do you unit-test the refactored design, and what does the
-original make impossible?
+**(a)(i)** A **Test Engineer agent** creates/executes candidate regression tests and reports evidence; a **Requirements Analyst agent** clarifies requests and checks traceability between requirements and reviewed changes. These are proposed additions, distinct from the existing conversation-focused QA-Checker.
 
-<details><summary>Answer</summary>
+**(a)(ii)** Choose **extensibility/maintainability**: new agent roles and analysis strategies should be addable without changing all existing agents. The request to introduce roles makes this a defensible priority; correctness/security would also require attention in a real platform.
 
-**(a)** **Open–Closed Principle**: adding `XMLReport` requires **modifying** `ReportGenerator`. Also
-**SRP** (the class both selects and renders) and **DIP** (it depends on three concrete classes).
-
-**(b)** **Strategy**:
+**(a)(iii)** Use layered UI/orchestration/domain boundaries with plug-in agents. A coordinator schedules phases and supervised conversations; agents implement a common contract; configuration/registry selects roles. This avoids hard-coded peer dependencies throughout the UI.
 
 ```mermaid
 classDiagram
-    class ReportGenerator {
-        <<Context>>
-        +generate(r:ReportRenderer)
+    class ReviewUI {
+        +submit(commit, message, files)
+        +showReport(id)
     }
-    class ReportRenderer {
+    class ReviewCoordinator {
+        +start(request)
+        +runPhase(phase)
+        +summarise(request)
+    }
+    class Agent {
         <<interface>>
+        +respond(question, context)
+    }
+    class RoleAgent {
+        +role
+        +respond(question, context)
+    }
+    class AgentRegistry {
+        +register(role, agent)
+        +get(role) Agent
+    }
+    class Conversation {
+        +instructorRole
+        +assistantRole
+        +roundCount
+        +maxRounds
+        +record(message)
+    }
+    class QAChecker {
+        +assess(question, answer)
+        +refine(question, answer)
+    }
+    class ReviewReport {
+        +observations
+        +unresolvedItems
         +render()
     }
-    class Pdf
-    class Csv
-    class Html
-    ReportGenerator --> ReportRenderer : uses
-    ReportRenderer <|.. Pdf
-    ReportRenderer <|.. Csv
-    ReportRenderer <|.. Html
+    ReviewUI --> ReviewCoordinator
+    ReviewCoordinator --> AgentRegistry
+    ReviewCoordinator --> Conversation
+    ReviewCoordinator --> ReviewReport
+    AgentRegistry --> Agent
+    Agent <|.. RoleAgent
+    Conversation --> QAChecker
+    Conversation --> Agent : instructor and assistant
 ```
 
-`generate(ReportRenderer r) { r.render(); }` — `ReportGenerator` is now **closed for modification**.
-If selection must stay inside the generator, add a **Factory**: `RendererFactory.create(type)` — that
-centralises the one place that knows the mapping (and is the only place to edit for a new type).
+Configure RoleAgent for User/CEO/CPO/CTO/Reviewer/Coder, or add new Agent implementations. Persist logs and preserve unresolved status when conversation limits are reached. The registry approach supports the chosen extensibility NFR; storage and orchestration should not depend on one concrete role.
 
-**(c)** Someone must still map `"PDF"` → `PdfRenderer`. With **Strategy only**, that switch moves to
-the _client_ (`new PdfReport()` at call sites) — the OCP violation relocates rather than disappears.
-A Factory centralises construction; a registry/dynamic loader can move type selection to
-configuration. A switch-based Factory still changes when a new renderer is added, so it does not
-make the whole application automatically closed to modification.
+**(b)(i)** Combine Strategy for analysis methods with Simple Factory for constructing the requested checks:
 
-**(d)** Testing: inject a **fake/stub** `ReportRenderer` and assert `generate` calls `render()` exactly
-once — no file system, no PDF library. The original's `new PdfReport()` **hard-wires construction**, so
-you cannot substitute a test double through ordinary injection: ordinary dependency injection cannot substitute a renderer without changing the code.
-Integration tests remain possible; instrumentation/mocking of construction is an additional tooling
-option, not something this course example needs. This is the **testability** consequence of the DIP violation.
-
-</details>
-
----
-
-### C3. Are these tests adequate?
-
-```java
-1  double price = 100;
-2  if (age < 12 || age >= 65) {
-3      price = price * 0.7;
-4  } else if (member) {
-5      price = price * 0.9;
-6  }
-7  return price;
+```mermaid
+classDiagram
+    class ReviewerAgent {
+        +review(request)
+    }
+    class CheckFactory {
+        +create(kind) ReviewCheck
+    }
+    class ReviewCheck {
+        <<interface>>
+        +analyse(request)
+    }
+    class ConsistencyCheck {
+        +analyse(request)
+    }
+    class VulnerabilityCheck {
+        +analyse(request)
+    }
+    class FormatCheck {
+        +analyse(request)
+    }
+    ReviewerAgent --> CheckFactory
+    ReviewerAgent --> ReviewCheck
+    CheckFactory ..> ConsistencyCheck
+    CheckFactory ..> VulnerabilityCheck
+    CheckFactory ..> FormatCheck
+    ReviewCheck <|.. ConsistencyCheck
+    ReviewCheck <|.. VulnerabilityCheck
+    ReviewCheck <|.. FormatCheck
 ```
 
-Test set: `(30, true) → 90`, `(10, false) → 70`, `(70, false) → 70`.
+Reviewer's three analyses retain separate responsibilities, while creation is centralised. A new check can be registered without duplicating the review workflow.
 
-(a) Statement coverage? (b) Branch coverage? (c) Which behaviour is untested? (d) Give the missing test
-and one EC/BV table for `age`.
+**(b)(ii)** CodeAgent can automate review/revision tasks and assist people, but the described system does not replace the full responsibilities of a development team. Stakeholder negotiation, ambiguous requirements, architecture trade-offs, independent validation, deployment/operations and accountability remain. Agent agreement or an “appropriate” conversation does not prove correct software. Use reviewed outputs, deterministic tests and human decisions for consequential changes. Avoid equating automated code review with complete autonomous development.
 
-<details><summary>Answer</summary>
+</details>
 
-**(a) 100% statement coverage** — nodes 1, 2, 3, 4, 5, 7 are all executed.
+#### Q4 — Inputs, QA effectiveness and evolution (25 marks)
 
-**(b) Branch coverage is NOT 100%.** The inner `else if (member)` has a **false** edge (straight to
-node 7) that is never taken: `age = 10` and `age = 70` both exit at node 3 (the outer condition is true
-and short-circuits), and `age = 30` takes the `member == true` edge. So the "not a member, not a
-senior/child" combination is never exercised. _(This is the short-circuit trap: the second operand of
-`||` is not evaluated when the first is true.)_
+**(a)(i) Derive ECs for Project Description, Development Time Limit (minutes), Launch Date and Application Type (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (7).**
 
-**(c) The full-price path** — an adult non-member paying $100 — is never asserted. A fault that
-returns 90 instead of 100 **only when `member` is false** survives these tests. Inverting the member
-test would **not** survive: `(30, true)` would fail.
+<details><summary>Worked answer — Q4(a)</summary>
 
-**(d)** Add `(30, false) → 100`.
+**Input interpretation.** Project Description must be ASCII; Development Time Limit (minutes) is a 4-digit integer; Launch Date is between 2000 and 2026; Application Type is one of `Desktop Application`, `Web Site`, `Mobile App`, `AI Application`, `All Types`. Assume a positive 4-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
 
-EC/BV for `age` under the **additional assumption** that supported ages are 0–120:
+**(i) Equivalence classes:**
 
-| EC      | Range          | Output band     |
-| ------- | -------------- | --------------- |
-| valid   | 0 ≤ age ≤ 11   | child discount  |
-| valid   | 12 ≤ age ≤ 64  | no age discount |
-| valid   | 65 ≤ age ≤ 120 | senior discount |
-| invalid | age ≤ −1       | invalid input   |
-| invalid | age ≥ 121      | invalid input   |
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Project Description | ASCII text | Text containing non-ASCII characters |
+| Development Time Limit (minutes) | Integer 1000…9999 | Integer below 1000; integer above 9999; malformed/non-integer input at the input boundary |
+| Launch Date | Real calendar date 2000-01-01…2026-12-31 | Real date before 2000-01-01; real date after 2026-12-31; malformed/nonexistent date |
+| Application Type | One EC containing {Desktop Application, Web Site, Mobile App, AI Application, All Types} | Any unlisted value |
 
-State triplets at 0, 11, 12, 64, 65 and 120. The course's reduced valid BV set is
-**{0, 11, 12, 64, 65, 120}**, with invalid values **{−1, 121}** under that age-range assumption. The
-`<` / `>=` operators in the code make **12** and **65** the decisive values.
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
 
-**Lesson to write down:** 100% statement ≠ 100% branch ≠ correct. Use white-box for structure,
-black-box (EC/BV) for boundaries, and neither proves the requirement is right.
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| Development Time Limit (minutes): minimum | 999 (reject) | 1000 (accept) | 1001 (accept) |
+| Development Time Limit (minutes): maximum | 9998 (accept) | 9999 (accept) | 10000 (reject) |
+| Launch Date: earliest | 1999-12-31 (reject) | 2000-01-01 (accept) | 2000-01-02 (accept) |
+| Launch Date: latest | 2026-12-30 (accept) | 2026-12-31 (accept) | 2027-01-01 (reject) |
+
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Project Description | Development Time Limit (minutes) | Launch Date | Application Type | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `Build service` | `1000` | `2000-01-01` | `Desktop Application` | Accept — valid boundaries / category coverage |
+| `Build service` | `1001` | `2000-01-02` | `Web Site` | Accept — valid boundaries / category coverage |
+| `Build service` | `9998` | `2026-12-30` | `Mobile App` | Accept — valid boundaries / category coverage |
+| `Build service` | `9999` | `2026-12-31` | `AI Application` | Accept — valid boundaries / category coverage |
+| `Build service` | `5499` | `2013-07-01` | `All Types` | Accept — interior baseline / category coverage |
+| `非ASCII` | `5499` | `2013-07-01` | `Desktop Application` | Reject — non-ASCII Project Description |
+| `Build service` | `999` | `2013-07-01` | `Desktop Application` | Reject — Development Time Limit (minutes) below minimum |
+| `Build service` | `10000` | `2013-07-01` | `Desktop Application` | Reject — Development Time Limit (minutes) above maximum |
+| `Build service` | `5499` | `1999-12-31` | `Desktop Application` | Reject — Launch Date below minimum |
+| `Build service` | `5499` | `2027-01-01` | `Desktop Application` | Reject — Launch Date above maximum |
+| `Build service` | `5499` | `2013-07-01` | `Unknown` | Reject — unlisted Application Type |
+| `Build service` | `12x` | `2013-07-01` | `Desktop Application` | Reject — malformed integer; extra defensive case |
+| `Build service` | `5499` | `2000-02-30` | `Desktop Application` | Reject — nonexistent calendar date; extra defensive case |
+
+</details>
+
+**(b) Improve QA-Checker with course testing techniques (6). (c) Extend CodeAgent for maintenance/evolution (4).**
+
+<details><summary>Worked answer — Q4(b–c)</summary>
+
+**(b)** Derive EC/BV tests from requirements for candidate code, including invalid inputs and limits. Generate normal/alternative scenario tests and independently reviewed expected outputs. Use structural analysis for branch/basis-path coverage where code is available, then run unit, integration and system tests in isolation. Regression suites compare revised code with required existing behaviour; known-defect fixtures check whether the agent detects real issues. Record actual results/coverage and return failures to Coder. QA-Checker must distinguish conversational relevance from executable correctness; generated tests and oracles need review because agents may share the same mistake.
+
+**(c)** Add versioned change requests and impact analysis linking requirements, affected components and tests. Maintain code/documentation/version history and decision logs. Let maintenance agents propose patches/refactorings, run regression and compatibility tests, and require review before acceptance. Update reports/documentation and retain a rollback path. These additions support continuing evolution rather than regenerating the entire project without preserving behaviour.
 
 </details>
 
 ---
 
-### C4. "MVC breaks layering — discuss." (8 marks)
+## 18. Past-year papers — AY2024/25
 
-<details><summary>Answer</summary>
+### 18.1 AY2024/25 Semester 1 — Collaborative task management
 
-**Both true, at different granularities.**
+**Source:** [Question paper](pyps/SC2006_AY2425_S1_Questions.pdf), Q1–Q4 on PDF pp. 1–3; Appendix A on p. 4. Answers remain unofficial; diagram conventions are in §16.
 
-_The claim "MVC breaks layering" is defensible_ because the MVC collaboration is **triangular**:
+**Case facts.** Registered users log in; access is role based. Members create tasks; team leaders/project managers verify and assign them to an individual or team, setting deadlines/milestones. Tasks have categories, priorities and tags. Reassignment is allowed, but a task cannot have two assignments simultaneously. Finished tasks can be updated/deleted. Chat, comments and documents support collaboration; dashboards show progress/overdue work/workloads; email and in-app notifications cover deadlines, upcoming tasks and priority changes, with configurable alerts.
 
-- the **Model** notifies the **View** (`notify()` → `update()`), which is a **lower-layer → upper-layer
-  up-call**;
-- the **View** calls the **Controller** (`handleEvent` delegation) and the Controller calls back into
-  the Model — dependencies are not a strict DAG.
+#### Q1 — Use cases (25 marks)
 
-A pure layered style permits only downward calls, so a literal reading says MVC is **not layered**.
+**(a) Actors/use cases/relationships (19). (b) Task-assignment use case with actors, preconditions and alternative flows (6).**
 
-_But MVC does not lose the benefits of layering_ because:
+<details><summary>Worked answer — Q1</summary>
 
-1. The up-call is made **through an abstraction owned by the lower layer** (`Observer` interface), so
-   the Model has no compile-time knowledge of any concrete View. This is **dependency inversion**, and
-   this removes the Model-to-concrete-View dependency. Acyclicity of the entire class graph still
-   depends on how all interfaces and references are arranged; MVC alone does not guarantee it.
-2. The **separation of concerns** that layering is _for_ — presentation vs logic vs data — is preserved
-   and strengthened: that is exactly why the course says MVC gives **high cohesion** and **low
-   coupling**.
-3. The model does not depend on any particular number, type or identity of views — the Open–Closed
-   Principle holds for new views.
+**(a)** Actors: Team Member, Team Leader, Project Manager and external Email Server. Leaders/managers have member capabilities; model actor generalization in UML. The dashboard and notification subsystem are internal, not actors.
 
-**Verdict to write:** MVC is best described as an **architectural style for interactive systems** that
-_uses_ layered separation but replaces the strict "downward calls only" constraint with a
-**publish–subscribe connector** (Observer) plus a **Strategy** connector between View and Controller.
-Calling it "not layered" is a terminology argument, not a design defect; the design goal (replaceable
-presentation, reusable core) is met.
+```mermaid
+flowchart LR
+    M["Team member"] --- Account(["Register / log in"])
+    M --- Create(["Create task"])
+    M --- Collaborate(["Chat / comment / share<br/>documents"])
+    M --- Progress(["Record / monitor task progress"])
+    M --- AlertConfig(["Configure reminders"])
+    M --- Notify(["Receive notifications"])
+    L["Team leader / project manager<br/>also member capabilities"] --- Assign(["Assign / reassign task"])
+    L --- Dash(["View progress, overdue tasks<br/>and workload"])
+    M --- Finished(["Update / delete finished task"])
+    Assign -. "«include»" .-> Verify(["Verify task and assignment<br/>authority"])
+    Assign -. "«include»" .-> Deadline(["Set deadline / milestone"])
+    Assign -. "«include»" .-> Unique(["Enforce one current assignment"])
+    Notify -. "«include»" .-> Email(["Send email notification"])
+    Notify -. "«include»" .-> App(["Deliver in-app notification"])
+    E["Email server"] --- Email
+```
 
-_Marks:_ naming the up-call/cycle, naming dependency inversion or "abstract coupling", and giving the
-verdict with the trade-off (more indirection, harder navigation / learning curve).
+Every protected action requires a valid session and appropriate role. Member permissions for modifying/deleting tasks must follow the agreed access policy; the appendix does not say every member can modify every task. Include categorisation/priority/tag fields in Create/Update Task descriptions rather than treating each field entry as a separate user goal. No optional extension is needed simply to satisfy the diagram wording.
+
+**(b) Use case: Assign Task.** Primary actor: authenticated Team Leader or Project Manager. Preconditions: task exists and actor is authorised; chosen individual/team exists. Normal flow: actor selects task; system presents task and current assignment; actor verifies task, chooses one assignee and specifies deadline/milestones; system validates rights and details; system atomically records the assignment and exposes updated workload/progress. Alternatives: unverified/invalid task or unavailable assignee, request correction; unauthorised actor, reject; concurrent assignment change, reject/reload; reassignment, replace the old assignment atomically instead of appending a second active assignment. **Assumption:** “one assignment” means one assignee target, which may be an individual or a team, not only one person within a team.
+
+</details>
+
+#### Q2 — Analysis, lifecycle and process (25 marks)
+
+**(a) Assignment conceptual classes/stereotypes (9). (b) Activity/swimlane diagram from task creation to deletion (7). (c) Waterfall response to drastic mid-project requirement change (4). (d) Improve customer satisfaction after a disappointing first agile sprint (5).**
+
+<details><summary>Worked answer — Q2</summary>
+
+**(a)**
+
+```mermaid
+classDiagram
+    class AssignmentPage {
+        <<boundary>>
+    }
+    class AssignmentController {
+        <<control>>
+    }
+    class Task {
+        <<entity>>
+    }
+    class Assignment {
+        <<entity>>
+    }
+    class Assignee {
+        <<entity>>
+    }
+    class Individual {
+        <<entity>>
+    }
+    class Team {
+        <<entity>>
+    }
+    class AuthorisedUser {
+        <<entity>>
+    }
+    AssignmentPage --> AssignmentController
+    AssignmentController --> AuthorisedUser : checks role
+    AssignmentController --> Task
+    Task "1" -- "0..1" Assignment : current
+    Assignment "0..*" --> "1" Assignee
+    Assignee <|-- Individual
+    Assignee <|-- Team
+```
+
+If assignment history is added, use `0..*` historical assignments plus an explicit **at most one active assignment** constraint; do not remove the invariant.
+
+**(b)** The appendix permits update/deletion after completion, so those actions appear after Finished. Reassignment is an atomic replacement. Deletion is optional, not an automatic consequence of finishing.
+
+```mermaid
+flowchart TD
+    subgraph Member["Team member"]
+        A["Create task with description,<br/>category, priority and tags"]
+        W["Work / collaborate / record<br/>progress"]
+        F["Mark finished"]
+    end
+    subgraph Leader["Leader / Manager"]
+        V{"Verify task?"}
+        R["Request correction"]
+        S["Choose individual or team; set<br/>deadline"]
+        Re["Choose replacement assignee"]
+    end
+    subgraph System
+        Save["Save task"]
+        One["Atomically save one assignment"]
+        Dash["Update dashboard / scheduled<br/>notifications"]
+        Next{"Next action?"}
+        Complete["Save finished status"]
+        Action{"Finished-task action?"}
+        Update["Authorised update"]
+        Delete["Authorised deletion"]
+        Retain["Retain finished task"]
+        EndNode(("End"))
+    end
+    A --> Save --> V
+    V -->|No| R --> A
+    V -->|Yes| S --> One --> Dash --> W --> Next
+    Next -->|Reassign| Re --> One
+    Next -->|Continue| W
+    Next -->|Finish| F --> Complete --> Action
+    Action -->|Update| Update --> Action
+    Action -->|Delete| Delete --> EndNode
+    Action -->|Keep| Retain --> EndNode
+    StartNode(("Start")) --> A
+```
+
+**(c)** Record and clarify changes with the customer; analyse their effects on requirements, design, code, tests, schedule and budget. Obtain agreement on revised scope/baselines, replan affected phases, update documentation and rerun impacted tests. If repeated change makes the original process unsuitable, agree on incremental/agile delivery for remaining work rather than silently continuing an obsolete plan.
+
+**(d)** Demonstrate the actual increment and ask which unmet needs cause dissatisfaction. With the Product Owner, reprioritise the backlog around highest customer value, clarify acceptance criteria and agree a realistic Sprint Goal. Investigate estimation, capacity, communication or integration problems in the retrospective and adopt concrete improvements. Deliver smaller usable increments, obtain regular feedback, and evaluate accepted outcomes. Do not promise unlimited scope or change the definition of done to make progress appear better.
+
+</details>
+
+#### Q3 — Architecture, NFR and patterns (25 marks)
+
+**(a)(i) Detailed architecture/classes (8); (ii) one relevant NFR and alternative architecture addressing it (8). (b)(i) Combined-pattern scenario/classes (6); (ii) is combining patterns always beneficial? (3).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)(i)** Use a layered task application: UI boundaries, application services, task/assignment entities and repositories/notification gateways.
+
+```mermaid
+classDiagram
+    class TaskView {
+        +createTask(details)
+        +assignTask(id, assignee)
+        +showDashboard()
+    }
+    class TaskService {
+        +create(details)
+        +assign(id, assignee, deadline)
+        +reassign(id, assignee)
+        +finish(id)
+        +deleteFinished(id)
+    }
+    class Task {
+        +id
+        +description
+        +priority
+        +deadline
+        +status
+        +finish()
+    }
+    class Assignment {
+        +assigneeId
+        +assigneeType
+        +replaceWith(assignee)
+    }
+    class TaskRepository {
+        +find(id)
+        +replaceAssignmentAtomically(id, assignment)
+        +save(task)
+    }
+    class NotificationService {
+        +notifyDeadline(task)
+        +notifyPriorityChange(task)
+    }
+    TaskView --> TaskService
+    TaskService --> TaskRepository
+    TaskService --> NotificationService
+    TaskRepository --> Task
+    Task "1" -- "0..1" Assignment : current
+```
+
+**(a)(ii)** Choose **security/access control**, explicitly motivated by role-based access and sensitive team information. An alternative centralised **client–server architecture with a security Facade** places all task operations behind authenticated server-side authorisation. Browser/UI role checks alone cannot protect the data.
+
+```mermaid
+classDiagram
+    class BrowserClient {
+        +sendRequest(action, taskId)
+    }
+    class SecureTaskFacade {
+        +perform(session, action, taskId)
+    }
+    class AccessPolicy {
+        +authorise(user, action, task) bool
+    }
+    class TaskService {
+        +performApproved(action, taskId)
+    }
+    class AuditStore {
+        +record(user, action, result)
+    }
+    BrowserClient --> SecureTaskFacade
+    SecureTaskFacade --> AccessPolicy
+    SecureTaskFacade --> TaskService : only after authorisation
+    SecureTaskFacade --> AuditStore
+```
+
+Keep Task/Assignment/Repository from Q3(a)(i) behind TaskService. Centralisation makes policy consistent across clients and supports audited denials; it adds a server/network dependency. Audit storage is a proposed security measure, not an explicit appendix feature. Layering and client–server are compatible architectural dimensions; the alternative adds a trust boundary rather than claiming that these styles are mutually exclusive.
+
+**(b)(i)** Combine Observer with Simple Factory for email and in-app notifications. A task subject notifies both subscribed channels on relevant events; a factory creates/configures channel observers. Deadline timers also publish events rather than requiring a task to mutate every second.
+
+```mermaid
+classDiagram
+    class TaskEvents {
+        +observers
+        +attach(observer)
+        +detach(observer)
+        +notify(event)
+    }
+    class NotificationObserver {
+        <<interface>>
+        +update(event)
+    }
+    class EmailNotifier {
+        +update(event)
+    }
+    class InAppNotifier {
+        +update(event)
+    }
+    class NotificationFactory {
+        +create(channel) NotificationObserver
+    }
+    TaskEvents --> NotificationObserver : notifies all subscribers
+    NotificationObserver <|.. EmailNotifier
+    NotificationObserver <|.. InAppNotifier
+    NotificationFactory ..> EmailNotifier
+    NotificationFactory ..> InAppNotifier
+```
+
+Factory governs creation; Observer governs runtime notification without coupling task code to concrete delivery channels. The requirements call for email **and** in-app messages, not arbitrarily selecting only one.
+
+**(b)(ii)** No. Unnecessary composition adds interfaces, indirection, lifecycle/configuration complexity and testing cost. Combine patterns only when actual forces justify each responsibility and their interactions remain understandable. A single straightforward implementation is preferable where no variation or reuse is needed.
+
+</details>
+
+#### Q4 — Task inputs, shift-left and maintenance (25 marks)
+
+**(a)(i) Derive ECs for Task Description, Resource needed, Deadline and Task Priority (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (5).**
+
+<details><summary>Worked answer — Q4(a)</summary>
+
+**Input interpretation.** Task Description must be ASCII; Resource needed is a 4-digit integer; Deadline is between 2024 and 2026; Task Priority is one of `Critical`, `High`, `Normal`, `Low`, `Very Low`. Assume a positive 4-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
+
+**(i) Equivalence classes:**
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Task Description | ASCII text | Text containing non-ASCII characters |
+| Resource needed | Integer 1000…9999 | Integer below 1000; integer above 9999; malformed/non-integer input at the input boundary |
+| Deadline | Real calendar date 2024-01-01…2026-12-31 | Real date before 2024-01-01; real date after 2026-12-31; malformed/nonexistent date |
+| Task Priority | One EC containing {Critical, High, Normal, Low, Very Low} | Any unlisted value |
+
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
+
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| Resource needed: minimum | 999 (reject) | 1000 (accept) | 1001 (accept) |
+| Resource needed: maximum | 9998 (accept) | 9999 (accept) | 10000 (reject) |
+| Deadline: earliest | 2023-12-31 (reject) | 2024-01-01 (accept) | 2024-01-02 (accept) |
+| Deadline: latest | 2026-12-30 (accept) | 2026-12-31 (accept) | 2027-01-01 (reject) |
+
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Task Description | Resource needed | Deadline | Task Priority | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `Implement API` | `1000` | `2024-01-01` | `Critical` | Accept — valid boundaries / category coverage |
+| `Implement API` | `1001` | `2024-01-02` | `High` | Accept — valid boundaries / category coverage |
+| `Implement API` | `9998` | `2026-12-30` | `Normal` | Accept — valid boundaries / category coverage |
+| `Implement API` | `9999` | `2026-12-31` | `Low` | Accept — valid boundaries / category coverage |
+| `Implement API` | `5499` | `2025-07-01` | `Very Low` | Accept — interior baseline / category coverage |
+| `非ASCII` | `5499` | `2025-07-01` | `Critical` | Reject — non-ASCII Task Description |
+| `Implement API` | `999` | `2025-07-01` | `Critical` | Reject — Resource needed below minimum |
+| `Implement API` | `10000` | `2025-07-01` | `Critical` | Reject — Resource needed above maximum |
+| `Implement API` | `5499` | `2023-12-31` | `Critical` | Reject — Deadline below minimum |
+| `Implement API` | `5499` | `2027-01-01` | `Critical` | Reject — Deadline above maximum |
+| `Implement API` | `5499` | `2025-07-01` | `Unknown` | Reject — unlisted Task Priority |
+| `Implement API` | `12x` | `2025-07-01` | `Critical` | Reject — malformed integer; extra defensive case |
+| `Implement API` | `5499` | `2024-02-30` | `Critical` | Reject — nonexistent calendar date; extra defensive case |
+
+</details>
+
+**(b) Why is shift-left testing useful? (4). (c) Four maintenance challenges and mitigations (8).**
+
+<details><summary>Worked answer — Q4(b–c)</summary>
+
+**(b)** Reviewing requirements and designing tests early exposes ambiguity before it spreads into design/code. Early unit/integration automation provides fast feedback, reduces downstream rework and makes changes safer. Examples: identify the one-assignment invariant during analysis and test the service before building the dashboard. Shift-left complements rather than eliminates later system, performance and acceptance testing.
+
+**(c)**
+
+| Challenge | Mitigation |
+| --- | --- |
+| Understanding unfamiliar/poorly documented legacy code | Maintain architecture/decision notes, clear interfaces and traceable change history; use code reviews and onboarding. |
+| Regressions caused by changes | Automate regression tests, check integration/compatibility, and use reviewed version-controlled changes with rollback. |
+| Increasing technical debt and coupling | Refactor incrementally with behaviour-preservation checks; keep responsibilities and boundaries clear. |
+| Changing requirements/dependencies and operational environments | Perform impact analysis, prioritise changes, maintain supported dependency versions, and update requirements/tests/documentation together. |
+
+Tie each challenge to its remedy rather than listing four generic “best practices” without explanation.
+
+</details>
+
+### 18.2 AY2024/25 Semester 2 — Disaster Warning System (DWS)
+
+**Source:** [Question paper](pyps/SC2006_AY2425_S2_Questions.pdf), Q1–Q4 on PDF pp. 1–4; Appendix A on p. 5.
+
+**Case facts.** A local government deploys a configurable DWS. Its manager registers/deregisters physically connected sensors and alert systems, links/unlinks registered sensor–alert pairs, and chooses safe measurement ranges. Registered sensors send integer updates at any time; an out-of-range value triggers the linked alert. Changes and received/sent messages are recorded. More than 24 hours without an update from a registered sensor causes a manager alert. The manager can retrieve the full record.
+
+#### Q1 — Stakeholders, requirements and use cases (25 marks)
+
+**(a) Four stakeholders and interests (4). (b) Three FRs and three NFRs (6). (c) Actors/use cases/relationships (15).**
+
+<details><summary>Worked answer — Q1</summary>
+
+**(a)** Local government: public safety, budget and dependable operation. DWS manager: correct configuration, sensor health and usable records. Emergency responders/alert recipients: timely, accurate, actionable warnings. Residents: protection from disasters and avoidance of missed/false alarms. A stakeholder need not directly operate the software and therefore need not be an actor.
+
+**(b) Three FRs:** (1) accept sensor/alert registration only when physical connection is detected; (2) maintain configured links/ranges and trigger linked alerts for out-of-range integer measurements; (3) notify the manager when a registered sensor has supplied no update for over 24 hours. Recording and record retrieval are additional FRs.
+
+**Three proposed NFRs:** (1) flexibility/interoperability across different deployments and sensor/alert implementations; (2) availability/reliability for ongoing monitoring and fault recovery; (3) performance for timely processing and delivery of alerts under the agreed peak sensor workload. Flexibility is explicit in the case; measurable availability, latency and recovery targets must be agreed, not invented. “Log all messages” is functional behaviour, not automatically an NFR merely because it concerns auditing.
+
+**(c)** Actors: DWS Manager, external Sensor, external Alert System. Time passage is an event, not necessarily an actor.
+
+```mermaid
+flowchart LR
+    M["DWS manager"] --- RS(["Register sensor"])
+    M --- DS(["Deregister sensor"])
+    M --- RA(["Register alert"])
+    M --- DA(["Deregister alert"])
+    M --- Link(["Link sensor to alert and safe<br/>range"])
+    M --- Unlink(["Unlink sensor and alert"])
+    M --- Records(["Request full<br/>interaction/message record"])
+    M --- Health(["Receive no-update warning"])
+    RS -. "«include»" .-> Connected(["Verify physical connection"])
+    RA -. "«include»" .-> Connected
+    Link -. "«include»" .-> Registered(["Validate registered endpoints<br/>and range"])
+    S["Sensor"] --- Receive(["Receive integer measurement"])
+    Receive -. "«include»" .-> Evaluate(["Evaluate linked safe ranges"])
+    Trigger(["Send disaster alert"]) -. "«extend» [outside linked<br/>range]" .-> Evaluate
+    A["Alert system"] --- Trigger
+    Receive -. "«include»" .-> Log(["Record interaction / message"])
+    Trigger -. "«include»" .-> Log
+    Monitor(["Check sensor freshness"]) -. "«include»" .-> Inspect(["Inspect last-update time"])
+    Health -. "«extend» [silence over 24<br/>hours]" .-> Monitor
+```
+
+Registration, deregistration, linking and unlinking also include recording; add their arrows to the shared Record use case in exact UML. The physical-connection check applies only to registration. Safe-range alerting is conditional, making `«extend»` reasonable here. The system must not let an unregistered sensor bypass its configured registration policy.
+
+</details>
+
+#### Q2 — Sensor behaviour and process (25 marks)
+
+**(a) Sensor-object state machine (6). (b) Linking activity/swimlanes (7). (c)(i) Choose Waterfall or Agile for changing requirements (3); (ii) manage changes (3). (d) Scrum response to an urgent mid-sprint feature request (6).**
+
+<details><summary>Worked answer — Q2</summary>
+
+**(a)** Model the sensor's **DWS-side lifecycle**, since this software cannot dictate the internal hardware's physical operating states. A registered sensor is monitored even when quiet; silence is not automatic deregistration. A registration timestamp starts monitoring until the first update, a necessary stated assumption because the appendix does not define that initial timer.
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> Unregistered
+    Unregistered --> Fresh : register [connected] / beginMonitoring()
+    Unregistered --> Unregistered : register [not connected] / reject()
+    Fresh --> Fresh : integer update / processUpdate()
+    Fresh --> Overdue : timeout [silence > 24h] / warnManager()
+    Overdue --> Fresh : integer update / processUpdate()
+    Fresh --> Unregistered : deregister / endMonitoring()
+    Overdue --> Unregistered : deregister / endMonitoring()
+```
+
+`beginMonitoring()` records registration and starts freshness timing; `processUpdate()` records the valid measurement, evaluates linked ranges and resets freshness; `endMonitoring()` records deregistration and stops monitoring/subscriptions. Exactly 24 hours is not “over 24 hours”. Repeated warning frequency is unspecified; assume one warning per overdue episode unless the client defines reminders. Invalid-type messages are rejected/logged by a defensive integration boundary, not treated as valid measurements.
+
+**(b)**
+
+```mermaid
+flowchart TD
+    subgraph Manager
+        A["Select registered sensor and<br/>alert; enter safe range"]
+        Fix["Correct selection / range or<br/>cancel"]
+        Confirm["Receive confirmation"]
+    end
+    subgraph DWS
+        B["Validate input format and<br/>registered endpoints"]
+        C{"All checks pass?"}
+        Err["Show rejection reason"]
+        D["Persist link and safe range"]
+        E["Record configuration<br/>interaction"]
+        F["Use link for future<br/>measurement evaluation"]
+    end
+    A --> B --> C
+    C -->|No| Err --> Fix
+    Fix -->|Retry| A
+    C -->|Yes| D --> E --> Confirm --> F
+    StartNode(("Start")) --> A
+    Fix -->|Cancel| EndNode(("End"))
+    F --> EndNode
+```
+
+Linking does not require an immediate disaster measurement, nor does it automatically send an alert. Preserve the existing configuration if validation fails.
+
+**(c)(i)** Recommend Agile/incremental delivery because requirements may change and early stakeholder feedback can refine configuration and warning workflows. Retain appropriate safety reviews, documentation and rigorous testing; “agile” does not mean no planning.
+
+**(c)(ii)** Capture changes in a prioritised backlog, clarify acceptance criteria, analyse safety/interface impacts and select feasible increments. Protect the current sprint's goal; negotiate later scope and re-estimate affected work, then validate changes with regression and acceptance tests.
+
+**(d)** Do not unilaterally insert the feature or extend the sprint. Discuss urgency and effect on the Sprint Goal with the Product Owner and developers. Normally prioritise it in the product backlog for a future sprint. If developers and Product Owner can renegotiate work without endangering the goal or quality, make that change transparently. If the goal is obsolete, the Product Owner may cancel the sprint; the Scrum Master facilitates rather than cancelling it alone. This is consistent with the course's principle of protecting sprint work while managing change explicitly.
+
+</details>
+
+#### Q3 — DWS architecture, Observer and responsibility (25 marks)
+
+**(a) Architecture/justification (3). (b)(i) Most applicable pattern (3); (ii) detailed classes (10). (c)(i) One reason for/against blaming the vendor for a crash on a string measurement (2); (ii) two other responsible parties (4); (iii) three prevention/risk-reduction measures (3).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)** An event-driven architecture, with layered configuration, monitoring/domain and device-integration services, fits asynchronous measurements. A registry manages runtime membership, a monitor evaluates configured links, and gateways deliver alerts while a record store preserves interactions. Isolate malformed or failing devices so one sensor cannot crash monitoring for all others.
+
+**(b)(i)** **Observer**: sensor subjects publish measurements to a DWS observer that can subscribe/unsubscribe at runtime. This avoids tight coupling to a fixed sensor set and avoids requiring the DWS to synchronously poll for every update. Distinguish domain registration from subscription: the registration service coordinates both, but a list of objects alone is not Observer.
+
+**(b)(ii)**
+
+```mermaid
+classDiagram
+    class SensorSubject {
+        <<interface>>
+        +attach(observer)
+        +detach(observer)
+        +notify(measurement)
+    }
+    class Sensor {
+        +id
+        +lastMeasurement
+        +attach(observer)
+        +detach(observer)
+        +notify(measurement)
+    }
+    class MeasurementObserver {
+        <<interface>>
+        +update(sensorId, measurement)
+    }
+    class DWSMonitor {
+        +lastSeenBySensor
+        +update(sensorId, measurement)
+        +checkSilence(now)
+    }
+    class RegistrationService {
+        +registerSensor(sensor)
+        +deregisterSensor(id)
+        +registerAlert(alert)
+        +link(sensorId, alertId, lower, width)
+        +unlink(sensorId, alertId)
+    }
+    class Link {
+        +sensorId
+        +alertId
+        +lower
+        +width
+        +outside(value) bool
+    }
+    class AlertGateway {
+        +send(alertId, measurement)
+        +warnManager(sensorId)
+    }
+    class RecordStore {
+        +append(event)
+        +readAll()
+    }
+    SensorSubject <|.. Sensor
+    SensorSubject --> MeasurementObserver : subscribers
+    MeasurementObserver <|.. DWSMonitor
+    RegistrationService --> SensorSubject : attach / detach DWS monitor
+    RegistrationService --> Link
+    RegistrationService --> RecordStore
+    DWSMonitor --> Link
+    DWSMonitor --> AlertGateway
+    DWSMonitor --> RecordStore
+```
+
+For heterogeneous external devices, a sensor adapter can expose SensorSubject while translating the real protocol. `update` validates integer messages, records them, updates freshness, evaluates every matching Link, and records any sent alerts. Registration verifies connection before subscribing. Link changes are recorded. Deregistration stops monitoring/subscriptions; the policy for dependent links must be agreed rather than leaving dangling references. Use overflow-safe arithmetic for safe-range calculations.
+
+**(c)(i)** Engineering arguments **for** responsibility: a foreseeable malformed external input should be rejected/isolated rather than causing a system-wide outage, especially in a warning system. **Against:** the third-party sensor violated the specified integer interface contract; the DWS vendor did not control that sensor's implementation. Both facts can be relevant; neither alone settles all responsibility.
+
+**(c)(ii)** Sensor manufacturer: emitted a value outside the agreed protocol or failed to validate its output. Client/integrator: installed or approved incompatible equipment without verifying conformance and deployment integration. Explain the actual contribution rather than assigning blame solely because a party exists.
+
+**(c)(iii)** Three measures: (1) validate types/ranges and contain exceptions at every device boundary; (2) run defensive, fault-injection and third-party conformance/integration tests, including string messages and disconnected devices; (3) document interface contracts, supported-device requirements and acceptance evidence, with monitoring and clear failure reporting. Documentation reduces ambiguity but does not substitute for robust error handling.
+
+</details>
+
+#### Q4 — DWS defensive tests and dependent inputs (25 marks)
+
+**Given:** deployed sensor `smoke concentration`, alert `fire`; signed five-digit decimal `N` (e.g. `+83220`, `-00123`); unsigned five-digit non-negative decimal `M` (e.g. `12345`, `00020`). Safe upper bound is `N+M`. Individually, integer values outside `−32768…32767` must be rejected.
+
+**(a) ECs for the four inputs (5). (b) Boundary triplets (4). (c) Defensive test suite (8). (d) Consequences of additionally restricting `N+M` to signed 16-bit range (4). (e)(i) Difficulty of one generic deployment-independent suite (2); (ii) solution (2).**
+
+<details><summary>Worked answer — Q4</summary>
+
+**(a) Treat formatting and parsed numeric value separately.** Assume exactly one sign and five ASCII digits for N, and exactly five ASCII digits without a sign for M. Leading zeroes are required/allowed as in the paper. ASCII names must also identify registered endpoints in this deployment.
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Sensor name | Exact registered name `smoke concentration` | Other ASCII name not registered; name containing non-ASCII characters |
+| Alert name | Exact registered name `fire` | Other ASCII name not registered; name containing non-ASCII characters |
+| N | Format `[+-][0-9]{5}` and parsed value `−32768 ≤ N ≤ 32767` | Well-formed value below −32768; well-formed value above 32767; malformed representation |
+| M | Format `[0-9]{5}` and parsed value `0 ≤ M ≤ 32767` | Well-formed value above 32767; malformed representation, including a negative/sign-bearing input |
+
+These partitions are disjoint when numeric invalid classes are restricted to correctly formatted values. `+83220` illustrates the required shape but is **invalid under the additional 16-bit rule**. Negative M cannot satisfy its unsigned format. No assumption that every ASCII name is registered is allowed.
+
+**(b)** Numeric triplets, written using the required formats:
+
+| Boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| N minimum −32768 | `-32769` reject | `-32768` accept | `-32767` accept |
+| N maximum 32767 | `+32766` accept | `+32767` accept | `+32768` reject |
+| M minimum 0 | `-00001` reject (format) | `00000` accept | `00001` accept |
+| M maximum 32767 | `32766` accept | `32767` accept | `32768` reject |
+
+Name membership has no ordered boundary. Extra/missing digits and signs are format tests, not numeric boundary neighbours. The just-below-zero M representation is necessarily invalid in format; there is no negative, unsigned, well-formed M string.
+
+**(c)** In this initial version, the **sum has no extra 16-bit rejection rule**. For each row keep all other inputs valid. Abbreviations in the table: `S = smoke concentration`, `A = fire`; `other sensor` and `other alert` are stipulated unregistered. A means accepted link/configuration, R means clean rejection without changing links or crashing.
+
+| Sensor | Alert | N | M | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| S | A | `+00000` | `00020` | A — baseline |
+| S | A | `-32768` | `00000` | A — N lower, M lower |
+| S | A | `-32767` | `00001` | A — valid lower neighbours |
+| S | A | `+32766` | `32766` | A — valid upper neighbours; sum restriction absent |
+| S | A | `+32767` | `32767` | A — valid maxima; sum restriction absent |
+| S | A | `-32769` | `00020` | R — N too small |
+| S | A | `+32768` | `00020` | R — N too large |
+| S | A | `+00000` | `32768` | R — M too large |
+| S | A | `+00000` | `-00001` | R — M negative / forbidden sign |
+| other sensor | A | `+00000` | `00020` | R — sensor not registered |
+| `烟` | A | `+00000` | `00020` | R — sensor non-ASCII |
+| S | other alert | `+00000` | `00020` | R — alert not registered |
+| S | `火` | `+00000` | `00020` | R — alert non-ASCII |
+| S | A | `00000` | `00020` | R — N missing sign |
+| S | A | `+0000` | `00020` | R — N too few digits |
+| S | A | `+000000` | `00020` | R — N too many digits |
+| S | A | `+00a00` | `00020` | R — N non-digit |
+| S | A | `+00000` | `+00020` | R — M forbidden sign |
+| S | A | `+00000` | `0020` | R — M too few digits |
+| S | A | `+00000` | `000020` | R — M too many digits |
+| S | A | `+00000` | `00a20` | R — M non-digit |
+
+Use fresh/reset fixtures for each row so an existing link does not alter the oracle. Exactly one **parameter** is invalid in each rejected row; a malformed parameter can violate more than one format predicate. Supplement with physical-connection/registration tests at the appropriate integration boundary.
+
+**(d)** Now M's valid numeric range depends on N:
+
+`0 ≤ M ≤ min(32767, 32767 − N)`, with valid N already in `−32768…32767`.
+
+The sum cannot underflow because M is non-negative, but it can overflow. Partition the **pair** `(N,M)` into sum-valid and sum-too-large cases in addition to independent format/range classes. For N=`+32760`, M=`00006`, `00007`, `00008` exercise below/on/above the upper sum boundary; the last is now rejected. At N=`+32767`, only M=`00000` is valid. Reclassify earlier maximum-pair tests rather than reusing their old acceptance oracles. Compute the sum in a wider/checked representation before testing its range.
+
+**(e)(i)** Registered names and even available devices vary by deployment. A name valid in one installation can be invalid in another; a supposedly “invalid” hard-coded name may actually be registered elsewhere. Physical connections and existing links also affect results.
+
+**(e)(ii)** Parameterise the suite with known registered names, verified absent ASCII names and resettable configuration. Prefer a controlled fixture that registers a test sensor and alert (using connected simulators/test devices), runs the suite, and restores state. Validate fixture preconditions; do not label deployment differences as software defects.
 
 </details>
 
 ---
 
-### C5. Trap MCQ set (12 items — one best answer each)
+## 19. Past-year papers — AY2025/26
 
-1. The «extend» arrow points from …
-   (A) base to extending (B) extending to base (C) actor to use case (D) either way
-2. In `Customer 1 — * Order`, one Order is associated with …
-   (A) many Customers (B) exactly one Customer (C) zero Customers (D) 1..\* Customers
-3. The filled diamond in a class diagram denotes …
-   (A) aggregation, diamond at the part (B) composition, diamond at the whole
-   (C) composition, diamond at the part (D) generalization
-4. BVs for `0 ≤ x ≤ 5` are …
-   (A) 0,1,5,6 (B) −1,0,1,4,5,6 (C) 0,2.5,5 (D) −1,0,5,6
-5. In the lecture's isolated-invalid-input EC method, an invalid test case should contain …
-   (A) any number of invalid inputs (B) at most one invalid input (C) exactly two (D) none
-6. Which is true?
-   (A) statement coverage ⇒ branch coverage (B) branch coverage ⇒ statement coverage
-   (C) they are equivalent (D) neither implies the other
-7. A backlog of 64 points over 8 sprints means velocity is …
-   (A) 64 (B) 8 points/sprint (C) 512 (D) 8 sprints/point
-8. The main drawback of the waterfall model is …
-   (A) no testing phase (B) difficulty accommodating change after the process is under way
-   (C) it cannot be used for large systems (D) it has no documentation
-9. "Which concrete class is instantiated is only known at runtime" is the problem solved by …
-   (A) Observer (B) Strategy (C) Factory (D) Façade
-10. Which does NOT belong in an SRS?
-    (A) functional requirements (B) data dictionary (C) the chosen design pattern
-    (D) interface requirements
-11. A use case triggered by a system event has …
-    (A) the system as actor (B) a NULL initiating actor (C) no description (D) two initiating actors
-12. A connected, single-entry/single-exit CFG has 12 nodes and 15 edges. CC is …
-    (A) 3 (B) 4 (C) 5 (D) 6
+### 19.1 AY2025/26 Semester 1 — Smart Home Control System
 
-<details><summary>Answers</summary>
+**Source:** [Question paper](pyps/SC2006_AY2526_S1_Questions.pdf), Q1–Q4 on PDF pp. 1–3; Appendix A on p. 4. Answers remain unofficial; diagram conventions are in §16.
 
-1. **B** — extending → base ("point at the host").
-2. **B** — the `*` sits near `Order`, so one Customer has many Orders; each Order has exactly one
-   Customer.
-3. **B** — filled diamond = composition, drawn at the **whole**.
-4. **B** — triplets (−1,0,1) and (4,5,6).
-5. **B** — use exactly one invalid input in each invalid row to isolate that invalid class.
-   A rejection alone still does not prove which internal check executed.
-6. **B** — branch ⇒ statement; the converse fails (e.g. `if (c) {S1;}` with `c` always true).
-7. **B**.
-8. **B**.
-9. **C** — Factory (selection/creation).
-10. **C** — the SRS explicitly contains **no design suggestions**.
-11. **B**.
-12. **C** — 15 − 12 + 2 = 5.
+**Case facts.** Owners control lights, AC and door locks through a mobile app or LLM-powered voice assistant. The assistant interprets voice requests and can ask clarifying questions. Owners grant/revoke temporary guest access to specific doors. Guests may lock/unlock only during their permitted period; denied out-of-window attempts are logged. Administrators manage accounts, credentials and access rights but do not control devices. All guest-access activity is logged.
+
+#### Q1 — Use cases (25 marks)
+
+**(a) Actors/use cases/relationships (18). (b) Guest door-access description (7).**
+
+<details><summary>Worked answer — Q1</summary>
+
+**(a)** Actors: Homeowner, Guest, Administrator and external controlled devices (Lights, AC, Door Locks). App and voice assistant are interfaces/components of the SHCS, not additional human users. An external hosted speech/LLM service can be a supporting actor if that deployment boundary is chosen, but hosting is not specified in this appendix.
+
+```mermaid
+flowchart LR
+    O["Homeowner"] --- Control(["Control lights / AC / locks"])
+    O --- Grant(["Grant / revoke temporary door<br/>access"])
+    G["Guest"] --- Door(["Request door lock / unlock"])
+    O --- Door
+    A["Administrator"] --- Users(["Add / remove accounts"])
+    A --- Credentials(["Reset credentials"])
+    A --- Rights(["Adjust access rights"])
+    Control -. "«include»" .-> Authorise(["Authenticate and authorise<br/>command"])
+    Door -. "«include»" .-> Authorise
+    Door -. "«include»" .-> Log(["Record access attempt and<br/>outcome"])
+    Voice(["Use voice command"]) -. "«extend» [voice channel]" .-> Control
+    Voice -. "«extend» [voice channel]" .-> Door
+    Voice -. "«include»" .-> Interpret(["Transcribe and interpret<br/>request"])
+    Clarify(["Clarify ambiguous request"]) -. "«extend» [ambiguous]" .-> Voice
+    D["Lights / AC / door locks"] --- Control
+    Lock["Door lock"] --- Door
+```
+
+Authorisation includes a guest's door-specific grant, revocation status and current time. Do not generalise Administrator from Homeowner or give administrators device-control associations. An owner-granted access period is not a one-time login token or permission for every door. Both permitted and denied guest attempts must reach the log.
+
+**(b) Use case: Guest Door Access.** Primary actor: Guest. Supporting actor: Door Lock; voice interface if selected. Preconditions: guest identity can be authenticated; door and guest grant can be identified. Do **not** require “current time is valid” as the only precondition if the description must cover out-of-window denial. Flow: guest requests lock/unlock for a specific door through app or voice; system interprets/clarifies the request as needed; authenticate guest; check action, door, grant, revocation and time; execute permitted command through the lock interface; record request/time/outcome and show confirmation. Alternatives: no grant, revoked grant, wrong door or outside period, deny and log; ambiguous command, clarify without unlocking; device failure, log failure and report it rather than claiming success. A voice utterance alone is not proof of identity.
+
 </details>
 
----
+#### Q2 — Access states, voice activity and process (25 marks)
 
-### C6. Mark this answer (10 marks available)
+**(a) Temporary guest access-controller state machine (4). (b) Guest voice-unlock activity/swimlanes (8). (c) Waterfall/Agile comparison: flexibility, customer involvement, delivery and one advantage each (5). (d) Two sprint advantages and two challenges, with examples (8).**
 
-> **Question:** "Explain why the Observer pattern is preferable to the View polling the Model."
->
-> **Student answer:** "Observer is a behavioural pattern from the Gang of Four book. It uses a subject
-> and observers. The subject calls update on the observers. This is better because polling is slow and
-> uses CPU. Observer is also loosely coupled and supports multiple views, so it is a good design.
-> Observer is used in MVC."
+<details><summary>Worked answer — Q2</summary>
 
-<details><summary>Illustrative marking rubric — not an official scheme</summary>
+**(a)** Model one guest–door grant. **Assumption:** a time window is half-open `[start,end)`; the paper requires a strict window but does not specify endpoint inclusion. Agree the exact policy before implementation/testing.
 
-| Criterion                                                                                        | Marks | Awarded here | Comment                                                                  |
-| ------------------------------------------------------------------------------------------------ | ----- | ------------ | ------------------------------------------------------------------------ |
-| Defines the **problem** (subject changes; observers must learn of it; unknown count/identity)    | 2     | 1            | Named "subject/observers" but never stated the _problem_ Observer solves |
-| Explains **polling cost** correctly (wasted work, latency vs refresh interval, unpredictable)    | 2     | 1            | "slow and uses CPU" is a slogan; no latency/refresh-interval trade-off   |
-| Explains **subscription + notification** mechanisms (`attach/detach`, `notify` → `update`)       | 2     | 1            | `notify` mentioned; `attach/detach` (runtime subscription) missing       |
-| Explains **coupling direction** (model depends on an abstraction it owns, not on concrete views) | 2     | 1            | "loosely coupled" is asserted, not explained                             |
-| **Trade-off** (slower notification, ordering, leaks if not detached, complexity)                 | 2     | 0            | No consequence at all                                                    |
+```mermaid
+stateDiagram-v2
+    [*] --> NoGrant
+    NoGrant --> Scheduled : owner grants [now < start]
+    NoGrant --> Active : owner grants [start <= now and now < end]
+    Scheduled --> Active : start reached
+    Active --> Expired : now >= end
+    Scheduled --> Revoked : owner revokes
+    Active --> Revoked : owner revokes
+    Active --> Active : access [correct door and identity] / execute and log
+    Scheduled --> Scheduled : access / deny and log
+    Expired --> Expired : access / deny and log
+    Revoked --> Revoked : access / deny and log
+    NoGrant --> NoGrant : access / deny and log
+```
 
-**Total: 4/10.** Naming the GoF category and citing MVC earns nothing on its own — marks are for the
-_mechanism_ and the _trade-off_. A 10-mark answer is 4 short paragraphs: **problem → mechanism →
-why coupling improves → cost**.
+A new grant can create a fresh controller/grant instance. A command arriving late must recheck time before execution; being previously Active is not enough.
+
+**(b)**
+
+```mermaid
+flowchart TD
+    subgraph Guest
+        G1["Speak unlock request"]
+        G2["Clarify target / action"]
+        G3["Receive result"]
+    end
+    subgraph Voice["Voice assistant"]
+        V1["Transcribe and interpret"]
+        V2{"Ambiguous?"}
+        V3["Ask clarification"]
+        V4["Submit structured door command"]
+    end
+    subgraph Access["Trusted access controller"]
+        A1["Authenticate guest; validate<br/>door, grant, revocation and<br/>time"]
+        A2{"Permitted now?"}
+        A3["Deny request"]
+        A4["Record attempt and actual<br/>outcome"]
+    end
+    subgraph Device["Door lock interface"]
+        D1["Attempt unlock; return success<br/>or failure"]
+    end
+    G1 --> V1 --> V2
+    V2 -->|Yes| V3 --> G2 --> V1
+    V2 -->|No| V4 --> A1 --> A2
+    A2 -->|No| A3 --> A4
+    A2 -->|Yes| D1 --> A4
+    A4 --> G3
+    StartNode(("Start")) --> G1
+    G3 --> EndNode(("End"))
+```
+
+LLM output proposes an action; deterministic access rules decide whether it can occur. Failure to interpret/authenticate must not unlock the door.
+
+**(c)** Waterfall: relatively expensive late change, customer involvement concentrated in requirements/reviews/acceptance, and usually later integrated delivery; advantage: clear baselines and milestone planning when requirements are stable. Agile: embraces reprioritisation between iterations, frequent customer feedback and incremental usable delivery; advantage: earlier validation and adaptation. Both require planning, quality checks and stakeholder involvement; neither guarantees success merely by its label.
+
+**(d)** Two advantages: **frequent feedback**, e.g. owners test voice clarification after an early sprint; **bounded planning and visible increments**, e.g. a sprint delivers tested guest-access rules instead of reporting only percentage-complete code. Two challenges: **poorly sliced/underestimated work**, e.g. voice plus device integration does not fit the sprint, addressed by smaller items/spikes and capacity-based selection; **interruptions/dependencies**, e.g. urgent requests or unavailable lock hardware threaten the goal, addressed by backlog negotiation, early integration and test doubles. Keep the timebox; finish to the agreed definition of done rather than extending every sprint.
+
+</details>
+
+#### Q3 — Smart-home architecture and pattern judgement (25 marks)
+
+**(a)(i) Architecture/detailed classes (8); (ii) one NFR and alternative architecture (8). (b)(i) Combined-pattern scenario/classes (6); (ii) evaluate the cost of pattern overuse (3).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)(i)** Use layered channel interfaces, application command control, domain access policy and device gateways. Both app and voice requests reach the same trusted policy before actuation.
+
+```mermaid
+classDiagram
+    class MobileView {
+        +request(action, deviceId)
+        +showResult(result)
+    }
+    class VoiceAssistant {
+        +interpret(audio)
+        +clarify(question)
+    }
+    class CommandController {
+        +execute(userId, action, deviceId, now)
+    }
+    class AccessPolicy {
+        +allows(user, action, device, now) bool
+    }
+    class GuestGrant {
+        +guestId
+        +doorId
+        +startsAt
+        +endsAt
+        +revoked
+        +isActive(now) bool
+    }
+    class DeviceGateway {
+        +execute(deviceId, action)
+    }
+    class AuditLog {
+        +record(userId, action, deviceId, time, outcome)
+    }
+    MobileView --> CommandController
+    VoiceAssistant --> CommandController
+    CommandController --> AccessPolicy
+    AccessPolicy --> GuestGrant
+    CommandController --> DeviceGateway : authorised commands only
+    CommandController --> AuditLog : permitted and denied attempts
+```
+
+**(a)(ii)** Choose **security**, explicitly required by authentication, role separation and time-limited door grants. An alternative **client–server architecture with a security Facade/reference gate** treats app and LLM processing as untrusted input channels. Only a trusted server-side access service can invoke device gateways. Account administration uses a separate authorised API and does not confer device-control rights.
+
+```mermaid
+flowchart LR
+    App["Mobile client"] --> Gate["Secure command facade<br/>authenticate; validate;<br/>authorise"]
+    LLM["Voice / LLM channel"] --> Gate
+    Gate -->|Allowed command only| Devices["Device gateway"]
+    Gate --> Policy["Role and guest-grant store"]
+    Gate --> Log["Access audit log"]
+    Admin["Admin client"] --> AdminAPI["Account / rights service"]
+    AdminAPI --> Policy
+```
+
+Compared with policy spread among clients, a central gate prevents channel-specific bypasses and keeps one authoritative time/grant check. It introduces connectivity/availability concerns that require explicit failure behaviour; door access must not silently bypass checks when the policy service fails. This is a deployment/trust-boundary alternative compatible with layered internals.
+
+**(b)(i)** Combine Strategy for role-specific permission policies with Simple Factory for selecting the policy from the **authenticated role**, never an LLM-supplied role string.
+
+```mermaid
+classDiagram
+    class AccessService {
+        +authorise(user, action, device, now)
+    }
+    class PolicyFactory {
+        +create(authenticatedRole) AccessPolicy
+    }
+    class AccessPolicy {
+        <<interface>>
+        +allows(user, action, device, now) bool
+    }
+    class OwnerPolicy {
+        +allows(user, action, device, now) bool
+    }
+    class GuestPolicy {
+        +allows(user, action, device, now) bool
+    }
+    class AdministratorPolicy {
+        +allows(user, action, device, now) bool
+    }
+    AccessService --> PolicyFactory
+    AccessService --> AccessPolicy
+    PolicyFactory ..> OwnerPolicy
+    PolicyFactory ..> GuestPolicy
+    PolicyFactory ..> AdministratorPolicy
+    AccessPolicy <|.. OwnerPolicy
+    AccessPolicy <|.. GuestPolicy
+    AccessPolicy <|.. AdministratorPolicy
+```
+
+GuestPolicy checks only allowed doors/actions during the grant period. AdministratorPolicy denies device-control actions. Factory isolates construction; Strategy isolates policy variation. A simpler policy table may be preferable if the policies remain trivial.
+
+**(b)(ii)** Agree: unnecessary patterns add classes, indirection, configuration and cognitive cost. They help when real variation, coupling or lifecycle problems justify them. Use the smallest design that satisfies access rules and testability, and introduce a pattern when a concrete change pressure appears. “More patterns” is not evidence of better architecture.
+
+</details>
+
+#### Q4 — User inputs and automation (25 marks)
+
+**(a)(i) Derive ECs for Name, Phone Number, Access Expiry Date and Type of the User (4). (ii) Give on/below/above boundary values (4). (iii) Design defensive tests (5).**
+
+<details><summary>Worked answer — Q4(a)</summary>
+
+**Input interpretation.** Name must be ASCII; Phone Number is a 8-digit integer; Access Expiry Date is between 2025 and 2030; Type of the User is one of `Administrator`, `Owner`, `Guest`, `One Time User`. Assume a positive 8-digit numeric value (not a string whose leading zeroes count as digits), inclusive complete calendar years, and one-day date resolution. These interpretations are stated because the brief does not specify parsing details. Do not invent an ASCII-field length limit.
+
+**(i) Equivalence classes:**
+
+| Field | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Name | ASCII text | Text containing non-ASCII characters |
+| Phone Number | Integer 10000000…99999999 | Integer below 10000000; integer above 99999999; malformed/non-integer input at the input boundary |
+| Access Expiry Date | Real calendar date 2025-01-01…2030-12-31 | Real date before 2025-01-01; real date after 2030-12-31; malformed/nonexistent date |
+| Type of the User | One EC containing {Administrator, Owner, Guest, One Time User} | Any unlisted value |
+
+The category set is **one valid EC**, although testing all its few members is useful. No empty-string prohibition or printable-only ASCII restriction is supplied; clarify those separately instead of asserting an invented oracle.
+
+**(ii) Boundary triplets:**
+
+| Field / boundary | Just below | On boundary | Just above |
+| --- | --- | --- | --- |
+| Phone Number: minimum | 9999999 (reject) | 10000000 (accept) | 10000001 (accept) |
+| Phone Number: maximum | 99999998 (accept) | 99999999 (accept) | 100000000 (reject) |
+| Access Expiry Date: earliest | 2024-12-31 (reject) | 2025-01-01 (accept) | 2025-01-02 (accept) |
+| Access Expiry Date: latest | 2030-12-30 (accept) | 2030-12-31 (accept) | 2031-01-01 (reject) |
+
+ASCII membership and unordered categories have no specified application-level ordered boundary. Malformed values are additional EC tests, not numeric/date neighbours.
+
+**(iii) Defensive suite.** Each row is independent, with other business/fixture preconditions valid. Accept means input validation succeeds; Reject means controlled validation failure without changing stored data or crashing. Valid rows combine boundary values; every rejected row has exactly one invalid field. Full distinct triplet values are retained here, which is stronger than the course's reduced interior-neighbour selection (§13.5).
+
+| Name | Phone Number | Access Expiry Date | Type of the User | Expected / purpose |
+| --- | --- | --- | --- | --- |
+| `Alex` | `10000000` | `2025-01-01` | `Administrator` | Accept — valid boundaries / category coverage |
+| `Alex` | `10000001` | `2025-01-02` | `Owner` | Accept — valid boundaries / category coverage |
+| `Alex` | `99999998` | `2030-12-30` | `Guest` | Accept — valid boundaries / category coverage |
+| `Alex` | `99999999` | `2030-12-31` | `One Time User` | Accept — valid boundaries / category coverage |
+| `Alex` | `54999999` | `2027-07-01` | `Administrator` | Accept — interior baseline / category coverage |
+| `非ASCII` | `54999999` | `2027-07-01` | `Administrator` | Reject — non-ASCII Name |
+| `Alex` | `9999999` | `2027-07-01` | `Administrator` | Reject — Phone Number below minimum |
+| `Alex` | `100000000` | `2027-07-01` | `Administrator` | Reject — Phone Number above maximum |
+| `Alex` | `54999999` | `2024-12-31` | `Administrator` | Reject — Access Expiry Date below minimum |
+| `Alex` | `54999999` | `2031-01-01` | `Administrator` | Reject — Access Expiry Date above maximum |
+| `Alex` | `54999999` | `2027-07-01` | `Unknown` | Reject — unlisted Type of the User |
+| `Alex` | `12x` | `2027-07-01` | `Administrator` | Reject — malformed integer; extra defensive case |
+| `Alex` | `54999999` | `2025-02-30` | `Administrator` | Reject — nonexistent calendar date; extra defensive case |
+
+The Q4 category `One Time User` is valid for this input question, although Appendix A does not define that role's device permissions. Do not invent its access policy from the category name.
+
+</details>
+
+**(b) How can LLMs assist automated testing? (4). (c) At least four challenges of fully automated development (8).**
+
+<details><summary>Worked answer — Q4(b–c)</summary>
+
+**(b)** Use requirements and code context to propose tests, fixtures, boundary cases and automation scripts; run them through a real test runner and report actual results. Generate guest-access cases for wrong door, revocation and exact time edges, and validate expected results against the agreed policy. Review generated code/oracles and measure meaningful coverage. An LLM's claim that a test passed is not execution evidence; voice-language tests also need representative ambiguous/adversarial requests and repeatability controls.
+
+**(c)** Four challenges with consequences: **ambiguous/incomplete requirements** require stakeholder clarification, otherwise correct-looking code solves the wrong problem; **incorrect or nondeterministic generation** can introduce defects/security flaws, requiring independent execution and review; **integration/context limits** make existing interfaces, hardware behaviour and cross-component invariants hard to preserve; **validation and accountability** require trusted oracles, quality-attribute evidence and responsibility for consequential decisions. Maintenance adds further difficulty because changes must preserve compatibility, intent and operational safety across versions. In this case, a plausible voice response cannot establish that a physical door was correctly authorised or operated.
+
+</details>
+
+### 19.2 AY2025/26 Semester 2 — Restaurant Recommendation System
+
+**Source:** [Question paper](pyps/SC2006_AY2526_S2_Questions.pdf), Q1–Q4 on PDF pp. 1–3; Appendix A on p. 4.
+
+**Case facts.** Anonymous users converse with an LLM about food preferences. Conversation ends after ten user/assistant message pairs or an earlier Finished action. The same LLM then returns JSON containing up to five tags from a fixed set of twenty. Invalid JSON, out-of-set tags or more than five tags produces an error and a restart invitation. With valid tags, user provides postcode and integer travel radius; recommendations stay within radius and sort by decreasing count of matching tags. Clicking a restaurant website records preferences and selection. Administrators authenticate to maintain restaurant entries and view selection logs.
+
+#### Q1 — Use cases and JSON-check activity (25 marks)
+
+**(a) Actors/use cases/relationships (18). (b) Activity/swimlane diagram for checking JSON output (7).**
+
+<details><summary>Worked answer — Q1</summary>
+
+**(a)** Actors: Anonymous User, Administrator, and external LLM Service if externally hosted (explicitly the deployment considered in Q3(c)). The database and validation function are internal components. A restaurant website need not be a supporting actor merely because the browser follows its link.
+
+```mermaid
+flowchart LR
+    U["Anonymous user"] --- Recommend(["Obtain restaurant<br/>recommendations"])
+    Recommend -. "«include»" .-> Converse(["Converse about preferences"])
+    Finish(["Finish conversation early"]) -. "«extend» [Finished clicked<br/>before limit]" .-> Converse
+    Recommend -. "«include»" .-> Tags(["Extract preference tags"])
+    Tags -. "«include»" .-> Check(["Validate JSON, tag membership<br/>and count"])
+    Recommend -. "«include»" .-> Location(["Provide postcode and radius"])
+    Recommend -. "«include»" .-> Rank(["Filter by distance and rank<br/>matches"])
+    U --- Click(["Open restaurant website"])
+    Click -. "«include»" .-> Log(["Record preferences and<br/>selected restaurant"])
+    L["External LLM service"] --- Converse
+    L --- Tags
+    A["Administrator"] --- Login(["Administrator login"])
+    A --- Maintain(["Add / remove / alter<br/>restaurant entries"])
+    A --- ViewLog(["View selection log"])
+```
+
+Protected administrator actions require authentication; anonymous recommendations do not. Early finish is optional; reaching ten completed pairs also ends the conversation. Location/ranking steps belong to the successful flow; validation failure terminates that attempt before them. Recording a selection happens on a website click, not automatically for every displayed restaurant.
+
+**(b)** **Schema assumption:** the LLM contract represents tags as a JSON array of strings (or an agreed object field holding that array). JSON validity alone does not ensure that the parsed shape is usable as a tag list.
+
+```mermaid
+flowchart TD
+    subgraph LLM["LLM service"]
+        L1["Return candidate tag JSON"]
+    end
+    subgraph System
+        P["Parse JSON"]
+        J{"Valid JSON and agreed tag-list<br/>shape?"}
+        N{"At most five tag entries?"}
+        T{"Every tag belongs to fixed<br/>twenty-tag set?"}
+        OK["Accept tags; request postcode<br/>and radius"]
+        Fail["Display error and invite<br/>restart"]
+    end
+    subgraph User
+        U1["Continue with location input"]
+        U2["Choose whether to restart"]
+    end
+    L1 --> P --> J
+    J -->|No| Fail
+    J -->|Yes| N
+    N -->|No| Fail
+    N -->|Yes| T
+    T -->|No| Fail
+    T -->|Yes| OK --> U1
+    Fail --> U2
+    StartNode(("Start")) --> L1
+    U1 --> EndNode(("End"))
+    U2 --> EndNode
+```
+
+“Up to five” supplies no minimum-one rule: do not reject an empty tag list unless a separate requirement establishes that rule. Duplicate-tag handling is unspecified; do not silently add a rejection requirement. Count entries before any optional deduplication so a six-entry response cannot evade the stated limit.
+
+</details>
+
+#### Q2 — Recommendation classes, conversation states and Scrum (25 marks)
+
+**(a) Recommendation-generation conceptual classes/stereotypes (8). (b) Conversation state machine (6). (c) Waterfall versus Agile when the tag set changes (5). (d) Two causes/remedies for frequently overrun sprints (6).**
+
+<details><summary>Worked answer — Q2</summary>
+
+**(a)**
+
+```mermaid
+classDiagram
+    class RecommendationPage {
+        <<boundary>>
+    }
+    class LLMGateway {
+        <<boundary>>
+    }
+    class RecommendationController {
+        <<control>>
+    }
+    class TagValidator {
+        <<control>>
+    }
+    class ConversationSession {
+        <<entity>>
+    }
+    class Preferences {
+        <<entity>>
+    }
+    class Restaurant {
+        <<entity>>
+    }
+    class RecommendationList {
+        <<entity>>
+    }
+    RecommendationPage --> RecommendationController
+    RecommendationController --> LLMGateway
+    RecommendationController --> TagValidator
+    RecommendationController --> ConversationSession
+    ConversationSession "1" -- "0..1" Preferences
+    RecommendationController --> RecommendationList
+    RecommendationList --> Restaurant : ranked entries
+    Preferences --> Restaurant : tag matching
+```
+
+Postcode/radius belong to the recommendation request; preferences contain validated tags. No registered-user entity is required for anonymous use.
+
+**(b)** Count **completed user/assistant pairs**, not individual messages. The limit is ten of each, not ten combined.
+
+```mermaid
+stateDiagram-v2
+    state CountCheck <<choice>>
+    [*] --> WaitingForUser : pairs = 0
+    WaitingForUser --> WaitingForReply : user sends message
+    WaitingForReply --> CountCheck : LLM response delivered / pairs = pairs + 1
+    CountCheck --> WaitingForUser : [pairs < 10]
+    CountCheck --> Ended : [pairs == 10]
+    WaitingForUser --> Ended : Finished clicked
+    WaitingForReply --> Ended : Finished clicked / cancel or ignore late reply
+    Ended --> [*] : request tag JSON using conversation context
+```
+
+Handling Finished while a reply is pending is a stated design choice; it must not reopen the ended conversation when a late reply arrives. Restart after invalid tag JSON starts a fresh session. JSON validation/recommendation are subsequent components, not extra conversation messages.
+
+**(c)** Waterfall treats the original tag set as part of its requirements/design baseline. Change requires impact analysis and approved revisions to data, prompts, validators, stored restaurant tags, UI and tests; late changes can be expensive. Agile puts the change into a prioritised backlog, clarifies migration/acceptance criteria and delivers it in a future increment with feedback. Neither approach makes changing only the prompt sufficient: the fixed vocabulary must remain consistent across the whole system. Configuring/versioning the tag set reduces change cost in either process.
+
+**(d)** Cause 1: oversized items, optimistic estimates or insufficient capacity allowance. Remedy: split stories, use actual completed velocity, clarify the definition of done and select less work. Cause 2: hidden integration dependencies, external LLM/API failures or unplanned scope/defect work. Remedy: investigate dependencies early, use interface test doubles/spikes, protect sprint scope and reserve realistic capacity for known support work. Sprints are fixed timeboxes: do not repeatedly extend them; unfinished work is not done and must be replanned.
+
+</details>
+
+#### Q3 — Architecture and external LLM trade-offs (25 marks)
+
+**(a) Architecture (3). (b) Detailed classes with attributes/methods (12). (c)(i) Two upsides/two downsides of self-hosting an LLM (4); (ii) two other responses to a hosted LLM advertising competitors (6).**
+
+<details><summary>Worked answer — Q3</summary>
+
+**(a)** Use client–server with layered application/domain services and an external LLM gateway. MVC can organise browser interaction: views display conversation/results, controllers accept inputs, and domain models/services hold conversation, tag-validation and recommendation rules. Keep the restaurant database, logging and administrator authorisation on the server; never trust unvalidated LLM output.
+
+**(b)** Two views of one class model keep the diagram readable. `SessionController` is the same class in both views; operations are shown in the view that uses them.
+
+```mermaid
+classDiagram
+    class WebView {
+        +sendMessage(text)
+        +finish()
+        +submitLocation(postcode, radius)
+        +showRecommendations(items)
+    }
+    class SessionController {
+        +handleMessage(sessionId, text)
+        +finishConversation(sessionId)
+    }
+    class ConversationSession {
+        +id
+        +messages
+        +completedPairs
+        +ended
+        +appendReply(text)
+        +finish()
+    }
+    class LLMGateway {
+        +reply(history)
+        +extractTags(history, tagSet)
+    }
+    class TagValidator {
+        +allowedTags
+        +parseAndValidate(json) Preferences
+    }
+    WebView --> SessionController
+    SessionController --> ConversationSession
+    SessionController --> LLMGateway
+    SessionController --> TagValidator
+```
+
+```mermaid
+classDiagram
+    class SessionController {
+        +recommend(sessionId, postcode, radius)
+        +openWebsite(sessionId, restaurantId)
+    }
+    class RecommendationService {
+        +recommend(tags, postcode, radius)
+        +matchCount(tags, restaurant) int
+    }
+    class LocationGateway {
+        +resolve(postcode)
+        +distance(origin, restaurant) number
+    }
+    class RestaurantRepository {
+        +findCandidates(origin, radius)
+        +add(entry)
+        +update(entry)
+        +remove(id)
+    }
+    class Restaurant {
+        +id
+        +name
+        +address
+        +website
+        +tags
+    }
+    class SelectionLog {
+        +append(preferences, restaurantId)
+        +readAll()
+    }
+    class AdminController {
+        +authenticate(username, password)
+        +maintainRestaurant(session, change)
+        +viewLog(session)
+    }
+    SessionController --> RecommendationService
+    RecommendationService --> LocationGateway
+    RecommendationService --> RestaurantRepository
+    RestaurantRepository --> Restaurant
+    SessionController --> SelectionLog : only on selected website link
+    AdminController --> RestaurantRepository
+    AdminController --> SelectionLog
+```
+
+A server-side selection endpoint records the preferences/restaurant associated with that anonymous session, then redirects to the restaurant website. Domain algorithm: resolve location; retain restaurants with `distance ≤ radius`; compute the number of matching preference tags; sort descending; display names and website links. Zero matches are not explicitly excluded. Tie ordering and distance calculation method are unspecified; declare any chosen policy. Location resolution is a proposed integration needed for distance calculation, distinct from Q4's initially format-only validator.
+
+**(c)(i)** Self-hosting upsides: **control over model behaviour/version/customisation**, and **control over data handling with less dependence on a hosted provider's policies/availability**. Downsides: **compute/infrastructure cost**, and **operational/expertise burden** for serving, monitoring, updates, capacity and security. Self-hosting does not automatically deliver better accuracy or eliminate harmful outputs.
+
+**(c)(ii)** Two approaches other than self-hosting:
+
+1. **Switch to another externally hosted model/provider**, through the gateway, after testing against conversation and tag-extraction requirements. Establish service/content expectations and regression checks; avoid merely assuming every alternative behaves better.
+2. **Add a server-side output-policy boundary.** Check user-visible replies for unwanted promotional content, block affected responses and request a constrained regeneration with bounded retries; provide a controlled error/fallback when checks fail. Keep tag extraction under strict structural/membership validation as well. A prompt instruction alone is not a reliable enforcement boundary, and valid JSON does not establish that freeform replies contain no advertising. Evaluate false positives/negatives and preserve the required conversation capability.
+
+</details>
+
+#### Q4 — Postcode/distance ECs, external API and internationalisation (25 marks)
+
+**Given:** `validateUserInput(postcode, distance)` accepts a postcode string of six numerical digits and an integer distance from 0 to 100 km inclusive. **(a) ECs/assumptions (4). (b) Boundary triplets (4). (c) Defensive suite (8). (d)(i) EC changes when a public API confirms a real Singapore building (3); (ii) two complications for comprehensive tests (4). (e) Adaptation to multiple countries (2).**
+
+<details><summary>Worked answer — Q4</summary>
+
+**(a)** Assume “numerical digits” means ASCII `0`–`9`, retain leading zeroes, do not trim/coerce invalid inputs silently, and initially check **syntax only**, not real-building existence. The function contract already gives string/integer argument types; non-string/non-integer inputs are extra defensive-interface cases if the implementation permits them.
+
+| Input | Valid EC | Invalid ECs |
+| --- | --- | --- |
+| Postcode | Exactly six ASCII digits: `[0-9]{6}` | Length other than six; length six with at least one non-digit (including non-ASCII digits) |
+| Distance | Integer `0 ≤ d ≤ 100` | Integer `d < 0`; integer `d > 100` |
+
+The postcode invalid classes are disjoint as defined. `000000` and `999999` are syntactically valid even if they do not identify buildings. Postcode is not an integer range from 100000 to 999999.
+
+**(b)** Distance triplets: `−1, 0, 1` and `99, 100, 101`. Postcode **length** triplet: length `5, 6, 7`, e.g. `00000`, `000000`, `0000000`. Character membership is a discrete format rule; use a six-character string containing a letter/space rather than inventing an overall numeric postcode boundary.
+
+**(c)** Reset/isolate each test. “Accept” means this validator returns acceptance; it does not promise that later geocoding/recommendation will succeed.
+
+| Postcode string | Distance (km) | Expected / purpose |
+| --- | --- | --- |
+| `612345` | 50 | Accept — baseline |
+| `000000` | 50 | Accept — leading zeroes, syntax only |
+| `999999` | 50 | Accept — six digits, syntax only |
+| `612345` | 0 | Accept — lower distance boundary |
+| `612345` | 1 | Accept — lower valid neighbour |
+| `612345` | 99 | Accept — upper valid neighbour |
+| `612345` | 100 | Accept — upper distance boundary |
+| `612345` | −1 | Reject — distance below minimum |
+| `612345` | 101 | Reject — distance above maximum |
+| `00000` | 50 | Reject — five characters |
+| `0000000` | 50 | Reject — seven characters |
+| `12345a` | 50 | Reject — six characters with non-digit |
+| `123 45` | 50 | Reject — embedded space |
+| `１２３４５６` | 50 | Reject — non-ASCII digits under stated assumption |
+| empty string | 50 | Reject — wrong length |
+
+All rejected rows contain exactly one invalid parameter. If runtime types are not enforced, add type-check tests such as fractional distance and a numeric rather than string postcode, with explicit rejection policy.
+
+**(d)(i)** Split the old valid-syntax postcode class into **API-confirmed real-building postcodes** and **well-formed postcodes confirmed not to identify a building**. Keep malformed classes. Timeout, unavailable service, malformed API response or rate limiting is a dependency-failure outcome, not proof that the postcode is invalid. Define fail/retry/error behaviour explicitly.
+
+**(d)(ii)** Two complications: **changing external data**, so a postcode's building association/validity may change and make hard-coded oracles stale; **nondeterministic service behaviour**, including network failures, latency, limits and unexpected response formats. Use versioned fixtures/test doubles for deterministic unit/contract cases and a smaller controlled live integration suite with recorded expectations. Exercise confirmed-valid, confirmed-absent and each failure response; do not claim that a mocked suite verifies live API availability.
+
+**(e)** Add a country identifier or country-specific validation policy: `validateUserInput(countryCode, postcode, distance)`. Select the appropriate format and, where required, country-specific lookup service. Preserve postcodes as strings because countries may use letters, spaces and leading zeroes. Define normalisation and accepted formats per country and parameterise tests; do not impose Singapore's six-digit rule globally.
 
 </details>
 
@@ -4488,7 +5507,8 @@ source files. Lecture numbering follows topic headings: the file named
 | §13 BV testing | [2026 L18](lectures/Lecture%2018%20Boundary%20Value%20Testing%202026.pdf), pp. 11–16; [other L18](lectures/Lecture%2018%20BV%20Testing%20Lecture.pdf); [summary](lectures/summary%281%29.pdf) |
 | §14 GES facts A–K | [Scanned GES supplement](tutorial/CECZ2006_tutorials_supplement.pdf), pp. 1–2; visually checked because it has no extractable body text |
 | §15 all nine tutorials | [Tutorial Questions](tutorial/Tutorial%20Questions.pdf), one tutorial per PDF page; solutions in this guide are derived, not official |
-| §§16–21 practice and revision | Original exercises/summaries applying the sources above; invented scenarios and illustrative rubrics are not past-paper evidence |
+| §§16–19 past-year questions and answers | Eight original question PDFs in [pyps](pyps/), AY2022/23 S1/S2 through AY2025/26 S1/S2; each paper and relevant PDF pages are linked at its subsection. Prompts are summarised; worked answers are derived and unofficial. |
+| §§20–21 traps and revision | Summaries applying the lecture/tutorial sources above; not an official marking scheme or prediction of future papers |
 | §22 guest material | [Understanding AI Engineering](lectures/Understanding%20AI%20Engineering.pdf); [AI Engineering as a practice](lectures/AI%20Engineering%20as%20a%20practice%20-%20NTU.pdf); [Agentic Software Engineering](lectures/20260818_NTU%20Agentic%20Software%20Engineering.pdf) |
 | §22 architecture extension and competition | Thursday deck, pp. 8–14; [competition](lectures/20260821_NTU%20SWE%20Course%20Project%20Competition.pdf), p. 4 |
 
@@ -4510,6 +5530,7 @@ source files. Lecture numbering follows topic headings: the file named
   are not fully specified. §13.9/§14 state assumptions and TBDs instead of inventing requirements.
 - **Scope:** announcements, competition publicity and the two-page textbook cover/contents PDF do
   not establish an exam syllabus. Example ZIPs and the mortgage spreadsheet are supporting assets;
-  this audit checks the guide against lectures/tutorials, not execution of those sample projects.
+  this audit checks the guide against lectures/tutorials and the eight supplied past papers, not execution of those sample projects.
+- **Past papers:** questions and printed marks are primary evidence; worked answers are original, unofficial derivations. Architecture/design answers can have multiple valid solutions. Input-format, timing and deployment assumptions are stated with the affected answer; historical exam format does not establish a future syllabus.
 
 _End of guide._
