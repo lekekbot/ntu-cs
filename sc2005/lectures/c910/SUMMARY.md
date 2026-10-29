@@ -98,5 +98,5 @@ thrash when D > m
 
 * Segmentation, paging mechanics and address translation — that is [`../c89`](../c89).
 * File systems — now covered in [`../c11`](../c11) (directories, block allocation, inode,
-  free-space management). Disk scheduling is a later topic.
+  free-space management). Disk scheduling, I/O systems and RAID are in [`../c12`](../c12).
 * Copy-on-write and memory-mapped files are not discussed in these recordings.

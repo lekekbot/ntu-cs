@@ -69,6 +69,9 @@ Transcription: OpenAI Whisper `large-v3-turbo` (MLX) on the extracted 16 kHz mon
 | [`../c89`](../c89) | Memory organization | virtual memory |
 | [`../c910`](../c910) | Virtual memory | *"file systems and disk scheduling — later topics"* |
 | `c11` (this folder) | File systems | nothing — the recordings are self-contained supplements |
+| [`../c12`](../c12) | I/O systems, disks, scheduling, RAID | the last topic in this sequence |
 
 Not covered in these four recordings: disk scheduling, I/O systems, RAID, and file-system
-implementation details beyond the inode (e.g. superblock, cylinder groups).
+implementation details beyond the inode (e.g. superblock, cylinder groups). The first three are
+[`../c12`](../c12) — its S37 picks up the last idea in this folder, showing how the **allocation
+method** determines the **disk request pattern**, and therefore how much disk scheduling can help.

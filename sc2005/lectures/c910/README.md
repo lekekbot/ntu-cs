@@ -62,4 +62,6 @@ Transcription: Whisper `large-v3-turbo` (MLX) on the extracted 16 kHz mono audio
 This continues [`../c89`](../c89) (memory organization) and is itself continued by
 [`../c11`](../c11) (**file systems**): swapping and demand paging put pages on a backing store, and
 the chapter after this one organises that store — file attributes and directories, block allocation
-(contiguous / linked / indexed), the Unix inode, and free-space management.
+(contiguous / linked / indexed), the Unix inode, and free-space management. The sequence ends with
+[`../c12`](../c12) (**I/O systems and disks**), which prices the actual block transfers: access
+time, disk scheduling and RAID.
