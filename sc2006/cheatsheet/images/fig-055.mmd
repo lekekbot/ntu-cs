@@ -1,0 +1,31 @@
+flowchart TD
+    subgraph User
+        U1["Request replacement / identify<br/>item"]
+        U2["Supply photos, receipt and<br/>reason"]
+        U3["Receive procedure or rejection"]
+    end
+    subgraph Chatbot
+        C1["Obtain purchase and delivery<br/>data"]
+        C2{"Within seven days?"}
+        C3["Collect evidence"]
+        C4{"Evidence complete?"}
+        C5["Submit request; show pending"]
+        C6["Communicate decision"]
+    end
+    subgraph ExistingSystem["Existing web-based system"]
+        W1["Retrieve order / delivery"]
+        W2["Company reviews request"]
+        W3{"Approved?"}
+        W4["Provide replacement procedure"]
+        W5["Provide rejection"]
+    end
+    U1 --> C1 --> W1 --> C2
+    C2 -->|No| C6
+    C2 -->|Yes| C3 --> U2 --> C4
+    C4 -->|No| C3
+    C4 -->|Yes| C5 --> W2 --> W3
+    W3 -->|Yes| W4 --> C6
+    W3 -->|No| W5 --> C6
+    C6 --> U3
+    StartNode(("Start")) --> U1
+    U3 --> EndNode(("End"))

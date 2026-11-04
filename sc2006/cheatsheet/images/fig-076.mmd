@@ -1,0 +1,10 @@
+stateDiagram-v2
+    direction LR
+    [*] --> Unregistered
+    Unregistered --> Fresh : register [connected] / beginMonitoring()
+    Unregistered --> Unregistered : register [not connected] / reject()
+    Fresh --> Fresh : integer update / processUpdate()
+    Fresh --> Overdue : timeout [silence > 24h] / warnManager()
+    Overdue --> Fresh : integer update / processUpdate()
+    Fresh --> Unregistered : deregister / endMonitoring()
+    Overdue --> Unregistered : deregister / endMonitoring()

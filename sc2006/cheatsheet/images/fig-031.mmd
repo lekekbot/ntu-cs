@@ -1,0 +1,22 @@
+%%{init: {"sequence": {"width": 100, "actorMargin": 20, "diagramMarginX": 10}}}%%
+sequenceDiagram
+    actor User
+    participant V as Editing View
+    participant C as Controller
+    participant M as Model
+    participant O as Other Views
+    Note over V,O: Views already subscribed
+    User->>V: enter(value)
+    V->>C: handleEvent(value)
+    C->>M: service(value)
+    M->>M: change data
+    M->>V: update()
+    V->>M: getData()
+    M-->>V: current data
+    V->>V: redraw
+    loop each View
+        M->>O: update()
+        O->>M: getData()
+        M-->>O: current data
+        O->>O: redraw
+    end

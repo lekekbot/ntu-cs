@@ -1,0 +1,66 @@
+\section*{Past-year papers and worked answers}\label{papers-start}
+\fontsize{9}{10.5}\selectfont
+
+\textbf{Paper format observed:} two hours, four compulsory 25-mark questions. Budget about 30 minutes per question, including reading/checking. The linked originals supply exact wording and Appendix A; prompts here are summaries. Worked designs are examples, not unique solutions.
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.37840\linewidth-9.08pt\relax}L{\dimexpr 0.20818\linewidth-5.00pt\relax}L{\dimexpr 0.41343\linewidth-9.92pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Paper} & \textbf{Scenario} & \textbf{Main modelling variation} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Paper} & \textbf{Scenario} & \textbf{Main modelling variation} \\
+\midrule\endhead
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2223\_S1\_Questions.pdf}{AY2022/\allowbreak{}23 S1} & Car sales & Hold-car use case, conceptual classes, dialog map \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2223\_S2\_Questions.pdf}{AY2022/\allowbreak{}23 S2} & Shopping chatbot & Replacement use case, conceptual classes, activity diagram \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2324\_S1\_Questions.pdf}{AY2023/\allowbreak{}24 S1} & DevSecOps & Security-check use case, classes, activity diagram \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2324\_S2\_Questions.pdf}{AY2023/\allowbreak{}24 S2} & CodeAgent & Reviewer use case, classes, QA-Checker state machine \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2425\_S1\_Questions.pdf}{AY2024/\allowbreak{}25 S1} & Task management & Assignment use case, classes, task lifecycle activity diagram \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2425\_S2\_Questions.pdf}{AY2024/\allowbreak{}25 S2} & Disaster Warning System & Stakeholders/\allowbreak{}requirements, sensor state machine, linking activity \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2526\_S1\_Questions.pdf}{AY2025/\allowbreak{}26 S1} & Smart home & Guest access use case, controller state machine, voice activity \\
+\href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2526\_S2\_Questions.pdf}{AY2025/\allowbreak{}26 S2} & Restaurant recommendations & JSON-check activity, recommendation classes, conversation state machine \\
+\end{longtable}
+}
+\textbf{Common testing conventions:} reset/isolate rows; keep fixtures and other inputs valid; combine valid coverage but use exactly one invalid field per defensive row. Accept means input validation passes, not that later external operations succeed. Reject means controlled failure without data mutation/crash. Oracles come from requirements; unclear behaviour is labelled TBD. Full triplets are retained; categorical membership has no numeric boundary.
+
+\textbf{Answer map:} Q1 uses Chapters 2--3; modelling uses 4--5; process/Scrum uses 7--8; architecture/patterns uses 9--11; testing uses 12--13; AI checks use 16. Apply the method to the case rather than copying an earlier case's classes or limits.
+
+\textbf{Drawing convention:} Mermaid approximates UML use-case/activity notation. In an examination, use UML actors, boundaries, ellipses, arrowheads, initial/final nodes, bars and guarded diamonds as explained in Chapters 3--5.
+
+
+\section*{Older papers: grouped question bank}\label{older-bank}
+\phantomsection\addcontentsline{toc}{section}{Older papers: cases and question map}
+\markboth{Older papers | Case map}{}
+The four older papers (AY2022/23 and AY2023/24) are grouped by question type. Each case retains its own prompt, diagrams, constraints and testing rows. The four newer papers follow in chronological order.
+
+\begin{longtable}{L{.28\linewidth}L{.14\linewidth}L{.14\linewidth}L{.14\linewidth}L{.14\linewidth}}
+\toprule\rowcolor{ice}\textbf{Older case} & \textbf{Q1} & \textbf{Q2} & \textbf{Q3} & \textbf{Q4}\\\midrule\endhead
+Car sales & p.\ \pageref{old-2223-s1-q1} & p.\ \pageref{old-2223-s1-q2} & p.\ \pageref{old-2223-s1-q3} & p.\ \pageref{old-2223-s1-q4}\\
+Shopping chatbot & p.\ \pageref{old-2223-s2-q1} & p.\ \pageref{old-2223-s2-q2} & p.\ \pageref{old-2223-s2-q3} & p.\ \pageref{old-2223-s2-q4}\\
+DevSecOps & p.\ \pageref{old-2324-s1-q1} & p.\ \pageref{old-2324-s1-q2} & p.\ \pageref{old-2324-s1-q3} & p.\ \pageref{old-2324-s1-q4}\\
+CodeAgent & p.\ \pageref{old-2324-s2-q1} & p.\ \pageref{old-2324-s2-q2} & p.\ \pageref{old-2324-s2-q3} & p.\ \pageref{old-2324-s2-q4}\\
+\bottomrule
+\end{longtable}
+\begin{studycolumns}
+\subsection*{AY2022/23 S1: Car sales}\label{paper-2223-s1}
+\sectionlabel{h-161-ay202223-semester-1--car-selling-system-x}
+\textbf{Source:} \href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2223\_S1\_Questions.pdf}{Question paper}, Q1--Q4 on PDF pp. 1--3; Appendix A on p. 4.
+
+\textbf{Case facts.} Visitors browse/\allowbreak{}search new and used cars. A registered, logged-in user can hold one car by paying a deposit through the dealer's payment system. A car has only one holder at a time; another user cannot hold or buy it. Cancellation/\allowbreak{}expiry causes a refund. A buyer completes purchase with dealer staff. Staff log in, view car information, manage orders and complete delivery only after full-payment confirmation. A sales manager additionally manages car listings and generates sales reports.
+\subsection*{AY2022/23 S2: Shopping chatbot}\label{paper-2223-s2}
+\sectionlabel{h-162-ay202223-semester-2--customer-service-chatbot}
+\textbf{Source:} \href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2223\_S2\_Questions.pdf}{Question paper}, Q1--Q4 on PDF pp. 1--4; Appendix A on p. 5.
+
+\textbf{Case facts.} The chatbot answers product/\allowbreak{}pricing/\allowbreak{}availability queries and helps logged-in customers manage carts, orders, payment/\allowbreak{}delivery details, status, replacements and refunds. Free replacement/\allowbreak{}refund is available within seven days of delivery, with item photos, purchase receipt and reasons. The company confirms or rejects the request; the chatbot communicates instructions or rejection.
+\subsection*{AY2023/24 S1: DevSecOps}\label{paper-2324-s1}
+\sectionlabel{h-171-ay202324-semester-1--devsecops-platform}
+\textbf{Source:} \href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2324\_S1\_Questions.pdf}{Question paper}, Q1--Q4 on PDF pp. 1--3; Appendix A on p. 4.
+
+\textbf{Case facts.} A developer supplies a local project or GitHub link. The platform analyses security and quality using four external toolsets: SCA, SAST, DAST and IAST. It generates a report and offers mitigation recommendations. Project-selection help is optional. Developers may rerun selected toolsets to verify fixes and generate reports on request.
+\subsection*{AY2023/24 S2: CodeAgent}\label{paper-2324-s2}
+\sectionlabel{h-172-ay202324-semester-2--codeagent}
+\textbf{Source:} \href{run:/Users/bryangoh/Work/ntu-cs/sc2006/pyps/SC2006\_AY2324\_S2\_Questions.pdf}{Question paper}, Q1--Q4 on PDF pp. 1--4; Appendix A on p. 5.
+
+\textbf{Case facts.} Seven internal agents are User, CEO, CPO, CTO, Reviewer, Coder and QA-Checker. The first six correspond to user roles; users log in to interact with the corresponding agents. Code review recognises input modality/\allowbreak{}language; Reviewer checks commit-message consistency, vulnerability injection and formatting; Coder revises code; Coder/\allowbreak{}CTO/\allowbreak{}CEO summarise the work. Paired agents converse under QA-Checker supervision until the answer is appropriate or a dialogue limit is reached. Logs/\allowbreak{}reports are generated on request.
+\end{studycolumns}

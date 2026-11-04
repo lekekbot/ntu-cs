@@ -1,0 +1,104 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[margin=12mm,headheight=16pt,headsep=4mm,footskip=6mm]{geometry}
+\usepackage{colortbl}
+\usepackage{graphicx,xcolor,amsmath,amssymb,array,longtable,booktabs,ragged2e,enumitem,fancyhdr,needspace,caption,multicol}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{fvextra}
+\usepackage{hyperref,xurl}
+\definecolor{navy}{HTML}{16324A}
+\definecolor{teal}{HTML}{176B66}
+\definecolor{amber}{HTML}{9C5D11}
+\definecolor{danger}{HTML}{9D3538}
+\definecolor{ice}{HTML}{EDF3F8}
+\definecolor{mint}{HTML}{EEF6F2}
+\definecolor{sand}{HTML}{FFF5E5}
+\definecolor{line}{HTML}{CCD7DF}
+\hypersetup{colorlinks=true,linkcolor=navy,urlcolor=teal,pdftitle={SC2006 A4 Visual Examination Reference},pdfauthor={Study reference; unofficial worked answers},bookmarksnumbered=false}
+\setlength{\columnsep}{6mm}
+\setlength{\columnseprule}{.2pt}
+\def\columnseprulecolor{\color{line}}
+\setlength{\multicolsep}{5pt}
+\newenvironment{studycolumns}{\begin{multicols}{2}\raggedcolumns}{\end{multicols}}
+\newenvironment{referenceentries}{\par\begingroup\fontsize{9}{11}\selectfont}{\par\endgroup}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\LTpre}{3pt}
+\setlength{\LTpost}{4pt}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\setlist{nosep,leftmargin=1.6em,topsep=3pt,itemsep=2pt,parsep=1pt}
+\setlist[enumerate,2]{label=\alph*.,leftmargin=1.7em}
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\captionsetup{font=footnotesize,labelfont=bf,skip=2pt}
+\newtcolorbox{eli5box}{breakable,colback=ice,colframe=navy,boxrule=.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=ELI5,fonttitle=\bfseries,colbacktitle=navy,coltitle=white}
+\newtcolorbox{watchbox}{breakable,colback=sand,colframe=amber,boxrule=.5pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=Traps and things to check,fonttitle=\bfseries,colbacktitle=amber,coltitle=white}
+\newtcolorbox{examlinkbox}{breakable,colback=mint,colframe=teal,boxrule=.4pt,arc=1mm,left=2mm,right=2mm,top=1mm,bottom=1mm,title=Where it helps in the papers,fonttitle=\bfseries,colbacktitle=teal,coltitle=white}
+\DefineVerbatimEnvironment{ReferenceCode}{Verbatim}{breaklines=true,breakanywhere=true,fontsize=\small,frame=lines,framesep=2mm,rulecolor=\color{line}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\chapteropen}[2]{\par\Needspace{160pt}\bigskip\phantomsection\addcontentsline{toc}{section}{#1}\markboth{#1}{#1}\section*{#1}\label{#2}}
+\newcommand{\sectionlabel}[1]{\phantomsection\label{#1}}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textcolor{navy}{SC2006\;|\;Visual examination reference}}
+\fancyhead[R]{\footnotesize\textcolor{navy}{\nouppercase{\leftmark}}}
+\fancyfoot[L]{\scriptsize SC2006 visual reference}
+\fancyfoot[R]{\scriptsize\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\renewcommand{\footrulewidth}{.2pt}
+\setcounter{tocdepth}{1}
+\raggedbottom
+
+\begin{document}
+\markboth{Navigation}{}
+{\color{navy}\fontsize{20}{23}\selectfont\bfseries SC2006 Visual examination reference\par}
+{\small A4 chapter guide, four older papers grouped by question type and four recent worked papers. Revised 4 November 2026.}\par
+\textbf{Use:} read the ELI5 introduction, inspect the diagram, then use the rules and traps to build a case-specific answer. Tutorial material already covered in lecture chapters appears once.
+\par\textbf{Historical format:} all eight supplied papers allow two hours for four compulsory 25-mark questions.
+\begin{longtable}{L{.12\linewidth}L{.52\linewidth}L{.28\linewidth}}
+\toprule\rowcolor{ice}\textbf{Question} & \textbf{What to find first} & \textbf{Chapter / page}\\\midrule\endhead
+Q1 & Actors, goals, use-case relationships and behaviour; one paper adds stakeholders/requirements. & Ch. 2--3, pp.\ \pageref{chapter-2}--\pageref{chapter-3}\\
+Q2 & Conceptual classes, state/activity/dialog diagrams, development process and Scrum reasoning. & Ch. 4--5, 7--8; pp.\ \pageref{chapter-4}, \pageref{chapter-5}, \pageref{chapter-7}, \pageref{chapter-8}\\
+Q3 & Architecture tied to the case, NFRs, design-pattern roles, trade-offs and responsibility/LLM questions. & Ch. 9--11, 16; pp.\ \pageref{chapter-9}, \pageref{chapter-10}, \pageref{chapter-11}, \pageref{chapter-16}\\
+Q4 & ECs, full boundary triplets, one-invalid defensive rows and expected outcomes; testing/maintenance extensions. & Ch. 12--13, 16; pp.\ \pageref{chapter-12}, \pageref{chapter-13}, \pageref{chapter-16}\\
+\bottomrule
+\end{longtable}
+\textbf{Print:} A4, actual size, one page per sheet side. All pages are portrait. Colour labels remain readable in greyscale.
+\par\textbf{Status:} worked answers are unofficial; assumptions are labelled. Use original PDFs for exact questions and proper UML notation in examination drawings. Historical formats do not guarantee the next paper.
+\begingroup\small
+\setlength{\parskip}{0pt}
+\makeatletter\renewcommand{\l@section}{\@dottedtocline{1}{0pt}{1.5em}}\makeatother
+\tableofcontents
+\endgroup
+\clearpage
+\input{sections/chapter-01.tex}
+\input{sections/chapter-02.tex}
+\input{sections/chapter-03.tex}
+\input{sections/chapter-04.tex}
+\input{sections/chapter-05.tex}
+\input{sections/chapter-06.tex}
+\input{sections/chapter-07.tex}
+\input{sections/chapter-08.tex}
+\input{sections/chapter-09.tex}
+\input{sections/chapter-10.tex}
+\input{sections/chapter-11.tex}
+\input{sections/chapter-12.tex}
+\input{sections/chapter-13.tex}
+\input{sections/chapter-14.tex}
+\input{sections/chapter-15.tex}
+\input{sections/chapter-16.tex}
+\input{sections/chapter-17.tex}
+\input{sections/sources.tex}
+\input{sections/papers-overview.tex}
+\input{sections/older-q1.tex}
+\input{sections/older-q2.tex}
+\input{sections/older-q3.tex}
+\input{sections/older-q4.tex}
+\input{sections/papers-2024-25.tex}
+\input{sections/papers-2025-26.tex}
+\end{document}

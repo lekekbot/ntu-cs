@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Normal : assume initial readings are normal
+    Normal --> Blocked : sensor alert [humidity or temperature abnormal]
+    Blocked --> Normal : readings [humidity and temperature normal]
+    Blocked --> Blocked : deposit requested / refuse intake
+    note right of Blocked
+        Intake disabled regardless of occupancy.
+        Sensors also alert external grain dryer.
+    end note

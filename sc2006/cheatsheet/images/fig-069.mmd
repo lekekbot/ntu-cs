@@ -1,0 +1,16 @@
+flowchart LR
+    M["Team member"] --- Account(["Register / log in"])
+    M --- Create(["Create task"])
+    M --- Collaborate(["Chat / comment / share<br/>documents"])
+    M --- Progress(["Record / monitor task progress"])
+    M --- AlertConfig(["Configure reminders"])
+    M --- Notify(["Receive notifications"])
+    L["Team leader / project manager<br/>also member capabilities"] --- Assign(["Assign / reassign task"])
+    L --- Dash(["View progress, overdue tasks<br/>and workload"])
+    M --- Finished(["Update / delete finished task"])
+    Assign -. "«include»" .-> Verify(["Verify task and assignment<br/>authority"])
+    Assign -. "«include»" .-> Deadline(["Set deadline / milestone"])
+    Assign -. "«include»" .-> Unique(["Enforce one current assignment"])
+    Notify -. "«include»" .-> Email(["Send email notification"])
+    Notify -. "«include»" .-> App(["Deliver in-app notification"])
+    E["Email server"] --- Email

@@ -1,0 +1,31 @@
+classDiagram
+    class WebView {
+        +sendMessage()
+        +finish()
+        +submitLocation()
+        +showRecommendations()
+    }
+    class SessionController {
+        +handleMessage()
+        +finishConversation()
+    }
+    class ConversationSession {
+        +id
+        +messages
+        +completedPairs
+        +ended
+        +appendReply()
+        +finish()
+    }
+    class LLMGateway {
+        +reply()
+        +extractTags()
+    }
+    class TagValidator {
+        +allowedTags
+        +parseAndValidate() Preferences
+    }
+    WebView --> SessionController
+    SessionController --> ConversationSession
+    SessionController --> LLMGateway
+    SessionController --> TagValidator

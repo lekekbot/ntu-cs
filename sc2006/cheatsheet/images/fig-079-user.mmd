@@ -1,0 +1,10 @@
+flowchart LR
+ O["Homeowner"] --- C(["Control lights / AC / locks"])
+ O --- G(["Grant / revoke temporary access"])
+ O --- D(["Request door lock / unlock"])
+ U["Guest"] --- D
+ C -. "include" .-> A(["Authenticate / authorise"])
+ D -. "include" .-> A
+ D -. "include" .-> L(["Log access attempt / outcome"])
+ V["Lights / AC / locks"] --- C
+ K["Door lock"] --- D

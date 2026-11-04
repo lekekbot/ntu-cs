@@ -1,0 +1,28 @@
+classDiagram
+    class ChatController {
+        +handle()
+    }
+    class HandlerFactory {
+        +create() IntentHandler
+    }
+    class IntentHandler {
+        <<interface>>
+        +execute()
+    }
+    class ProductQueryHandler {
+        +execute()
+    }
+    class ReplacementHandler {
+        +execute()
+    }
+    class RefundHandler {
+        +execute()
+    }
+    ChatController --> HandlerFactory
+    ChatController --> IntentHandler
+    HandlerFactory ..> ProductQueryHandler
+    HandlerFactory ..> ReplacementHandler
+    HandlerFactory ..> RefundHandler
+    IntentHandler <|.. ProductQueryHandler
+    IntentHandler <|.. ReplacementHandler
+    IntentHandler <|.. RefundHandler

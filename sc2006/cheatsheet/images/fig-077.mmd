@@ -1,0 +1,18 @@
+flowchart LR
+ subgraph Manager
+  A["Sensor + alert;<br/>safe range"]
+  R["Correct /<br/>cancel"]
+  C["Receive<br/>confirmation"]
+ end
+ subgraph DWS
+  V["Validate format;<br/>registered ends"]
+  D{"All valid?"}
+  S["Save link/range;<br/>log change"]
+  E["Show reason"]
+  F["Evaluate future<br/>readings"]
+ end
+ Start((Start)) --> A --> V --> D
+ D -->|no| E --> R
+ R -->|retry| A
+ R -->|cancel| End((End))
+ D -->|yes| S --> C --> F --> End

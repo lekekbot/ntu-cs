@@ -1,0 +1,6 @@
+flowchart TD
+    Analyse(["Perform review analysis"]) -. "«include»" .-> CA(["Check commit / message consistency"])
+    Analyse -. "«include»" .-> VA(["Check vulnerability injection"])
+    Analyse -. "«include»" .-> FA(["Check format consistency"])
+    Analyse -. "«include»" .-> Converse(["Collaborate through<br/>paired conversation"])
+    Converse -. "«include»" .-> QA(["Assess answer and refine<br/>question if needed"])

@@ -1,0 +1,7 @@
+flowchart TD
+ Q{"What is asserted?"} -->|Capability, data, interaction| F["FR<br/>Search catalogue"]
+ Q -->|Quality or constraint| N["NFR<br/>Detect within 2 seconds"]
+ F --> V{"Measurable and specific?"}
+ N --> V
+ V -->|yes| K["Keep atomic assertion"]
+ V -->|no| C["Clarify; record TBD"]

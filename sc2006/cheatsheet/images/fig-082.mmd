@@ -1,0 +1,35 @@
+classDiagram
+    class MobileView {
+        +request()
+        +showResult()
+    }
+    class VoiceAssistant {
+        +interpret()
+        +clarify()
+    }
+    class CommandController {
+        +execute()
+    }
+    class AccessPolicy {
+        +allows() bool
+    }
+    class GuestGrant {
+        +guestId
+        +doorId
+        +startsAt
+        +endsAt
+        +revoked
+        +isActive() bool
+    }
+    class DeviceGateway {
+        +execute()
+    }
+    class AuditLog {
+        +record()
+    }
+    MobileView --> CommandController
+    VoiceAssistant --> CommandController
+    CommandController --> AccessPolicy
+    AccessPolicy --> GuestGrant
+    CommandController --> DeviceGateway : authorised commands only
+    CommandController --> AuditLog : permitted and denied attempts

@@ -1,0 +1,10 @@
+flowchart TB
+    M[Model]
+    V[View]
+    C[Controller]
+    V -->|"register(this) / unregister(this) — Observer subscription"| M
+    M -->|"notify() → update() — Observer notification"| V
+    V -->|"handleEvent() — Strategy"| C
+    C -->|"service() / update model"| M
+    V -->|"getData() — pull"| M
+    C -->|"select / update view where needed"| V

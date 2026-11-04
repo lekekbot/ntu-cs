@@ -1,0 +1,30 @@
+classDiagram
+    class Subject {
+        <<interface>>
+        +attach()
+        +detach()
+        +notify()
+        +getData() Details
+    }
+    class Observer {
+        <<interface>>
+        +update()
+    }
+    class ConcreteSubject {
+        -observers : Observer[*]
+    }
+    class LineChart {
+        +drawLine()
+    }
+    class BarChart {
+        +drawBar()
+    }
+    class YourAccount {
+        +newAnnouncement()
+    }
+    Subject <|.. ConcreteSubject : implements
+    Observer <|.. LineChart : implements
+    Observer <|.. BarChart : implements
+    Observer <|.. YourAccount : implements
+    ConcreteSubject "1" --> "0..*" Observer : registered observers
+    note for ConcreteSubject "WorkSheet, SC2006NTU, Silo"

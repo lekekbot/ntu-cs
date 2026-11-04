@@ -1,0 +1,41 @@
+classDiagram
+    class HoldPage {
+        +selectedCarId
+        +showTerms()
+        +confirmHold()
+        +showResult()
+    }
+    class HoldController {
+        +requestHold()
+        +cancelHold()
+        +expireHold()
+    }
+    class Car {
+        +id
+        +price
+        +saleStatus
+        +isAvailableFor()
+    }
+    class Hold {
+        +customerId
+        +carId
+        +expiresAt
+        +status
+        +activate()
+        +end()
+    }
+    class HoldRepository {
+        +allocateAtomically()
+        +findActive()
+        +save()
+    }
+    class PaymentGateway {
+        +chargeDeposit()
+        +refund()
+        +confirmFullPayment()
+    }
+    HoldPage --> HoldController
+    HoldController --> Car
+    HoldController --> Hold
+    HoldController --> HoldRepository
+    HoldController --> PaymentGateway

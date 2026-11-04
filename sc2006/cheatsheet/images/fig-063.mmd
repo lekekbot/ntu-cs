@@ -1,0 +1,14 @@
+flowchart LR
+    U["User-role human"] --- Login(["Log in"])
+    U --- Review(["Request code review"])
+    U --- Logs(["Request<br/>dialogue logs"])
+    U --- Reports(["Request review report"])
+    CEO["CEO-role human"] --- Summary(["Review summary /<br/>supervise work"])
+    CPO["CPO-role human"] --- Identify(["Input modality<br/>and language"])
+    CTO["CTO-role human"] --- Summary
+    RH["Reviewer-role human"] --- Analyse(["Review<br/>analysis"])
+    CH["Coder-role human"] --- Revise(["Revise<br/>incorrect code"])
+    Review -. "«include»" .-> Identify
+    Review -. "«include»" .-> Analyse
+    Review -. "«include»" .-> Summary
+    Revise -. "«extend» [incorrect snippets]" .-> Review

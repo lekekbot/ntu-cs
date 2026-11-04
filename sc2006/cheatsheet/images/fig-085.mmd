@@ -1,0 +1,16 @@
+%%{init: {"flowchart": {"nodeSpacing": 6, "rankSpacing": 20, "padding": 4}}}%%
+flowchart LR
+    U["Anonymous user"] --- Recommend(["Obtain restaurant<br/>recommendations"])
+    Recommend -. "«include»" .-> Converse(["Converse about preferences"])
+    Finish(["Finish conversation early"]) -. "«extend» [Finished clicked<br/>before limit]" .-> Converse
+    Recommend -. "«include»" .-> Tags(["Extract preference tags"])
+    Tags -. "«include»" .-> Check(["Validate JSON, tag membership<br/>and count"])
+    Recommend -. "«include»" .-> Location(["Provide postcode and radius"])
+    Recommend -. "«include»" .-> Rank(["Filter by distance and rank<br/>matches"])
+    U --- Click(["Open restaurant website"])
+    Click -. "«include»" .-> Log(["Record preferences and<br/>selected restaurant"])
+    L["External LLM service"] --- Converse
+    L --- Tags
+    A["Administrator"] --- Login(["Administrator login"])
+    A --- Maintain(["Add / remove / alter<br/>restaurant entries"])
+    A --- ViewLog(["View selection log"])

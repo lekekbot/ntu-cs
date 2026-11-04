@@ -1,0 +1,27 @@
+flowchart LR
+ subgraph Guest
+  G1["Speak request"]
+  G2["Clarify door / action"]
+  G3["Receive result"]
+ end
+ subgraph Voice["Voice assistant"]
+  V1["Transcribe / interpret"]
+  V2{"Ambiguous?"}
+  V3["Ask clarification"]
+  V4["Submit door command"]
+ end
+ subgraph Access["Trusted access controller"]
+  A1["Check identity, door,<br/>grant, revocation, time"]
+  A2{"Permitted now?"}
+  A3["Deny"]
+  A4["Log attempt + actual outcome"]
+ end
+ subgraph Device["Lock interface"]
+  D1["Unlock; return success / failure"]
+ end
+ Start((Start)) --> G1 --> V1 --> V2
+ V2 -->|yes| V3 --> G2 --> V1
+ V2 -->|no| V4 --> A1 --> A2
+ A2 -->|no| A3 --> A4
+ A2 -->|yes| D1 --> A4
+ A4 --> G3 --> End((End))

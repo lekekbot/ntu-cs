@@ -1,0 +1,15 @@
+flowchart LR
+ subgraph Developer
+  Review["Review report"]
+  M{"Mitigation?"}
+  Fix["Fix code"]
+ end
+ subgraph Platform
+  Rec["Recommend fixes"]
+  A["A: select engines"]
+ end
+ B((B)) --> Review --> M
+ M -->|no| End((End))
+ M -->|yes| Rec --> Fix
+ Fix -->|verify| A
+ Fix -->|finish| End

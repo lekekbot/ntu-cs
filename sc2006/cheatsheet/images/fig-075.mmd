@@ -1,0 +1,20 @@
+flowchart LR
+    M["DWS manager"] --- RS(["Register sensor"])
+    M --- DS(["Deregister sensor"])
+    M --- RA(["Register alert"])
+    M --- DA(["Deregister alert"])
+    M --- Link(["Link sensor to alert and safe<br/>range"])
+    M --- Unlink(["Unlink sensor and alert"])
+    M --- Records(["Request full<br/>interaction/message record"])
+    M --- Health(["Receive no-update warning"])
+    RS -. "«include»" .-> Connected(["Verify physical connection"])
+    RA -. "«include»" .-> Connected
+    Link -. "«include»" .-> Registered(["Validate registered endpoints<br/>and range"])
+    S["Sensor"] --- Receive(["Receive integer measurement"])
+    Receive -. "«include»" .-> Evaluate(["Evaluate linked safe ranges"])
+    Trigger(["Send disaster alert"]) -. "«extend» [outside linked<br/>range]" .-> Evaluate
+    A["Alert system"] --- Trigger
+    Receive -. "«include»" .-> Log(["Record interaction / message"])
+    Trigger -. "«include»" .-> Log
+    Monitor(["Check sensor freshness"]) -. "«include»" .-> Inspect(["Inspect last-update time"])
+    Health -. "«extend» [silence over 24<br/>hours]" .-> Monitor

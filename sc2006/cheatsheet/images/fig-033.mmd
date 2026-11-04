@@ -1,0 +1,5 @@
+flowchart LR
+ B["Requirements<br/>BLACK BOX: EC / BV"] --> O["Independent oracle"]
+ W["Implementation<br/>WHITE BOX: CFG / paths"] --> O
+ O --> E["Execute and record"]
+ E --> C["Compare expected / actual"]

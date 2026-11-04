@@ -1,0 +1,36 @@
+sequenceDiagram
+    actor Manager
+    participant UI as ArrivalUI
+    participant AC as AllocationController
+    participant S as Silos
+    participant TL as TransactionLog
+    Manager->>UI: grain type, grade, offered quantity
+    UI->>AC: proposeAllocation(type, grade, quantity)
+    activate AC
+    AC->>S: get compatible capacity and condition
+    S-->>AC: eligible silos and available quantities
+    AC-->>UI: proposed silo quantities and unaccepted remainder
+    deactivate AC
+    UI-->>Manager: show proposal
+    alt no grain can be accepted
+        UI-->>Manager: report no grain accepted
+        Note over Manager,TL: Zero-quantity logging policy is TBD
+    else some or all grain can be accepted
+        alt manager accepts
+            Manager->>UI: accept proposal
+        else manager overrules
+            Manager->>UI: revised silo selection
+        end
+        Note over Manager,S: Manager arranges physical unloading outside GES
+        Manager->>UI: actual amounts per silo, truck, driver, seller
+        UI->>AC: recordActualDeposit(actuals, shipment details)
+        activate AC
+        loop each silo receiving grain
+            AC->>S: record actual deposited amount
+        end
+        AC->>TL: append F shipment fields with date/time and manager
+        TL-->>AC: recorded
+        AC-->>UI: acknowledge receipt
+        deactivate AC
+        UI-->>Manager: acknowledgement
+    end

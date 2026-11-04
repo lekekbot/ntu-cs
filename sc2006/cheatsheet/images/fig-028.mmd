@@ -1,0 +1,15 @@
+classDiagram
+ direction LR
+    class Context {
+        -strategy : Strategy
+        +operation()
+    }
+    class Strategy {
+        <<interface>>
+        +algorithm()
+    }
+    class ConcreteStrategyA
+    class ConcreteStrategyB
+    Context --> Strategy : uses
+    Strategy <|.. ConcreteStrategyA : implements
+    Strategy <|.. ConcreteStrategyB : implements

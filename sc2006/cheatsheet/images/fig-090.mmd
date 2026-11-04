@@ -1,0 +1,43 @@
+classDiagram
+ direction LR
+    class SessionController {
+        +recommend()
+        +openWebsite()
+    }
+    class RecommendationService {
+        +recommend()
+        +matchCount() int
+    }
+    class LocationGateway {
+        +resolve()
+        +distance() number
+    }
+    class RestaurantRepository {
+        +findCandidates()
+        +add()
+        +update()
+        +remove()
+    }
+    class Restaurant {
+        +id
+        +name
+        +address
+        +website
+        +tags
+    }
+    class SelectionLog {
+        +append()
+        +readAll()
+    }
+    class AdminController {
+        +authenticate()
+        +maintainRestaurant()
+        +viewLog()
+    }
+    SessionController --> RecommendationService
+    RecommendationService --> LocationGateway
+    RecommendationService --> RestaurantRepository
+    RestaurantRepository --> Restaurant
+    SessionController --> SelectionLog : only on selected website link
+    AdminController --> RestaurantRepository
+    AdminController --> SelectionLog

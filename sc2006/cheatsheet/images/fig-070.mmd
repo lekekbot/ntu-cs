@@ -1,0 +1,33 @@
+classDiagram
+ direction LR
+    class AssignmentPage {
+        <<boundary>>
+    }
+    class AssignmentController {
+        <<control>>
+    }
+    class Task {
+        <<entity>>
+    }
+    class Assignment {
+        <<entity>>
+    }
+    class Assignee {
+        <<entity>>
+    }
+    class Individual {
+        <<entity>>
+    }
+    class Team {
+        <<entity>>
+    }
+    class AuthorisedUser {
+        <<entity>>
+    }
+    AssignmentPage --> AssignmentController
+    AssignmentController --> AuthorisedUser : checks role
+    AssignmentController --> Task
+    Task "1" -- "0..1" Assignment : current
+    Assignment "0..*" --> "1" Assignee
+    Assignee <|-- Individual
+    Assignee <|-- Team

@@ -1,0 +1,398 @@
+\fontsize{9}{10.5}\selectfont
+\par\Needspace{100pt}\section*{Older Q4: Input testing and applied testing/maintenance}\label{older-q4}
+\phantomsection\addcontentsline{toc}{section}{Older Q4: Input testing and applied testing/maintenance}
+\markboth{Older papers | Q4}{}
+\begin{studycolumns}
+\textbf{Shared input interpretation.} The older questions specify an ASCII identifier/description, a fixed-digit integer, a calendar-date range and an allowed category set. Assume positive numeric integers (leading zeroes do not count), inclusive complete years and one-day date resolution. Parsing policy is an explicit assumption; do not invent ASCII length, printable-only or nonempty restrictions.
+\textbf{Shared EC/BV checks.} Each category set is one valid EC; testing all members adds coverage, not extra ECs. ASCII membership and unordered categories have no specified ordered application boundary. Malformed numbers/nonexistent dates are extra EC tests. Keep all boundary triplets and exactly one invalid field per defensive row. All original rows follow under their own cases.
+\end{studycolumns}
+\par\Needspace{85pt}\subsection*{AY2022/23 S1: Car sales --- Q4 (25 marks)}\label{old-2223-s1-q4}
+
+\sectionlabel{h-q4--input-testing-test-levels-and-maintenance-25-marks}
+\textbf{(a)(i) Derive ECs for Car Model, Price, Manufacturing Date and Color (4). (ii) Give on/\allowbreak{}below/\allowbreak{}above boundary values (4). (iii) Design defensive tests (5).}
+
+
+\textbf{Input interpretation.} Car Model must be ASCII; Price is a 6-digit integer; Manufacturing Date is between 2010 and 2022; Color is one of \code{White}, \code{Black}, \code{Blue}, \code{Red}, \code{Others}. Apply the shared input interpretation above.
+
+\textbf{(i) Equivalence classes:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.22341\linewidth-5.36pt\relax}L{\dimexpr 0.32885\linewidth-7.89pt\relax}L{\dimexpr 0.44775\linewidth-10.75pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endhead
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Car Model & ASCII text & Text containing non-ASCII characters \\
+Price & Integer 100000\ldots{}999999 & Integer below 100000; integer above 999999; malformed/\allowbreak{}non-integer input at the input boundary \\
+Manufacturing Date & Real calendar date 2010-01-01\ldots{}2022-12-31 & Real date before 2010-01-01; real date after 2022-12-31; malformed/\allowbreak{}nonexistent date \\
+Color & One EC containing \{White, Black, Blue, Red, Others\} & Any unlisted value \\
+\end{longtable}
+}
+
+
+
+\textbf{(ii) Boundary triplets:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.27158\linewidth-8.69pt\relax}L{\dimexpr 0.24073\linewidth-7.70pt\relax}L{\dimexpr 0.24384\linewidth-7.80pt\relax}L{\dimexpr 0.24384\linewidth-7.80pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endhead
+\multicolumn{4}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Price: minimum & 99999 (reject) & 100000 (accept) & 100001 (accept) \\
+Price: maximum & 999998 (accept) & 999999 (accept) & 1000000 (reject) \\
+Manufacturing Date: earliest & 2009-12-31 (reject) & 2010-01-01 (accept) & 2010-01-02 (accept) \\
+Manufacturing Date: latest & 2022-12-30 (accept) & 2022-12-31 (accept) & 2023-01-01 (reject) \\
+\end{longtable}
+}
+
+
+
+\textbf{(iii) Defensive suite:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.17225\linewidth-6.89pt\relax}L{\dimexpr 0.17225\linewidth-6.89pt\relax}L{\dimexpr 0.17530\linewidth-7.01pt\relax}L{\dimexpr 0.17225\linewidth-6.89pt\relax}L{\dimexpr 0.30796\linewidth-12.32pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Car Model} & \textbf{Price} & \textbf{Manufacturing Date} & \textbf{Color} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Car Model} & \textbf{Price} & \textbf{Manufacturing Date} & \textbf{Color} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endhead
+\multicolumn{5}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+\code{CAR-\allowbreak{}A} & \code{100000} & \code{2010-\allowbreak{}01-\allowbreak{}01} & \code{White} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{CAR-\allowbreak{}A} & \code{100001} & \code{2010-\allowbreak{}01-\allowbreak{}02} & \code{Black} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{CAR-\allowbreak{}A} & \code{999998} & \code{2022-\allowbreak{}12-\allowbreak{}30} & \code{Blue} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{CAR-\allowbreak{}A} & \code{999999} & \code{2022-\allowbreak{}12-\allowbreak{}31} & \code{Red} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{CAR-\allowbreak{}A} & \code{549999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Others} & Accept --- interior baseline /\allowbreak{} category coverage \\
+\code{caf\'{e}} & \code{549999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{White} & Reject --- non-ASCII Car Model \\
+\code{CAR-\allowbreak{}A} & \code{99999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{White} & Reject --- Price below minimum \\
+\code{CAR-\allowbreak{}A} & \code{1000000} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{White} & Reject --- Price above maximum \\
+\code{CAR-\allowbreak{}A} & \code{549999} & \code{2009-\allowbreak{}12-\allowbreak{}31} & \code{White} & Reject --- Manufacturing Date below minimum \\
+\code{CAR-\allowbreak{}A} & \code{549999} & \code{2023-\allowbreak{}01-\allowbreak{}01} & \code{White} & Reject --- Manufacturing Date above maximum \\
+\code{CAR-\allowbreak{}A} & \code{549999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Unknown} & Reject --- unlisted Color \\
+\code{CAR-\allowbreak{}A} & \code{12x} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{White} & Reject --- malformed integer; extra defensive case \\
+\code{CAR-\allowbreak{}A} & \code{549999} & \code{2010-\allowbreak{}02-\allowbreak{}30} & \code{White} & Reject --- nonexistent calendar date; extra defensive case \\
+\end{longtable}
+}
+
+\begin{studycolumns}
+\vspace{0pt}
+
+\textbf{(b)(i) Give at least two unit/\allowbreak{}system testing differences (4). (ii) Why might grey-box testing be better in some cases? (6). (iii) When is refactoring needed? (2).}
+
+
+\textbf{(i)} Unit: isolate a component (e.g. Hold expiry) with test doubles; fast, cheap failure localisation. System: verify the integrated application against requirements, e.g. payment creates a hold and delivery requires full payment. It exposes end-to-end interaction faults.
+
+\textbf{(ii)} Grey-box testing uses partial knowledge of interfaces/state/storage to target cases while keeping externally specified oracles. Separate hold/payment records suggest callback-order and reconciliation tests. It can improve fault targeting/cost, but does not guarantee structural coverage or replace black-box requirement checks.
+
+\textbf{(iii)} Refactor costly duplication, coupling or unclear responsibilities. Preserve observable behaviour and check with regression tests; adding features or changing requirements is not refactoring.
+\end{studycolumns}
+
+\par\Needspace{85pt}\subsection*{AY2022/23 S2: Shopping chatbot --- Q4 (25 marks)}\label{old-2223-s2-q4}
+
+
+\begin{studycolumns}
+\vspace{0pt}
+\sectionlabel{h-q4--order-inputs-and-ai-assisted-maintenancetesting-25-marks}
+\textbf{(a)(i) Derive ECs for Product ID, Quantity, Payment Date and Shipping method (4). (ii) Give on/\allowbreak{}below/\allowbreak{}above boundary values (4). (iii) Design defensive tests (5).}
+
+
+\textbf{Input interpretation.} Product ID must be ASCII; Quantity is a 7-digit integer; Payment Date is between 2010 and 2023; Shipping method is one of \code{Flat rate}, \code{Express}, \code{Next-\allowbreak{}day Delivery}, \code{Pickup}, \code{Others}. Apply the shared input interpretation above.
+
+\textbf{(i) Equivalence classes:}
+\end{studycolumns}
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.21671\linewidth-5.20pt\relax}L{\dimexpr 0.34718\linewidth-8.33pt\relax}L{\dimexpr 0.43611\linewidth-10.47pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endhead
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Product ID & ASCII text & Text containing non-ASCII characters \\
+Quantity & Integer 1000000\ldots{}9999999 & Integer below 1000000; integer above 9999999; malformed/\allowbreak{}non-integer input at the input boundary \\
+Payment Date & Real calendar date 2010-01-01\ldots{}2023-12-31 & Real date before 2010-01-01; real date after 2023-12-31; malformed/\allowbreak{}nonexistent date \\
+Shipping method & One EC containing \{Flat rate, Express, Next-day Delivery, Pickup, Others\} & Any unlisted value \\
+\end{longtable}
+}
+
+
+
+\textbf{(ii) Boundary triplets:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.26293\linewidth-8.41pt\relax}L{\dimexpr 0.24365\linewidth-7.80pt\relax}L{\dimexpr 0.24671\linewidth-7.89pt\relax}L{\dimexpr 0.24671\linewidth-7.89pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endhead
+\multicolumn{4}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Quantity: minimum & 999999 (reject) & 1000000 (accept) & 1000001 (accept) \\
+Quantity: maximum & 9999998 (accept) & 9999999 (accept) & 10000000 (reject) \\
+Payment Date: earliest & 2009-12-31 (reject) & 2010-01-01 (accept) & 2010-01-02 (accept) \\
+Payment Date: latest & 2023-12-30 (accept) & 2023-12-31 (accept) & 2024-01-01 (reject) \\
+\end{longtable}
+}
+
+
+
+\textbf{(iii) Defensive suite:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.17253\linewidth-6.90pt\relax}L{\dimexpr 0.17253\linewidth-6.90pt\relax}L{\dimexpr 0.17253\linewidth-6.90pt\relax}L{\dimexpr 0.17253\linewidth-6.90pt\relax}L{\dimexpr 0.30989\linewidth-12.40pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Product ID} & \textbf{Quantity} & \textbf{Payment Date} & \textbf{Shipping method} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Product ID} & \textbf{Quantity} & \textbf{Payment Date} & \textbf{Shipping method} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endhead
+\multicolumn{5}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+\code{P100} & \code{1000000} & \code{2010-\allowbreak{}01-\allowbreak{}01} & \code{Flat rate} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{P100} & \code{1000001} & \code{2010-\allowbreak{}01-\allowbreak{}02} & \code{Express} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{P100} & \code{9999998} & \code{2023-\allowbreak{}12-\allowbreak{}30} & \code{Next-\allowbreak{}day Delivery} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{P100} & \code{9999999} & \code{2023-\allowbreak{}12-\allowbreak{}31} & \code{Pickup} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{P100} & \code{5499999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Others} & Accept --- interior baseline /\allowbreak{} category coverage \\
+\code{caf\'{e}} & \code{5499999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Flat rate} & Reject --- non-ASCII Product ID \\
+\code{P100} & \code{999999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Flat rate} & Reject --- Quantity below minimum \\
+\code{P100} & \code{10000000} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Flat rate} & Reject --- Quantity above maximum \\
+\code{P100} & \code{5499999} & \code{2009-\allowbreak{}12-\allowbreak{}31} & \code{Flat rate} & Reject --- Payment Date below minimum \\
+\code{P100} & \code{5499999} & \code{2024-\allowbreak{}01-\allowbreak{}01} & \code{Flat rate} & Reject --- Payment Date above maximum \\
+\code{P100} & \code{5499999} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Unknown} & Reject --- unlisted Shipping method \\
+\code{P100} & \code{12x} & \code{2016-\allowbreak{}07-\allowbreak{}01} & \code{Flat rate} & Reject --- malformed integer; extra defensive case \\
+\code{P100} & \code{5499999} & \code{2010-\allowbreak{}02-\allowbreak{}30} & \code{Flat rate} & Reject --- nonexistent calendar date; extra defensive case \\
+\end{longtable}
+}
+
+\begin{studycolumns}
+\vspace{0pt}
+
+\textbf{(b)(i) Use requirement understanding to assist testing (3). (ii) Use code summarisation for testing (3). (iii) Give two maintainability uses (6).}
+
+
+\textbf{(i)} Turn requirements into a traceable candidate test catalogue: normal/\allowbreak{}alternative use-case flows, input ECs/\allowbreak{}BVs and expected results. Review cases against the actual requirements, then implement automated tests. The company-confirmation rule must not disappear merely because a generated test assumes automatic approval.
+
+\textbf{(ii)} Summarise branches, state changes and dependencies to identify candidate unit tests, branch/\allowbreak{}path cases and integration failures. Compare the code's apparent behaviour with the independently specified intended behaviour; a summary of a bug must not become the test oracle. Run tests and inspect coverage rather than treating generated prose as evidence of execution.
+
+\textbf{(iii)} Two useful applications: \textbf{program comprehension/\allowbreak{}documentation}, where code summaries explain responsibilities and dependencies to maintainers; and \textbf{change/\allowbreak{}refactoring assistance}, where candidate patches remove duplication or address a change request, accompanied by regression tests and human review. Generated explanations and patches can be wrong, so validate them against code, requirements and tests. These are applied suggestions, not official marking points or guarantees of an AI product's capabilities.
+\end{studycolumns}
+
+\par\Needspace{85pt}\subsection*{AY2023/24 S1: DevSecOps --- Q4 (25 marks)}\label{old-2324-s1-q4}
+
+
+\begin{studycolumns}
+\vspace{0pt}
+\sectionlabel{h-q4--project-inputs-and-testing-strategy-25-marks}
+\textbf{(a)(i) Derive ECs for Project ID, Scan Time Limit (minutes), Last Commit Date and Scan Engines (4). (ii) Give on/\allowbreak{}below/\allowbreak{}above boundary values (4). (iii) Design defensive tests (5).}
+
+
+\textbf{Input interpretation.} Project ID must be ASCII; Scan Time Limit (minutes) is a 6-digit integer; Last Commit Date is between 2000 and 2023; Scan Engines is one of \code{SAST}, \code{SCA}, \code{DAST}, \code{IAST}, \code{All Engines}. Apply the shared input interpretation above.
+
+\textbf{(i) Equivalence classes:}
+\end{studycolumns}
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.23358\linewidth-5.61pt\relax}L{\dimexpr 0.32667\linewidth-7.84pt\relax}L{\dimexpr 0.43974\linewidth-10.55pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endhead
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Project ID & ASCII text & Text containing non-ASCII characters \\
+Scan Time Limit (minutes) & Integer 100000\ldots{}999999 & Integer below 100000; integer above 999999; malformed/\allowbreak{}non-integer input at the input boundary \\
+Last Commit Date & Real calendar date 2000-01-01\ldots{}2023-12-31 & Real date before 2000-01-01; real date after 2023-12-31; malformed/\allowbreak{}nonexistent date \\
+Scan Engines & One EC containing \{SAST, SCA, DAST, IAST, All Engines\} & Any unlisted value \\
+\end{longtable}
+}
+
+
+
+\textbf{(ii) Boundary triplets:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.30361\linewidth-9.72pt\relax}L{\dimexpr 0.23015\linewidth-7.36pt\relax}L{\dimexpr 0.23312\linewidth-7.46pt\relax}L{\dimexpr 0.23312\linewidth-7.46pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endhead
+\multicolumn{4}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Scan Time Limit (minutes): minimum & 99999 (reject) & 100000 (accept) & 100001 (accept) \\
+Scan Time Limit (minutes): maximum & 999998 (accept) & 999999 (accept) & 1000000 (reject) \\
+Last Commit Date: earliest & 1999-12-31 (reject) & 2000-01-01 (accept) & 2000-01-02 (accept) \\
+Last Commit Date: latest & 2023-12-30 (accept) & 2023-12-31 (accept) & 2024-01-01 (reject) \\
+\end{longtable}
+}
+
+
+
+\textbf{(iii) Defensive suite:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.17031\linewidth-6.81pt\relax}L{\dimexpr 0.17031\linewidth-6.81pt\relax}L{\dimexpr 0.17233\linewidth-6.89pt\relax}L{\dimexpr 0.17031\linewidth-6.81pt\relax}L{\dimexpr 0.31673\linewidth-12.67pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Project ID} & \textbf{Scan Time Limit (minutes)} & \textbf{Last Commit Date} & \textbf{Scan Engines} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Project ID} & \textbf{Scan Time Limit (minutes)} & \textbf{Last Commit Date} & \textbf{Scan Engines} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endhead
+\multicolumn{5}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+\code{PROJ1} & \code{100000} & \code{2000-\allowbreak{}01-\allowbreak{}01} & \code{SAST} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{PROJ1} & \code{100001} & \code{2000-\allowbreak{}01-\allowbreak{}02} & \code{SCA} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{PROJ1} & \code{999998} & \code{2023-\allowbreak{}12-\allowbreak{}30} & \code{DAST} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{PROJ1} & \code{999999} & \code{2023-\allowbreak{}12-\allowbreak{}31} & \code{IAST} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{PROJ1} & \code{549999} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{All Engines} & Accept --- interior baseline /\allowbreak{} category coverage \\
+\code{caf\'{e}} & \code{549999} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{SAST} & Reject --- non-ASCII Project ID \\
+\code{PROJ1} & \code{99999} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{SAST} & Reject --- Scan Time Limit (minutes) below minimum \\
+\code{PROJ1} & \code{1000000} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{SAST} & Reject --- Scan Time Limit (minutes) above maximum \\
+\code{PROJ1} & \code{549999} & \code{1999-\allowbreak{}12-\allowbreak{}31} & \code{SAST} & Reject --- Last Commit Date below minimum \\
+\code{PROJ1} & \code{549999} & \code{2024-\allowbreak{}01-\allowbreak{}01} & \code{SAST} & Reject --- Last Commit Date above maximum \\
+\code{PROJ1} & \code{549999} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{Unknown} & Reject --- unlisted Scan Engines \\
+\code{PROJ1} & \code{12x} & \code{2011-\allowbreak{}07-\allowbreak{}01} & \code{SAST} & Reject --- malformed integer; extra defensive case \\
+\code{PROJ1} & \code{549999} & \code{2000-\allowbreak{}02-\allowbreak{}30} & \code{SAST} & Reject --- nonexistent calendar date; extra defensive case \\
+\end{longtable}
+}
+
+\begin{studycolumns}
+\vspace{0pt}
+
+\textbf{(b) Apply unit, integration, system and acceptance testing to the platform (8). (c) Design projects that exercise the four engines (4).}
+
+
+\textbf{(b)} Unit: test validators, result parsers and report aggregation with tool doubles. Integration: test source retrieval, each real tool adapter, result interchange and timeout/\allowbreak{}error handling. System: run an end-to-end local/\allowbreak{}GitHub submission through scans, report and mitigation, including selected reruns and partial failures. Acceptance: developers evaluate agreed workflows and quality criteria on representative projects, checking that reports are useful and findings trace to source/\allowbreak{}version. Begin test design early and automate regression checks; one level cannot substitute for all others.
+
+\textbf{(c)} Prepare controlled projects with known ground truth and clean counterparts: vulnerable dependency/\allowbreak{}component for SCA; a known insecure code construct for SAST; a safely deployed application with an observable runtime vulnerability for DAST; an instrumented test application exercising a known vulnerable path for IAST. Check detection, location, severity/\allowbreak{}report mapping and absence of false positives on corrected versions. Include unsupported inputs, tool failure and mixed-engine cases. Run intentionally vulnerable fixtures only in an isolated test environment. ``Found at least one issue'' alone is not a sufficient oracle.
+\end{studycolumns}
+
+\par\Needspace{85pt}\subsection*{AY2023/24 S2: CodeAgent --- Q4 (25 marks)}\label{old-2324-s2-q4}
+
+
+\begin{studycolumns}
+\vspace{0pt}
+\sectionlabel{h-q4--inputs-qa-effectiveness-and-evolution-25-marks}
+\textbf{(a)(i) Derive ECs for Project Description, Development Time Limit (minutes), Launch Date and Application Type (4). (ii) Give on/\allowbreak{}below/\allowbreak{}above boundary values (4). (iii) Design defensive tests (7).}
+
+
+\textbf{Input interpretation.} Project Description must be ASCII; Development Time Limit (minutes) is a 4-digit integer; Launch Date is between 2000 and 2026; Application Type is one of \code{Desktop Application}, \code{Web Site}, \code{Mobile App}, \code{AI Application}, \code{All Types}. Apply the shared input interpretation above.
+
+\textbf{(i) Equivalence classes:}
+\end{studycolumns}
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.24443\linewidth-5.87pt\relax}L{\dimexpr 0.34254\linewidth-8.22pt\relax}L{\dimexpr 0.41304\linewidth-9.91pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field} & \textbf{Valid EC} & \textbf{Invalid ECs} \\
+\midrule\endhead
+\multicolumn{3}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Project Description & ASCII text & Text containing non-ASCII characters \\
+Development Time Limit (minutes) & Integer 1000\ldots{}9999 & Integer below 1000; integer above 9999; malformed/\allowbreak{}non-integer input at the input boundary \\
+Launch Date & Real calendar date 2000-01-01\ldots{}2026-12-31 & Real date before 2000-01-01; real date after 2026-12-31; malformed/\allowbreak{}nonexistent date \\
+Application Type & One EC containing \{Desktop Application, Web Site, Mobile App, AI Application, All Types\} & Any unlisted value \\
+\end{longtable}
+}
+
+
+
+\textbf{(ii) Boundary triplets:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.31233\linewidth-9.99pt\relax}L{\dimexpr 0.22716\linewidth-7.27pt\relax}L{\dimexpr 0.23025\linewidth-7.37pt\relax}L{\dimexpr 0.23025\linewidth-7.37pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Field /\allowbreak{} boundary} & \textbf{Just below} & \textbf{On boundary} & \textbf{Just above} \\
+\midrule\endhead
+\multicolumn{4}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+Development Time Limit (minutes): minimum & 999 (reject) & 1000 (accept) & 1001 (accept) \\
+Development Time Limit (minutes): maximum & 9998 (accept) & 9999 (accept) & 10000 (reject) \\
+Launch Date: earliest & 1999-12-31 (reject) & 2000-01-01 (accept) & 2000-01-02 (accept) \\
+Launch Date: latest & 2026-12-30 (accept) & 2026-12-31 (accept) & 2027-01-01 (reject) \\
+\end{longtable}
+}
+
+
+
+\textbf{(iii) Defensive suite:}
+
+
+
+
+{\fontsize{8.5}{9.8}\selectfont
+\begin{longtable}{L{\dimexpr 0.17913\linewidth-7.17pt\relax}L{\dimexpr 0.16137\linewidth-6.45pt\relax}L{\dimexpr 0.16137\linewidth-6.45pt\relax}L{\dimexpr 0.19368\linewidth-7.75pt\relax}L{\dimexpr 0.30445\linewidth-12.18pt\relax}}
+\toprule
+\rowcolor{ice}\textbf{Project Description} & \textbf{Development Time Limit (minutes)} & \textbf{Launch Date} & \textbf{Application Type} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endfirsthead
+\toprule\rowcolor{ice}\textbf{Project Description} & \textbf{Development Time Limit (minutes)} & \textbf{Launch Date} & \textbf{Application Type} & \textbf{Expected /\allowbreak{} purpose} \\
+\midrule\endhead
+\multicolumn{5}{r}{\scriptsize Continued on next page}\\\endfoot
+\bottomrule\endlastfoot
+\code{Build service} & \code{1000} & \code{2000-\allowbreak{}01-\allowbreak{}01} & \code{Desktop Application} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{Build service} & \code{1001} & \code{2000-\allowbreak{}01-\allowbreak{}02} & \code{Web Site} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{Build service} & \code{9998} & \code{2026-\allowbreak{}12-\allowbreak{}30} & \code{Mobile App} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{Build service} & \code{9999} & \code{2026-\allowbreak{}12-\allowbreak{}31} & \code{AI Application} & Accept --- valid boundaries /\allowbreak{} category coverage \\
+\code{Build service} & \code{5499} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{All Types} & Accept --- interior baseline /\allowbreak{} category coverage \\
+\code{caf\'{e}} & \code{5499} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{Desktop Application} & Reject --- non-ASCII Project Description \\
+\code{Build service} & \code{999} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{Desktop Application} & Reject --- Development Time Limit (minutes) below minimum \\
+\code{Build service} & \code{10000} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{Desktop Application} & Reject --- Development Time Limit (minutes) above maximum \\
+\code{Build service} & \code{5499} & \code{1999-\allowbreak{}12-\allowbreak{}31} & \code{Desktop Application} & Reject --- Launch Date below minimum \\
+\code{Build service} & \code{5499} & \code{2027-\allowbreak{}01-\allowbreak{}01} & \code{Desktop Application} & Reject --- Launch Date above maximum \\
+\code{Build service} & \code{5499} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{Unknown} & Reject --- unlisted Application Type \\
+\code{Build service} & \code{12x} & \code{2013-\allowbreak{}07-\allowbreak{}01} & \code{Desktop Application} & Reject --- malformed integer; extra defensive case \\
+\code{Build service} & \code{5499} & \code{2000-\allowbreak{}02-\allowbreak{}30} & \code{Desktop Application} & Reject --- nonexistent calendar date; extra defensive case \\
+\end{longtable}
+}
+
+\begin{studycolumns}
+\vspace{0pt}
+
+\textbf{(b) Improve QA-Checker with course testing techniques (6). (c) Extend CodeAgent for maintenance/\allowbreak{}evolution (4).}
+
+
+\textbf{(b)} Derive EC/\allowbreak{}BV tests from requirements for candidate code, including invalid inputs and limits. Generate normal/\allowbreak{}alternative scenario tests and independently reviewed expected outputs. Use structural analysis for branch/\allowbreak{}basis-path coverage where code is available, then run unit, integration and system tests in isolation. Regression suites compare revised code with required existing behaviour; known-defect fixtures check whether the agent detects real issues. Record actual results/\allowbreak{}coverage and return failures to Coder. QA-Checker must distinguish conversational relevance from executable correctness; generated tests and oracles need review because agents may share the same mistake.
+
+\textbf{(c)} Add versioned change requests and impact analysis linking requirements, affected components and tests. Maintain code/\allowbreak{}documentation/\allowbreak{}version history and decision logs. Let maintenance agents propose patches/\allowbreak{}refactorings, run regression and compatibility tests, and require review before acceptance. Update reports/\allowbreak{}documentation and retain a rollback path. These additions support continuing evolution rather than regenerating the entire project without preserving behaviour.
+\end{studycolumns}
+

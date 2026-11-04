@@ -1,0 +1,5 @@
+flowchart LR
+ Q(["Clarify request"]) -. "extend: ambiguous" .-> V(["Voice command"])
+ V -. "include" .-> I(["Transcribe / interpret"])
+ V -. "extend: voice channel" .-> C(["Control device"])
+ V -. "extend: voice channel" .-> D(["Lock / unlock door"])

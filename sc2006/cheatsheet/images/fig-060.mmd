@@ -1,0 +1,27 @@
+flowchart LR
+ subgraph Dev["Developer"]
+  D1["Specify project / GitHub"]
+  D2["Review report"]
+  D3{"Mitigation?"}
+  D4["Fix code"]
+ end
+ subgraph Platform
+  H{"Need help?"}
+  Help["Show help"]
+  P1["Retrieve / validate"]
+  P2["Select engines<br/>all or rerun subset"]
+  P3["Dispatch scans"]
+  P4["Merge findings;<br/>flag incomplete checks"]
+  P5["Generate report"]
+  P6["Recommend fixes"]
+ end
+ subgraph Tools["External toolsets"]
+  T["Run selected<br/>SCA / SAST / DAST / IAST"]
+ end
+ Start((Start)) --> D1 --> H
+ H -->|yes| Help --> D1
+ H -->|no| P1 --> P2 --> P3 --> T --> P4 --> P5 --> D2 --> D3
+ D3 -->|yes| P6 --> D4
+ D3 -->|no| End((End))
+ D4 -->|verify| P2
+ D4 -->|finish| End

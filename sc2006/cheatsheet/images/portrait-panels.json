@@ -1,0 +1,86 @@
+{
+  "fig-001": [
+    {
+      "file": "fig-001-compact-1.pdf",
+      "width": 224,
+      "height": 423
+    },
+    {
+      "file": "fig-001-compact-2.pdf",
+      "width": 224,
+      "height": 466
+    }
+  ],
+  "fig-003": [
+    {
+      "file": "fig-003-compact-1.pdf",
+      "width": 441,
+      "height": 429
+    },
+    {
+      "file": "fig-003-compact-2.pdf",
+      "width": 441,
+      "height": 430
+    }
+  ],
+  "fig-020": [
+    {
+      "file": "fig-020-compact-1.pdf",
+      "width": 394,
+      "height": 661
+    },
+    {
+      "file": "fig-020-compact-2.pdf",
+      "width": 394,
+      "height": 662
+    }
+  ],
+  "fig-029": [
+    {
+      "file": "fig-029-compact-1.pdf",
+      "width": 629,
+      "height": 439
+    },
+    {
+      "file": "fig-029-compact-2.pdf",
+      "width": 629,
+      "height": 439
+    }
+  ],
+  "fig-031": [
+    {
+      "file": "fig-031-compact-1.pdf",
+      "width": 643,
+      "height": 482
+    },
+    {
+      "file": "fig-031-compact-2.pdf",
+      "width": 643,
+      "height": 483
+    }
+  ],
+  "fig-035": [
+    {
+      "file": "fig-035-compact-1.pdf",
+      "width": 235,
+      "height": 433
+    },
+    {
+      "file": "fig-035-compact-2.pdf",
+      "width": 235,
+      "height": 433
+    }
+  ],
+  "fig-046": [
+    {
+      "file": "fig-046-compact-1.pdf",
+      "width": 298,
+      "height": 485
+    },
+    {
+      "file": "fig-046-compact-2.pdf",
+      "width": 298,
+      "height": 504
+    }
+  ]
+}

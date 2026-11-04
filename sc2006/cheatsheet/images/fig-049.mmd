@@ -1,0 +1,30 @@
+classDiagram
+ direction LR
+    class HoldPage {
+        <<boundary>>
+    }
+    class PaymentGateway {
+        <<boundary>>
+    }
+    class HoldController {
+        <<control>>
+    }
+    class Customer {
+        <<entity>>
+    }
+    class Car {
+        <<entity>>
+    }
+    class Hold {
+        <<entity>>
+    }
+    class Deposit {
+        <<entity>>
+    }
+    HoldPage --> HoldController
+    HoldController --> PaymentGateway
+    HoldController --> Car
+    HoldController --> Hold
+    Customer "1" -- "0..*" Hold
+    Car "1" -- "0..*" Hold : historical holds
+    Hold "1" -- "1" Deposit

@@ -1,0 +1,12 @@
+flowchart LR
+    U["Anonymous user"] --- Recommend(["Get restaurant<br/>recommendations"])
+    Recommend -. "«include»" .-> Converse(["Discuss<br/>preferences"])
+    Finish(["Finish conversation early"]) -. "«extend» [Finished clicked<br/>before limit]" .-> Converse
+    Recommend -. "«include»" .-> Tags(["Extract preference tags"])
+    Tags -. "«include»" .-> Check(["Validate JSON,<br/>tag set + count"])
+    Recommend -. "«include»" .-> Location(["Postcode +<br/>radius"])
+    Recommend -. "«include»" .-> Rank(["Filter by distance and rank<br/>matches"])
+    U --- Click(["Open restaurant website"])
+    Click -. "«include»" .-> Log(["Log preferences +<br/>selected restaurant"])
+    L["External LLM service"] --- Converse
+    L --- Tags

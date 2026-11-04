@@ -1,0 +1,47 @@
+classDiagram
+ direction LR
+    class ReviewUI {
+        +submit()
+        +showReport()
+    }
+    class ReviewCoordinator {
+        +start()
+        +runPhase()
+        +summarise()
+    }
+    class Agent {
+        <<interface>>
+        +respond()
+    }
+    class RoleAgent {
+        +role
+        +respond()
+    }
+    class AgentRegistry {
+        +register()
+        +get() Agent
+    }
+    class Conversation {
+        +instructorRole
+        +assistantRole
+        +roundCount
+        +maxRounds
+        +record()
+    }
+    class QAChecker {
+        +assess()
+        +refine()
+    }
+    class ReviewReport {
+        +observations
+        +unresolvedItems
+        +render()
+    }
+    ReviewUI --> ReviewCoordinator
+    ReviewCoordinator --> AgentRegistry
+    ReviewCoordinator --> Conversation
+    ReviewCoordinator --> ReviewReport
+    AgentRegistry --> Agent
+    Agent <|.. RoleAgent
+    Conversation --> QAChecker
+    Conversation --> Agent : instructor and assistant

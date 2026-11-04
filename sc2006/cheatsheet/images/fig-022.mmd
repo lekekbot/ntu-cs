@@ -1,0 +1,17 @@
+%%{init: {"flowchart": {"nodeSpacing": 20, "rankSpacing": 25}}}%%
+flowchart TB
+    subgraph W["Waterfall"]
+        direction LR
+        W1["Requirements"] --> W2["Design"] --> W3["Build<br/>Unit test"] --> W4["Integrate<br/>System test"] --> W5["Operate<br/>Maintain"]
+    end
+    subgraph I["Incremental"]
+        direction LR
+        I1["Specify<br/>one useful increment"] --> I2["Develop<br/>and validate"] --> I3["Deliver<br/>and get feedback"]
+        I3 --> I1
+    end
+    subgraph R["Reuse-oriented"]
+        direction LR
+        R1["Specify<br/>requirements"] --> R2["Discover and evaluate<br/>existing software"] --> R3["Refine<br/>requirements"] --> R4["Configure, adapt<br/>and integrate"]
+    end
+    W ~~~ I
+    I ~~~ R

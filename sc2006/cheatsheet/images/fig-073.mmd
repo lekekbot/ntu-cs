@@ -1,0 +1,21 @@
+classDiagram
+ direction LR
+    class BrowserClient {
+        +sendRequest()
+    }
+    class SecureTaskFacade {
+        +perform()
+    }
+    class AccessPolicy {
+        +authorise() bool
+    }
+    class TaskService {
+        +performApproved()
+    }
+    class AuditStore {
+        +record()
+    }
+    BrowserClient --> SecureTaskFacade
+    SecureTaskFacade --> AccessPolicy
+    SecureTaskFacade --> TaskService : only after authorisation
+    SecureTaskFacade --> AuditStore

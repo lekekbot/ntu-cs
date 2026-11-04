@@ -1,0 +1,17 @@
+flowchart LR
+ subgraph Access["Trusted access controller"]
+  C["Identity, door,<br/>grant, revocation,<br/>time checks"]
+  D{"Allowed?"}
+  N["Deny"]
+  L["Log actual<br/>outcome"]
+ end
+ subgraph Lock["Lock interface"]
+  U["Unlock;<br/>return result"]
+ end
+ subgraph Guest
+  R["Receive<br/>result"]
+ end
+ B((B)) --> C --> D
+ D -->|no| N --> L
+ D -->|yes| U --> L
+ L --> R --> End((End))

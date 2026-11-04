@@ -1,0 +1,37 @@
+[
+  {
+    "id": "fig-085-user",
+    "width": 1327,
+    "height": 608
+  },
+  {
+    "id": "fig-085-admin",
+    "width": 395,
+    "height": 229
+  },
+  {
+    "id": "extra-trust",
+    "width": 1042,
+    "height": 165
+  },
+  {
+    "id": "extra-overview",
+    "width": 920,
+    "height": 467
+  },
+  {
+    "id": "fig-079-user",
+    "width": 828,
+    "height": 337
+  },
+  {
+    "id": "fig-079-admin",
+    "width": 412,
+    "height": 229
+  },
+  {
+    "id": "fig-079-voice",
+    "width": 988,
+    "height": 202
+  }
+]

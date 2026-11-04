@@ -1,0 +1,25 @@
+flowchart LR
+    V["Visitor"] --- Browse(["Browse / search cars"])
+    U["Registered customer"] --- Account(["Create account / log in"])
+    V --- Account
+    U --- Browse
+    U --- Hold(["Hold car"])
+    U --- Cancel(["Cancel hold"])
+    U --- Buy(["Complete purchase"])
+    V --- Buy
+    S["Dealer staff"] --- Login(["Staff login"])
+    S --- Info(["View full car information"])
+    S --- Orders(["Create / update / delete<br/>orders"])
+    S --- Buy
+    S --- Deliver(["Complete delivery"])
+    M["Sales manager<br/>also has staff capabilities"] --- Listings(["Add / update / delete listings"])
+    M --- Reports(["Generate period sales report"])
+    Hold -. "«include»" .-> Eligible(["Check availability and hold<br/>conflict"])
+    Buy -. "«include»" .-> Eligible
+    Hold -. "«include»" .-> Deposit(["Pay deposit"])
+    Cancel -. "«include»" .-> Refund(["Return deposit"])
+    Expire(["Expire hold"]) -. "«include»" .-> Refund
+    Deliver -. "«include»" .-> Paid(["Confirm full payment"])
+    P["Dealer payment system"] --- Deposit
+    P --- Refund
+    P --- Paid

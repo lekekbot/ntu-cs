@@ -1,0 +1,7 @@
+flowchart LR
+ I["Input / context"] --> L["LLM proposal"]
+ L --> V["Independent checks<br/>schema / policy / tests"]
+ V -->|pass| E["Authorised execution"]
+ V -->|fail| R["Reject / clarify / bounded retry"]
+ E --> A["Record outcome"]
+ R --> A

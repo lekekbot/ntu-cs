@@ -1,0 +1,17 @@
+flowchart LR
+ subgraph Member["Team member"]
+  A["Create<br/>task"]
+ end
+ subgraph Leader["Leader / Manager"]
+  V{"Verified?"}
+  R["Request<br/>correction"]
+  S["Assignee +<br/>deadline"]
+ end
+ subgraph System
+  Save["Save task"]
+  One["Save ONE<br/>assignment<br/>atomically"]
+  Dash["Dashboard +<br/>notifications"]
+ end
+ Start((Start)) --> A --> Save --> V
+ V -->|no| R --> A
+ V -->|yes| S --> One --> Dash --> B((B))

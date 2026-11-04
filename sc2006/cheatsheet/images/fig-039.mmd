@@ -1,0 +1,22 @@
+flowchart LR
+    Manager["Actor: Elevator Manager"]
+    Sensors["Actor: Temperature / humidity sensors"]
+    Dryer["External grain dryer"]
+    subgraph GES["Grain Elevator System"]
+        Arrival([Accept Grain Arrival])
+        Allocate([Allocate Silos])
+        Overrule([Overrule Proposed Allocation])
+        Departure([Record Grain Departure])
+        Monitor([Monitor Silo Conditions])
+        Report([Produce Elevator Report])
+        Log([Produce Transaction Log])
+    end
+    Manager --- Arrival
+    Manager --- Overrule
+    Manager --- Departure
+    Manager --- Report
+    Manager --- Log
+    Sensors --- Monitor
+    Arrival -.->|«include»| Allocate
+    Overrule -.->|«extend»: manager rejects proposal| Arrival
+    Sensors -.->|direct alert outside GES| Dryer

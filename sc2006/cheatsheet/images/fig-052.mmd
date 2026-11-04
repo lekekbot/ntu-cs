@@ -1,0 +1,27 @@
+classDiagram
+ direction LR
+    class HoldController {
+        +holdCar()
+    }
+    class PaymentFactory {
+        +create() PaymentStrategy
+    }
+    class PaymentStrategy {
+        <<interface>>
+        +charge()
+        +refund()
+    }
+    class CardPayment {
+        +charge()
+        +refund()
+    }
+    class WalletPayment {
+        +charge()
+        +refund()
+    }
+    HoldController --> PaymentFactory : obtains strategy
+    HoldController --> PaymentStrategy : delegates
+    PaymentFactory ..> CardPayment : creates
+    PaymentFactory ..> WalletPayment : creates
+    PaymentStrategy <|.. CardPayment
+    PaymentStrategy <|.. WalletPayment

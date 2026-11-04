@@ -1,0 +1,18 @@
+classDiagram
+ direction LR
+    class NetworkContext {
+        -strategy : NetworkStrategy
+        +connect()
+        +send()
+    }
+    class NetworkStrategy {
+        <<interface>>
+        +connect()
+        +send()
+    }
+    NetworkContext "1" --> "1" NetworkStrategy : delegates to
+    NetworkStrategy <|.. LANStrategy
+    NetworkStrategy <|.. WiFiStrategy
+    NetworkStrategy <|.. BluetoothStrategy
+    NetworkStrategy <|.. ThreeGStrategy
+    NetworkStrategy <|.. FourGStrategy

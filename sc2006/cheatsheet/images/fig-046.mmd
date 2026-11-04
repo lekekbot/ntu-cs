@@ -1,0 +1,25 @@
+classDiagram
+    class GrainEventSource {
+        +attach()
+        +detach()
+        +changeInterests()
+        +notify()
+    }
+    class PlantObserver {
+        <<interface>>
+        +update()
+    }
+    class ProcessingPlantSubscription {
+        interests
+        +update()
+        +setChannels()
+    }
+    class NotificationStrategy {
+        <<interface>>
+        +send()
+    }
+    GrainEventSource "1" --> "0..*" PlantObserver : selective notification
+    PlantObserver <|.. ProcessingPlantSubscription
+    ProcessingPlantSubscription "1" --> "1..*" NotificationStrategy : preferred channels
+    NotificationStrategy <|.. EmailNotifier
+    NotificationStrategy <|.. SMSNotifier

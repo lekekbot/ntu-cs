@@ -1,0 +1,8 @@
+flowchart TD
+    I["Income requirement<br/>1500 to 80000 inclusive; integer dollars"]
+    I --> L["LOW INVALID EC<br/>1499 and below"]
+    I --> V["VALID EC<br/>1500 through 80000"]
+    I --> H["HIGH INVALID EC<br/>80001 and above"]
+    L --> LB["Just outside lower edge<br/>1499: Reject"]
+    V --> VB["Lower triplet: 1499 / 1500 / 1501<br/>Upper triplet: 79999 / 80000 / 80001"]
+    H --> HB["Just outside upper edge<br/>80001: Reject"]

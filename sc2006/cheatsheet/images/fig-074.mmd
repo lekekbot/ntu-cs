@@ -1,0 +1,26 @@
+classDiagram
+ direction LR
+    class TaskEvents {
+        +observers
+        +attach()
+        +detach()
+        +notify()
+    }
+    class NotificationObserver {
+        <<interface>>
+        +update()
+    }
+    class EmailNotifier {
+        +update()
+    }
+    class InAppNotifier {
+        +update()
+    }
+    class NotificationFactory {
+        +create() NotificationObserver
+    }
+    TaskEvents --> NotificationObserver : notifies all subscribers
+    NotificationObserver <|.. EmailNotifier
+    NotificationObserver <|.. InAppNotifier
+    NotificationFactory ..> EmailNotifier
+    NotificationFactory ..> InAppNotifier

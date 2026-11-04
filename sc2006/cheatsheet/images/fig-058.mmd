@@ -1,0 +1,18 @@
+flowchart LR
+    D["Developer"] --- Full(["Run full project analysis"])
+    D --- Recheck(["Recheck with selected toolsets"])
+    D --- Report(["Generate / view report"])
+    D --- Mitigate(["Request mitigation<br/>recommendations"])
+    Full -. "«include»" .-> Select(["Specify local project or<br/>GitHub link"])
+    Recheck -. "«include»" .-> Select
+    Help(["Show project-selection help"]) -. "«extend» [help requested]" .-> Select
+    Full -. "«include»" .-> A(["Run SCA"])
+    Full -. "«include»" .-> B(["Run SAST"])
+    Full -. "«include»" .-> C(["Run DAST"])
+    Full -. "«include»" .-> E(["Run IAST"])
+    Full -. "«include»" .-> Report
+    SCA["External SCA"] --- A
+    SAST["External SAST"] --- B
+    DAST["External DAST"] --- C
+    IAST["External IAST"] --- E
+    G["GitHub"] --- Select

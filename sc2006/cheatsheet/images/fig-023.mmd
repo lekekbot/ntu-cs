@@ -1,0 +1,10 @@
+flowchart LR
+ P["Product backlog"] --> L["Sprint planning"]
+ L --> B["Build, integrate, test"]
+ D["Daily Scrum"] -->|inspect and adapt| B
+ B --> D
+ B --> I["Done increment"]
+ I --> R["Sprint Review"]
+ R -->|product feedback| P
+ R --> T["Retrospective"]
+ T -->|process improvements| L

@@ -1,0 +1,34 @@
+classDiagram
+    class Arrival {
+        dateTime
+        grainType
+        grade
+        offeredQuantity
+    }
+    class Allocation {
+        proposedAmount
+        actualDepositedAmount
+    }
+    class Silo {
+        id
+        capacity
+        currentAmount
+        grainType
+        grade
+        temperature
+        humidity
+    }
+    class Truck {
+        plateNumber
+    }
+    class TransactionLogEntry
+    class ElevatorManager
+    class Driver
+    class Seller
+    Arrival "1" -- "0..*" Allocation : allocations
+    Silo "1" -- "0..*" Allocation : receives
+    Truck "1" -- "0..*" Arrival : carries
+    Driver "1" -- "0..*" Arrival : drives for
+    Seller "1" -- "0..*" Arrival : supplies
+    ElevatorManager "1" -- "0..*" Arrival : records
+    Arrival "1" -- "0..1" TransactionLogEntry : recorded as

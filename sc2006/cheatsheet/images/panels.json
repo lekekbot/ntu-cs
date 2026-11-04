@@ -1,0 +1,74 @@
+{
+  "fig-038": [
+    {
+      "file": "fig-038-panel-1.pdf",
+      "width": 712,
+      "height": 748
+    },
+    {
+      "file": "fig-038-panel-2.pdf",
+      "width": 712,
+      "height": 881
+    }
+  ],
+  "fig-060": [
+    {
+      "file": "fig-060-panel-1.pdf",
+      "width": 1122,
+      "height": 853
+    },
+    {
+      "file": "fig-060-panel-2.pdf",
+      "width": 1122,
+      "height": 865
+    }
+  ],
+  "fig-071": [
+    {
+      "file": "fig-071-panel-1.pdf",
+      "width": 1343,
+      "height": 936
+    },
+    {
+      "file": "fig-071-panel-2.pdf",
+      "width": 1343,
+      "height": 906
+    }
+  ],
+  "fig-079": [
+    {
+      "file": "fig-079-panel-1.pdf",
+      "width": 1790,
+      "height": 290
+    },
+    {
+      "file": "fig-079-panel-2.pdf",
+      "width": 1790,
+      "height": 304
+    }
+  ],
+  "fig-081": [
+    {
+      "file": "fig-081-panel-1.pdf",
+      "width": 775,
+      "height": 880
+    },
+    {
+      "file": "fig-081-panel-2.pdf",
+      "width": 775,
+      "height": 880
+    }
+  ],
+  "fig-086": [
+    {
+      "file": "fig-086-panel-1.pdf",
+      "width": 609,
+      "height": 1070
+    },
+    {
+      "file": "fig-086-panel-2.pdf",
+      "width": 609,
+      "height": 866
+    }
+  ]
+}

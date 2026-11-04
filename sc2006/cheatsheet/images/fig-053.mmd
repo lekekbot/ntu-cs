@@ -1,0 +1,22 @@
+flowchart LR
+    C["Customer"] --- Query(["Ask product / price /<br/>availability"])
+    C --- Login(["Log in for shopping"])
+    C --- Cart(["Add items to cart"])
+    C --- Order(["Place order"])
+    C --- Status(["Get order status"])
+    C --- Replace(["Request replacement"])
+    C --- Refund(["Request refund"])
+    Order -. "«include»" .-> Details(["Confirm payment and delivery"])
+    Replace -. "«include»" .-> Evidence(["Collect photos, receipt and<br/>reason"])
+    Refund -. "«include»" .-> Evidence
+    Replace -. "«include»" .-> Eligibility(["Check seven-day eligibility"])
+    Refund -. "«include»" .-> Eligibility
+    Replace -. "«include»" .-> Decision(["Submit for company decision"])
+    Refund -. "«include»" .-> Decision
+    W["Existing shopping system"] --- Query
+    W --- Login
+    W --- Cart
+    W --- Order
+    W --- Status
+    W --- Eligibility
+    W --- Decision

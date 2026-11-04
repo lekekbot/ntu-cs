@@ -1,0 +1,8 @@
+flowchart LR
+    App["Mobile client"] --> Gate["Secure command facade<br/>authenticate; validate;<br/>authorise"]
+    LLM["Voice / LLM channel"] --> Gate
+    Gate -->|Allowed command only| Devices["Device gateway"]
+    Gate --> Policy["Role and guest-grant store"]
+    Gate --> Log["Access audit log"]
+    Admin["Admin client"] --> AdminAPI["Account / rights service"]
+    AdminAPI --> Policy

@@ -1,0 +1,41 @@
+classDiagram
+ direction LR
+    class TaskView {
+        +createTask()
+        +assignTask()
+        +showDashboard()
+    }
+    class TaskService {
+        +create()
+        +assign()
+        +reassign()
+        +finish()
+        +deleteFinished()
+    }
+    class Task {
+        +id
+        +description
+        +priority
+        +deadline
+        +status
+        +finish()
+    }
+    class Assignment {
+        +assigneeId
+        +assigneeType
+        +replaceWith()
+    }
+    class TaskRepository {
+        +find()
+        +replaceAssignment()
+        +save()
+    }
+    class NotificationService {
+        +notifyDeadline()
+        +notifyPriorityChange()
+    }
+    TaskView --> TaskService
+    TaskService --> TaskRepository
+    TaskService --> NotificationService
+    TaskRepository --> Task
+    Task "1" -- "0..1" Assignment : current

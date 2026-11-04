@@ -1,0 +1,11 @@
+flowchart LR
+ subgraph System
+  D{"After finish?"}
+  U["Authorised update"]
+  X["Authorised deletion"]
+  K["Retain finished task"]
+ end
+ C((C)) --> D
+ D -->|update| U --> D
+ D -->|delete| X --> End((End))
+ D -->|keep| K --> End

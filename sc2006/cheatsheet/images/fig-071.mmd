@@ -1,0 +1,32 @@
+flowchart LR
+ subgraph Member["Team member"]
+  A["Create task"]
+  W["Work / record progress"]
+  F["Mark finished"]
+ end
+ subgraph Leader["Leader / Manager"]
+  V{"Verify?"}
+  R["Request correction"]
+  S["Set assignee + deadline"]
+  Re["Choose replacement"]
+ end
+ subgraph System
+  Save["Save task"]
+  One["Save one assignment<br/>atomically"]
+  Dash["Dashboard + notifications"]
+  Next{"Next?"}
+  Complete["Save finished status"]
+  Action{"After finish?"}
+  Update["Authorised update"]
+  Delete["Authorised deletion"]
+  Keep["Retain task"]
+ end
+ Start((Start)) --> A --> Save --> V
+ V -->|no| R --> A
+ V -->|yes| S --> One --> Dash --> W --> Next
+ Next -->|reassign| Re --> One
+ Next -->|continue| W
+ Next -->|finish| F --> Complete --> Action
+ Action -->|update| Update --> Action
+ Action -->|delete| Delete --> End((End))
+ Action -->|keep| Keep --> End

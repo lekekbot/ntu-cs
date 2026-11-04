@@ -1,0 +1,9 @@
+flowchart TD
+ A["1 Study initial specification"] --> B["2 Draft use cases, dictionary,<br/>FR/NFR and uncertainties"]
+ B --> D{"3 Initial client review agreed?"}
+ D -->|no: refine elicitation| B
+ D -->|yes| F["4 Analyse classes, associations,<br/>multiplicities and dynamic models"]
+ F --> I{"5 Client review: requirements agreed?"}
+ I -->|no| U["6 Update use cases if affected;<br/>refine classes and other models"]
+ U --> I
+ I -->|yes| S["7 Sign off SRS"]

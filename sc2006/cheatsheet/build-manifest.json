@@ -1,0 +1,86 @@
+{
+  "chapters": 17,
+  "paperCount": 8,
+  "questionCount": 32,
+  "captionedFigures": 66,
+  "tables": 65,
+  "prepared": "2026-11-04",
+  "revision": {
+    "previousPages": 72,
+    "pagesRemoved": 7,
+    "selectedChanges": [
+      "Selective two-column layouts",
+      "Group four older papers by Q1\u2013Q4"
+    ],
+    "tutorialPolicy": "Retain the existing difficult-question selection; no further tutorial cuts.",
+    "olderPapers": [
+      "AY2022/23 S1",
+      "AY2022/23 S2",
+      "AY2023/24 S1",
+      "AY2023/24 S2"
+    ],
+    "completeRecentPapers": [
+      "AY2024/25 S1",
+      "AY2024/25 S2",
+      "AY2025/26 S1",
+      "AY2025/26 S2"
+    ],
+    "changes": [
+      "Two-column bands for short explanations, lists, traps and compact visuals; wide diagrams and comparisons/testing tables remain full-width.",
+      "Reformatted 23 short chapter tables as labelled reference panels; retained substantive entries and existing text font sizes.",
+      "Rearranged all ten relationship-notation sketches into four tiles per row.",
+      "Grouped the four oldest papers by question type with a checked case/question page map and shared method references.",
+      "All 32 original prompt summaries, all original PYP testing-table rows and all 66 captioned figures retained.",
+      "No further chapter topics or difficult tutorial questions removed."
+    ]
+  },
+  "export": {
+    "file": "output/pdf/SC2006_A4_Visual_Reference.pdf",
+    "pages": 65,
+    "paper": "A4",
+    "orientation": "portrait",
+    "landscapePages": 0,
+    "paperStartPages": {
+      "5": 49,
+      "6": 53,
+      "7": 57,
+      "8": 61
+    },
+    "sha256": "5d18f67681382629e19f30ee4a1b666ba28149f46bfa08ad14ae7fa3f955bcde",
+    "validation": "Desktop compiler success; all 65 pages rendered and visually reviewed; atlas, grouped older answer and final testing page inspected full-size; 32 original prompt summaries, every original PYP table and every graphic asset retained; contents, template targets and older case map checked; all pages portrait A4; no overflow, missing glyphs or unresolved references.",
+    "olderCaseMapPage": 34,
+    "olderQuestionGroupStartPages": {
+      "Q1": 34,
+      "Q2": 38,
+      "Q3": 42,
+      "Q4": 45
+    },
+    "olderCaseQuestionPages": {
+      "2223-s1": {
+        "Q1": 34,
+        "Q2": 38,
+        "Q3": 42,
+        "Q4": 45
+      },
+      "2223-s2": {
+        "Q1": 35,
+        "Q2": 39,
+        "Q3": 43,
+        "Q4": 46
+      },
+      "2324-s1": {
+        "Q1": 36,
+        "Q2": 40,
+        "Q3": 44,
+        "Q4": 47
+      },
+      "2324-s2": {
+        "Q1": 37,
+        "Q2": 41,
+        "Q3": 44,
+        "Q4": 48
+      }
+    }
+  },
+  "referencePanels": 23
+}

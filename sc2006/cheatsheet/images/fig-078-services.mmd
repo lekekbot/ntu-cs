@@ -1,0 +1,35 @@
+classDiagram
+ direction LR
+ class RegistrationService {
+  +registerSensor()
+  +deregisterSensor()
+  +registerAlert()
+  +link()
+  +unlink()
+ }
+ class DWSMonitor {
+  +lastSeenBySensor
+  +update()
+  +checkSilence()
+ }
+ class Link {
+  +sensorId
+  +alertId
+  +lower
+  +width
+  +outside() bool
+ }
+ class AlertGateway {
+  +send()
+  +warnManager()
+ }
+ class RecordStore {
+  +append()
+  +readAll()
+ }
+ RegistrationService --> DWSMonitor : attach / detach via SensorSubject
+ RegistrationService --> Link
+ RegistrationService --> RecordStore
+ DWSMonitor --> Link
+ DWSMonitor --> AlertGateway
+ DWSMonitor --> RecordStore

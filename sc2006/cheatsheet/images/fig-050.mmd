@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> CarList
+    CarList --> CarDetails : select car
+    CarDetails --> LoginScreen : hold [not logged in]
+    LoginScreen --> CarDetails : login successful
+    CarDetails --> HoldTerms : hold [authenticated, available]
+    CarDetails --> CarDetails : unavailable / show reason
+    HoldTerms --> DepositPayment : confirm
+    HoldTerms --> CarDetails : cancel
+    DepositPayment --> HoldConfirmation : payment + allocation OK
+    DepositPayment --> PaymentError : failed or allocation conflict
+    PaymentError --> DepositPayment : recheck + retry
+    PaymentError --> CarDetails : abandon
+    HoldConfirmation --> RefundStatus : cancel or expiry notice
+    RefundStatus --> CarDetails : refund result shown

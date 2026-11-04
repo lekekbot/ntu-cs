@@ -1,0 +1,28 @@
+classDiagram
+    class AccessService {
+        +authorise()
+    }
+    class PolicyFactory {
+        +create() AccessPolicy
+    }
+    class AccessPolicy {
+        <<interface>>
+        +allows() bool
+    }
+    class OwnerPolicy {
+        +allows() bool
+    }
+    class GuestPolicy {
+        +allows() bool
+    }
+    class AdministratorPolicy {
+        +allows() bool
+    }
+    AccessService --> PolicyFactory
+    AccessService --> AccessPolicy
+    PolicyFactory ..> OwnerPolicy
+    PolicyFactory ..> GuestPolicy
+    PolicyFactory ..> AdministratorPolicy
+    AccessPolicy <|.. OwnerPolicy
+    AccessPolicy <|.. GuestPolicy
+    AccessPolicy <|.. AdministratorPolicy

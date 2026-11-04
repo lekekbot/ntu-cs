@@ -1,0 +1,34 @@
+classDiagram
+ direction LR
+    class ChatInterface {
+        <<boundary>>
+    }
+    class ShoppingSystemGateway {
+        <<boundary>>
+    }
+    class ReplacementController {
+        <<control>>
+    }
+    class Customer {
+        <<entity>>
+    }
+    class Purchase {
+        <<entity>>
+    }
+    class ReplacementRequest {
+        <<entity>>
+    }
+    class Evidence {
+        <<entity>>
+    }
+    class CompanyDecision {
+        <<entity>>
+    }
+    ChatInterface --> ReplacementController
+    ReplacementController --> ShoppingSystemGateway
+    ReplacementController --> Purchase
+    ReplacementController --> ReplacementRequest
+    Customer "1" -- "0..*" Purchase
+    Purchase "1" -- "0..*" ReplacementRequest
+    ReplacementRequest "1" -- "1" Evidence
+    ReplacementRequest "1" -- "0..1" CompanyDecision

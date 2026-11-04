@@ -1,0 +1,20 @@
+classDiagram
+    class NetworkFactory {
+        +createStrategy()$ NetworkStrategy
+    }
+    class NetworkContext
+    class NetworkStrategy {
+        <<interface>>
+    }
+    NetworkContext ..> NetworkFactory : obtains strategy
+    NetworkFactory ..> LANStrategy : creates
+    NetworkFactory ..> WiFiStrategy : creates
+    NetworkFactory ..> BluetoothStrategy : creates
+    NetworkFactory ..> ThreeGStrategy : creates
+    NetworkFactory ..> FourGStrategy : creates
+    NetworkContext --> NetworkStrategy : uses
+    NetworkStrategy <|.. LANStrategy
+    NetworkStrategy <|.. WiFiStrategy
+    NetworkStrategy <|.. BluetoothStrategy
+    NetworkStrategy <|.. ThreeGStrategy
+    NetworkStrategy <|.. FourGStrategy

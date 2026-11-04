@@ -1,0 +1,13 @@
+stateDiagram-v2
+    [*] --> NoGrant
+    NoGrant --> Scheduled : owner grants [now < start]
+    NoGrant --> Active : owner grants [start <= now and now < end]
+    Scheduled --> Active : start reached
+    Active --> Expired : now >= end
+    Scheduled --> Revoked : owner revokes
+    Active --> Revoked : owner revokes
+    Active --> Active : access [correct door and identity] / execute and log
+    Scheduled --> Scheduled : access / deny and log
+    Expired --> Expired : access / deny and log
+    Revoked --> Revoked : access / deny and log
+    NoGrant --> NoGrant : access / deny and log

@@ -1,0 +1,18 @@
+flowchart LR
+ subgraph Shop["Existing shopping system"]
+  C["Company review"]
+  D{"Approved?"}
+  P["Replacement procedure"]
+  R["Rejection"]
+ end
+ subgraph Chatbot
+  M["Communicate decision"]
+ end
+ subgraph User
+  U["Receive result"]
+ end
+ B((B)) --> C --> D
+ D -->|yes| P --> M
+ D -->|no| R --> M
+ X((Reject)) --> M
+ M --> U --> End((End))

@@ -1,0 +1,32 @@
+\chapteropen{Chapter 15: Hard tutorial questions}{chapter-15}
+\markboth{Ch. 15 | Hard tutorials}{}
+
+
+\begin{studycolumns}
+\vspace{0pt}
+\begin{eli5box}The hard part is keeping two independent changes separate: which plants want an event, and how each plant receives it. A subscription list chooses who; a channel strategy chooses how.\end{eli5box}
+\textbf{Other hard exercises, answered once:} Tutorial 8's normal/sensor-range ECs and ambiguous below-normal policy are in Section 13.9. Tutorial 9's compound conditions, feasible traces and two-test coverage suite are in Section 12.9. The routine projector and basic tutorial walkthroughs are omitted.
+\end{studycolumns}
+\Needspace{100pt}
+\subsection*{Hard tutorial: selective Observer + channel Strategy}
+\begin{studycolumns}
+\sectionlabel{h-tutorial-7--observer--factory}
+\textbf{Q1.} GES notifies processing plants on grain arrival/\allowbreak{}departure; plants register \textbf{interests in specific grain types}; notification via preferred channel \textbf{email, SMS, or both}; interests and channels \textbf{vary over time}; must be \textbf{easily extended} to new channels.
+
+\begin{itemize}
+\item \textbf{Design problem:} one-to-many notification with runtime-variable subscribers and \emph{two} varying dimensions (interest + channel).
+\item \textbf{Patterns:} \textbf{Observer} (subscription + notification: \code{attach/\allowbreak{}detach/\allowbreak{}notify}, \code{update} with interests \ensuremath{\rightarrow} \textbf{selective notification}) \textbf{+ Strategy} for the communication means (\code{Email\allowbreak{}Notifier}, \code{SMSNotifier}, \code{Composite\allowbreak{}Notifier} for "both") \textbf{+ an optional Factory} to create the notifier for a plant's current preference.
+\item \textbf{Trap:} "combination of these means" \ensuremath{\Rightarrow} the \textbf{Composite} pattern is also defensible for email+SMS; say so and justify.
+\end{itemize}
+\end{studycolumns}
+
+
+\par\smallskip\noindent\begin{minipage}{\linewidth}\centering
+\begin{minipage}[t]{0.488\linewidth}\centering\scriptsize\textbf{1}\par\smallskip\includegraphics[width=137.08pt]{images/fig-046-compact-1.pdf}\end{minipage}\hfill
+\begin{minipage}[t]{0.488\linewidth}\centering\scriptsize\textbf{2}\par\smallskip\includegraphics[width=137.08pt]{images/fig-046-compact-2.pdf}\end{minipage}
+\captionof{figure}{Hard tutorial: selective Observer + channel Strategy --- follow numbered panels; crossing arrows continue.}\end{minipage}\par\smallskip
+
+
+
+\textbf{Channel check:} interests and delivery channels change independently. Send through each selected channel so ``both'' is supported; channel creation may use an optional Factory.
+

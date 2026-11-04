@@ -1,0 +1,33 @@
+classDiagram
+ direction LR
+    class ChatView {
+        +sendMessage()
+        +showReply()
+    }
+    class ChatController {
+        +sessionId
+        +handleMessage()
+        +dispatch()
+    }
+    class ReplacementService {
+        +requestReplacement()
+        +checkEligibility()
+    }
+    class ReplacementRequest {
+        +id
+        +orderId
+        +status
+        +recordDecision()
+    }
+    class ShoppingGateway {
+        +getProduct()
+        +getOrder()
+        +updateCart()
+        +placeOrder()
+        +submitReplacement()
+    }
+    ChatView --> ChatController
+    ChatController --> ReplacementService
+    ChatController --> ShoppingGateway
+    ReplacementService --> ShoppingGateway
+    ReplacementService --> ReplacementRequest

@@ -1,0 +1,14 @@
+flowchart LR
+ subgraph Guest
+  G["Speak request"]
+  C["Clarify<br/>door / action"]
+ end
+ subgraph Voice["Voice assistant"]
+  I["Interpret"]
+  D{"Ambiguous?"}
+  Q["Ask<br/>clarification"]
+  S["Structured<br/>door command"]
+ end
+ Start((Start)) --> G --> I --> D
+ D -->|yes| Q --> C --> I
+ D -->|no| S --> B((B))

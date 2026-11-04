@@ -1,0 +1,10 @@
+stateDiagram-v2
+    state CountCheck <<choice>>
+    [*] --> WaitingForUser : pairs = 0
+    WaitingForUser --> WaitingForReply : user sends message
+    WaitingForReply --> CountCheck : LLM response delivered / pairs = pairs + 1
+    CountCheck --> WaitingForUser : [pairs < 10]
+    CountCheck --> Ended : [pairs == 10]
+    WaitingForUser --> Ended : Finished clicked
+    WaitingForReply --> Ended : Finished clicked / cancel or ignore late reply
+    Ended --> [*] : request tag JSON using conversation context

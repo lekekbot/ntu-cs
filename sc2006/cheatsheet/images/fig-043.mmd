@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> Off
+    Off --> WarmingUp : press ON
+    WarmingUp --> ReadyPC : ready / indicator green
+    ReadyPC --> Laptop : press LAPTOP
+    ReadyPC --> Off : press OFF
+    Laptop --> Off : press OFF
+    note right of WarmingUp
+        entry / beep once
+        do / blink red
+    end note
+    note right of ReadyPC
+        Default source is PC.
+    end note

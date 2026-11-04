@@ -1,0 +1,9 @@
+stateDiagram-v2
+    [*] --> Idle : Power On / Reset
+    Idle --> Accumulate : insert(coin)
+    Accumulate --> Accumulate : insert(coin)
+    Accumulate --> Vend : select(item) [amount is enough for i]
+    Vend --> ReturnChange : [amount > 0]
+    Vend --> Idle : [amount = 0]
+    ReturnChange --> Idle : change returned
+    Idle --> [*] : Power Off

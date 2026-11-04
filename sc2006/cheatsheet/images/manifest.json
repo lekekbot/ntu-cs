@@ -1,0 +1,812 @@
+[
+  {
+    "id": "fig-001",
+    "position": 7377,
+    "index": 0,
+    "title": "1. The spine of the course: SDLC \u2192 artefacts",
+    "width": 224,
+    "height": 881,
+    "effectiveFont": 7.3
+  },
+  {
+    "id": "fig-002",
+    "position": 10030,
+    "index": 1,
+    "title": "Requirement \u2192 analysis \u2192 design traceability chain",
+    "width": 1005,
+    "height": 192,
+    "effectiveFont": 9.8
+  },
+  {
+    "id": "fig-003",
+    "position": 10456,
+    "index": 2,
+    "title": "Visual: classify a requirement",
+    "width": 441,
+    "height": 851,
+    "effectiveFont": 9.6
+  },
+  {
+    "id": "fig-004",
+    "position": 23583,
+    "index": 3,
+    "title": "Visual: decide between include and extend",
+    "width": 760,
+    "height": 340,
+    "effectiveFont": 7.8
+  },
+  {
+    "id": "fig-005",
+    "position": 36549,
+    "index": 4,
+    "title": "Visual: assign each class a responsibility",
+    "width": 911,
+    "height": 92,
+    "effectiveFont": 14.5
+  },
+  {
+    "id": "fig-006",
+    "position": 39333,
+    "index": 5,
+    "title": "4.3 Class notation",
+    "width": 301,
+    "height": 166,
+    "effectiveFont": 28.8
+  },
+  {
+    "id": "fig-007",
+    "position": 42331,
+    "index": 6,
+    "title": "What the relationships look like",
+    "width": 338,
+    "height": 65,
+    "effectiveFont": 24.7
+  },
+  {
+    "id": "fig-008",
+    "position": 42446,
+    "index": 7,
+    "title": "What the relationships look like",
+    "width": 325,
+    "height": 65,
+    "effectiveFont": 25.6
+  },
+  {
+    "id": "fig-009",
+    "position": 42526,
+    "index": 8,
+    "title": "What the relationships look like",
+    "width": 375,
+    "height": 65,
+    "effectiveFont": 9.5
+  },
+  {
+    "id": "fig-010",
+    "position": 42760,
+    "index": 9,
+    "title": "What the relationships look like",
+    "width": 326,
+    "height": 65,
+    "effectiveFont": 25.5
+  },
+  {
+    "id": "fig-011",
+    "position": 42843,
+    "index": 10,
+    "title": "What the relationships look like",
+    "width": 198,
+    "height": 100,
+    "effectiveFont": 41.6
+  },
+  {
+    "id": "fig-012",
+    "position": 42955,
+    "index": 11,
+    "title": "What the relationships look like",
+    "width": 332,
+    "height": 100,
+    "effectiveFont": 33.6
+  },
+  {
+    "id": "fig-013",
+    "position": 43085,
+    "index": 12,
+    "title": "What the relationships look like",
+    "width": 310,
+    "height": 65,
+    "effectiveFont": 26.6
+  },
+  {
+    "id": "fig-014",
+    "position": 43164,
+    "index": 13,
+    "title": "What the relationships look like",
+    "width": 309,
+    "height": 65,
+    "effectiveFont": 26.7
+  },
+  {
+    "id": "fig-015",
+    "position": 43242,
+    "index": 14,
+    "title": "What the relationships look like",
+    "width": 356,
+    "height": 65,
+    "effectiveFont": 23.6
+  },
+  {
+    "id": "fig-016",
+    "position": 43324,
+    "index": 15,
+    "title": "What the relationships look like",
+    "width": 279,
+    "height": 75,
+    "effectiveFont": 29.2
+  },
+  {
+    "id": "fig-017",
+    "position": 52051,
+    "index": 16,
+    "title": "Visual: choose the diagram that answers the question",
+    "width": 633,
+    "height": 292,
+    "effectiveFont": 15.1
+  },
+  {
+    "id": "fig-018",
+    "position": 53786,
+    "index": 17,
+    "title": "5.1 State machine diagram (a.k.a. statechart, finite state automaton, **dialog map**)",
+    "width": 488,
+    "height": 553,
+    "effectiveFont": 16.6
+  },
+  {
+    "id": "fig-019",
+    "position": 56031,
+    "index": 18,
+    "title": "5.2 Activity diagram",
+    "width": 307,
+    "height": 734,
+    "effectiveFont": 15.8
+  },
+  {
+    "id": "fig-020",
+    "position": 58500,
+    "index": 19,
+    "title": "5.4 The requirements elicitation & analysis activity diagram (memorise the loop)",
+    "width": 394,
+    "height": 1315,
+    "effectiveFont": 5.4
+  },
+  {
+    "id": "fig-021",
+    "position": 59288,
+    "index": 20,
+    "title": "Visual: see the SRS as five compartments",
+    "width": 1163,
+    "height": 488,
+    "effectiveFont": 8.1
+  },
+  {
+    "id": "fig-022",
+    "position": 66699,
+    "index": 21,
+    "title": "Visual: compare how the work is arranged",
+    "width": 722,
+    "height": 548,
+    "effectiveFont": 10
+  },
+  {
+    "id": "fig-023",
+    "position": 74851,
+    "index": 22,
+    "title": "Visual: follow one sprint through its feedback loops",
+    "width": 1123,
+    "height": 216,
+    "effectiveFont": 8.9
+  },
+  {
+    "id": "fig-024",
+    "position": 92038,
+    "index": 23,
+    "title": "Visual: recognise the architectural organisation",
+    "width": 403,
+    "height": 546,
+    "effectiveFont": 13.6
+  },
+  {
+    "id": "fig-025",
+    "position": 101016,
+    "index": 24,
+    "title": "9.10 Design rationale frame (design rationale)",
+    "width": 331,
+    "height": 535,
+    "effectiveFont": 15.4
+  },
+  {
+    "id": "fig-026",
+    "position": 102113,
+    "index": 25,
+    "title": "Visual: match the design problem to a pattern",
+    "width": 556,
+    "height": 294,
+    "effectiveFont": 14.6
+  },
+  {
+    "id": "fig-027",
+    "position": 103647,
+    "index": 26,
+    "title": "10.2 Why patterns at all?",
+    "width": 224,
+    "height": 777,
+    "effectiveFont": 11.7
+  },
+  {
+    "id": "fig-028",
+    "position": 106421,
+    "index": 27,
+    "title": "10.5 Strategy",
+    "width": 830,
+    "height": 143,
+    "effectiveFont": 17.9
+  },
+  {
+    "id": "fig-029",
+    "position": 107891,
+    "index": 28,
+    "title": "10.6 Observer (L13; Tutorial 7)",
+    "width": 629,
+    "height": 870,
+    "effectiveFont": 10.8
+  },
+  {
+    "id": "fig-030",
+    "position": 110643,
+    "index": 29,
+    "title": "10.7 Factory (Static Factory)",
+    "width": 854,
+    "height": 211,
+    "effectiveFont": 20.3
+  },
+  {
+    "id": "fig-031",
+    "position": 117373,
+    "index": 30,
+    "title": "Visual: watch one edit update every view",
+    "width": 643,
+    "height": 957,
+    "effectiveFont": 10.9
+  },
+  {
+    "id": "fig-032",
+    "position": 120731,
+    "index": 31,
+    "title": "11.3 The triangular structure (know the arrows by heart)",
+    "width": 720,
+    "height": 466,
+    "effectiveFont": 13
+  },
+  {
+    "id": "fig-033",
+    "position": 126491,
+    "index": 32,
+    "title": "Visual: separate test selection from code coverage",
+    "width": 871,
+    "height": 219,
+    "effectiveFont": 12.6
+  },
+  {
+    "id": "fig-034",
+    "position": 134254,
+    "index": 33,
+    "title": "12.7 Basis path testing (white box)",
+    "width": 251,
+    "height": 490,
+    "effectiveFont": 18.2
+  },
+  {
+    "id": "fig-035",
+    "position": 137061,
+    "index": 34,
+    "title": "12.9 Worked white-box example you should be able to reproduce \u2014 Tutorial 9",
+    "width": 235,
+    "height": 858,
+    "effectiveFont": 10.1
+  },
+  {
+    "id": "fig-036",
+    "position": 140180,
+    "index": 35,
+    "title": "Visual: build tests in the right order",
+    "width": 1026,
+    "height": 138,
+    "effectiveFont": 8.3
+  },
+  {
+    "id": "fig-037",
+    "position": 146178,
+    "index": 36,
+    "title": "Visual: see the mortgage-income partitions and their edges",
+    "width": 688,
+    "height": 400,
+    "effectiveFont": 16.4
+  },
+  {
+    "id": "fig-038",
+    "position": 158128,
+    "index": 37,
+    "title": "Visual: distinguish a proposal from the grain actually stored",
+    "width": 515,
+    "height": 1710,
+    "effectiveFont": 5.4
+  },
+  {
+    "id": "fig-039",
+    "position": 162373,
+    "index": 38,
+    "title": "14.3 Actors, use cases and arrival description (Tutorial 2)",
+    "width": 1509,
+    "height": 698,
+    "effectiveFont": 6.4
+  },
+  {
+    "id": "fig-040",
+    "position": 166449,
+    "index": 39,
+    "title": "14.4 Conceptual classes and associations (Tutorial 3 Q1)",
+    "width": 631,
+    "height": 755,
+    "effectiveFont": 13
+  },
+  {
+    "id": "fig-041",
+    "position": 168002,
+    "index": 40,
+    "title": "14.5 Silo condition state machine (requirement E)",
+    "width": 527,
+    "height": 659,
+    "effectiveFont": 15
+  },
+  {
+    "id": "fig-042",
+    "position": 168831,
+    "index": 41,
+    "title": "14.6 Sequence for arrival and actual recording (requirements G\u2013H)",
+    "width": 573,
+    "height": 1710,
+    "effectiveFont": 8
+  },
+  {
+    "id": "fig-043",
+    "position": 174047,
+    "index": 42,
+    "title": "Tutorial 3 \u2014 Conceptual model + projector state machine",
+    "width": 782,
+    "height": 616,
+    "effectiveFont": 13
+  },
+  {
+    "id": "fig-044",
+    "position": 176511,
+    "index": 43,
+    "title": "Tutorial 6 \u2014 Architecture + Strategy",
+    "width": 224,
+    "height": 346,
+    "effectiveFont": 25.3
+  },
+  {
+    "id": "fig-045",
+    "position": 177401,
+    "index": 44,
+    "title": "Tutorial 6 \u2014 Architecture + Strategy",
+    "width": 921,
+    "height": 357,
+    "effectiveFont": 9.9
+  },
+  {
+    "id": "fig-046",
+    "position": 178983,
+    "index": 45,
+    "title": "Tutorial 7 \u2014 Observer + Factory",
+    "width": 298,
+    "height": 981,
+    "effectiveFont": 9.2
+  },
+  {
+    "id": "fig-047",
+    "position": 180733,
+    "index": 46,
+    "title": "Tutorial 7 \u2014 Observer + Factory",
+    "width": 902,
+    "height": 514,
+    "effectiveFont": 9.4
+  },
+  {
+    "id": "fig-048",
+    "position": 186395,
+    "index": 47,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1186,
+    "height": 1030,
+    "effectiveFont": 8.3
+  },
+  {
+    "id": "fig-049",
+    "position": 189798,
+    "index": 48,
+    "title": "Q2 \u2014 Analysis and process (25 marks)",
+    "width": 922,
+    "height": 316,
+    "effectiveFont": 11.4
+  },
+  {
+    "id": "fig-050",
+    "position": 190736,
+    "index": 49,
+    "title": "Q2 \u2014 Analysis and process (25 marks)",
+    "width": 1048,
+    "height": 820,
+    "effectiveFont": 9.7
+  },
+  {
+    "id": "fig-051",
+    "position": 193190,
+    "index": 50,
+    "title": "Q3 \u2014 Architecture and pattern composition (25 marks)",
+    "width": 936,
+    "height": 642,
+    "effectiveFont": 7.5
+  },
+  {
+    "id": "fig-052",
+    "position": 195062,
+    "index": 51,
+    "title": "Q3 \u2014 Architecture and pattern composition (25 marks)",
+    "width": 1100,
+    "height": 359,
+    "effectiveFont": 13.4
+  },
+  {
+    "id": "fig-053",
+    "position": 203010,
+    "index": 52,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1147,
+    "height": 696,
+    "effectiveFont": 8.9
+  },
+  {
+    "id": "fig-054",
+    "position": 205723,
+    "index": 53,
+    "title": "Q2 \u2014 Analysis and development process (25 marks)",
+    "width": 1170,
+    "height": 242,
+    "effectiveFont": 12.8
+  },
+  {
+    "id": "fig-055",
+    "position": 206843,
+    "index": 54,
+    "title": "Q2 \u2014 Analysis and development process (25 marks)",
+    "width": 955,
+    "height": 1518,
+    "effectiveFont": 6.6
+  },
+  {
+    "id": "fig-056",
+    "position": 209435,
+    "index": 55,
+    "title": "Q3 \u2014 Chatbot architecture and combined patterns (25 marks)",
+    "width": 1101,
+    "height": 422,
+    "effectiveFont": 12.6
+  },
+  {
+    "id": "fig-057",
+    "position": 210832,
+    "index": 56,
+    "title": "Q3 \u2014 Chatbot architecture and combined patterns (25 marks)",
+    "width": 652,
+    "height": 442,
+    "effectiveFont": 10.8
+  },
+  {
+    "id": "fig-058",
+    "position": 218678,
+    "index": 57,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 993,
+    "height": 946,
+    "effectiveFont": 9.3
+  },
+  {
+    "id": "fig-059",
+    "position": 221279,
+    "index": 58,
+    "title": "Q2 \u2014 Analysis and agile (25 marks)",
+    "width": 1111,
+    "height": 262,
+    "effectiveFont": 10.7
+  },
+  {
+    "id": "fig-060",
+    "position": 222154,
+    "index": 59,
+    "title": "Q2 \u2014 Analysis and agile (25 marks)",
+    "width": 2224,
+    "height": 592,
+    "effectiveFont": 5.9
+  },
+  {
+    "id": "fig-061",
+    "position": 225133,
+    "index": 60,
+    "title": "Q3 \u2014 Quality attributes and architecture (25 marks)",
+    "width": 878,
+    "height": 736,
+    "effectiveFont": 7.9
+  },
+  {
+    "id": "fig-062",
+    "position": 226626,
+    "index": 61,
+    "title": "Q3 \u2014 Quality attributes and architecture (25 marks)",
+    "width": 623,
+    "height": 261,
+    "effectiveFont": 17.4
+  },
+  {
+    "id": "fig-063",
+    "position": 234587,
+    "index": 62,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1353,
+    "height": 490,
+    "effectiveFont": 6.9
+  },
+  {
+    "id": "fig-064",
+    "position": 235377,
+    "index": 63,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1040,
+    "height": 464,
+    "effectiveFont": 9.8
+  },
+  {
+    "id": "fig-065",
+    "position": 237466,
+    "index": 64,
+    "title": "Q2 \u2014 Reviewer analysis, QA states and process (25 marks)",
+    "width": 926,
+    "height": 342,
+    "effectiveFont": 14.1
+  },
+  {
+    "id": "fig-066",
+    "position": 238555,
+    "index": 65,
+    "title": "Q2 \u2014 Reviewer analysis, QA states and process (25 marks)",
+    "width": 813,
+    "height": 591,
+    "effectiveFont": 11.1
+  },
+  {
+    "id": "fig-067",
+    "position": 241314,
+    "index": 66,
+    "title": "Q3 \u2014 Extending CodeAgent and architecture (25 marks)",
+    "width": 1266,
+    "height": 556,
+    "effectiveFont": 9.1
+  },
+  {
+    "id": "fig-068",
+    "position": 242830,
+    "index": 67,
+    "title": "Q3 \u2014 Extending CodeAgent and architecture (25 marks)",
+    "width": 619,
+    "height": 442,
+    "effectiveFont": 11.2
+  },
+  {
+    "id": "fig-069",
+    "position": 251290,
+    "index": 68,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1026,
+    "height": 910,
+    "effectiveFont": 8.9
+  },
+  {
+    "id": "fig-070",
+    "position": 253899,
+    "index": 69,
+    "title": "Q2 \u2014 Analysis, lifecycle and process (25 marks)",
+    "width": 1202,
+    "height": 241,
+    "effectiveFont": 10
+  },
+  {
+    "id": "fig-071",
+    "position": 254957,
+    "index": 70,
+    "title": "Q2 \u2014 Analysis, lifecycle and process (25 marks)",
+    "width": 2353,
+    "height": 580,
+    "effectiveFont": 5.4
+  },
+  {
+    "id": "fig-072",
+    "position": 257589,
+    "index": 71,
+    "title": "Q3 \u2014 Architecture, NFR and patterns (25 marks)",
+    "width": 1292,
+    "height": 355,
+    "effectiveFont": 8.4
+  },
+  {
+    "id": "fig-073",
+    "position": 258873,
+    "index": 72,
+    "title": "Q3 \u2014 Architecture, NFR and patterns (25 marks)",
+    "width": 949,
+    "height": 302,
+    "effectiveFont": 9.9
+  },
+  {
+    "id": "fig-074",
+    "position": 260166,
+    "index": 73,
+    "title": "Q3 \u2014 Architecture, NFR and patterns (25 marks)",
+    "width": 974,
+    "height": 288,
+    "effectiveFont": 12.9
+  },
+  {
+    "id": "fig-075",
+    "position": 269149,
+    "index": 74,
+    "title": "Q1 \u2014 Stakeholders, requirements and use cases (25 marks)",
+    "width": 1431,
+    "height": 995,
+    "effectiveFont": 6.8
+  },
+  {
+    "id": "fig-076",
+    "position": 271353,
+    "index": 75,
+    "title": "Q2 \u2014 Sensor behaviour and process (25 marks)",
+    "width": 1251,
+    "height": 424,
+    "effectiveFont": 7.9
+  },
+  {
+    "id": "fig-077",
+    "position": 272389,
+    "index": 76,
+    "title": "Q2 \u2014 Sensor behaviour and process (25 marks)",
+    "width": 1304,
+    "height": 398,
+    "effectiveFont": 6.9
+  },
+  {
+    "id": "fig-078",
+    "position": 275616,
+    "index": 77,
+    "title": "Q3 \u2014 DWS architecture, Observer and responsibility (25 marks)",
+    "width": 658,
+    "height": 1294,
+    "effectiveFont": 7.2
+  },
+  {
+    "id": "fig-079",
+    "position": 285784,
+    "index": 78,
+    "title": "Q1 \u2014 Use cases (25 marks)",
+    "width": 1725,
+    "height": 634,
+    "effectiveFont": 5.9
+  },
+  {
+    "id": "fig-080",
+    "position": 288566,
+    "index": 79,
+    "title": "Q2 \u2014 Access states, voice activity and process (25 marks)",
+    "width": 1190,
+    "height": 746,
+    "effectiveFont": 11.8
+  },
+  {
+    "id": "fig-081",
+    "position": 289338,
+    "index": 80,
+    "title": "Q2 \u2014 Access states, voice activity and process (25 marks)",
+    "width": 2525,
+    "height": 392,
+    "effectiveFont": 5.3
+  },
+  {
+    "id": "fig-082",
+    "position": 292123,
+    "index": 81,
+    "title": "Q3 \u2014 Smart-home architecture and pattern judgement (25 marks)",
+    "width": 680,
+    "height": 637,
+    "effectiveFont": 7.9
+  },
+  {
+    "id": "fig-083",
+    "position": 293497,
+    "index": 82,
+    "title": "Q3 \u2014 Smart-home architecture and pattern judgement (25 marks)",
+    "width": 850,
+    "height": 268,
+    "effectiveFont": 11.8
+  },
+  {
+    "id": "fig-084",
+    "position": 294474,
+    "index": 83,
+    "title": "Q3 \u2014 Smart-home architecture and pattern judgement (25 marks)",
+    "width": 687,
+    "height": 442,
+    "effectiveFont": 7.1
+  },
+  {
+    "id": "fig-085",
+    "position": 303051,
+    "index": 84,
+    "title": "Q1 \u2014 Use cases and JSON-check activity (25 marks)",
+    "width": 1428,
+    "height": 821,
+    "effectiveFont": 6.7
+  },
+  {
+    "id": "fig-086",
+    "position": 304611,
+    "index": 85,
+    "title": "Q1 \u2014 Use cases and JSON-check activity (25 marks)",
+    "width": 2034,
+    "height": 428,
+    "effectiveFont": 5.6
+  },
+  {
+    "id": "fig-087",
+    "position": 306062,
+    "index": 86,
+    "title": "Q2 \u2014 Recommendation classes, conversation states and Scrum (25 marks)",
+    "width": 721,
+    "height": 658,
+    "effectiveFont": 11.8
+  },
+  {
+    "id": "fig-088",
+    "position": 307189,
+    "index": 87,
+    "title": "Q2 \u2014 Recommendation classes, conversation states and Scrum (25 marks)",
+    "width": 575,
+    "height": 603,
+    "effectiveFont": 13.5
+  },
+  {
+    "id": "fig-089",
+    "position": 310057,
+    "index": 88,
+    "title": "Q3 \u2014 Architecture and external LLM trade-offs (25 marks)",
+    "width": 856,
+    "height": 597,
+    "effectiveFont": 8.7
+  },
+  {
+    "id": "fig-090",
+    "position": 310845,
+    "index": 89,
+    "title": "Q3 \u2014 Architecture and external LLM trade-offs (25 marks)",
+    "width": 1004,
+    "height": 490,
+    "effectiveFont": 7.6
+  }
+]

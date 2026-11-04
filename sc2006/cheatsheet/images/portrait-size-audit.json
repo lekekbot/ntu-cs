@@ -1,0 +1,482 @@
+[
+  {
+    "id": "fig-058",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 416.24
+  },
+  {
+    "id": "fig-059",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 115.28
+  },
+  {
+    "id": "fig-060-a",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 144.4
+  },
+  {
+    "id": "fig-060-b",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 136.8
+  },
+  {
+    "id": "fig-061",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 323.84
+  },
+  {
+    "id": "fig-062",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 114.84
+  },
+  {
+    "id": "fig-063",
+    "unit": 0.37989652623798964,
+    "printedFontEstimate": 6.8381374722838135,
+    "height": 186.14929785661494
+  },
+  {
+    "id": "fig-064",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 204.16
+  },
+  {
+    "id": "fig-065",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 150.48
+  },
+  {
+    "id": "fig-066",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 260.04
+  },
+  {
+    "id": "fig-067",
+    "unit": 0.4060031595576619,
+    "printedFontEstimate": 6.496050552922591,
+    "height": 225.73775671406003
+  },
+  {
+    "id": "fig-068",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 194.48
+  },
+  {
+    "id": "fig-079-user",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 148.28
+  },
+  {
+    "id": "fig-079-admin",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 100.76
+  },
+  {
+    "id": "fig-079-voice",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 88.88
+  },
+  {
+    "id": "fig-080",
+    "unit": 0.3753351206434316,
+    "printedFontEstimate": 6.756032171581769,
+    "height": 280.0
+  },
+  {
+    "id": "fig-081-a",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 118.4
+  },
+  {
+    "id": "fig-081-b",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 120.0
+  },
+  {
+    "id": "fig-082",
+    "unit": 0.43956043956043955,
+    "printedFontEstimate": 7.032967032967033,
+    "height": 280.0
+  },
+  {
+    "id": "fig-083",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 117.92
+  },
+  {
+    "id": "fig-084",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 194.48
+  },
+  {
+    "id": "fig-085-user",
+    "unit": 0.3873398643556895,
+    "printedFontEstimate": 6.972117558402411,
+    "height": 235.5026375282592
+  },
+  {
+    "id": "fig-085-admin",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 100.76
+  },
+  {
+    "id": "fig-086-a",
+    "unit": 0.39937839937839936,
+    "printedFontEstimate": 7.188811188811188,
+    "height": 138.18492618492618
+  },
+  {
+    "id": "fig-086-b",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 112.0
+  },
+  {
+    "id": "fig-087",
+    "unit": 0.425531914893617,
+    "printedFontEstimate": 6.808510638297872,
+    "height": 280.0
+  },
+  {
+    "id": "fig-088",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 265.32
+  },
+  {
+    "id": "fig-089",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 262.68
+  },
+  {
+    "id": "fig-090",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 215.6
+  },
+  {
+    "id": "fig-024",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 251.16000000000003
+  },
+  {
+    "id": "fig-025",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 246.10000000000002
+  },
+  {
+    "id": "fig-023",
+    "unit": 0.4577025823686554,
+    "printedFontEstimate": 8.238646482635797,
+    "height": 98.86375779162957
+  },
+  {
+    "id": "fig-033",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 100.74000000000001
+  },
+  {
+    "id": "fig-035",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 199.18
+  },
+  {
+    "id": "fig-021",
+    "unit": 0.4419604471195185,
+    "printedFontEstimate": 7.955288048151333,
+    "height": 215.676698194325
+  },
+  {
+    "id": "fig-022",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 252.08
+  },
+  {
+    "id": "fig-036",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 63.480000000000004
+  },
+  {
+    "id": "fig-037",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 184.0
+  },
+  {
+    "id": "fig-017",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 134.32
+  },
+  {
+    "id": "fig-019",
+    "unit": 0.4087193460490463,
+    "printedFontEstimate": 7.356948228882834,
+    "height": 300.0
+  },
+  {
+    "id": "fig-020",
+    "unit": 0.45045045045045046,
+    "printedFontEstimate": 8.108108108108109,
+    "height": 298.1981981981982
+  },
+  {
+    "id": "fig-031",
+    "unit": 0.39035769828926903,
+    "printedFontEstimate": 7.026438569206842,
+    "height": 188.54276827371694
+  },
+  {
+    "id": "fig-032",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 214.36
+  },
+  {
+    "id": "fig-026",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 135.24
+  },
+  {
+    "id": "fig-028",
+    "unit": 0.46,
+    "printedFontEstimate": 7.36,
+    "height": 65.78
+  },
+  {
+    "id": "fig-029",
+    "unit": 0.3990461049284579,
+    "printedFontEstimate": 6.384737678855326,
+    "height": 175.181240063593
+  },
+  {
+    "id": "fig-030",
+    "unit": 0.46,
+    "printedFontEstimate": 7.36,
+    "height": 97.06
+  },
+  {
+    "id": "fig-005",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 42.32
+  },
+  {
+    "id": "fig-006",
+    "unit": 0.46,
+    "printedFontEstimate": 7.36,
+    "height": 76.36
+  },
+  {
+    "id": "fig-041",
+    "unit": 0.4552352048558422,
+    "printedFontEstimate": 8.19423368740516,
+    "height": 300.0
+  },
+  {
+    "id": "fig-046",
+    "unit": 0.46,
+    "printedFontEstimate": 7.36,
+    "height": 231.84
+  },
+  {
+    "id": "fig-001",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 214.36
+  },
+  {
+    "id": "fig-002",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 88.32000000000001
+  },
+  {
+    "id": "fig-004",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 156.4
+  },
+  {
+    "id": "fig-048",
+    "unit": 0.42718446601941745,
+    "printedFontEstimate": 7.689320388349514,
+    "height": 440.0
+  },
+  {
+    "id": "fig-049",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 139.04
+  },
+  {
+    "id": "fig-050",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 360.8
+  },
+  {
+    "id": "fig-051",
+    "unit": 0.43613707165109034,
+    "printedFontEstimate": 6.978193146417445,
+    "height": 280.0
+  },
+  {
+    "id": "fig-052",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 157.96
+  },
+  {
+    "id": "fig-053",
+    "unit": 0.40229885057471265,
+    "printedFontEstimate": 7.241379310344827,
+    "height": 280.0
+  },
+  {
+    "id": "fig-054",
+    "unit": 0.4393162393162393,
+    "printedFontEstimate": 7.029059829059829,
+    "height": 106.31452991452991
+  },
+  {
+    "id": "fig-055-a",
+    "unit": 0.3743627093954843,
+    "printedFontEstimate": 6.738528769118718,
+    "height": 198.0378732702112
+  },
+  {
+    "id": "fig-055-b",
+    "unit": 0.3506139154160982,
+    "printedFontEstimate": 6.3110504774897676,
+    "height": 124.11732605729877
+  },
+  {
+    "id": "fig-056",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 185.68
+  },
+  {
+    "id": "fig-057",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 194.48
+  },
+  {
+    "id": "fig-003",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 197.8
+  },
+  {
+    "id": "extra-trust",
+    "unit": 0.46,
+    "printedFontEstimate": 8.280000000000001,
+    "height": 75.9
+  },
+  {
+    "id": "fig-069",
+    "unit": 0.44,
+    "printedFontEstimate": 7.92,
+    "height": 400.4
+  },
+  {
+    "id": "fig-070",
+    "unit": 0.4276206322795341,
+    "printedFontEstimate": 6.841930116472546,
+    "height": 103.05657237936772
+  },
+  {
+    "id": "fig-071-a",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 141.20000000000002
+  },
+  {
+    "id": "fig-071-b",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 147.6
+  },
+  {
+    "id": "fig-071-c",
+    "unit": 0.4,
+    "printedFontEstimate": 7.2,
+    "height": 128.0
+  },
+  {
+    "id": "fig-072",
+    "unit": 0.3978328173374613,
+    "printedFontEstimate": 6.365325077399381,
+    "height": 141.23065015479875
+  },
+  {
+    "id": "fig-073",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 132.88
+  },
+  {
+    "id": "fig-074",
+    "unit": 0.44,
+    "printedFontEstimate": 7.04,
+    "height": 126.72
+  },
+  {
+    "id": "fig-075",
+    "unit": 0.3591893780573026,
+    "printedFontEstimate": 6.465408805031447,
+    "height": 357.3934311670161
+  },
+  {
+    "id": "fig-076",
+    "unit": 0.4108713029576339,
+    "printedFontEstimate": 7.39568345323741,
+    "height": 174.20943245403677
+  },
+  {
+    "id": "fig-077",
+    "unit": 0.3941717791411043,
+    "printedFontEstimate": 7.095092024539877,
+    "height": 156.88036809815952
+  },
+  {
+    "id": "fig-078-protocol",
+    "unit": 0.4,
+    "printedFontEstimate": 6.4,
+    "height": 98.80000000000001
+  },
+  {
+    "id": "fig-078-services",
+    "unit": 0.4,
+    "printedFontEstimate": 6.4,
+    "height": 206.4
+  }
+]

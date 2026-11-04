@@ -1,0 +1,28 @@
+classDiagram
+    class ReviewerAgent {
+        +review()
+    }
+    class CheckFactory {
+        +create() ReviewCheck
+    }
+    class ReviewCheck {
+        <<interface>>
+        +analyse()
+    }
+    class ConsistencyCheck {
+        +analyse()
+    }
+    class VulnerabilityCheck {
+        +analyse()
+    }
+    class FormatCheck {
+        +analyse()
+    }
+    ReviewerAgent --> CheckFactory
+    ReviewerAgent --> ReviewCheck
+    CheckFactory ..> ConsistencyCheck
+    CheckFactory ..> VulnerabilityCheck
+    CheckFactory ..> FormatCheck
+    ReviewCheck <|.. ConsistencyCheck
+    ReviewCheck <|.. VulnerabilityCheck
+    ReviewCheck <|.. FormatCheck

@@ -1,0 +1,24 @@
+classDiagram
+ direction LR
+ class Context {
+  +request()
+ }
+ class Factory {
+  +create() Strategy
+ }
+ class Strategy {
+  <<interface>>
+  +operation()
+ }
+ class ConcreteA {
+  +operation()
+ }
+ class ConcreteB {
+  +operation()
+ }
+ Context --> Factory : obtains
+ Context --> Strategy : delegates
+ Factory ..> ConcreteA : creates
+ Factory ..> ConcreteB : creates
+ Strategy <|.. ConcreteA
+ Strategy <|.. ConcreteB

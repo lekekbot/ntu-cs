@@ -1,0 +1,20 @@
+flowchart LR
+ subgraph User
+  R["Request replacement"]
+  E["Supply photos,<br/>receipt + reason"]
+ end
+ subgraph Chatbot
+  O["Obtain order data"]
+  D{"Within 7 days?"}
+  C["Collect evidence"]
+  V{"Complete?"}
+  S["Submit; show pending"]
+ end
+ subgraph Shop["Existing shopping system"]
+  Q["Retrieve order / delivery"]
+ end
+ Start((Start)) --> R --> O --> Q --> D
+ D -->|no| X((Reject))
+ D -->|yes| C --> E --> V
+ V -->|no| C
+ V -->|yes| S --> B((B))

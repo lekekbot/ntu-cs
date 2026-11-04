@@ -1,0 +1,11 @@
+flowchart LR
+ subgraph System
+  A["Accept tags;<br/>ask location"]
+  E["Show error;<br/>invite restart"]
+ end
+ subgraph User
+  L["Enter postcode + radius"]
+  C["Restart or stop"]
+ end
+ G((G)) --> A --> L --> End((End))
+ R((R)) --> E --> C --> End

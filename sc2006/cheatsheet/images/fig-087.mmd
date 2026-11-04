@@ -1,0 +1,33 @@
+classDiagram
+    class RecommendationPage {
+        <<boundary>>
+    }
+    class LLMGateway {
+        <<boundary>>
+    }
+    class RecommendationController {
+        <<control>>
+    }
+    class TagValidator {
+        <<control>>
+    }
+    class ConversationSession {
+        <<entity>>
+    }
+    class Preferences {
+        <<entity>>
+    }
+    class Restaurant {
+        <<entity>>
+    }
+    class RecommendationList {
+        <<entity>>
+    }
+    RecommendationPage --> RecommendationController
+    RecommendationController --> LLMGateway
+    RecommendationController --> TagValidator
+    RecommendationController --> ConversationSession
+    ConversationSession "1" -- "0..1" Preferences
+    RecommendationController --> RecommendationList
+    RecommendationList --> Restaurant : ranked entries
+    Preferences --> Restaurant : tag matching

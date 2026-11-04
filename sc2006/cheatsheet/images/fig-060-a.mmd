@@ -1,0 +1,17 @@
+flowchart LR
+ subgraph Dev["Developer"]
+  D["Specify<br/>project"]
+ end
+ subgraph Platform
+  H{"Help?"}
+  Help["Show help"]
+  P["Retrieve /<br/>validate"]
+  S["Select engines;<br/>dispatch all /<br/>rerun subset"]
+  R["Merge findings;<br/>generate report;<br/>flag incomplete checks"]
+ end
+ subgraph Tools["External toolsets"]
+  T["SCA / SAST /<br/>DAST / IAST"]
+ end
+ Start((Start)) --> D --> H
+ H -->|yes| Help --> D
+ H -->|no| P --> S --> T --> R --> B((B))

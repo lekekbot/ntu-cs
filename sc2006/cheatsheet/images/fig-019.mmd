@@ -1,0 +1,15 @@
+stateDiagram-v2
+    state LaundryFork <<fork>>
+    state LaundryJoin <<join>>
+    state DryCheck <<choice>>
+    [*] --> SortClothes
+    SortClothes --> LaundryFork
+    LaundryFork --> WashWhites
+    LaundryFork --> WashDarks
+    WashWhites --> LaundryJoin
+    WashDarks --> LaundryJoin
+    LaundryJoin --> RunDryer
+    RunDryer --> DryCheck
+    DryCheck --> RunDryer : [still wet]
+    DryCheck --> FoldClothes : [else]
+    FoldClothes --> [*]

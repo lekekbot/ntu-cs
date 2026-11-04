@@ -1,0 +1,15 @@
+classDiagram
+ direction LR
+    class DataStoreFactory {
+        +getDatastore()$ DataStoreInterface
+    }
+    class DataStoreInterface {
+        <<interface>>
+    }
+    class FlatFileImpl
+    class MySQLImpl
+    class DB2Impl
+    DataStoreFactory ..> DataStoreInterface : creates
+    DataStoreInterface <|.. FlatFileImpl
+    DataStoreInterface <|.. MySQLImpl
+    DataStoreInterface <|.. DB2Impl

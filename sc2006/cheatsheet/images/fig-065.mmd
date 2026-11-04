@@ -1,0 +1,34 @@
+classDiagram
+ direction LR
+    class ReviewScreen {
+        <<boundary>>
+    }
+    class ReviewController {
+        <<control>>
+    }
+    class ReviewerAgent {
+        <<control>>
+    }
+    class CoderAgent {
+        <<control>>
+    }
+    class QAChecker {
+        <<control>>
+    }
+    class ReviewRequest {
+        <<entity>>
+    }
+    class Conversation {
+        <<entity>>
+    }
+    class AnalysisReport {
+        <<entity>>
+    }
+    ReviewScreen --> ReviewController
+    ReviewController --> ReviewRequest
+    ReviewController --> ReviewerAgent
+    ReviewerAgent --> CoderAgent
+    ReviewerAgent --> QAChecker
+    ReviewRequest "1" -- "0..*" Conversation
+    QAChecker --> Conversation
+    ReviewRequest "1" -- "0..1" AnalysisReport

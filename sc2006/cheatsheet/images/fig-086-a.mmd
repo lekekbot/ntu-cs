@@ -1,0 +1,17 @@
+flowchart LR
+ subgraph LLM["LLM service"]
+  J["Candidate<br/>JSON"]
+ end
+ subgraph System
+  P["Parse"]
+  V{"JSON +<br/>shape valid?"}
+  N{"Count <= 5?"}
+  T{"Allowed tags?"}
+ end
+ Start((Start)) --> J --> P --> V
+ V -->|no| R((R))
+ V -->|yes| N
+ N -->|no| R
+ N -->|yes| T
+ T -->|no| R
+ T -->|yes| G((G))

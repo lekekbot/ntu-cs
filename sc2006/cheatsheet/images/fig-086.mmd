@@ -1,0 +1,24 @@
+flowchart LR
+ subgraph LLM["LLM service"]
+  L["Candidate JSON"]
+ end
+ subgraph System
+  P["Parse JSON"]
+  J{"JSON + shape valid?"}
+  N{"Count <= 5?"}
+  T{"All tags in fixed set?"}
+  OK["Accept; ask location"]
+  Fail["Show error; invite restart"]
+ end
+ subgraph User
+  U1["Enter postcode + radius"]
+  U2["Restart or stop"]
+ end
+ Start((Start)) --> L --> P --> J
+ J -->|no| Fail
+ J -->|yes| N
+ N -->|no| Fail
+ N -->|yes| T
+ T -->|no| Fail
+ T -->|yes| OK --> U1 --> End((End))
+ Fail --> U2 --> End

@@ -1,0 +1,17 @@
+flowchart LR
+ subgraph Member
+  W["Work / log progress"]
+  F["Mark finished"]
+ end
+ subgraph Leader
+  Re["Choose replacement"]
+ end
+ subgraph System
+  N{"Next?"}
+  Save["Save finished"]
+  A["A: save assignment"]
+ end
+ B((B)) --> W --> N
+ N -->|continue| W
+ N -->|reassign| Re --> A
+ N -->|finish| F --> Save --> C((C))

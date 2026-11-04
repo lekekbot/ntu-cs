@@ -1,0 +1,11 @@
+flowchart TD
+    M["Manager enters grain type, grade and quantity"] --> E["Check eligible silos<br/>Compatible contents, free capacity, permitted conditions"]
+    E --> Q{"Can any grain be accepted?"}
+    Q -->|no| N["Report no grain accepted<br/>Zero-quantity logging policy is TBD"]
+    Q -->|yes| P["Propose silo quantities<br/>Identify any unaccepted remainder"]
+    P --> D{"Manager accepts the proposal?"}
+    D -->|yes| U["Manager arranges physical unloading"]
+    D -->|no| O["Manager overrules silo selection<br/>B, C and E constraints still apply"]
+    O --> U
+    U --> A["Manager reports ACTUAL deposits<br/>Plus truck, driver and seller details"]
+    A --> R["GES records actual stock changes and shipment log<br/>Then acknowledges receipt"]

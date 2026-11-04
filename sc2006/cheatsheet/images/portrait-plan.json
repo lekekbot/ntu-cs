@@ -1,0 +1,738 @@
+{
+  "plans": [
+    {
+      "id": "extra-trust",
+      "width": 1042,
+      "height": 165,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-001",
+      "width": 224,
+      "height": 881,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "folded",
+      "cuts": [
+        419
+      ]
+    },
+    {
+      "id": "fig-002",
+      "width": 1005,
+      "height": 192,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-003",
+      "width": 441,
+      "height": 851,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "folded",
+      "cuts": [
+        425
+      ]
+    },
+    {
+      "id": "fig-004",
+      "width": 760,
+      "height": 340,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-005",
+      "width": 911,
+      "height": 92,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-006",
+      "width": 301,
+      "height": 166,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-007",
+      "width": 338,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-008",
+      "width": 325,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-009",
+      "width": 375,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-010",
+      "width": 326,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-011",
+      "width": 198,
+      "height": 100,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-012",
+      "width": 332,
+      "height": 100,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-013",
+      "width": 310,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-014",
+      "width": 309,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-015",
+      "width": 356,
+      "height": 65,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-016",
+      "width": 279,
+      "height": 75,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-017",
+      "width": 633,
+      "height": 292,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-019",
+      "width": 307,
+      "height": 734,
+      "base": 18,
+      "unit": 0.4087193460490463,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-020",
+      "width": 394,
+      "height": 1315,
+      "base": 18,
+      "unit": 0.45045045045045046,
+      "mode": "folded",
+      "cuts": [
+        657
+      ]
+    },
+    {
+      "id": "fig-021",
+      "width": 1163,
+      "height": 488,
+      "base": 18,
+      "unit": 0.4419604471195185,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-022",
+      "width": 722,
+      "height": 548,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-023",
+      "width": 1123,
+      "height": 216,
+      "base": 18,
+      "unit": 0.4577025823686554,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-024",
+      "width": 403,
+      "height": 546,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-025",
+      "width": 331,
+      "height": 535,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-026",
+      "width": 556,
+      "height": 294,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-028",
+      "width": 830,
+      "height": 143,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-029",
+      "width": 629,
+      "height": 870,
+      "base": 16,
+      "unit": 0.3990461049284579,
+      "mode": "folded",
+      "cuts": [
+        435
+      ]
+    },
+    {
+      "id": "fig-030",
+      "width": 854,
+      "height": 211,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-031",
+      "width": 643,
+      "height": 957,
+      "base": 18,
+      "unit": 0.39035769828926903,
+      "mode": "folded",
+      "cuts": [
+        478
+      ]
+    },
+    {
+      "id": "fig-032",
+      "width": 720,
+      "height": 466,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-033",
+      "width": 871,
+      "height": 219,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-035",
+      "width": 235,
+      "height": 858,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "folded",
+      "cuts": [
+        429
+      ]
+    },
+    {
+      "id": "fig-036",
+      "width": 1026,
+      "height": 138,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-037",
+      "width": 688,
+      "height": 400,
+      "base": 18,
+      "unit": 0.46,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-041",
+      "width": 527,
+      "height": 659,
+      "base": 18,
+      "unit": 0.4552352048558422,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-046",
+      "width": 298,
+      "height": 981,
+      "base": 16,
+      "unit": 0.46,
+      "mode": "folded",
+      "cuts": [
+        481
+      ]
+    },
+    {
+      "id": "fig-048",
+      "width": 1186,
+      "height": 1030,
+      "base": 18,
+      "unit": 0.42718446601941745,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-049",
+      "width": 922,
+      "height": 316,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-050",
+      "width": 1048,
+      "height": 820,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-051",
+      "width": 936,
+      "height": 642,
+      "base": 16,
+      "unit": 0.43613707165109034,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-052",
+      "width": 1100,
+      "height": 359,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-053",
+      "width": 1147,
+      "height": 696,
+      "base": 18,
+      "unit": 0.40229885057471265,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-054",
+      "width": 1170,
+      "height": 242,
+      "base": 16,
+      "unit": 0.4393162393162393,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-056",
+      "width": 1101,
+      "height": 422,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-057",
+      "width": 652,
+      "height": 442,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-058",
+      "width": 993,
+      "height": 946,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-059",
+      "width": 1111,
+      "height": 262,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-061",
+      "width": 878,
+      "height": 736,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-062",
+      "width": 623,
+      "height": 261,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-064",
+      "width": 1040,
+      "height": 464,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-065",
+      "width": 926,
+      "height": 342,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-066",
+      "width": 813,
+      "height": 591,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-067",
+      "width": 1266,
+      "height": 556,
+      "base": 16,
+      "unit": 0.4060031595576619,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-068",
+      "width": 619,
+      "height": 442,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-069",
+      "width": 1026,
+      "height": 910,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-070",
+      "width": 1202,
+      "height": 241,
+      "base": 16,
+      "unit": 0.4276206322795341,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-072",
+      "width": 1292,
+      "height": 355,
+      "base": 16,
+      "unit": 0.3978328173374613,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-073",
+      "width": 949,
+      "height": 302,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-074",
+      "width": 974,
+      "height": 288,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-075",
+      "width": 1431,
+      "height": 995,
+      "base": 18,
+      "unit": 0.3591893780573026,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-076",
+      "width": 1251,
+      "height": 424,
+      "base": 18,
+      "unit": 0.4108713029576339,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-079-admin",
+      "width": 412,
+      "height": 229,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-079-user",
+      "width": 828,
+      "height": 337,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-079-voice",
+      "width": 988,
+      "height": 202,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-080",
+      "width": 1190,
+      "height": 746,
+      "base": 18,
+      "unit": 0.3753351206434316,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-082",
+      "width": 680,
+      "height": 637,
+      "base": 16,
+      "unit": 0.43956043956043955,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-083",
+      "width": 850,
+      "height": 268,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-084",
+      "width": 687,
+      "height": 442,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-085-admin",
+      "width": 395,
+      "height": 229,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-087",
+      "width": 721,
+      "height": 658,
+      "base": 16,
+      "unit": 0.425531914893617,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-088",
+      "width": 575,
+      "height": 603,
+      "base": 18,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-089",
+      "width": 856,
+      "height": 597,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-090",
+      "width": 1004,
+      "height": 490,
+      "base": 16,
+      "unit": 0.44,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-077",
+      "width": 1304,
+      "height": 398,
+      "base": 18,
+      "unit": 0.3941717791411043,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-063",
+      "width": 1353,
+      "height": 490,
+      "base": 18,
+      "unit": 0.37989652623798964,
+      "mode": "normal",
+      "cuts": []
+    },
+    {
+      "id": "fig-085-user",
+      "width": 1327,
+      "height": 608,
+      "base": 18,
+      "unit": 0.3873398643556895,
+      "mode": "normal",
+      "cuts": []
+    }
+  ],
+  "phaseSets": {
+    "fig-055": [
+      "fig-055-a",
+      "fig-055-b"
+    ],
+    "fig-060": [
+      "fig-060-a",
+      "fig-060-b"
+    ],
+    "fig-071": [
+      "fig-071-a",
+      "fig-071-b",
+      "fig-071-c"
+    ],
+    "fig-078": [
+      "fig-078-protocol",
+      "fig-078-services"
+    ],
+    "fig-081": [
+      "fig-081-a",
+      "fig-081-b"
+    ],
+    "fig-086": [
+      "fig-086-a",
+      "fig-086-b"
+    ]
+  }
+}

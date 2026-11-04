@@ -1,0 +1,5 @@
+flowchart LR
+ M{"Must A run B?"} -->|yes| I["INCLUDE<br/>A to B"]
+ M -->|no| O{"Optional add-on to A?"}
+ O -->|yes| E["EXTEND<br/>B to A"]
+ O -->|no| S["Independent goals"]

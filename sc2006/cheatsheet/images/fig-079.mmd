@@ -1,0 +1,17 @@
+flowchart LR
+    O["Homeowner"] --- Control(["Control lights / AC / locks"])
+    O --- Grant(["Grant / revoke temporary door<br/>access"])
+    G["Guest"] --- Door(["Request door lock / unlock"])
+    O --- Door
+    A["Administrator"] --- Users(["Add / remove accounts"])
+    A --- Credentials(["Reset credentials"])
+    A --- Rights(["Adjust access rights"])
+    Control -. "«include»" .-> Authorise(["Authenticate and authorise<br/>command"])
+    Door -. "«include»" .-> Authorise
+    Door -. "«include»" .-> Log(["Record access attempt and<br/>outcome"])
+    Voice(["Use voice command"]) -. "«extend» [voice channel]" .-> Control
+    Voice -. "«extend» [voice channel]" .-> Door
+    Voice -. "«include»" .-> Interpret(["Transcribe and interpret<br/>request"])
+    Clarify(["Clarify ambiguous request"]) -. "«extend» [ambiguous]" .-> Voice
+    D["Lights / AC / door locks"] --- Control
+    Lock["Door lock"] --- Door

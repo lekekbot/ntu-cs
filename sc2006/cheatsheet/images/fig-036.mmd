@@ -1,0 +1,7 @@
+flowchart LR
+ R["Read requirement<br/>units and behaviour"] --> P["Partition ECs"]
+ P --> V["Combine valid values"]
+ P --> I["One invalid per row"]
+ V --> B["Ordered boundaries<br/>below / on / above"]
+ I --> B
+ B --> O["Write expected result<br/>then execute and compare"]

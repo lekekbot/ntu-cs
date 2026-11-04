@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> AwaitingFirstAnswer
+    AwaitingFirstAnswer --> Checking : answer received / n = 1
+    Checking --> Accepted : [answer appropriate]
+    Checking --> Refining : [inappropriate and n < max]
+    Refining --> AwaitingNextAnswer : append instructions to original question and send
+    AwaitingNextAnswer --> Checking : answer received / n = n + 1
+    Checking --> LimitReached : [inappropriate and n >= max]
+    Accepted --> [*]
+    LimitReached --> [*]

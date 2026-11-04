@@ -1,0 +1,46 @@
+classDiagram
+    class ScanView {
+        +submitProject()
+        +showStatus()
+        +showReport()
+    }
+    class ScanCoordinator {
+        +submit()
+        +getStatus()
+        +buildReport()
+    }
+    class ScanJob {
+        +id
+        +projectVersion
+        +status
+        +recordResult()
+    }
+    class Engine {
+        <<interface>>
+        +scan() ScanResult
+    }
+    class SCAAdapter {
+        +scan()
+    }
+    class SASTAdapter {
+        +scan()
+    }
+    class DASTAdapter {
+        +scan()
+    }
+    class IASTAdapter {
+        +scan()
+    }
+    class Report {
+        +findings
+        +incompleteEngines
+        +render()
+    }
+    ScanView --> ScanCoordinator
+    ScanCoordinator --> ScanJob
+    ScanCoordinator --> Engine
+    ScanJob --> Report
+    Engine <|.. SCAAdapter
+    Engine <|.. SASTAdapter
+    Engine <|.. DASTAdapter
+    Engine <|.. IASTAdapter

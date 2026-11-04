@@ -1,0 +1,23 @@
+classDiagram
+ direction LR
+ class SensorSubject {
+  <<interface>>
+  +attach()
+  +detach()
+  +notify()
+ }
+ class Sensor {
+  +id
+  +lastMeasurement
+ }
+ class MeasurementObserver {
+  <<interface>>
+  +update()
+ }
+ class DWSMonitor {
+  +update()
+  +checkSilence()
+ }
+ SensorSubject <|.. Sensor
+ SensorSubject "1" --> "0..*" MeasurementObserver : subscribers
+ MeasurementObserver <|.. DWSMonitor
