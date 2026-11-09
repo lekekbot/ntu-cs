@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SC2005 · Lab 3 — Visual Guide</title>
+<style>
+  :root{
+    --bg:#070b14;
+    --panel:#0f1729;
+    --panel2:#141f36;
+    --line:#22314f;
+    --text:#e6edf7;
+    --muted:#8b9bb4;
+    --cyan:#38bdf8;
+    --green:#34d399;
+    --amber:#fbbf24;
+    --red:#f87171;
+    --purple:#a78bfa;
+    --pink:#f472b6;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(56,189,248,.15), transparent 60%),
+      radial-gradient(900px 520px at 92% -5%, rgba(167,139,250,.13), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 34px}
+  .kicker{
+    display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--cyan);
+    border:1px solid rgba(56,189,248,.35);border-radius:999px;padding:5px 12px;
+    background:rgba(56,189,248,.08);
+  }
+  h1{
+    font-size:clamp(34px,6vw,56px);line-height:1.05;margin:18px 0 14px;letter-spacing:-.02em;
+    background:linear-gradient(100deg,#fff 10%,#9fd7ff 55%,#b6a6ff 95%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .lede{font-size:17px;color:#b9c7dd;max-width:680px;margin:0}
+  .chiprow{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .chip{
+    font-size:12px;font-family:var(--mono);color:#b8c7de;
+    border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:rgba(255,255,255,.03);
+  }
+
+  /* ---------- toc ---------- */
+  .toc{position:sticky;top:0;z-index:50;background:rgba(7,11,20,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 22px;scrollbar-width:none}
+  .toc .wrap::-webkit-scrollbar{display:none}
+  .toc a{white-space:nowrap;font-size:13px;color:var(--muted);text-decoration:none;padding:6px 11px;border-radius:999px;border:1px solid transparent;transition:.16s}
+  .toc a:hover{color:var(--text);background:rgba(255,255,255,.06);border-color:var(--line)}
+
+  /* ---------- sections ---------- */
+  .section{padding:54px 0 8px;border-top:1px solid rgba(34,49,79,.55)}
+  .section:first-of-type{border-top:0}
+  .section-head{display:flex;align-items:center;gap:14px;margin:0 0 8px;flex-wrap:wrap}
+  .num{
+    font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--cyan);
+    border:1px solid rgba(56,189,248,.35);border-radius:8px;padding:3px 8px;background:rgba(56,189,248,.08);
+  }
+  h2{font-size:clamp(24px,3.4vw,32px);margin:0;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:15px;max-width:760px}
+
+  .card{
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    border:1px solid var(--line);border-radius:16px;padding:22px;margin:16px 0;
+  }
+  .card h3{margin:0 0 10px;font-size:17px}
+  .card p{margin:0 0 10px}
+  .card p:last-child{margin-bottom:0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .two > *,.three > *{min-width:0}
+  @media (max-width:760px){.two,.three{grid-template-columns:1fr}}
+
+  /* ---------- text helpers ---------- */
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+  .mono{font-family:var(--mono)}
+  code{font-family:var(--mono);font-size:.92em;background:rgba(56,189,248,.10);border:1px solid rgba(56,189,248,.16);border-radius:5px;padding:1px 5px;color:#bfe6ff}
+  .good{color:var(--green)}
+  .bad{color:var(--red)}
+  .warn{color:var(--amber)}
+  .formula{margin:8px 0;padding:9px 11px;border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;background:rgba(56,189,248,.07);color:#cfe0f5;font:13px/1.6 var(--mono);overflow-wrap:anywhere}
+  .note{border-left:3px solid var(--cyan);background:rgba(56,189,248,.07);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0}
+  .note.red{border-color:var(--red);background:rgba(248,113,113,.07)}
+  .note.amber{border-color:var(--amber);background:rgba(251,191,36,.07)}
+  .note.green{border-color:var(--green);background:rgba(52,211,153,.07)}
+  .note b{color:#fff}
+
+  /* ---------- code ---------- */
+  .code{background:#080e1b;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+  .code .cap{
+    font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);
+    padding:8px 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.025);
+  }
+  .code pre{margin:0;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.8px;line-height:1.6;color:#cfe0f5}
+  .code .k{color:#c084fc}
+  .code .s{color:#86efac}
+  .code .c{color:#54657f;font-style:italic}
+  .code .n{color:#fbbf24}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    font-family:inherit;font-size:13px;font-weight:600;color:#cfe0f5;cursor:pointer;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:999px;padding:8px 15px;
+    transition:.16s;white-space:nowrap;
+  }
+  .btn:hover{background:rgba(255,255,255,.1);border-color:#3a527d;transform:translateY(-1px)}
+  .btn:active{transform:translateY(0)}
+  .btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+  .btn.primary{background:rgba(56,189,248,.16);border-color:rgba(56,189,248,.5);color:#bfe9ff}
+  .btn.primary:hover{background:rgba(56,189,248,.26)}
+  .btn.green{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.45);color:#a7f3d0}
+  .btn.warn{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.42);color:#fde68a}
+  .btn.active{outline:2px solid rgba(56,189,248,.55);outline-offset:2px}
+
+  /* ---------- simulator shell ---------- */
+  .sim{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#0b1322,#0a1120);padding:18px;margin:16px 0}
+  .simbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+  .simbar .spacer{flex:1}
+  .simstage{display:grid;gap:14px}
+
+  /* actor panels */
+  .actor{
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.02);
+    transition:.2s;min-width:0;
+  }
+  .actor.active{border-color:rgba(56,189,248,.7);box-shadow:0 0 0 3px rgba(56,189,248,.12);background:rgba(56,189,248,.07)}
+  .actor .aname{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+  .actor .aval{font-family:var(--mono);font-size:22px;font-weight:700;margin:2px 0}
+  .actor .astate{font-size:12px;color:var(--muted);min-height:18px}
+
+  .counterbig{
+    border:1px solid rgba(251,191,36,.4);border-radius:14px;padding:14px 18px;text-align:center;
+    background:rgba(251,191,36,.07);
+  }
+  .counterbig .label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#d6b46a}
+  .counterbig .val{font-family:var(--mono);font-size:44px;font-weight:800;line-height:1.1;color:#fde68a;transition:.2s}
+  .counterbig .val.flash{transform:scale(1.14)}
+
+  .log{
+    font-family:var(--mono);font-size:12px;line-height:1.7;max-height:230px;overflow-y:auto;
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:rgba(0,0,0,.25);
+  }
+  .log div{padding:2px 0;border-left:2px solid transparent;padding-left:10px;color:#a9bad3}
+  .log div.p{border-color:var(--cyan);color:#c8e9ff}
+  .log div.c{border-color:var(--pink);color:#ffd6ec}
+  .log div.a{border-color:var(--green);color:#b7f5dc}
+  .log div.b{border-color:var(--purple);color:#dcd0ff}
+  .log div.bad{border-color:var(--red);color:#ffc9c9}
+  .log div.ok{border-color:var(--green);color:#b7f5dc}
+  .log .dim{color:#5f7089}
+
+  /* lock chips */
+  .lockrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .lockchip{
+    font-family:var(--mono);font-size:12px;border:1px dashed var(--line);border-radius:999px;padding:4px 10px;
+    color:var(--muted);transition:.18s;
+  }
+  .lockchip.held{border-style:solid;border-color:rgba(251,191,36,.75);background:rgba(251,191,36,.13);color:#fde68a}
+
+  /* state machine */
+  .sm{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:8px 0}
+  .stnode{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;padding:9px 16px;border-radius:10px;
+    border:1px solid var(--line);color:var(--muted);background:rgba(255,255,255,.02);transition:.2s;
+  }
+  .stnode.on{border-color:rgba(167,139,250,.85);background:rgba(167,139,250,.18);color:#e4dbff;box-shadow:0 0 0 3px rgba(167,139,250,.12)}
+  .arrow{color:#3d527a;font-size:18px}
+
+  /* gap viz */
+  .gapviz{display:grid;gap:10px;margin:8px 0}
+  .lane{display:grid;grid-template-columns:minmax(0,74px) minmax(0,88px) minmax(0,1fr) minmax(0,88px);gap:10px;align-items:center}
+  .lane .tag{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .lane .op{min-width:0;overflow-wrap:anywhere;font-family:var(--mono);font-size:12px;text-align:center;border:1px solid rgba(56,189,248,.4);background:rgba(56,189,248,.1);border-radius:8px;padding:6px 4px;color:#bfe9ff}
+  .lane .gap{min-width:0;overflow-wrap:anywhere;font-family:var(--mono);font-size:11px;text-align:center;color:#d6a94a;border:1px dashed rgba(251,191,36,.45);border-radius:8px;padding:6px 4px;background:repeating-linear-gradient(45deg,rgba(251,191,36,.07) 0 8px,transparent 8px 16px)}
+  .verdict{text-align:center;font-size:13px;color:#ffc9c9;margin-top:4px}
+
+  /* file map */
+  .filemap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:700px){.filemap{grid-template-columns:1fr}}
+  .filegroup{border:1px solid var(--line);border-radius:14px;padding:14px;background:rgba(255,255,255,.02)}
+  .filegroup h4{margin:0 0 10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:var(--mono)}
+  .filebox{
+    border:1px solid var(--line);border-left-width:4px;border-radius:9px;padding:9px 12px;margin-bottom:8px;background:rgba(0,0,0,.22);
+  }
+  .filebox b{display:block;font-family:var(--mono);font-size:12.5px;color:#dbe7f7}
+  .filebox span{font-size:12px;color:var(--muted)}
+  .filebox.edit{border-left-color:var(--amber)}
+  .filebox.read{border-left-color:var(--cyan)}
+  .filebox.prov{border-left-color:#4a5a78}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted);margin-top:10px}
+  .legend span{display:inline-flex;align-items:center}
+  .legend i{flex:none;display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+
+  /* semaphore chips */
+  .semchips{display:flex;gap:10px;flex-wrap:wrap}
+  .semchip{
+    flex:1;min-width:110px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:center;
+    background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.3);
+  }
+  .semchip .n{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#f7b6d6}
+  .semchip .v{font-family:var(--mono);font-size:28px;font-weight:800;color:#ffd6ec;line-height:1.2}
+  .semchip.dead{border-color:rgba(248,113,113,.6);background:rgba(248,113,113,.1)}
+  .semchip.dead .v{color:#ffc9c9}
+
+  /* ring buffer */
+  .ring{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin:10px 0}
+  .cell{
+    position:relative;aspect-ratio:1/1;border:1px solid var(--line);border-radius:8px;display:flex;
+    flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.28);
+    font-family:var(--mono);transition:.18s;
+  }
+  .cell .idx{position:absolute;top:2px;left:5px;font-size:9px;color:#4a5a78}
+  .cell .ch{font-size:16px;font-weight:700;color:#9fb3ce}
+  .cell.filled{background:rgba(52,211,153,.14);border-color:rgba(52,211,153,.5)}
+  .cell.filled .ch{color:#a7f3d0}
+  .cell.tail::after{content:"tail";position:absolute;bottom:-16px;font-size:9px;color:var(--cyan)}
+  .cell.head::before{content:"head";position:absolute;top:-16px;font-size:9px;color:var(--amber)}
+  .cell.tail{border-color:rgba(56,189,248,.75);box-shadow:0 0 0 2px rgba(56,189,248,.15)}
+  .cell.head{border-color:rgba(251,191,36,.75);box-shadow:0 0 0 2px rgba(251,191,36,.15)}
+  .cell.filled.just{animation:pop .5s ease}
+  @keyframes pop{0%{transform:scale(.75);filter:brightness(1.8)}100%{transform:scale(1);filter:none}}
+  .ringwrap{padding:18px 0 22px}
+
+  .procrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-bottom:8px;background:rgba(255,255,255,.02)}
+  .procrow .pname{font-family:var(--mono);font-size:12.5px;min-width:64px;color:#dbe7f7}
+  .procrow .pstate{font-size:12px;color:var(--muted);flex:1}
+  .pill{font-size:11px;font-family:var(--mono);padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+  .pill.run{border-color:rgba(52,211,153,.5);color:#a7f3d0;background:rgba(52,211,153,.1)}
+  .pill.block{border-color:rgba(251,191,36,.5);color:#fde68a;background:rgba(251,191,36,.1)}
+  .pill.done{border-color:rgba(56,189,248,.5);color:#bfe9ff;background:rgba(56,189,248,.1)}
+  .pill.dead{border-color:rgba(248,113,113,.6);color:#ffc9c9;background:rgba(248,113,113,.12)}
+
+  /* tables */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  td code{white-space:nowrap}
+  .card table,.checkpoint table{display:block;overflow-x:auto}
+
+  /* answers */
+  .checkpoint{
+    margin:12px 0;padding:18px;border:1px solid var(--line);border-radius:14px;
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  }
+  .checkpoint h3{margin:0 0 12px;font-size:16px}
+  .qa-list{display:grid;gap:14px;margin:0;padding:0;list-style:none;counter-reset:qa}
+  .qa-list > li{position:relative;padding-left:36px;counter-increment:qa}
+  .qa-list > li::before{
+    content:counter(qa);position:absolute;left:0;top:0;width:24px;height:24px;
+    display:grid;place-items:center;border:1px solid rgba(56,189,248,.4);border-radius:7px;
+    color:var(--cyan);font:700 12px var(--mono);
+  }
+  .steps{margin:6px 0 12px;padding-left:24px;color:#d5e2f2;font-size:14px}
+  .steps li{margin:7px 0;padding-left:3px}
+  .steps li::marker{color:var(--cyan);font-family:var(--mono);font-weight:700}
+  .qa-list .q{margin:0 0 8px;color:#dbe7f7;font-size:14.5px;line-height:1.55}
+  .qa-list details.answer{margin:0}
+  .qa-list details.answer .body p{margin:8px 0}
+  .qa-list details.answer .body table{font-size:13px}
+  details.answer{
+    border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.025);margin:10px 0;overflow:hidden;
+  }
+  .checkpoint details.answer{margin:0;background:rgba(0,0,0,.22)}
+  details.answer summary{
+    cursor:pointer;padding:13px 16px;font-weight:600;font-size:14.5px;list-style:none;display:flex;align-items:center;gap:10px;
+  }
+  details.answer summary::-webkit-details-marker{display:none}
+  details.answer summary::before{
+    content:"";flex:none;width:20px;height:20px;border:1px solid rgba(56,189,248,.4);border-radius:6px;
+    background:
+      linear-gradient(var(--cyan),var(--cyan)) center / 9px 1.5px no-repeat,
+      linear-gradient(var(--cyan),var(--cyan)) center / 1.5px 9px no-repeat;
+  }
+  details.answer[open] summary::before{
+    background:linear-gradient(var(--cyan),var(--cyan)) center / 9px 1.5px no-repeat;
+  }
+  details.answer .body{padding:0 16px 16px;color:#c3d2e6;font-size:14px}
+  details.answer .body ul{margin:8px 0;padding-left:20px}
+  details.answer .body li{margin:5px 0}
+
+  /* revision grid */
+  .rev{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .revcard{border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(255,255,255,.025)}
+  .revcard h4{margin:0 0 8px;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--cyan);font-family:var(--mono)}
+  .revcard ul{margin:0;padding-left:18px;font-size:13px;color:#c3d2e6}
+  .revcard li{margin:4px 0}
+
+  footer{padding:50px 0 70px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">SC2005 · Lab 3</span>
+    <h1>Synchronization &amp; Semaphores</h1>
+    <p class="lede">
+      Every idea below is a picture you can poke. If the words don't land yet, press the buttons —
+      the machines do exactly what the kernel does, just slowly enough to see.
+    </p>
+    <div class="chiprow">
+      <span class="chip">two processes, one counter</span>
+      <span class="chip">spinlock = one atomic swap</span>
+      <span class="chip">semaphore = count + sleep</span>
+      <span class="chip">producer / consumer</span>
+      <span class="chip">CPUS=3</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#howto">How to use</a>
+    <a href="#bigidea">0 · Big idea</a>
+    <a href="#race">1 · Lost update</a>
+    <a href="#spinlock">2 · Spinlock</a>
+    <a href="#sleep">3 · sleep / wakeup</a>
+    <a href="#semaphore">4 · Semaphore</a>
+    <a href="#racetest">5 · race_test</a>
+    <a href="#pc">6 · Producer / consumer</a>
+    <a href="#syscall">7 · Syscall path</a>
+    <a href="#answers">8 · Exam answers</a>
+    <a href="#revision">9 · Revision card</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============================================================ -->
+  <!-- 0. BIG IDEA                                                  -->
+  <!-- ============================================================ -->
+  <section class="section" id="howto">
+    <div class="section-head"><span class="num">?</span><h2>How to use this guide</h2></div>
+    <p class="sub">Nothing here is a video: you press a button, the picture changes, and the log says what just happened.
+      That is the whole method.</p>
+
+    <div class="card">
+      <h3>The four moves</h3>
+      <ol class="steps">
+        <li><b>Read the sentence above the panel</b>, then look at the picture. Each section is exactly one idea — do not jump ahead.</li>
+        <li><b>Press the buttons left to right.</b> Coloured buttons run the demo (<i>Run unprotected</i>, <i>Broken: read-then-write</i>,
+          <i>P1 · sem_wait</i>). Plain buttons are extras: <i>Step ▶</i>, <i>Auto ▶▶</i>, <i>Finish ⏩</i>.</li>
+        <li><b>Watch the counters and the log.</b> The log is the running commentary. <b>Reset ↺</b> puts everything back so you can retry.</li>
+        <li><b>Only then open the answers</b> in section 8 — they are the manual's own “You are ready when you can…” bullets, one answer each. If an answer surprises you, jump back and press the buttons again.</li>
+      </ol>
+      <div class="legend">
+        <span><i style="background:var(--cyan)"></i>blue = the normal path</span>
+        <span><i style="background:var(--green)"></i>green = correct / succeeds</span>
+        <span><i style="background:var(--amber)"></i>amber = the broken version</span>
+        <span><i style="background:var(--red)"></i>red = the failure it produces</span>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Suggested order</h3>
+        <table>
+          <tr><th>If you…</th><th>Do this</th></tr>
+          <tr><td>know nothing yet</td><td>0 → 1 → 2 → 3</td></tr>
+          <tr><td>are stuck on semaphores</td><td>4 → 5</td></tr>
+          <tr><td>are stuck on producer/consumer</td><td>6 (and the deadlock panel)</td></tr>
+          <tr><td>are about to be asked questions</td><td>8 → 9, then 1 and 6 again</td></tr>
+        </table>
+        <p class="small muted" style="margin:0">Roughly 20 minutes if you press every button once.</p>
+      </div>
+      <div class="card">
+        <h3>Where each control lives</h3>
+        <table>
+          <tr><th>Control</th><th>Section</th></tr>
+          <tr><td><i>Run unprotected</i> / <i>Run with mutex</i></td><td>1 · Lost update</td></tr>
+          <tr><td><i>Broken: read-then-write</i> / <i>Atomic: amoswap</i></td><td>2 · Spinlock</td></tr>
+          <tr><td><i>Step ▶</i> on the sleep timeline</td><td>3 · sleep / wakeup</td></tr>
+          <tr><td><i>while ✓</i> / <i>if ✗</i></td><td>4 · Semaphore</td></tr>
+          <tr><td><i>P1</i> / <i>P2</i> / <i>sem_signal</i></td><td>4 · Semaphore</td></tr>
+          <tr><td><i>Step P1</i> / <i>Step P2</i> / <i>Step Consumer</i></td><td>6 · Producer / consumer</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="note green"><b>Honest tip:</b> the buttons are not decoration. Reading alone gives you the vocabulary;
+      the state changes are what make the exam sentence make sense.</div>
+  </section>
+
+  <section class="section" id="bigidea">
+    <div class="section-head"><span class="num">00</span><h2>The whole lab in one picture</h2></div>
+    <p class="sub">Two CPUs, one variable. Each does <code>read → add 1 → write</code>. If the reads overlap, one increment disappears.</p>
+
+    <div class="card">
+      <div class="gapviz">
+        <div class="lane">
+          <span class="tag">CPU 0</span>
+          <span class="op">read 100</span>
+          <span class="gap">⋯ preempted / running user code ⋯</span>
+          <span class="op">write 101</span>
+        </div>
+        <div class="lane">
+          <span class="tag">CPU 1</span>
+          <span class="op">read 100</span>
+          <span class="gap">⋯ preempted / running user code ⋯</span>
+          <span class="op">write 101</span>
+        </div>
+        <div class="verdict">Both reads landed in the gap → both writes carry a stale 100 → <b>2 increments, 1 unit of progress</b></div>
+      </div>
+      <div class="note amber" style="margin-bottom:0">
+        <b>Entering the kernel is not the same as being atomic.</b> A syscall runs without interruption,
+        but the <em>pair</em> of syscalls has a gap between them, and that gap is where the race lives.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>What you actually build</h3>
+      <div class="three">
+        <div>
+          <div class="mono small" style="color:var(--cyan)">① spinlock (given)</div>
+          <p class="small muted" style="margin-top:6px">One word + one atomic instruction. Holds for a few cycles.</p>
+        </div>
+        <div>
+          <div class="mono small" style="color:var(--amber)">② semaphore (you write)</div>
+          <p class="small muted" style="margin-top:6px">A counter + a waiting room. Waits by sleeping, not spinning.</p>
+        </div>
+        <div>
+          <div class="mono small" style="color:var(--pink)">③ two uses (you wire)</div>
+          <p class="small muted" style="margin-top:6px">As a mutex around a counter, and as counts + mutex around a ring buffer.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Where each piece lives</h3>
+      <div class="filemap">
+        <div class="filegroup">
+          <h4>kernel/</h4>
+          <div class="filebox read"><b>spinlock.c / .h</b><span>read it, don't change it — it's already correct</span></div>
+          <div class="filebox read"><b>proc.c</b><span>sleep() / wakeup() — read, don't change</span></div>
+          <div class="filebox edit"><b>semaphore.c</b><span>✏️ you implement wait / signal / getvalue</span></div>
+          <div class="filebox prov"><b>ucnt.c</b><span>shared counters — the thing being raced (provided)</span></div>
+          <div class="filebox prov"><b>ubuf.c</b><span>16-slot ring buffer with a deliberate yield() (provided)</span></div>
+        </div>
+        <div class="filegroup">
+          <h4>user/</h4>
+          <div class="filebox edit"><b>race_test.c</b><span>✏️ you add the semaphore discipline</span></div>
+          <div class="filebox prov"><b>user.h · usys.pl</b><span>syscall declarations + stubs (provided)</span></div>
+          <div class="filebox prov"><b>usertests.c</b><span>unrelated regression suite — no lab logic</span></div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:#fbbf24"></i>you edit</span>
+        <span><i style="background:#38bdf8"></i>read only</span>
+        <span><i style="background:#4a5a78"></i>provided / untouched</span>
+      </div>
+    </div>
+
+    <div class="code">
+      <div class="cap">run it</div>
+      <pre><code data-c>cd xv6zz-lab3
+make clean
+make CPUS=3 qemu      # 3 harts: on 1 CPU the race rarely shows up
+
+$ race_test</code></pre>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 1. LOST UPDATE                                               -->
+  <!-- ============================================================ -->
+  <section class="section" id="race">
+    <div class="section-head"><span class="num">01</span><h2>The lost update</h2></div>
+    <p class="sub">The whole problem in four steps. Watch the counter refuse to reach 2.</p>
+
+    <div class="code">
+      <div class="cap">user/race_test.c — the dangerous pair</div>
+      <pre><code data-c>int val = ucnt_get(0);   // syscall: kernel reads ucnt[0]
+ucnt_set(0, val + 1);    // syscall: kernel writes ucnt[0]</code></pre>
+    </div>
+
+    <div class="sim" id="race-sim">
+      <div class="simbar">
+        <button class="btn primary" data-rmode="unprotected">Run unprotected</button>
+        <button class="btn green" data-rmode="protected">Run with mutex</button>
+        <span class="spacer"></span>
+        <button class="btn" data-rstep>Step ▶</button>
+        <button class="btn" data-rauto>Auto ▶▶</button>
+        <button class="btn" data-rreset>Reset ↺</button>
+      </div>
+
+      <div class="simstage">
+        <div class="two">
+          <div class="actor" id="race-parent">
+            <div class="aname">Parent</div>
+            <div class="aval" id="race-pval">—</div>
+            <div class="astate" id="race-pstate">idle</div>
+          </div>
+          <div class="actor" id="race-child">
+            <div class="aname">Child</div>
+            <div class="aval" id="race-cval">—</div>
+            <div class="astate" id="race-cstate">idle</div>
+          </div>
+        </div>
+
+        <div class="two">
+          <div class="counterbig">
+            <div class="label">ucnt[0] in kernel memory</div>
+            <div class="val" id="race-counter">0</div>
+          </div>
+          <div class="counterbig" style="border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06)">
+            <div class="label" style="color:#f7b6d6">semaphore value</div>
+            <div class="val" id="race-sem" style="color:#ffd6ec">—</div>
+          </div>
+        </div>
+
+        <div class="log" id="race-log"></div>
+        <div id="race-verdict" class="small" style="min-height:22px"></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3 class="bad">Why locking each syscall is useless</h3>
+        <p class="small">Each syscall already runs to completion inside the kernel. The bug isn't inside a
+        syscall — it's <b>between</b> them. The critical section is the <em>pair</em>, so the lock must be
+        taken in <b>user space</b>, around both calls.</p>
+        <div class="note red" style="margin-bottom:0">
+          <b>Measured when unprotected:</b> <code>final counter=1737</code> instead of 2000 — 263 increments vanished.
+        </div>
+      </div>
+      <div class="card">
+        <h3 class="good">Why the fix works</h3>
+        <p class="small">With a mutex initialised to <b>1</b>, the first <code>sem_wait</code> takes it
+        (1 → 0) and the other process cannot enter until <code>sem_signal</code> puts it back (0 → 1).
+        The read–modify–write becomes indivisible <em>as a pair</em>.</p>
+        <div class="code" style="margin-bottom:0">
+          <div class="cap">the fix</div>
+          <pre><code data-c>sem_wait(semid);
+int val = ucnt_get(0);
+ucnt_set(0, val + 1);
+sem_signal(semid);</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================ -->
+  <!-- 2. SPINLOCK                                                  -->
+  <!-- ============================================================ -->
+  <section class="section" id="spinlock">
+    <div class="section-head"><span class="num">02</span><h2>The spinlock: one indivisible swap</h2></div>
+    <p class="sub">A lock is one word. The safety comes from the fact that "look at it" and "take it" happen in a single instruction.</p>
+
+    <div class="code">
+      <div class="cap">kernel/spinlock.c — acquire / release</div>
+      <pre><code data-c>void acquire(struct spinlock *lk) {
+  push_off();                                        // interrupts off on THIS hart
+  if(holding(lk)) panic("acquire");
+
+  while(__sync_lock_test_and_set(&lk->locked, 1) != 0)  // amoswap.w.aq
+    ;
+
+  __sync_synchronize();                              // fence: nothing moves above
+  lk->cpu = mycpu();
+}
+
+void release(struct spinlock *lk) {
+  __sync_synchronize();                              // all stores visible first
+  __sync_lock_release(&lk->locked);                  // amoswap.w zero, zero
+  pop_off();
+}</code></pre>
+    </div>
+
+    <div class="sim" id="spin-sim">
+      <div class="simbar">
+        <button class="btn warn" data-smode="broken">Broken: read-then-write</button>
+        <button class="btn primary" data-smode="atomic">Atomic: amoswap</button>
+        <span class="spacer"></span>
+        <button class="btn" data-sstep>Step ▶</button>
+        <button class="btn" data-sauto>Auto ▶▶</button>
+        <button class="btn" data-sreset>Reset ↺</button>
+      </div>
+      <div class="simstage">
+        <div class="two">
+          <div class="actor" id="hart-a">
+            <div class="aname">hart 0</div>
+            <div class="aval" id="hart-a-val">idle</div>
+            <div class="astate" id="hart-a-state"></div>
+          </div>
+          <div class="actor" id="hart-b">
+            <div class="aname">hart 1</div>
+            <div class="aval" id="hart-b-val">idle</div>
+            <div class="astate" id="hart-b-state"></div>
+          </div>
+        </div>
+        <div class="counterbig" style="border-color:rgba(56,189,248,.4);background:rgba(56,189,248,.06)">
+          <div class="label" style="color:#9fd7ff">lk-&gt;locked</div>
+          <div class="val" id="spin-lock" style="color:#bfe9ff">0</div>
+        </div>
+        <div class="log" id="spin-log"></div>
+        <div id="spin-verdict" class="small" style="min-height:22px"></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Why interrupts are not enough</h3>
+        <p class="small"><code>push_off()</code> clears the interrupt-enable bit in <b>this hart's</b> <code>sstatus</code>.
+        The other hart has its own <code>sstatus</code>, its own PC, and is executing the same instructions on the
+        same memory. Your phone going silent does not silence the person next to you.</p>
+        <div class="sim" style="margin:0" id="intr-sim">
+          <div class="simbar" style="margin-bottom:12px">
+            <button class="btn warn" data-intr>intr_off() on hart 0</button>
+            <button class="btn" data-intr-reset>reset</button>
+          </div>
+          <div class="two" style="gap:10px">
+            <div class="actor" id="intr-a">
+              <div class="aname">hart 0</div>
+              <div class="astate" id="intr-a-state">sstatus.IE = 1</div>
+            </div>
+            <div class="actor" id="intr-b">
+              <div class="aname">hart 1</div>
+              <div class="astate" id="intr-b-state">sstatus.IE = 1</div>
+            </div>
+          </div>
+          <div class="small muted" id="intr-msg" style="margin-top:10px">Both harts can still reach the same lock word.</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>What the fences buy you</h3>
+        <p class="small"><b>After acquire:</b> the fence stops the compiler/CPU from hoisting a critical-section
+        load above the lock point.</p>
+        <p class="small"><b>Before release:</b> the fence makes every store inside the critical section visible
+        to the next holder <em>before</em> the lock word looks free.</p>
+        <div class="note" style="margin-bottom:0">
+          <b>ELI5.</b> One physical key by the door. "Look, then take" must be one motion — otherwise two
+          people both see it hanging and both grab it.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 3. SLEEP / WAKEUP                                            -->
+  <!-- ============================================================ -->
+  <section class="section" id="sleep">
+    <div class="section-head"><span class="num">03</span><h2>sleep / wakeup: the waiting room</h2></div>
+    <p class="sub">Spinning burns a CPU. Sleeping parks the process on a <em>tag</em> until someone shouts that tag.</p>
+
+    <div class="code">
+      <div class="cap">kernel/proc.c</div>
+      <pre><code data-c>void sleep(void *chan, struct spinlock *lk) {
+  struct proc *p = myproc();
+  acquire(&amp;p-&gt;lock);   // process lock FIRST
+  release(lk);          // only then drop the condition lock
+  p-&gt;chan = chan;
+  p-&gt;state = SLEEPING;
+  sched();              // switch to scheduler; p-&gt;lock travels with us
+  p-&gt;chan = 0;
+  release(&amp;p-&gt;lock);
+  acquire(lk);          // return holding lk, exactly as passed in
+}
+
+void wakeup(void *chan) {
+  for(p = proc; p &lt; &amp;proc[NPROC]; p++) {
+    if(p != myproc()){
+      acquire(&amp;p-&gt;lock);
+      if(p-&gt;state == SLEEPING &amp;&amp; p-&gt;chan == chan)
+        p-&gt;state = RUNNABLE;   // reserve NOTHING
+      release(&amp;p-&gt;lock);
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="sim" id="sleep-sim">
+      <div class="simbar">
+        <button class="btn primary" data-slstep>Step ▶</button>
+        <button class="btn" data-slauto>Auto ▶▶</button>
+        <button class="btn" data-slreset>Reset ↺</button>
+        <span class="spacer"></span>
+        <span class="pill" id="sl-chan">chan = —</span>
+      </div>
+      <div class="simstage">
+        <div class="sm">
+          <div class="stnode on" id="st-running">RUNNING</div>
+          <span class="arrow">→</span>
+          <div class="stnode" id="st-sleeping">SLEEPING</div>
+          <span class="arrow">→</span>
+          <div class="stnode" id="st-runnable">RUNNABLE</div>
+          <span class="arrow">↩</span>
+        </div>
+        <div class="lockrow" style="justify-content:center">
+          <span class="lockchip" id="lock-lk">lk (condition lock)</span>
+          <span class="lockchip" id="lock-plock">p-&gt;lock (process lock)</span>
+        </div>
+        <div class="small" id="sl-where" style="text-align:center;color:#bfe9ff;font-family:var(--mono)">waiting to start</div>
+        <div class="log" id="sleep-log"></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3 class="good">Why a wakeup cannot be lost</h3>
+        <p class="small">The waker holds the <em>same</em> <code>lk</code>. So when it holds <code>lk</code>,
+        the waiter is in exactly one of two places:</p>
+        <div class="note green" style="margin:10px 0">
+          <b>Path A — not yet tested.</b> It will acquire <code>lk</code> after the waker releases it, see the
+          new value, and never sleep.
+        </div>
+        <div class="note green" style="margin:0">
+          <b>Path B — already SLEEPING.</b> It stored <code>SLEEPING</code> under <code>p-&gt;lock</code>, and
+          <code>wakeup()</code> takes that same <code>p-&gt;lock</code> before inspecting <code>p-&gt;state</code>.
+          So it is guaranteed to be seen.
+        </div>
+        <p class="small muted" style="margin-top:12px">No third possibility. The mechanical reason:
+        <b><code>p-&gt;lock</code> is acquired <em>before</em> <code>lk</code> is released.</b></p>
+      </div>
+      <div class="card">
+        <h3 class="warn">Why the waiter must re-check</h3>
+        <p class="small"><code>wakeup()</code> does three unhelpful things: it wakes <b>everyone</b> on the
+        channel, it reserves <b>nothing</b>, and it does not run the waiter immediately.</p>
+        <p class="small">So the test must be a <code>while</code>, not an <code>if</code>.</p>
+
+        <div class="sim" id="while-sim" style="margin:0">
+          <div class="simbar" style="margin-bottom:12px">
+            <button class="btn primary" data-wsignal>sem_signal()</button>
+            <button class="btn" data-wmode="while" id="wmode-while">while ✓</button>
+            <button class="btn" data-wmode="if" id="wmode-if">if ✗</button>
+            <button class="btn" data-wreset>reset</button>
+          </div>
+          <div class="counterbig" style="padding:8px;border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06);margin-bottom:10px">
+            <div class="label" style="color:#f7b6d6">sem-&gt;value</div>
+            <div class="val" id="while-val" style="font-size:30px;color:#ffd6ec">0</div>
+          </div>
+          <div class="procrow"><span class="pname">W1</span><span class="pstate" id="w1-state">SLEEPING on sem</span><span class="pill block" id="w1-pill">blocked</span></div>
+          <div class="procrow" style="margin-bottom:0"><span class="pname">W2</span><span class="pstate" id="w2-state">SLEEPING on sem</span><span class="pill block" id="w2-pill">blocked</span></div>
+          <div class="small muted" id="while-msg" style="margin-top:10px">Two waiters, zero tokens.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Spin or sleep? (checkpoint 1, part 3)</h3>
+      <div class="two" style="gap:12px">
+        <div class="revcard" style="border-color:rgba(52,211,153,.45)">
+          <h4 style="color:var(--green)">≈ 10 cycles → spin</h4>
+          <p class="small" style="margin:0">Shorter than one <code>swtch()</code>, never mind two switches plus a
+          <code>wakeup()</code> scan of all 64 process slots.</p>
+        </div>
+        <div class="revcard" style="border-color:rgba(251,191,36,.45)">
+          <h4 style="color:var(--amber)">≈ 10,000 cycles → sleep</h4>
+          <p class="small" style="margin:0">On total system cycles, the spinning CPU could instead be running the
+          process that frees the resource.</p>
+        </div>
+      </div>
+      <p class="small muted" style="margin-top:12px">Assumptions to say out loud: (1) the holder can actually run —
+      on a uniprocessor with interrupts off, spinning deadlocks; (2) "cheaper" means <b>system-wide</b> cycles, not
+      this process's latency; (3) 10 and 10,000 are illustrative magnitudes, not measured xv6 thresholds.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 4. SEMAPHORE                                                 -->
+  <!-- ============================================================ -->
+  <section class="section" id="semaphore">
+    <div class="section-head"><span class="num">04</span><h2>The semaphore: a counter with a waiting room</h2></div>
+    <p class="sub">A spinlock protects a few instructions. A semaphore lets a process <em>sleep</em> until a resource exists.</p>
+
+    <div class="two">
+      <div class="code" style="margin-top:0">
+        <div class="cap">kernel/semaphore.c — the object</div>
+        <pre><code data-c>#define MAX_SEMAPHORES 32
+
+struct semaphore {
+  struct spinlock lock;   // condition lock
+  int value;              // units available
+  int in_use;             // slot allocated?
+};
+
+struct semaphore semaphores[MAX_SEMAPHORES];
+struct spinlock sem_table_lock;  // guards the table
+</code></pre>
+      </div>
+      <div class="code" style="margin-top:0">
+        <div class="cap">the three "inits" — exam favourite</div>
+        <pre><code data-c>sem_init(value)   user.h    a SYSCALL
+sys_sem_init()    sysproc.c handler: argint then sem_alloc
+sem_alloc(value)  semaphore.c allocator: find free slot
+seminit()         semaphore.c BOOT setup, called from main()
+                                returns nothing, hands out nothing</code></pre>
+      </div>
+    </div>
+
+    <div class="code">
+      <div class="cap">the implementation you write</div>
+      <pre><code data-c>int sem_wait(int semid) {
+  if(semid &lt; 0 || semid &gt;= MAX_SEMAPHORES || !semaphores[semid].in_use)
+    return -1;
+
+  struct semaphore *sem = &amp;semaphores[semid];
+
+  acquire(&amp;sem-&gt;lock);
+  while(sem-&gt;value == 0)          // re-check: wakeup reserves nothing
+    sleep(sem, &amp;sem-&gt;lock);       // channel == the semaphore's ADDRESS
+  sem-&gt;value--;                   // decrement INSIDE the lock
+  release(&amp;sem-&gt;lock);
+
+  return 0;
+}
+
+int sem_signal(int semid) {
+  if(semid &lt; 0 || semid &gt;= MAX_SEMAPHORES || !semaphores[semid].in_use)
+    return -1;
+
+  struct semaphore *sem = &amp;semaphores[semid];
+
+  acquire(&amp;sem-&gt;lock);
+  sem-&gt;value++;
+  wakeup(sem);                    // increment + wakeup = one atomic step
+  release(&amp;sem-&gt;lock);
+
+  return 0;
+}</code></pre>
+    </div>
+
+    <div class="sim" id="sem-sim">
+      <div class="simbar">
+        <button class="btn primary" data-wait="1">P1 · sem_wait</button>
+        <button class="btn primary" data-wait="2">P2 · sem_wait</button>
+        <button class="btn green" data-signal>sem_signal</button>
+        <span class="spacer"></span>
+        <button class="btn" data-semreset>Reset ↺</button>
+      </div>
+      <div class="simstage">
+        <div class="counterbig" style="border-color:rgba(244,114,182,.4);background:rgba(244,114,182,.06)">
+          <div class="label" style="color:#f7b6d6">sem-&gt;value</div>
+          <div class="val" id="sem-val" style="color:#ffd6ec">1</div>
+        </div>
+        <div class="procrow"><span class="pname">P1</span><span class="pstate" id="sem-p1">running</span><span class="pill run" id="sem-p1-pill">running</span></div>
+        <div class="procrow"><span class="pname">P2</span><span class="pstate" id="sem-p2">running</span><span class="pill run" id="sem-p2-pill">running</span></div>
+        <div class="log" id="sem-log"></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>What <code>sem_basic()</code> proves — and what it doesn't</h3>
+        <p class="small"><b>Proves:</b> the sequence <code>1 → 0 → 1</code>, and that <code>sem_free</code> succeeds.</p>
+        <p class="small"><b>Never exercises:</b> <code>sem_wait</code> on a zero value — so no <code>sleep()</code>,
+        no <code>wakeup()</code>, no re-check loop, no <code>sched()</code>. It is single-threaded, so no contention.
+        It also skips two-waiters-one-signal, table exhaustion, the <code>-1</code> paths, and freeing a semaphore
+        that still has users.</p>
+        <div class="note amber" style="margin-bottom:0"><b>A passing test only proves what it exercises.</b>
+        Opening and closing a door proves the handle turns; it says nothing about forty people pushing at once.</div>
+      </div>
+      <div class="card">
+        <h3>When is <code>sem_free()</code> safe?</h3>
+        <p class="small"><code>sem_free()</code> only clears <code>in_use</code>. It neither wakes nor waits for users.
+        So it is safe only when no process can still call wait/signal on that id:</p>
+        <ul class="small" style="color:#c3d2e6">
+          <li>in <code>race_test()</code>: after <code>wait(0)</code> has reaped the child;</li>
+          <li>in <code>producer_consumer()</code>: after all 96 reads <b>and</b> both producers reaped.</li>
+        </ul>
+        <p class="small muted" style="margin-bottom:0">Free too early and the slot gets reused — a sleeper on the old
+        channel would wake on, or decrement, the <em>new</em> semaphore.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5. RACE TEST FLOW                                            -->
+  <!-- ============================================================ -->
+  <section class="section" id="racetest">
+    <div class="section-head"><span class="num">05</span><h2>Part 3 in one diagram: <code>race_test()</code></h2></div>
+    <p class="sub">Two processes, one mutex, 1000 increments each. The parent must wait before it reads the total.</p>
+
+    <div class="card">
+      <div class="two" style="gap:18px">
+        <div>
+          <div class="mono small" style="color:var(--cyan);margin-bottom:10px">BEFORE <code>fork()</code> — once</div>
+          <div class="code" style="margin:0">
+            <div class="cap">shared setup</div>
+            <pre><code data-c>ucnt_set(0, 0);
+int semid = sem_init(1);   // count 1 ⇒ mutex
+T_ASSERT(semid &gt;= 0);
+int pid = fork();</code></pre>
+          </div>
+          <div class="note" style="margin-top:12px">
+            <b>Why the child's copy of <code>semid</code> is the same semaphore.</b>
+            <code>fork()</code> copies user memory, so each process gets its own integer — but that integer is only an
+            <b>index</b> into the kernel's <code>semaphores[]</code> table, which lives in kernel memory and is not copied.
+          </div>
+        </div>
+        <div>
+          <div class="mono small" style="color:var(--pink);margin-bottom:10px">AFTER <code>fork()</code> — both sides</div>
+          <div class="code" style="margin:0">
+            <div class="cap">do_work() × 1000</div>
+            <pre><code data-c>sem_wait(semid);
+int val = ucnt_get(0);
+ucnt_set(0, val + 1);
+sem_signal(semid);</code></pre>
+          </div>
+          <div class="code" style="margin:12px 0 0">
+            <div class="cap">parent tail</div>
+            <pre><code data-c>do_work(getpid(), semid);
+wait(0);                    // child's 1000 must be done
+int final = ucnt_get(0);
+T_ASSERT(final == 2*N);     // 2000
+sem_free(semid);            // safe: no users left</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="three">
+      <div class="revcard">
+        <h4>the gap</h4>
+        <p class="small" style="margin:0">Both processes are inside <code>ucnt_get</code>/<code>ucnt_set</code>
+        at once. The mutex spans the <b>pair</b>, not each call.</p>
+      </div>
+      <div class="revcard">
+        <h4>the count</h4>
+        <p class="small" style="margin:0"><code>2 × 1000 = 2000</code>. Unprotected run measured
+        <b class="bad">1737</b> — short by 263.</p>
+      </div>
+      <div class="revcard">
+        <h4>the wait</h4>
+        <p class="small" style="margin:0"><code>wait(0)</code> blocks until the child exits, so the read sees all 1000
+        child increments — and makes the later free safe.</p>
+      </div>
+    </div>
+
+    <div class="note amber">
+      <b>One run returning 2000 proves nothing.</b> Races are nondeterministic; on one CPU the lost update is
+      rare. Run with <code>CPUS=3</code> and repeat.
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 6. PRODUCER / CONSUMER                                       -->
+  <!-- ============================================================ -->
+  <section class="section" id="pc">
+    <div class="section-head"><span class="num">06</span><h2>Producer / consumer: a 16-slot ring</h2></div>
+    <p class="sub">Two producers, one consumer, three semaphores. Step through it and watch the counters move.</p>
+
+    <div class="code">
+      <div class="cap">the rule</div>
+      <pre><code data-c>producer:  sem_wait(empty); sem_wait(mutex); ubuf_write(c); sem_signal(mutex); sem_signal(filled);
+consumer:  sem_wait(filled); sem_wait(mutex); tmp = ubuf_read(); sem_signal(mutex); sem_signal(empty);</code></pre>
+    </div>
+
+    <div class="card">
+      <h3>Where the initial values come from</h3>
+      <div class="three">
+        <div class="revcard" style="border-color:rgba(52,211,153,.45)">
+          <h4 style="color:var(--green)">empty = 16</h4>
+          <p class="small" style="margin:0">Buffer starts empty → all <code>UBUF_SIZE</code> slots are free.
+          Producers consume this count; the consumer replenishes it.</p>
+        </div>
+        <div class="revcard" style="border-color:rgba(251,191,36,.45)">
+          <h4 style="color:var(--amber)">filled = 0</h4>
+          <p class="small" style="margin:0">Buffer starts empty → nothing to read. Consumers consume this count;
+          producers replenish it.</p>
+        </div>
+        <div class="revcard" style="border-color:rgba(56,189,248,.45)">
+          <h4 style="color:var(--cyan)">mutex = 1</h4>
+          <p class="small" style="margin:0">Unlocked. Binary. Protects <code>data</code>, <code>head</code>,
+          <code>tail</code> — the indices the counts do <em>not</em> protect.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sim" id="pc-sim">
+      <div class="simbar">
+        <button class="btn primary" data-pcstep="p1">Step P1 ▶</button>
+        <button class="btn primary" data-pcstep="p2">Step P2 ▶</button>
+        <button class="btn green" data-pcstep="c">Step Consumer ▶</button>
+        <span class="spacer"></span>
+        <button class="btn" data-pcauto>Auto ▶▶</button>
+        <button class="btn green" data-pcfinish>Finish ⏩</button>
+        <button class="btn" data-pcreset>Reset ↺</button>
+      </div>
+
+      <div class="simstage">
+        <div class="semchips">
+          <div class="semchip" id="pc-empty-chip"><div class="n">empty</div><div class="v" id="pc-empty">16</div></div>
+          <div class="semchip" id="pc-filled-chip"><div class="n">filled</div><div class="v" id="pc-filled">0</div></div>
+          <div class="semchip" id="pc-mutex-chip"><div class="n">mutex</div><div class="v" id="pc-mutex">1</div></div>
+        </div>
+
+        <div class="ringwrap">
+          <div class="ring" id="pc-ring"></div>
+        </div>
+
+        <div>
+          <div class="procrow"><span class="pname">P1</span><span class="pstate" id="pc-p1-state">ready</span><span class="pill" id="pc-p1-pill">idle</span></div>
+          <div class="procrow"><span class="pname">P2</span><span class="pstate" id="pc-p2-state">ready</span><span class="pill" id="pc-p2-pill">idle</span></div>
+          <div class="procrow" style="margin-bottom:0"><span class="pname">C</span><span class="pstate" id="pc-c-state">ready</span><span class="pill" id="pc-c-pill">idle</span></div>
+        </div>
+
+        <div class="log" id="pc-log"></div>
+        <div class="small mono" id="pc-invariant" style="color:#9fb3ce"></div>
+      </div>
+    </div>
+
+    <div class="two">
+      <div class="card">
+        <h3>Why counts alone are not enough</h3>
+        <p class="small">A counting semaphore controls <b>how many</b> may be inside — not <b>who may overlap with whom</b>
+        on shared indices.</p>
+        <ul class="small" style="color:#c3d2e6">
+          <li>two producers both pass <code>sem_wait(empty)</code> and both write <code>data[tail]</code> with the <b>same</b> tail → one byte silently overwritten, tail advanced twice;</li>
+          <li>two readers both take a <code>filled</code> token and read the same slot → duplicate byte;</li>
+          <li>a reader reads <code>data[head]</code> while a writer is midway through.</li>
+        </ul>
+        <div class="note amber" style="margin-bottom:0"><b>Condition counts and mutual exclusion are different jobs.</b> You need both.</div>
+      </div>
+      <div class="card">
+        <h3>Why <code>empty</code>/<code>filled</code> come before <code>mutex</code></h3>
+        <p class="small">A free slot is only created by the consumer calling <code>sem_signal(empty)</code> —
+        and the consumer can only reach that after <code>ubuf_read()</code>, which requires <code>mutex</code>.</p>
+        <div class="code" style="margin:10px 0">
+          <div class="cap">the cycle if you take mutex first</div>
+          <pre><code data-c>producer: holds mutex, waits for empty
+consumer: waits for mutex, which is needed to create empty
+          └── circular wait ── deadlock</code></pre>
+        </div>
+        <div class="note red" style="margin-bottom:0"><b>Rule:</b> never hold a lock while waiting for a resource
+        whose release requires that lock.</div>
+      </div>
+    </div>
+
+    <div class="sim" id="deadlock-sim">
+      <div class="simbar">
+        <button class="btn warn" data-dlstep>Step ▶</button>
+        <button class="btn" data-dlauto>Auto ▶▶</button>
+        <button class="btn" data-dlreset>Reset ↺</button>
+        <span class="spacer"></span>
+        <span class="pill dead" id="dl-status">not started</span>
+      </div>
+      <div class="simstage">
+        <div class="semchips">
+          <div class="semchip" id="dl-empty-chip"><div class="n">empty</div><div class="v" id="dl-empty">0</div></div>
+          <div class="semchip" id="dl-filled-chip"><div class="n">filled</div><div class="v" id="dl-filled">16</div></div>
+          <div class="semchip" id="dl-mutex-chip"><div class="n">mutex</div><div class="v" id="dl-mutex">1</div></div>
+        </div>
+        <div class="two">
+          <div class="actor" id="dl-p1"><div class="aname">Producer (wrong order)</div><div class="aval" id="dl-p1-val">ready</div><div class="astate" id="dl-p1-state"></div></div>
+          <div class="actor" id="dl-c"><div class="aname">Consumer</div><div class="aval" id="dl-c-val">ready</div><div class="astate" id="dl-c-state"></div></div>
+        </div>
+        <div class="log" id="dl-log"></div>
+        <div class="small" id="dl-verdict" style="min-height:22px"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>What the test actually proves</h3>
+      <div class="two" style="gap:12px">
+        <div>
+          <div class="mono small" style="color:var(--cyan);margin-bottom:6px">the supplied assertion</div>
+          <div class="code" style="margin:0"><pre><code data-c>T_ASSERT(valid[(unsigned char)tmp]);</code></pre></div>
+          <p class="small muted" style="margin-top:8px">It only checks that each received byte is <b>one of</b> the
+          characters in <code>msg</code>. It does not count occurrences, does not check order, and cannot detect a
+          duplicated, lost, or reordered byte.</p>
+        </div>
+        <div>
+          <div class="mono small" style="color:var(--green);margin-bottom:6px">what a pass establishes</div>
+          <p class="small">No corrupted or foreign byte appeared, and the run completed without deadlock.</p>
+          <p class="small">The stronger correctness argument comes from the <b>design</b> (counts + mutex), not from
+          the test. Being able to say this <em>is</em> the checkpoint.</p>
+          <p class="small muted" style="margin-bottom:0">Totals that must balance:
+          <code>sem_signal(filled) == sem_wait(filled) == 96</code> (48 chars × 2 producers).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 7. SYSCALL PATH                                              -->
+  <!-- ============================================================ -->
+  <section class="section" id="syscall">
+    <div class="section-head"><span class="num">07</span><h2>How a <code>sem_wait()</code> reaches the kernel</h2></div>
+    <p class="sub">Five layers. Only the last one is a semaphore; everything before it is plumbing.</p>
+
+    <div class="card">
+      <div style="display:grid;gap:8px">
+        <div class="procrow" style="border-left:3px solid var(--cyan)">
+          <span class="pname">user</span>
+          <span class="pstate"><code>sem_wait(id)</code> in <b>user/race_test.c</b></span>
+          <span class="pill">C call</span>
+        </div>
+        <div class="procrow" style="border-left:3px solid var(--cyan)">
+          <span class="pname">stub</span>
+          <span class="pstate"><code>entry("sem_wait")</code> in <b>user/usys.pl</b> → generates <b>usys.S</b>: <code>li a7, 27; ecall</code></span>
+          <span class="pill">ecall</span>
+        </div>
+        <div class="procrow" style="border-left:3px solid var(--purple)">
+          <span class="pname">trap</span>
+          <span class="pstate">hardware traps to <b>kernel/trap.c</b> → <code>syscall()</code></span>
+          <span class="pill">trap</span>
+        </div>
+        <div class="procrow" style="border-left:3px solid var(--purple)">
+          <span class="pname">dispatch</span>
+          <span class="pstate"><code>syscalls[27]</code> from <b>kernel/syscall.c</b> → <code>sys_sem_wait()</code></span>
+          <span class="pill">table</span>
+        </div>
+        <div class="procrow" style="border-left:3px solid var(--amber)">
+          <span class="pname">handler</span>
+          <span class="pstate"><b>kernel/sysproc.c</b>: <code>argint(0, &amp;semid); return sem_wait(semid);</code></span>
+          <span class="pill">argint</span>
+        </div>
+        <div class="procrow" style="border-left:3px solid var(--pink);margin-bottom:0">
+          <span class="pname">kernel</span>
+          <span class="pstate"><b>kernel/semaphore.c</b>: <code>acquire(&amp;sem-&gt;lock)</code> → <code>while(value==0) sleep()</code> → <code>value--</code></span>
+          <span class="pill dead" style="border-color:rgba(244,114,182,.5);color:#f7b6d6;background:rgba(244,114,182,.1)">the real work</span>
+        </div>
+      </div>
+      <p class="small muted" style="margin:14px 0 0">Syscall numbers: <code>sem_init 26</code>, <code>sem_wait 27</code>,
+      <code>sem_signal 28</code>, <code>sem_getvalue 29</code>, <code>sem_free 30</code>.
+      The table holds <code>MAX_SEMAPHORES = 32</code> entries.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 8. EXAM ANSWERS                                              -->
+  <!-- ============================================================ -->
+  <section class="section" id="answers">
+    <div class="section-head"><span class="num">08</span><h2>Checkpoints: question, then answer</h2></div>
+    <p class="sub">Every bullet below is copied verbatim from the <b>Lab 3 manual</b>, under its own
+      “You are ready when you can:” heading. The manual phrases each checkpoint as a capability, so read it as a question:
+      “can you do this?” Answer out loud first, then open the answer.</p>
+
+    <div class="checkpoint">
+      <h3>Checkpoint 0 — Orient yourself before editing</h3>
+      <ol class="qa-list">
+
+        <li>
+          <p class="q">Confirm the <code>lab3</code> branch and a three-CPU boot.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><code>git checkout lab3</code>, then <code>git branch --show-current</code> must print <code>lab3</code>.</li>
+              <li><code>make CPUS=3 qemu</code> must show <code>hart 1 starting</code> and <code>hart 2 starting</code> in addition to hart 0.</li>
+              <li>Three CPUs matter: with one CPU most of these races cannot interleave, so the tests would pass for the wrong reason.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Locate <code>kernel/spinlock.c</code>, <code>kernel/proc.c</code>, <code>kernel/semaphore.c</code>, <code>kernel/ucnt.c</code>, <code>kernel/ubuf.c</code>, and <code>user/race_test.c</code>.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <table>
+              <tr><th>File</th><th>Contains</th><th>Used by</th></tr>
+              <tr><td><code>kernel/spinlock.c</code></td><td><code>acquire()</code>, <code>release()</code>, <code>push_off()</code>, <code>pop_off()</code></td><td>Part 1</td></tr>
+              <tr><td><code>kernel/proc.c</code></td><td><code>sleep()</code>, <code>wakeup()</code>, <code>sched()</code></td><td>Part 1</td></tr>
+              <tr><td><code>kernel/semaphore.c</code></td><td><code>sem_alloc()</code>, <code>sem_wait()</code>, <code>sem_signal()</code></td><td>Part 2</td></tr>
+              <tr><td><code>kernel/ucnt.c</code></td><td><code>ucnt_get()</code>, <code>ucnt_set()</code></td><td>Part 3</td></tr>
+              <tr><td><code>kernel/ubuf.c</code></td><td>16-slot ring: <code>ubuf_write()</code>, <code>ubuf_read()</code></td><td>Part 4</td></tr>
+              <tr><td><code>user/race_test.c</code></td><td><code>race_test()</code>, <code>producer_consumer()</code>, and <code>main()</code></td><td>Parts 3–4</td></tr>
+            </table>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Identify how to select one test function in <code>main()</code> for the part you are working on.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li>All the tests live in <code>race_test()</code>, called from <code>main()</code> in <code>user/race_test.c</code>.</li>
+              <li><b>Comment out</b> the test calls you are not working on, and also comment out the final <code>ALL TESTS PASSED</code> print.</li>
+              <li><b>Keep <code>exit(0)</code> active</b>, otherwise the process falls off the end of <code>main()</code>.</li>
+              <li>Rebuild and run only the function for the current part, so a failure points at one exercise.</li>
+            </ul>
+          </div></details>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="checkpoint">
+      <h3>Checkpoint 1 — Explain the synchronization mechanisms</h3>
+      <ol class="qa-list">
+
+        <li>
+          <p class="q">Compare spinning and sleeping costs, stating your assumptions.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>≈10 cycles:</b> spin. A context switch costs far more than the whole wait, so sleeping loses.</li>
+              <li><b>≈10,000 cycles:</b> sleep. Burning a hart that long wastes a CPU another process could use.</li>
+              <li><b>Assumptions to state:</b> the holder can make progress (not descheduled or blocked on us); the comparison is system-wide throughput, not one thread's latency; the cycle counts are illustrative magnitudes, not measurements.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Identify the condition lock, wait channel, and process lock in the <code>sleep</code>/<code>wakeup</code> path.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <table>
+              <tr><th>Element</th><th>In the code</th><th>Role</th></tr>
+              <tr><td>condition lock</td><td><code>lk</code>, passed by the caller</td><td>protects the condition being tested (ticks, buffer counts); released inside <code>sleep()</code></td></tr>
+              <tr><td>wait channel</td><td><code>chan</code>, an arbitrary address such as <code>&amp;ticks</code></td><td>a tag matching sleepers to the waker; <code>wakeup()</code> compares it</td></tr>
+              <tr><td>process lock</td><td><code>p-&gt;lock</code></td><td>protects process state and the run queue; taken <b>before</b> <code>lk</code> is dropped</td></tr>
+            </table>
+            <p>Order: caller holds <code>lk</code> → <code>sleep()</code> takes <code>p-&gt;lock</code> → releases <code>lk</code> → <code>sched()</code> switches away holding <code>p-&gt;lock</code>.</p>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why a woken process must recheck its condition.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><code>wakeup(chan)</code> wakes <b>every</b> process sleeping on that channel, and reserves nothing.</li>
+              <li>The condition that made the first waiter sleep may already have been consumed by another waiter, so being awake does not mean the condition holds.</li>
+              <li>Hence <code>while(condition) sleep(chan, lk);</code> — never <code>if</code>. With <code>if</code>, a woken-but-unlucky waiter proceeds anyway and the resource count goes negative.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why separate reads and writes cannot replace atomic lock acquisition.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>Atomic version:</b> <code>__sync_lock_test_and_set(&amp;lk-&gt;locked, 1)</code> compiles to one <code>amoswap.w.aq</code> — read-and-take is a single indivisible step.</li>
+              <li><b>Read-then-write version:</b> two harts can both read <code>locked == 0</code>, both conclude the lock is free, both write <code>1</code>, and both enter the critical section.</li>
+              <li><b><code>intr_off()</code> does not fix it:</b> <code>push_off()</code> clears only <b>this hart's</b> <code>sstatus</code>; the other hart keeps running and still races.</li>
+              <li>Interrupts-off gives per-hart atomicity, which is exactly what you need <i>around</i> the atomic instruction — not mutual exclusion between harts.</li>
+            </ul>
+          </div></details>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="checkpoint">
+      <h3>Checkpoint 2 — Explain the semaphore implementation</h3>
+      <ol class="qa-list">
+
+        <li>
+          <p class="q">Distinguish user <code>sem_init()</code>, boot-time <code>seminit()</code>, and kernel <code>sem_alloc()</code>.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <table>
+              <tr><th>Name</th><th>Where</th><th>What it really is</th></tr>
+              <tr><td><code>sem_init(value)</code></td><td><code>user/user.h</code></td><td>a <b>syscall</b> the user calls; returns a <code>semid</code> or <code>-1</code></td></tr>
+              <tr><td><code>seminit()</code></td><td><code>kernel/semaphore.c</code></td><td><b>boot-time setup</b>: initialises the table and its lock once, before any process runs</td></tr>
+              <tr><td><code>sem_alloc(value)</code></td><td><code>kernel/semaphore.c</code></td><td>the <b>allocator</b>: takes <code>sem_table_lock</code>, finds a free slot, sets <code>in_use = 1</code>, stores the value, returns the index</td></tr>
+            </table>
+            <p>The kernel handler <code>sys_sem_init()</code> sits between the syscall and <code>sem_alloc()</code>. Two of these names being similar is the exam trap.</p>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain which lock and channel your wait and signal operations use.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>Lock:</b> the per-semaphore <code>sem-&gt;lock</code>, so different semaphores never contend. <code>sem_table_lock</code> guards only allocation, not waiting.</li>
+              <li><b>Channel:</b> <code>&amp;semaphores[semid]</code>, so <code>wakeup()</code> reaches only the waiters of this semaphore.</li>
+              <li><code>sem_wait()</code>: <code>acquire(&amp;sem-&gt;lock)</code> → loop → decrement → <code>release()</code>.</li>
+              <li><code>sem_signal()</code>: <code>acquire(&amp;sem-&gt;lock)</code> → <code>value++</code> → <code>wakeup(&amp;semaphores[semid])</code> → <code>release()</code>.</li>
+              <li><code>sem_getvalue()</code> reads <code>value</code> under the same lock, so you never see a half-updated state.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why a woken waiter must recheck that the semaphore value is positive before decrementing it.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><code>sem_signal()</code> wakes <b>all</b> sleepers on the channel, and the token is not reserved for any of them.</li>
+              <li>When two waiters race for one token, the first decrements it to 0; the second must see 0 and sleep again.</li>
+              <li>So the test is <code>while(sem-&gt;value == 0) sleep(...)</code>. With <code>if</code>, the second waiter decrements past zero and <code>value</code> becomes <code>-1</code> — a signal that was never sent, and mutual exclusion is broken.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Show the basic count sequence passing and identify what that test leaves untested.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>Passes:</b> <code>sem_init(1)</code> → <code>sem_wait</code> brings <code>1 → 0</code> without blocking → <code>sem_signal</code> restores <code>0 → 1</code>. So the happy path, including the value arithmetic, works.</li>
+              <li><b>Untested:</b> the zero-count path — no waiter ever has to <code>sleep()</code>, so the blocking code, the <code>while</code> re-check, and the wakeup are never exercised.</li>
+              <li><b>Also untested:</b> contention between processes. That is what Part 3 and Part 4's two-producer run supply.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain when it is safe for these exercises to free a semaphore.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li>Only when <b>no process can still use that id</b>: in these exercises, after the parent has <code>wait()</code>-ed for every child that shares it.</li>
+              <li>Freeing earlier clears <code>in_use</code>, so the slot can be handed to a new <code>sem_init()</code>. A straggler then decrements a <i>different</i> semaphore — a bug that looks like random corruption rather than a race.</li>
+              <li>Order to state: all producers/consumers done → <code>wait(0)</code> for each child → <code>sem_free()</code>.</li>
+            </ul>
+          </div></details>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="checkpoint">
+      <h3>Checkpoint 3 — Defend the critical section</h3>
+      <ol class="qa-list">
+
+        <li>
+          <p class="q">Demonstrate a lost update using two processes' reads and writes.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <div class="code" style="margin:0 0 10px"><pre><code data-c>parent: val = ucnt_get(0);      // reads 100
+child:  val = ucnt_get(0);      // reads 100  ← same value
+parent: ucnt_set(0, val + 1);   // writes 101
+child:  ucnt_set(0, val + 1);   // writes 101  ← increment lost</code></pre></div>
+            <p>Two increments, counter up by one. The unprotected run shows a total below <code>2 × N</code>, e.g. <code>1737 != 2000</code>.</p>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why protecting the two system calls separately is insufficient.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li>The invariant is “the value I read must still be the value I write”, and it spans <b>both</b> calls.</li>
+              <li>A lock inside <code>ucnt_get</code> and another inside <code>ucnt_set</code> makes each call atomic but leaves the gap between them open — which is exactly where the interleaving above happens.</li>
+              <li>Two operations being individually atomic does not make the pair atomic. The critical section must enclose the whole read-modify-write.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Show the expected final count and identify the semaphore shared by parent and child.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>Expected:</b> <code>2 × N</code> — with <code>N = 1000</code> that is <code>2000</code>. Every increment must survive.</li>
+              <li><b>The shared semaphore:</b> created by <code>sem_init(1)</code> <b>before</b> <code>fork()</code>, so the child inherits the same <code>semid</code>.</li>
+              <li>That <code>semid</code> is an index into one kernel table, so parent and child reach the same <code>struct semaphore</code> — including its lock and channel — even though they are separate processes with separate address spaces.</li>
+              <li>Value <code>1</code> makes it a binary semaphore usable as a mutex.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why the parent waits before validating and freeing the semaphore.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><b>To validate:</b> the total is only final after both children have finished. Reading earlier compares against a count that is still growing.</li>
+              <li><b>To free:</b> the parent must not free a semaphore while a child could still be inside <code>sem_wait</code>/<code>sem_signal</code>; <code>wait(0)</code> guarantees no users remain.</li>
+              <li>So one <code>wait(0)</code> does both jobs: it completes the arithmetic and establishes the safe moment to <code>sem_free()</code>.</li>
+            </ul>
+          </div></details>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="checkpoint">
+      <h3>Checkpoint 4 — Explain coordination and progress</h3>
+      <ol class="qa-list">
+
+        <li>
+          <p class="q">Explain each semaphore's role and derive its initial value from the empty buffer.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <table>
+              <tr><th>Semaphore</th><th>Role</th><th>Initial</th><th>Derivation</th></tr>
+              <tr><td><code>empty</code></td><td>counts free slots</td><td><code>16</code></td><td>the buffer starts empty, so all 16 slots are available</td></tr>
+              <tr><td><code>filled</code></td><td>counts readable bytes</td><td><code>0</code></td><td>nothing has been produced, so a consumer must block</td></tr>
+              <tr><td><code>mutex</code></td><td>protects <code>head</code>/<code>tail</code></td><td><code>1</code></td><td>binary semaphore starts unlocked — one token, nobody inside</td></tr>
+            </table>
+            <p>The counts describe <i>capacity</i>; <code>mutex</code> describes <i>ownership</i>. Different jobs, so three semaphores.</p>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Trace the semaphore and buffer calls used to produce one byte and consume one byte.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <div class="formula"><b>Producer:</b> <code>sem_wait(empty)</code> → <code>sem_wait(mutex)</code> → <code>ubuf_write()</code> (advances <code>tail</code>) → <code>sem_signal(mutex)</code> → <code>sem_signal(filled)</code></div>
+            <div class="formula"><b>Consumer:</b> <code>sem_wait(filled)</code> → <code>sem_wait(mutex)</code> → <code>ubuf_read()</code> (advances <code>head</code>) → <code>sem_signal(mutex)</code> → <code>sem_signal(empty)</code></div>
+            <ul>
+              <li><b>Order matters:</b> take <code>mutex</code> <i>after</i> the slot is guaranteed. A producer that grabs <code>mutex</code> first then waits for <code>empty</code> deadlocks the consumer out.</li>
+              <li>The <code>yield()</code> calls inside <code>kernel/ubuf.c</code> widen the window between read and write of the indices, so an unprotected index update is actually observable.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Explain why counting available slots alone does not protect the buffer's shared indices.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li><code>empty</code>/<code>filled</code> enforce capacity — how many slots may be written or read. They say nothing about who may touch <code>head</code> and <code>tail</code>.</li>
+              <li>With two producers, both could pass <code>sem_wait(empty)</code> and then compute the same <code>tail</code>, writing to the same slot: one byte silently lost.</li>
+              <li>The index update is itself read-modify-write, so it needs <code>mutex</code>. Counts and mutual exclusion do different jobs; neither replaces the other.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">Show completion with both producers reaped and the semaphores freed.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li>Two producers send 48 bytes each = <b>96 bytes</b> through the 16-slot ring.</li>
+              <li>The parent consumes until it has read 96 bytes, so it cannot exit early; the test then prints <code>[producer_consumer] PASS: message delivered.</code></li>
+              <li><b>Reap:</b> two <code>wait(0)</code> calls, one per producer, so no child is left running.</li>
+              <li><b>Free:</b> three <code>sem_free()</code> calls — <code>empty</code>, <code>filled</code>, <code>mutex</code> — only after the reaping.</li>
+              <li>Final invariant to quote: <code>empty 16 + filled 0 + in-hand 0 = 16</code>.</li>
+            </ul>
+          </div></details>
+        </li>
+
+        <li>
+          <p class="q">State the limits of the supplied character-membership check.</p>
+          <details class="answer"><summary>Show answer</summary><div class="body">
+            <ul>
+              <li>The consumer checks that each received byte belongs to the character set present in <code>msg</code>. That is <b>membership only</b>.</li>
+              <li>It does <b>not</b> compare the received stream with the expected sequence, so it cannot prove the absence of <b>duplication</b>, <b>loss</b>, or <b>reordering</b> — a duplicated byte from the same alphabet still passes.</li>
+              <li>Combine the pass with your argument about counts, mutual exclusion, and operation order; do not claim the test alone proves correctness.</li>
+            </ul>
+          </div></details>
+        </li>
+
+      </ol>
+    </div>
+
+    <div class="checkpoint">
+      <h3>Traps that cost marks <span class="pill" style="margin-left:8px">not from the manual</span></h3>
+      <details class="answer">
+        <summary>Show the six traps</summary>
+        <div class="body">
+          <ul>
+            <li>Using <code>if</code> instead of <code>while</code> in <code>sem_wait</code> → value goes negative.</li>
+            <li>Decrementing <code>value</code> outside the lock → lost update inside the semaphore itself.</li>
+            <li>Calling <code>wakeup()</code> after <code>release(&amp;sem-&gt;lock)</code> → waiter can miss the wakeup.</li>
+            <li>Taking <code>mutex</code> before <code>empty</code>/<code>filled</code> → deadlock.</li>
+            <li>Freeing a semaphore before <code>wait()</code> → slot reuse, someone decrements the new semaphore.</li>
+            <li>Claiming the test proves correctness — it proves only membership and completion.</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 9. REVISION CARD                                             -->
+  <!-- ============================================================ -->
+  <section class="section" id="revision">
+    <div class="section-head"><span class="num">09</span><h2>One-screen revision card</h2></div>
+    <p class="sub">If you remember nothing else, remember these shapes.</p>
+
+    <div class="rev">
+      <div class="revcard">
+        <h4>spinlock</h4>
+        <ul>
+          <li><code>locked</code> is one word</li>
+          <li><code>amoswap</code> = read+trade in one instruction</li>
+          <li><code>push_off</code> is per-hart: no cross-CPU exclusion</li>
+          <li>fence after acquire, before release</li>
+        </ul>
+      </div>
+      <div class="revcard">
+        <h4>sleep / wakeup</h4>
+        <ul>
+          <li><code>chan</code> is a tag, not storage</li>
+          <li>take <code>p-&gt;lock</code> before dropping <code>lk</code></li>
+          <li>wakeup wakes all, reserves nothing</li>
+          <li>hence <code>while</code>, never <code>if</code></li>
+        </ul>
+      </div>
+      <div class="revcard">
+        <h4>semaphore</h4>
+        <ul>
+          <li><code>value</code> + per-sem lock + <code>in_use</code></li>
+          <li>channel = the semaphore's address</li>
+          <li>decrement/increment inside the lock</li>
+          <li>free only after all users are gone</li>
+        </ul>
+      </div>
+      <div class="revcard">
+        <h4>mutex use</h4>
+        <ul>
+          <li><code>sem_init(1)</code></li>
+          <li>wrap the read–modify–write <b>pair</b></li>
+          <li><code>fork</code> copies the index, not the table</li>
+          <li><code>wait(0)</code> before reading the total</li>
+        </ul>
+      </div>
+      <div class="revcard">
+        <h4>ring buffer</h4>
+        <ul>
+          <li>empty=16, filled=0, mutex=1</li>
+          <li>counts first, mutex second</li>
+          <li><code>yield()</code> widens the window</li>
+          <li>96 reads = 48 × 2</li>
+        </ul>
+      </div>
+      <div class="revcard">
+        <h4>the one sentence</h4>
+        <ul>
+          <li><b>A data structure's invariant must be re-checked after every change to the mechanism that maintains it.</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note green">
+      <b>Next up:</b> Lab 4 applies the same move to memory — the gap between <em>reserving</em> an address and
+      <em>backing</em> it with a frame. Same sentence, different machinery.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  SC2005 · Lab 3 visual companion — built from the lab source tree in <code>xv6zz-lab3/</code>.
+  Press the buttons in order; the logs explain each step as it happens.
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+  /* ------------------------------------------------------------ */
+  /* tiny C highlighter                                            */
+  /* ------------------------------------------------------------ */
+  const KEYWORDS = new Set(['void','int','char','struct','while','if','else','return','for','const',
+    'uint','static','do','break','continue','sizeof','unsigned','long','short']);
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlightC(src) {
+    const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b0x[0-9a-fA-F]+\b|\b\d+\b)|([A-Za-z_]\w*)/g;
+    let out = '', last = 0, m;
+    while ((m = re.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      if (m[1]) out += '<span class="c">' + esc(m[1]) + '</span>';
+      else if (m[2]) out += '<span class="s">' + esc(m[2]) + '</span>';
+      else if (m[3]) out += '<span class="n">' + esc(m[3]) + '</span>';
+      else if (m[4]) {
+        const w = m[4];
+        out += KEYWORDS.has(w) ? '<span class="k">' + esc(w) + '</span>' : esc(w);
+      }
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    return out;
+  }
+
+  $$('code[data-c]').forEach(function (el) {
+    el.innerHTML = highlightC(el.textContent);
+  });
+
+  /* ------------------------------------------------------------ */
+  /* 1. lost update                                                */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#race-sim');
+    if (!box) return;
+
+    const el = {
+      counter: $('#race-counter'), sem: $('#race-sem'),
+      pval: $('#race-pval'), cval: $('#race-cval'),
+      pstate: $('#race-pstate'), cstate: $('#race-cstate'),
+      p: $('#race-parent'), c: $('#race-child'),
+      log: $('#race-log'), verdict: $('#race-verdict')
+    };
+
+    const UNPROT = [
+      { t: 'parent', note: 'Parent runs ucnt_get(0) → reads 0', counter: 0, sem: '—', pval: 'local = 0', cval: '—', ps: 'reading', cs: 'idle' },
+      { t: 'child',  note: 'Child runs ucnt_get(0) → reads 0 too (same value!)', counter: 0, sem: '—', pval: 'local = 0', cval: 'local = 0', ps: 'has 0', cs: 'reading' },
+      { t: 'parent', note: 'Parent runs ucnt_set(0, 0 + 1) → writes 1', counter: 1, sem: '—', pval: 'wrote 1', cval: 'local = 0', ps: 'done', cs: 'has 0' },
+      { t: 'child',  note: 'Child runs ucnt_set(0, 0 + 1) → writes 1 again. One increment is GONE.', counter: 1, sem: '—', pval: 'wrote 1', cval: 'wrote 1', ps: 'done', cs: 'done' }
+    ];
+
+    const PROT = [
+      { t: 'parent', note: 'Parent sem_wait: 1 → 0. It enters the critical section.', counter: 0, sem: '0', pval: '—', cval: '—', ps: 'IN critical section', cs: 'blocked on sem' },
+      { t: 'parent', note: 'Parent reads ucnt[0] = 0', counter: 0, sem: '0', pval: 'local = 0', cval: '—', ps: 'reading', cs: 'blocked' },
+      { t: 'parent', note: 'Parent writes 1', counter: 1, sem: '0', pval: 'wrote 1', cval: '—', ps: 'writing', cs: 'blocked' },
+      { t: 'parent', note: 'Parent sem_signal: 0 → 1. Leaves; the child wakes.', counter: 1, sem: '1', pval: 'done', cval: '—', ps: 'done', cs: 'wakes up' },
+      { t: 'child',  note: 'Child sem_wait: 1 → 0. It enters the critical section.', counter: 1, sem: '0', pval: 'done', cval: '—', ps: 'done', cs: 'IN critical section' },
+      { t: 'child',  note: 'Child reads ucnt[0] = 1', counter: 1, sem: '0', pval: 'done', cval: 'local = 1', ps: 'done', cs: 'reading' },
+      { t: 'child',  note: 'Child writes 2', counter: 2, sem: '0', pval: 'done', cval: 'wrote 2', ps: 'done', cs: 'writing' },
+      { t: 'child',  note: 'Child sem_signal: 0 → 1. Leaves.', counter: 2, sem: '1', pval: 'done', cval: 'done', ps: 'done', cs: 'done' }
+    ];
+
+    let mode = 'unprotected', steps = UNPROT, idx = 0, timer = null;
+
+    function stopTimer() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function render(flash) {
+      const s = idx > 0 ? steps[idx - 1]
+        : { counter: 0, sem: mode === 'protected' ? '1' : '—', pval: '—', cval: '—', ps: 'idle', cs: 'idle' };
+
+      el.counter.textContent = s.counter;
+      if (flash) {
+        el.counter.classList.add('flash');
+        setTimeout(function () { el.counter.classList.remove('flash'); }, 180);
+      }
+      el.sem.textContent = s.sem;
+      el.pval.textContent = s.pval;
+      el.cval.textContent = s.cval;
+      el.pstate.textContent = s.ps;
+      el.cstate.textContent = s.cs;
+
+      const active = idx > 0 ? steps[idx - 1].t : null;
+      el.p.classList.toggle('active', active === 'parent');
+      el.c.classList.toggle('active', active === 'child');
+
+      el.log.innerHTML = steps.slice(0, idx).map(function (x) {
+        return '<div class="' + (x.t === 'parent' ? 'p' : 'c') + '">' + esc(x.note) + '</div>';
+      }).join('');
+      el.log.scrollTop = el.log.scrollHeight;
+
+      if (idx >= steps.length) {
+        if (mode === 'unprotected') {
+          el.verdict.innerHTML = '<span class="bad">Expected 2 increments, counter = 1 → the child overwrote the parent\'s write.</span>';
+        } else {
+          el.verdict.innerHTML = '<span class="good">Expected 2, counter = 2 → each read–modify–write ran alone.</span>';
+        }
+      } else {
+        el.verdict.textContent = '';
+      }
+
+      $$('[data-rstep],[data-rauto]').forEach(function (b) { b.disabled = idx >= steps.length; });
+    }
+
+    function reset(nextMode) {
+      stopTimer();
+      mode = nextMode || mode;
+      steps = mode === 'protected' ? PROT : UNPROT;
+      idx = 0;
+      el.log.innerHTML = '';
+      $$('[data-rmode]').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-rmode') === mode);
+      });
+      render(false);
+    }
+
+    function step() {
+      if (idx >= steps.length) return;
+      idx++;
+      render(true);
+    }
+
+    $$('[data-rmode]').forEach(function (b) {
+      b.addEventListener('click', function () { reset(b.getAttribute('data-rmode')); });
+    });
+    $('[data-rstep]').addEventListener('click', step);
+    $('[data-rreset]').addEventListener('click', function () { reset(); });
+    $('[data-rauto]').addEventListener('click', function () {
+      if (timer) { stopTimer(); return; }
+      timer = setInterval(function () {
+        if (idx >= steps.length) { stopTimer(); return; }
+        step();
+      }, 900);
+    });
+
+    reset('unprotected');
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 2. spinlock                                                   */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#spin-sim');
+    if (!box) return;
+
+    const el = {
+      lock: $('#spin-lock'),
+      aval: $('#hart-a-val'), astate: $('#hart-a-state'),
+      bval: $('#hart-b-val'), bstate: $('#hart-b-state'),
+      a: $('#hart-a'), b: $('#hart-b'),
+      log: $('#spin-log'), verdict: $('#spin-verdict')
+    };
+
+    const BROKEN = [
+      { t: 'a', note: 'hart 0 reads lk->locked → 0', lock: '0', a: 'read 0', b: 'idle' },
+      { t: 'b', note: 'hart 1 reads lk->locked → 0  (both saw FREE)', lock: '0', a: 'read 0', b: 'read 0' },
+      { t: 'a', note: 'hart 0 writes 1 and enters the critical section', lock: '1', a: 'IN critical section', b: 'read 0' },
+      { t: 'b', note: 'hart 1 writes 1 and ALSO enters → two harts inside', lock: '1', a: 'IN critical section', b: 'IN critical section' }
+    ];
+
+    const ATOMIC = [
+      { t: 'a', note: 'hart 0: amoswap returns 0 → it now holds the lock', lock: '1', a: 'HOLDS lock', b: 'idle' },
+      { t: 'b', note: 'hart 1: amoswap returns 1 → it keeps spinning', lock: '1', a: 'IN critical section', b: 'spinning' },
+      { t: 'a', note: 'hart 0 finishes its critical section', lock: '1', a: 'leaving', b: 'spinning' },
+      { t: 'a', note: 'hart 0: __sync_lock_release → locked = 0', lock: '0', a: 'released', b: 'spinning' },
+      { t: 'b', note: 'hart 1: amoswap now returns 0 → it enters', lock: '1', a: 'done', b: 'HOLDS lock' }
+    ];
+
+    let mode = 'broken', steps = BROKEN, idx = 0, timer = null;
+
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function render() {
+      const s = idx > 0 ? steps[idx - 1] : { lock: '0', a: 'idle', b: 'idle' };
+      el.lock.textContent = s.lock;
+      el.aval.textContent = s.a;
+      el.bval.textContent = s.b;
+      el.astate.textContent = s.a.indexOf('critical') >= 0 || s.a.indexOf('HOLDS') >= 0 ? 'owns the lock word' : '';
+      el.bstate.textContent = s.b.indexOf('critical') >= 0 || s.b.indexOf('HOLDS') >= 0 ? 'owns the lock word' : (s.b === 'spinning' ? 'looping on amoswap' : '');
+
+      const activeA = s.a.indexOf('critical') >= 0 || s.a.indexOf('HOLDS') >= 0;
+      const activeB = s.b.indexOf('critical') >= 0 || s.b.indexOf('HOLDS') >= 0;
+      el.a.classList.toggle('active', activeA);
+      el.b.classList.toggle('active', activeB);
+      el.a.style.borderColor = (mode === 'broken' && activeA && activeB) ? 'rgba(248,113,113,.8)' : '';
+      el.b.style.borderColor = (mode === 'broken' && activeA && activeB) ? 'rgba(248,113,113,.8)' : '';
+
+      el.log.innerHTML = steps.slice(0, idx).map(function (x) {
+        return '<div class="' + (x.t === 'a' ? 'a' : 'b') + '">' + esc(x.note) + '</div>';
+      }).join('');
+      el.log.scrollTop = el.log.scrollHeight;
+
+      if (idx >= steps.length) {
+        el.verdict.innerHTML = mode === 'broken'
+          ? '<span class="bad">Both harts observed 0 → both believe they hold the lock. Mutual exclusion is broken.</span>'
+          : '<span class="good">Exactly one hart observed 0 at each swap → exactly one holder at all times.</span>';
+      } else {
+        el.verdict.textContent = '';
+      }
+    }
+
+    function reset(nextMode) {
+      stop();
+      mode = nextMode || mode;
+      steps = mode === 'atomic' ? ATOMIC : BROKEN;
+      idx = 0;
+      el.astate.textContent = '';
+      el.bstate.textContent = '';
+      el.a.style.borderColor = '';
+      el.b.style.borderColor = '';
+      $$('[data-smode]').forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-smode') === mode);
+      });
+      render();
+    }
+
+    $$('[data-smode]').forEach(function (b) {
+      b.addEventListener('click', function () { reset(b.getAttribute('data-smode')); });
+    });
+    $('[data-sstep]').addEventListener('click', function () {
+      if (idx < steps.length) { idx++; render(); }
+    });
+    $('[data-sauto]').addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      timer = setInterval(function () {
+        if (idx >= steps.length) { stop(); return; }
+        idx++; render();
+      }, 1000);
+    });
+    $('[data-sreset]').addEventListener('click', function () { reset(); });
+
+    reset('broken');
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 2b. interrupts are per-hart                                   */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const btn = $('[data-intr]');
+    if (!btn) return;
+    let off = false;
+    const a = $('#intr-a'), b = $('#intr-b');
+    const as = $('#intr-a-state'), bs = $('#intr-b-state'), msg = $('#intr-msg');
+
+    btn.addEventListener('click', function () {
+      off = !off;
+      as.textContent = off ? 'sstatus.IE = 0  (interrupts disabled)' : 'sstatus.IE = 1';
+      bs.textContent = 'sstatus.IE = 1  (unchanged)';
+      a.classList.toggle('active', off);
+      b.classList.toggle('active', off);
+      a.style.borderColor = off ? 'rgba(251,191,36,.8)' : '';
+      b.style.borderColor = off ? 'rgba(248,113,113,.7)' : '';
+      msg.innerHTML = off
+        ? 'hart 0 can no longer take a timer interrupt — but hart 1 never changed. It can still execute <code>acquire()</code> on the same word.'
+        : 'Both harts can still reach the same lock word.';
+    });
+
+    $('[data-intr-reset]').addEventListener('click', function () {
+      off = true; btn.click();
+    });
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 3. sleep / wakeup stepper                                     */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#sleep-sim');
+    if (!box) return;
+
+    const STEPS = [
+      { n: '1. Caller tests the condition while holding the semaphore lock.', lk: true, pl: false, st: 'RUNNING', chan: '—', where: 'while (sem->value == 0)' },
+      { n: '2. Call sleep(sem, &sem->lock) — condition lock still held.', lk: true, pl: false, st: 'RUNNING', chan: '—', where: 'sleep(sem, &sem->lock)' },
+      { n: '3. Take the process lock FIRST.', lk: true, pl: true, st: 'RUNNING', chan: '—', where: 'acquire(&p->lock)' },
+      { n: '4. Only now drop the condition lock.', lk: false, pl: true, st: 'RUNNING', chan: '—', where: 'release(lk)' },
+      { n: '5. Tag the wait channel and mark SLEEPING.', lk: false, pl: true, st: 'SLEEPING', chan: 'sem', where: 'p->chan = sem; p->state = SLEEPING' },
+      { n: '6. Switch to the scheduler; p->lock stays held.', lk: false, pl: true, st: 'SLEEPING', chan: 'sem', where: 'sched() → swtch()' },
+      { n: '7. A signal marks us RUNNABLE; the scheduler picks us again.', lk: false, pl: true, st: 'RUNNABLE', chan: 'sem', where: 'scheduler → swtch() back' },
+      { n: '8. Clear the channel and drop p->lock.', lk: false, pl: false, st: 'RUNNING', chan: '0', where: 'p->chan = 0; release(&p->lock)' },
+      { n: '9. Re-acquire lk — sleep() returns exactly as it was called.', lk: true, pl: false, st: 'RUNNING', chan: '0', where: 'acquire(lk)' }
+    ];
+
+    const lk = $('#lock-lk'), pl = $('#lock-plock');
+    const nodes = { RUNNING: $('#st-running'), SLEEPING: $('#st-sleeping'), RUNNABLE: $('#st-runnable') };
+    const log = $('#sleep-log'), where = $('#sl-where'), chan = $('#sl-chan');
+    let idx = 0, timer = null;
+
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function render() {
+      const s = idx > 0 ? STEPS[idx - 1] : { lk: false, pl: false, st: 'RUNNING', chan: '—', where: 'waiting to start' };
+      lk.classList.toggle('held', s.lk);
+      pl.classList.toggle('held', s.pl);
+      Object.keys(nodes).forEach(function (k) { nodes[k].classList.toggle('on', k === s.st); });
+      where.textContent = s.where;
+      chan.textContent = 'chan = ' + s.chan;
+      log.innerHTML = STEPS.slice(0, idx).map(function (x) {
+        return '<div>' + esc(x.n) + '</div>';
+      }).join('');
+      log.scrollTop = log.scrollHeight;
+    }
+
+    $('[data-slstep]').addEventListener('click', function () {
+      if (idx < STEPS.length) { idx++; render(); }
+    });
+    $('[data-slauto]').addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      timer = setInterval(function () {
+        if (idx >= STEPS.length) { stop(); return; }
+        idx++; render();
+      }, 1100);
+    });
+    $('[data-slreset]').addEventListener('click', function () {
+      stop(); idx = 0; log.innerHTML = ''; render();
+    });
+
+    render();
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 3b. why `while`, not `if`                                     */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#while-sim');
+    if (!box) return;
+
+    const valEl = $('#while-val');
+    const w1s = $('#w1-state'), w2s = $('#w2-state');
+    const w1p = $('#w1-pill'), w2p = $('#w2-pill');
+    const msg = $('#while-msg');
+    const bWhile = $('#wmode-while'), bIf = $('#wmode-if');
+
+    let value = 0, mode = 'while', signaled = false;
+
+    function paint() { valEl.textContent = value; }
+
+    function setPill(pill, kind) {
+      pill.className = 'pill ' + kind;
+      pill.textContent = kind === 'block' ? 'blocked' : (kind === 'run' ? 'running' : (kind === 'done' ? 'holding' : 'bug'));
+    }
+
+    function reset() {
+      value = 0; signaled = false;
+      w1s.textContent = 'SLEEPING on sem'; w2s.textContent = 'SLEEPING on sem';
+      setPill(w1p, 'block'); setPill(w2p, 'block');
+      msg.textContent = 'Two waiters, zero tokens. Press sem_signal().';
+      paint();
+    }
+
+    function signal() {
+      if (signaled) return;
+      signaled = true;
+      value = 1; paint();
+      w1s.textContent = 'RUNNABLE'; w2s.textContent = 'RUNNABLE';
+      setPill(w1p, 'run'); setPill(w2p, 'run');
+      msg.textContent = 'sem_signal: value 0 → 1. wakeup() marks BOTH waiters RUNNABLE — it reserves nothing.';
+
+      setTimeout(function () {
+        if (mode === 'while') {
+          value = 0; paint();
+          w1s.textContent = 're-checked: took the token'; setPill(w1p, 'done');
+          msg.textContent = 'W1 re-checks: value = 1 → takes it, value → 0.';
+          setTimeout(function () {
+            w2s.textContent = 're-checked: 0 → sleeps again'; setPill(w2p, 'block');
+            msg.textContent = 'W2 re-checks: value = 0 → sleeps again. Correct — nobody goes negative.';
+            paint();
+          }, 900);
+        } else {
+          value = 0; paint();
+          w1s.textContent = 'did NOT re-check: decremented'; setPill(w1p, 'done');
+          msg.textContent = 'W1 has no re-check: it decrements anyway, value → 0.';
+          setTimeout(function () {
+            value = -1; paint();
+            w2s.textContent = 'did NOT re-check: value is now negative'; setPill(w2p, 'dead');
+            msg.innerHTML = '<span class="bad">W2 also falls through: value → -1. The semaphore now has a negative count — the classic <code>if</code> bug.</span>';
+          }, 900);
+        }
+      }, 800);
+    }
+
+    function setMode(m) {
+      mode = m;
+      bWhile.classList.toggle('active', m === 'while');
+      bIf.classList.toggle('active', m === 'if');
+      reset();
+    }
+
+    $$('[data-wmode]').forEach(function (b) {
+      b.addEventListener('click', function () { setMode(b.getAttribute('data-wmode')); });
+    });
+    $('[data-wsignal]').addEventListener('click', signal);
+    $('[data-wreset]').addEventListener('click', reset);
+
+    setMode('while');
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 4. semaphore playground                                       */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#sem-sim');
+    if (!box) return;
+
+    const valEl = $('#sem-val'), log = $('#sem-log');
+    const p1s = $('#sem-p1'), p2s = $('#sem-p2');
+    const p1p = $('#sem-p1-pill'), p2p = $('#sem-p2-pill');
+
+    let value = 1, blocked = [], state = { 1: 'running', 2: 'running' };
+
+    function addLog(kind, text) {
+      const d = document.createElement('div');
+      d.className = kind;
+      d.textContent = text;
+      log.appendChild(d);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function paint() {
+      valEl.textContent = value;
+      [1, 2].forEach(function (id) {
+        const s = state[id];
+        const el = id === 1 ? p1s : p2s;
+        const pill = id === 1 ? p1p : p2p;
+        if (s === 'blocked') { el.textContent = 'SLEEPING on &semaphores[id]'; pill.className = 'pill block'; pill.textContent = 'sleeping'; }
+        else if (s === 'holding') { el.textContent = 'inside the critical section'; pill.className = 'pill done'; pill.textContent = 'holds token'; }
+        else { el.textContent = 'running'; pill.className = 'pill run'; pill.textContent = 'running'; }
+      });
+    }
+
+    function wait(id) {
+      if (state[id] === 'holding') { addLog('bad', 'P' + id + ' already holds the token — sem_wait would block itself'); return; }
+      addLog('p', 'P' + id + ': acquire(&sem->lock)');
+      if (value > 0) {
+        const before = value; value--;
+        state[id] = 'holding';
+        addLog('p', 'P' + id + ': value ' + before + ' → ' + value + ' → enters');
+      } else {
+        state[id] = 'blocked';
+        blocked.push(id);
+        addLog('bad', 'P' + id + ': value == 0 → sleep(sem, &sem->lock) — parks on the semaphore address');
+      }
+      addLog('p', 'P' + id + ': release(&sem->lock)');
+      paint();
+    }
+
+    function signal() {
+      addLog('a', 'sem_signal: acquire(&sem->lock)');
+      const holder = [1, 2].filter(function (id) { return state[id] === 'holding'; })[0];
+      if (holder) {
+        state[holder] = 'running';
+        addLog('ok', 'P' + holder + ': sem_signal → leaves the critical section');
+      }
+      const before = value; value++;
+      addLog('a', 'sem_signal: value ' + before + ' → ' + value);
+      addLog('a', 'wakeup(sem) — every sleeper on this channel becomes RUNNABLE');
+      const waiters = blocked.slice();
+      blocked = [];
+      waiters.forEach(function (id) {
+        if (value > 0) {
+          value--;
+          state[id] = 'holding';
+          addLog('ok', 'P' + id + ' re-checks: takes it, value → ' + value);
+        } else {
+          state[id] = 'blocked';
+          blocked.push(id);
+          addLog('bad', 'P' + id + ' re-checks: still 0 → sleeps again');
+        }
+      });
+      addLog('a', 'sem_signal: release(&sem->lock)');
+      paint();
+    }
+
+    function reset() {
+      value = 1; blocked = []; state = { 1: 'running', 2: 'running' };
+      log.innerHTML = ''; paint();
+      addLog('ok', 'sem_init(1) → a new binary semaphore, value = 1');
+    }
+
+    $$('[data-wait]').forEach(function (b) {
+      b.addEventListener('click', function () { wait(Number(b.getAttribute('data-wait'))); });
+    });
+    $('[data-signal]').addEventListener('click', signal);
+    $('[data-semreset]').addEventListener('click', reset);
+
+    reset();
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 6. producer / consumer ring                                   */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#pc-sim');
+    if (!box) return;
+
+    const SIZE = 16;
+    const MSG = 'cafefacefacefacefacefacefacefacefacecafecafecafe';
+    const TOTAL = MSG.length * 2;
+
+    const el = {
+      empty: $('#pc-empty'), filled: $('#pc-filled'), mutex: $('#pc-mutex'),
+      emptyChip: $('#pc-empty-chip'), filledChip: $('#pc-filled-chip'),
+      ring: $('#pc-ring'), log: $('#pc-log'), inv: $('#pc-invariant')
+    };
+
+    function fresh() {
+      return {
+        slots: new Array(SIZE).fill(null),
+        head: 0, tail: 0,
+        empty: SIZE, filled: 0, mutex: 1,
+        p1: { id: 'P1', msg: MSG, i: 0, stage: 'empty', blocked: null, done: false, inCrit: false },
+        p2: { id: 'P2', msg: MSG, i: 0, stage: 'empty', blocked: null, done: false, inCrit: false },
+        c: { id: 'C', msg: MSG, got: 0, stage: 'filled', blocked: null, done: false, inCrit: false },
+        log: []
+      };
+    }
+
+    let st = fresh();
+    let timer = null, turn = 0, silent = false;
+
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function add(text, cls) {
+      st.log.push({ text: text, cls: cls || '' });
+      if (st.log.length > 60) st.log.shift();
+    }
+
+    function buildRing() {
+      el.ring.innerHTML = '';
+      for (let i = 0; i < SIZE; i++) {
+        const d = document.createElement('div');
+        d.className = 'cell';
+        d.innerHTML = '<span class="idx">' + i + '</span><span class="ch"></span>';
+        el.ring.appendChild(d);
+      }
+    }
+
+    function render() {
+      if (silent) return;
+      el.empty.textContent = st.empty;
+      el.filled.textContent = st.filled;
+      el.mutex.textContent = st.mutex;
+      el.emptyChip.classList.toggle('dead', st.empty === 0);
+      el.filledChip.classList.toggle('dead', st.filled === 0);
+
+      const cells = el.ring.children;
+      for (let i = 0; i < SIZE; i++) {
+        const cell = cells[i];
+        const slot = st.slots[i];
+        cell.className = 'cell' + (slot ? ' filled' : '');
+        cell.querySelector('.ch').textContent = slot ? slot.ch : '';
+        if (i === st.tail) cell.classList.add('tail');
+        if (i === st.head) cell.classList.add('head');
+      }
+
+      renderProc('p1', el.p1State, el.p1Pill);
+      renderProc('p2', el.p2State, el.p2Pill);
+      renderProc('c', el.cState, el.cPill);
+
+      el.log.innerHTML = st.log.map(function (l) {
+        return '<div class="' + l.cls + '">' + esc(l.text) + '</div>';
+      }).join('');
+      el.log.scrollTop = el.log.scrollHeight;
+
+      const inflight = (st.p1.inCrit ? 1 : 0) + (st.p2.inCrit ? 1 : 0) + (st.c.inCrit ? 1 : 0);
+      el.inv.textContent = 'invariant: empty ' + st.empty + ' + filled ' + st.filled + ' + in-hand ' + inflight + ' = ' + (st.empty + st.filled + inflight) + '  (buffer size ' + SIZE + ')';
+      el.inv.style.color = (st.empty + st.filled + inflight === SIZE) ? '#9fb3ce' : 'var(--red)';
+    }
+
+    el.p1State = $('#pc-p1-state'); el.p1Pill = $('#pc-p1-pill');
+    el.p2State = $('#pc-p2-state'); el.p2Pill = $('#pc-p2-pill');
+    el.cState = $('#pc-c-state'); el.cPill = $('#pc-c-pill');
+
+    const STAGE_TEXT = {
+      empty: 'waiting for a free slot', mutex: 'waiting for mutex',
+      write: 'writing', release: 'signalling',
+      filled: 'waiting for data', read: 'reading', done: 'finished'
+    };
+
+    function renderProc(key, stateEl, pillEl) {
+      const p = st[key];
+      if (p.done) { stateEl.textContent = 'finished'; pillEl.className = 'pill done'; pillEl.textContent = 'done'; return; }
+      if (p.blocked) {
+        stateEl.textContent = 'SLEEPING on ' + p.blocked + ' — ' + (STAGE_TEXT[p.stage] || p.stage);
+        pillEl.className = 'pill block'; pillEl.textContent = 'sleeping'; return;
+      }
+      stateEl.textContent = STAGE_TEXT[p.stage] || p.stage;
+      pillEl.className = 'pill run'; pillEl.textContent = 'running';
+    }
+
+    function stepP(p) {
+      if (p.done) return;
+      if (p.blocked) {
+        const ok = (p.blocked === 'empty' && st.empty > 0) || (p.blocked === 'mutex' && st.mutex > 0);
+        if (!ok) { add(p.id + ': still asleep on ' + p.blocked, 'bad'); render(); return; }
+        add(p.id + ': woken → re-checks ' + p.blocked + ' → proceeds', 'ok');
+        p.blocked = null;
+      }
+
+      if (p.stage === 'empty') {
+        if (st.empty > 0) {
+          const before = st.empty; st.empty--;
+          p.inCrit = true;
+          add(p.id + ': sem_wait(empty) → empty ' + before + ' → ' + st.empty, 'a');
+          p.stage = 'mutex';
+        } else {
+          p.blocked = 'empty';
+          add(p.id + ': sem_wait(empty) BLOCKS (empty = 0)', 'bad');
+        }
+      } else if (p.stage === 'mutex') {
+        if (st.mutex > 0) {
+          st.mutex--;
+          add(p.id + ': sem_wait(mutex) → mutex 1 → 0 (inside the buffer)', 'a');
+          p.stage = 'write';
+        } else {
+          p.blocked = 'mutex';
+          add(p.id + ': sem_wait(mutex) BLOCKS (someone else is inside)', 'bad');
+        }
+      } else if (p.stage === 'write') {
+        const ch = p.msg[p.i];
+        st.slots[st.tail] = { ch: ch };
+        add(p.id + ": ubuf_write('" + ch + "') at slot " + st.tail + ', then yield()', 'a');
+        st.tail = (st.tail + 1) % SIZE;
+        p.i++;
+        p.stage = 'release';
+      } else if (p.stage === 'release') {
+        st.mutex = 1;
+        st.filled++;
+        p.inCrit = false;
+        add(p.id + ': sem_signal(mutex) → 1, sem_signal(filled) → ' + st.filled, 'ok');
+        if (p.i >= p.msg.length) {
+          p.done = true; p.stage = 'done';
+          add(p.id + ': message finished', 'ok');
+        } else {
+          p.stage = 'empty';
+        }
+      }
+      render();
+    }
+
+    function stepC() {
+      const c = st.c;
+      if (c.done) return;
+      if (c.blocked) {
+        const ok = (c.blocked === 'filled' && st.filled > 0) || (c.blocked === 'mutex' && st.mutex > 0);
+        if (!ok) { add('C: still asleep on ' + c.blocked, 'bad'); render(); return; }
+        add('C: woken → re-checks ' + c.blocked + ' → proceeds', 'ok');
+        c.blocked = null;
+      }
+
+      if (c.stage === 'filled') {
+        if (st.filled > 0) {
+          const before = st.filled; st.filled--;
+          c.inCrit = true;
+          add('C: sem_wait(filled) → filled ' + before + ' → ' + st.filled, 'a');
+          c.stage = 'mutex';
+        } else {
+          c.blocked = 'filled';
+          add('C: sem_wait(filled) BLOCKS (nothing to read yet)', 'bad');
+        }
+      } else if (c.stage === 'mutex') {
+        if (st.mutex > 0) {
+          st.mutex--;
+          add('C: sem_wait(mutex) → mutex 1 → 0 (inside the buffer)', 'a');
+          c.stage = 'read';
+        } else {
+          c.blocked = 'mutex';
+          add('C: sem_wait(mutex) BLOCKS (someone else is inside)', 'bad');
+        }
+      } else if (c.stage === 'read') {
+        const slot = st.slots[st.head];
+        const ch = slot ? slot.ch : '?';
+        st.slots[st.head] = null;
+        add("C: ubuf_read() → '" + ch + "' from slot " + st.head + ', then yield()', 'a');
+        st.head = (st.head + 1) % SIZE;
+        c.got++;
+        c.stage = 'release';
+      } else if (c.stage === 'release') {
+        st.mutex = 1;
+        st.empty++;
+        c.inCrit = false;
+        add('C: sem_signal(mutex) → 1, sem_signal(empty) → ' + st.empty, 'ok');
+        if (c.got >= TOTAL) {
+          c.done = true; c.stage = 'done';
+          add('C: all ' + TOTAL + ' bytes received', 'ok');
+        } else {
+          c.stage = 'filled';
+        }
+      }
+      render();
+    }
+
+    function allDone() { return st.p1.done && st.p2.done && st.c.done; }
+
+    function reset() {
+      stop();
+      st = fresh();
+      turn = 0;
+      buildRing();
+      add('sem_init(16)/(0)/(1) → empty=16, filled=0, mutex=1', 'ok');
+      add('Two producers forked, consumer runs in the parent.', 'dim');
+      render();
+    }
+
+    $$('[data-pcstep]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        const w = b.getAttribute('data-pcstep');
+        if (w === 'p1') stepP(st.p1);
+        else if (w === 'p2') stepP(st.p2);
+        else stepC();
+      });
+    });
+
+    $('[data-pcauto]').addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      timer = setInterval(function () {
+        if (allDone()) { stop(); return; }
+        const t = turn++ % 3;
+        if (t === 0) stepP(st.p1);
+        else if (t === 1) stepP(st.p2);
+        else stepC();
+      }, 140);
+    });
+
+    $('[data-pcfinish]').addEventListener('click', function () {
+      stop();
+      silent = true;
+      let guard = 0;
+      while (!allDone() && guard++ < 8000) {
+        const t = turn++ % 3;
+        if (t === 0) stepP(st.p1);
+        else if (t === 1) stepP(st.p2);
+        else stepC();
+      }
+      silent = false;
+      render();
+    });
+
+    $('[data-pcreset]').addEventListener('click', reset);
+
+    reset();
+  })();
+
+  /* ------------------------------------------------------------ */
+  /* 6b. deadlock demo                                             */
+  /* ------------------------------------------------------------ */
+  (function () {
+    const box = $('#deadlock-sim');
+    if (!box) return;
+
+    const STEPS = [
+      { note: 'Buffer is full: empty = 0, filled = 16, mutex = 1.', empty: '0', filled: '16', mutex: '1', p1: 'ready', cs: '', status: 'about to start', cls: '' },
+      { note: 'Producer takes mutex FIRST: mutex 1 → 0.', empty: '0', filled: '16', mutex: '0', p1: 'HOLDS mutex', cs: 'ready', status: 'P1 holds mutex', cls: 'warn' },
+      { note: 'Producer now waits for empty. empty = 0 → it SLEEPS while holding mutex.', empty: '0', filled: '16', mutex: '0', p1: 'SLEEPING on empty (holding mutex)', cs: 'ready', status: 'P1 blocked', cls: 'warn' },
+      { note: 'Consumer takes a filled token: filled 16 → 15.', empty: '0', filled: '15', mutex: '0', p1: 'SLEEPING on empty (holding mutex)', cs: 'holds a token', status: 'C has data', cls: 'warn' },
+      { note: 'Consumer now needs mutex to read… mutex = 0 → it blocks.', empty: '0', filled: '15', mutex: '0', p1: 'SLEEPING on empty (holding mutex)', cs: 'BLOCKED on mutex', status: 'circular wait', cls: 'bad' },
+      { note: 'DEADLOCK: P1 needs empty; only C can signal empty; C needs mutex; P1 holds it.', empty: '0', filled: '15', mutex: '0', p1: 'SLEEPING forever', cs: 'BLOCKED forever', status: 'DEADLOCK', cls: 'bad' }
+    ];
+
+    const el = {
+      empty: $('#dl-empty'), filled: $('#dl-filled'), mutex: $('#dl-mutex'),
+      emptyChip: $('#dl-empty-chip'), mutexChip: $('#dl-mutex-chip'),
+      p1v: $('#dl-p1-val'), p1s: $('#dl-p1-state'),
+      cv: $('#dl-c-val'), cs: $('#dl-c-state'),
+      p1: $('#dl-p1'), c: $('#dl-c'),
+      log: $('#dl-log'), verdict: $('#dl-verdict'), status: $('#dl-status')
+    };
+
+    let idx = 0, timer = null;
+
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+
+    function render() {
+      const s = idx > 0 ? STEPS[idx - 1] : { empty: '0', filled: '16', mutex: '1', p1: 'ready', cs: 'ready', status: 'not started', cls: '' };
+      el.empty.textContent = s.empty;
+      el.filled.textContent = s.filled;
+      el.mutex.textContent = s.mutex;
+      el.emptyChip.classList.toggle('dead', s.empty === '0');
+      el.mutexChip.classList.toggle('dead', s.mutex === '0');
+      el.p1v.textContent = s.p1;
+      el.cv.textContent = s.cs;
+      el.p1s.textContent = s.p1.indexOf('SLEEP') >= 0 ? 'waiting on empty' : '';
+      el.cs.textContent = s.cs.indexOf('BLOCK') >= 0 ? 'waiting on mutex' : '';
+      el.p1.classList.toggle('active', s.p1.indexOf('SLEEP') < 0 && s.p1 !== 'ready');
+      el.c.classList.toggle('active', s.cs.indexOf('BLOCK') < 0 && s.cs !== 'ready' && s.cs !== '');
+      el.p1.style.borderColor = s.cls === 'bad' ? 'rgba(248,113,113,.7)' : '';
+      el.c.style.borderColor = s.cls === 'bad' ? 'rgba(248,113,113,.7)' : '';
+
+      el.status.textContent = s.status;
+      el.status.className = 'pill ' + (s.cls === 'bad' ? 'dead' : (s.cls === 'warn' ? 'block' : ''));
+
+      el.log.innerHTML = STEPS.slice(0, idx).map(function (x) {
+        return '<div class="' + (x.cls === 'bad' ? 'bad' : (x.cls === 'warn' ? 'a' : '')) + '">' + esc(x.note) + '</div>';
+      }).join('');
+      el.log.scrollTop = el.log.scrollHeight;
+
+      if (idx >= STEPS.length) {
+        el.verdict.innerHTML = '<span class="bad">P1 → holds mutex → C needs mutex &nbsp;·&nbsp; C → creates empty → P1 needs empty. Nobody can move.</span>';
+      } else {
+        el.verdict.textContent = '';
+      }
+    }
+
+    $('[data-dlstep]').addEventListener('click', function () {
+      if (idx < STEPS.length) { idx++; render(); }
+    });
+    $('[data-dlauto]').addEventListener('click', function () {
+      if (timer) { stop(); return; }
+      timer = setInterval(function () {
+        if (idx >= STEPS.length) { stop(); return; }
+        idx++; render();
+      }, 1000);
+    });
+    $('[data-dlreset]').addEventListener('click', function () {
+      stop(); idx = 0; el.log.innerHTML = ''; render();
+    });
+
+    render();
+  })();
+})();
+</script>
+
+</body>
+</html>

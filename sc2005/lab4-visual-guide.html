@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SC2005 · Lab 4 — Visual Guide</title>
+<style>
+:root {
+  --bg: #070b14;
+  --panel: #0f1729;
+  --panel-2: #141f36;
+  --line: #22314f;
+  --text: #e6edf7;
+  --muted: #8b9bb4;
+  --cyan: #38bdf8;
+  --green: #34d399;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --purple: #a78bfa;
+  --pink: #f472b6;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(1200px 600px at 12% -10%, rgba(56,189,248,.15), transparent 60%),
+    radial-gradient(900px 520px at 92% -5%, rgba(167,139,250,.13), transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+.hero { padding: 64px 0 34px; }
+.kicker, .num {
+  display: inline-block;
+  color: var(--cyan);
+  border: 1px solid rgba(56,189,248,.35);
+  border-radius: 999px;
+  padding: 5px 12px;
+  background: rgba(56,189,248,.08);
+  font: 12px var(--mono);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+h1 {
+  margin: 18px 0 14px;
+  max-width: 900px;
+  font-size: clamp(35px, 6vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  background: linear-gradient(100deg, #fff 10%, #9fd7ff 55%, #b6a6ff 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lede { max-width: 720px; margin: 0; color: #b9c7dd; font-size: 17px; }
+.chips, .button-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips { margin-top: 22px; }
+.chip, .pill {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 11px;
+  color: #b8c7de;
+  background: rgba(255,255,255,.03);
+  font: 12px var(--mono);
+}
+.toc {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+  background: rgba(7,11,20,.86);
+  backdrop-filter: blur(12px);
+}
+.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding: 10px 22px; scrollbar-width: none; }
+.toc .wrap::-webkit-scrollbar { display: none; }
+.toc a { white-space: nowrap; padding: 6px 11px; color: var(--muted); text-decoration: none; font-size: 13px; }
+.toc a:hover { color: var(--text); }
+.section { padding: 54px 0 8px; border-top: 1px solid rgba(34,49,79,.55); }
+.section:first-of-type { border-top: 0; }
+.section-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+.num { border-radius: 8px; padding: 3px 8px; }
+h2 { margin: 0; font-size: clamp(25px, 3.4vw, 33px); letter-spacing: -.02em; }
+h3 { margin: 0 0 10px; font-size: 17px; }
+.sub { max-width: 800px; margin: 0 0 24px; color: var(--muted); }
+.card, .sim {
+  margin: 16px 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+}
+.sim { background: linear-gradient(180deg, #0b1322, #0a1120); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 760px) { .two, .three { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .code pre { white-space: pre-wrap; overflow-wrap: anywhere; } }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.mono, code, pre { font-family: var(--mono); }
+code {
+  padding: 1px 5px;
+  border: 1px solid rgba(56,189,248,.16);
+  border-radius: 5px;
+  background: rgba(56,189,248,.10);
+  color: #bfe6ff;
+  font-size: .92em;
+}
+.good { color: var(--green); }
+.bad { color: var(--red); }
+.warn { color: var(--amber); }
+.note { margin: 14px 0; padding: 12px 16px; border-left: 3px solid var(--cyan); border-radius: 0 10px 10px 0; background: rgba(56,189,248,.07); }
+.note.green { border-color: var(--green); background: rgba(52,211,153,.07); }
+.note.amber { border-color: var(--amber); background: rgba(251,191,36,.07); }
+.note.red { border-color: var(--red); background: rgba(248,113,113,.07); }
+.code { margin: 14px 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: #080e1b; }
+.code-cap { padding: 8px 14px; border-bottom: 1px solid var(--line); color: var(--muted); font: 11px var(--mono); letter-spacing: .13em; text-transform: uppercase; }
+.code pre { overflow-x: auto; margin: 0; padding: 14px 16px; color: #cfe0f5; font-size: 12.5px; line-height: 1.6; }
+.code .k { color: #c084fc; }
+.code .s { color: #86efac; }
+.code .c { color: #54657f; font-style: italic; }
+.code code[data-c] { display: block; min-width: 0; }
+.code .n { color: #fbbf24; }
+.btn {
+  cursor: pointer;
+  padding: 8px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: #cfe0f5;
+  background: rgba(255,255,255,.05);
+  font: 600 13px inherit;
+}
+.btn:hover { background: rgba(255,255,255,.1); }
+.btn.primary { border-color: rgba(56,189,248,.5); color: #bfe9ff; background: rgba(56,189,248,.16); }
+.btn.green { border-color: rgba(52,211,153,.45); color: #a7f3d0; background: rgba(52,211,153,.14); }
+.btn.warn { border-color: rgba(251,191,36,.42); color: #fde68a; background: rgba(251,191,36,.12); }
+.btn.active { outline: 2px solid rgba(56,189,248,.55); outline-offset: 2px; }
+.simbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.spacer { flex: 1; }
+.simstage { display: grid; gap: 14px; }
+.big-number {
+  padding: 12px 18px;
+  border: 1px solid rgba(251,191,36,.4);
+  border-radius: 14px;
+  text-align: center;
+  background: rgba(251,191,36,.07);
+}
+.big-number .label { color: #d6b46a; font: 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.big-number .value { color: #fde68a; font: 800 43px/1.1 var(--mono); }
+.big-number.cyan { border-color: rgba(56,189,248,.4); background: rgba(56,189,248,.06); }
+.big-number.cyan .label { color: #9fd7ff; }
+.big-number.cyan .value { color: #bfe9ff; }
+.log {
+  max-height: 250px;
+  overflow: auto;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0,0,0,.25);
+  color: #a9bad3;
+  font: 12px/1.7 var(--mono);
+}
+.log div { padding: 2px 0 2px 10px; border-left: 2px solid transparent; }
+.log .ok { border-color: var(--green); color: #b7f5dc; }
+.log .a { border-color: var(--cyan); color: #c8e9ff; }
+.log .b { border-color: var(--purple); color: #dcd0ff; }
+.log .bad { border-color: var(--red); color: #ffc9c9; }
+.log .dim { color: #5f7089; }
+.actor {
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.02);
+  transition: .2s;
+}
+.actor.active { border-color: rgba(56,189,248,.7); box-shadow: 0 0 0 3px rgba(56,189,248,.12); background: rgba(56,189,248,.07); }
+.actor .name { color: var(--muted); font: 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.actor .state { margin: 2px 0; font: 700 20px var(--mono); }
+.actor .detail { min-height: 18px; color: var(--muted); font-size: 12px; }
+.memline { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+.page {
+  width: 47px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: #5f7089;
+  background: rgba(0,0,0,.25);
+  font: 11px var(--mono);
+  transition: .18s;
+}
+.page .pg-label { font-size: 9px; }
+.page.reserved { border-color: rgba(56,189,248,.55); color: #bfe9ff; background: rgba(56,189,248,.10); }
+.page.mapped { border-color: rgba(52,211,153,.65); color: #a7f3d0; background: rgba(52,211,153,.15); }
+.page.guard { border-color: rgba(251,191,36,.65); color: #fde68a; background: repeating-linear-gradient(45deg, rgba(251,191,36,.09) 0 6px, transparent 6px 12px); }
+.page.touch { animation: pop .45s ease; }
+@keyframes pop { from { transform: scale(.75); filter: brightness(1.7); } to { transform: scale(1); filter: none; } }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 15px; color: var(--muted); font-size: 12px; }
+.legend span { display: inline-flex; align-items: center; }
+.legend i { flex: none; display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 3px; }
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+@media (max-width: 650px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat { padding: 10px; border: 1px solid var(--line); border-radius: 11px; text-align: center; background: rgba(255,255,255,.025); }
+.stat .label { color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+.stat .value { color: #dbe7f7; font: 700 25px var(--mono); }
+.stat.blue .value { color: #bfe9ff; }
+.stat.green .value { color: #a7f3d0; }
+.stat.amber .value { color: #fde68a; }
+.stat.pink .value { color: #ffd6ec; }
+.flow { display: grid; gap: 9px; }
+.flow-row { display: grid; grid-template-columns: 95px 1fr 90px; gap: 10px; align-items: center; }
+.flow-row .tag { color: var(--muted); font: 12px var(--mono); }
+.flow-box { min-width: 0; padding: 9px 12px; border: 1px solid var(--line); border-left: 4px solid var(--cyan); border-radius: 9px; background: rgba(255,255,255,.025); }
+.flow-box.green { border-left-color: var(--green); }
+.flow-box.amber { border-left-color: var(--amber); }
+.flow-box.pink { border-left-color: var(--pink); }
+.flow-row .arrow { color: var(--muted); font: 18px var(--mono); text-align: center; }
+.address {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.address > div { min-height: 78px; padding: 10px; border-right: 1px solid var(--line); text-align: center; }
+.address > div:last-child { border-right: 0; }
+.address .bits { color: #dbe7f7; font: 700 18px var(--mono); word-break: break-all; }
+.address .bits.small-bits { font-size: 15px; }
+.address .label { color: var(--muted); font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.address .level2 { background: rgba(167,139,250,.12); }
+.address .level1 { background: rgba(56,189,248,.10); }
+.address .level0 { background: rgba(52,211,153,.10); }
+.address .offset { background: rgba(251,191,36,.10); }
+.address .selected { outline: 3px solid rgba(255,255,255,.6); outline-offset: -3px; }
+.explain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 760px) { .explain-grid { grid-template-columns: 1fr; } }
+.pill { display: inline-block; font: 11px var(--mono); padding: 2px 9px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); vertical-align: middle; }
+.formula { margin: 8px 0; padding: 9px 11px; border-left: 3px solid var(--cyan); border-radius: 0 8px 8px 0; background: rgba(56,189,248,.07); color: #cfe0f5; font: 13px/1.6 var(--mono); overflow-wrap: anywhere; }
+.calc-input { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.calc-input input { min-width: 150px; flex: 1; padding: 9px 11px; border: 1px solid var(--line); border-radius: 9px; outline: 0; color: var(--text); background: #080e1b; font: 14px var(--mono); }
+.calc-input input:focus { border-color: rgba(56,189,248,.7); box-shadow: 0 0 0 3px rgba(56,189,248,.12); }
+.calc-error { min-height: 20px; margin-top: 8px; color: #fecaca; font-size: 13px; }
+.bitline { margin: 12px 0; padding: 12px 10px; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: rgba(0,0,0,.24); color: #dbe7f7; font: 15px var(--mono); white-space: nowrap; }
+.bitline .l2 { color: #c4b5fd; }
+.bitline .l1 { color: #7dd3fc; }
+.bitline .l0 { color: #86efac; }
+.bitline .off { color: #fde68a; }
+.result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (max-width: 650px) { .result-grid { grid-template-columns: repeat(2, 1fr); } }
+.result-cell { padding: 9px; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.025); }
+.result-cell .label { color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+.result-cell .value { margin-top: 3px; color: #dbe7f7; font: 700 18px var(--mono); }
+.walk {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 7px;
+  align-items: center;
+}
+@media (max-width: 560px) {
+  .walk { grid-template-columns: 1fr; }
+  .walk .arrow { transform: rotate(90deg); }
+}
+.walk .node { min-height: 72px; padding: 9px; border: 1px solid var(--line); border-radius: 10px; text-align: center; background: rgba(255,255,255,.025); }
+.walk .node.active { border-color: rgba(56,189,248,.7); box-shadow: 0 0 0 3px rgba(56,189,248,.10); }
+.walk .node .top { color: var(--muted); font: 10px var(--mono); text-transform: uppercase; }
+.walk .node .main { color: #dbe7f7; font: 700 15px var(--mono); }
+.walk .arrow { color: #58709b; text-align: center; }
+.pte {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 7px;
+  align-items: stretch;
+}
+.pte div { padding: 9px; border: 1px solid var(--line); color: #cfe0f5; font: 12px var(--mono); text-align: center; background: rgba(255,255,255,.025); }
+.pte .ppn { border-color: rgba(52,211,153,.5); background: rgba(52,211,153,.10); }
+.pte .flags { border-color: rgba(251,191,36,.5); background: rgba(251,191,36,.10); }
+.flag { display: inline-block; margin: 2px; padding: 2px 6px; border-radius: 5px; background: rgba(255,255,255,.09); font-size: 10px; }
+.flag.on { color: #a7f3d0; background: rgba(52,211,153,.18); }
+.flag.off { color: #71819a; }
+.fault-box { padding: 17px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.025); }
+.fault-box.active { border-color: rgba(56,189,248,.7); box-shadow: 0 0 0 3px rgba(56,189,248,.1); }
+.fault-box h4 { margin: 0 0 5px; color: #dbe7f7; font-size: 14px; }
+.fault-box p { margin: 0; color: var(--muted); font-size: 12px; }
+.decision { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+@media (max-width: 760px) { .decision { grid-template-columns: 1fr; } }
+.decision .branch { padding: 12px; border: 1px solid var(--line); border-radius: 11px; text-align: center; font-size: 13px; background: rgba(255,255,255,.025); }
+.decision .branch.active { border-color: rgba(52,211,153,.7); background: rgba(52,211,153,.11); }
+.decision .branch.bad-active { border-color: rgba(248,113,113,.7); background: rgba(248,113,113,.11); }
+.decision .branch .title { color: #dbe7f7; font-weight: 700; }
+.decision .branch .result { margin-top: 5px; color: var(--muted); font: 12px var(--mono); }
+.timeline { display: grid; gap: 10px; }
+.timeline-row { display: grid; grid-template-columns: 28px 1fr; gap: 11px; align-items: start; }
+.timeline-row .dot { width: 25px; height: 25px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font: 11px var(--mono); }
+.timeline-row.active .dot { border-color: rgba(52,211,153,.7); color: #a7f3d0; background: rgba(52,211,153,.15); }
+.timeline-row .body { padding: 8px 12px; border-left: 3px solid var(--line); color: var(--muted); font-size: 13px; }
+.timeline-row.active .body { border-color: var(--green); color: #d7f9e9; background: rgba(52,211,153,.05); }
+table { width: 100%; margin: 10px 0; border-collapse: collapse; font-size: 13.5px; }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { color: var(--muted); font: 11px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+tr:last-child td { border-bottom: 0; }
+.checkpoint {
+  margin: 12px 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+}
+.checkpoint h3 { margin: 0 0 12px; font-size: 16px; }
+.qa-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; counter-reset: qa; }
+.qa-list > li { position: relative; padding-left: 36px; counter-increment: qa; }
+.qa-list > li::before {
+  content: counter(qa);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(56,189,248,.4);
+  border-radius: 7px;
+  color: var(--cyan);
+  font: 700 12px var(--mono);
+}
+.qa-list .q { margin: 0 0 8px; color: #dbe7f7; font-size: 14.5px; line-height: 1.55; }
+.qa-list details.answer { margin: 0; }
+.qa-list details.answer .body p { margin: 8px 0; }
+.qa-list details.answer .body table { font-size: 13px; }
+.checkpoint details.answer { margin: 0; background: rgba(0,0,0,.22); }
+details.answer { margin: 10px 0; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); }
+details.answer summary { display: flex; align-items: center; gap: 9px; cursor: pointer; padding: 13px 16px; list-style: none; font-weight: 600; }
+details.answer summary::-webkit-details-marker { display: none; }
+details.answer summary::before {
+  content: "";
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(56,189,248,.4);
+  border-radius: 6px;
+  background:
+    linear-gradient(var(--cyan), var(--cyan)) center / 9px 1.5px no-repeat,
+    linear-gradient(var(--cyan), var(--cyan)) center / 1.5px 9px no-repeat;
+}
+details.answer[open] summary::before {
+  background: linear-gradient(var(--cyan), var(--cyan)) center / 9px 1.5px no-repeat;
+}
+details.answer .body { padding: 0 16px 16px; color: #c3d2e6; font-size: 14px; }
+.rev { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.revcard { padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); }
+.revcard h4 { margin: 0 0 8px; color: var(--cyan); font: 13px var(--mono); letter-spacing: .09em; text-transform: uppercase; }
+.revcard ul { margin: 0; padding-left: 18px; color: #c3d2e6; font-size: 13px; }
+footer { padding: 50px 0 70px; color: var(--muted); text-align: center; font-size: 13px; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">SC2005 · Lab 4</span>
+    <h1>Virtual Memory Management</h1>
+    <p class="lede">This lab is one visual idea: <b>an address can be promised before real memory exists</b>.
+      Press the buttons and watch a reservation turn into a physical frame only when the program touches it.</p>
+    <div class="chips">
+      <span class="chip">sbrk = reserve</span>
+      <span class="chip">page fault = first touch</span>
+      <span class="chip">Sv39 = 3 indexes + offset</span>
+      <span class="chip">PTE = key card</span>
+      <span class="chip">guard page = staff-only</span>
+    </div>
+  </div>
+</header>
+<nav class="toc"><div class="wrap">
+  <a href="#howto">How to use</a>
+  <a href="#bigidea">0 · Big idea</a>
+  <a href="#counts">1 · Counts</a>
+  <a href="#sv39">2 · Sv39</a>
+  <a href="#walk">3 · walk()</a>
+  <a href="#fault">4 · Faults</a>
+  <a href="#lazy">5 · Lazy allocation</a>
+  <a href="#cleanup">6 · Cleanup</a>
+  <a href="#syscalls">7 · Syscalls</a>
+  <a href="#answers">8 · Answers</a>
+  <a href="#revision">9 · Revision</a>
+</div></nav>
+<main class="wrap">
+
+<section class="section" id="howto">
+  <div class="section-head"><span class="num">?</span><h2>How to use this guide</h2></div>
+  <p class="sub">Nothing here is a video: you press a button, something changes, and the log tells you what just happened. That is the whole method.</p>
+  <div class="card">
+    <h3>The four moves</h3>
+    <div class="timeline">
+      <div class="timeline-row"><div class="dot">1</div><div class="body"><b>Read the sentence above the panel</b>, then look at the picture. Each section is exactly one idea — do not jump ahead.</div></div>
+      <div class="timeline-row"><div class="dot">2</div><div class="body"><b>Press the buttons left to right.</b> The coloured pill buttons run the demo. Plain buttons are extras (e.g. <i>Touch next page</i>, <i>Auto</i>).</div></div>
+      <div class="timeline-row"><div class="dot">3</div><div class="body"><b>Watch the numbers and the log.</b> The log is the running commentary. <b>Reset ↺</b> puts everything back so you can try again.</div></div>
+      <div class="timeline-row"><div class="dot">4</div><div class="body"><b>Only then open the answers</b> in section 8 — they are the manual's own “You are ready when you can…” bullets, one answer each. If an answer surprises you, jump back and press the buttons again.</div></div>
+    </div>
+    <div class="legend" style="margin-top:14px">
+      <span><i style="background:var(--cyan)"></i>blue = the normal path</span>
+      <span><i style="background:var(--green)"></i>green = correct / succeeds</span>
+      <span><i style="background:var(--amber)"></i>amber = careful, needs a condition</span>
+      <span><i style="background:var(--red)"></i>red = must be rejected</span>
+    </div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3>Suggested order</h3>
+      <table>
+        <tr><th>If you…</th><th>Do this</th></tr>
+        <tr><td>know nothing yet</td><td>0 → 1 → 2 → 3</td></tr>
+        <tr><td>need page faults</td><td>4 → 5</td></tr>
+        <tr><td>are debugging cleanup</td><td>6 → 5</td></tr>
+        <tr><td>are about to be asked questions</td><td>8 → 9, then 4 again</td></tr>
+      </table>
+      <p class="small muted" style="margin-bottom:0">Roughly 20 minutes if you press every button once.</p>
+    </div>
+    <div class="card">
+      <h3>Where each control lives</h3>
+      <table>
+        <tr><th>Control</th><th>Section</th></tr>
+        <tr><td><i>Run eager</i> / <i>Run lazy</i> / <i>Touch</i></td><td>1 · Counts</td></tr>
+        <tr><td>Address box + <i>Calculate</i></td><td>2 · Sv39</td></tr>
+        <tr><td><i>Step through walk()</i></td><td>3 · walk()</td></tr>
+        <tr><td>Fault buttons</td><td>4 · Faults</td></tr>
+        <tr><td><i>Step</i> on the timeline</td><td>5 · Lazy allocation</td></tr>
+        <tr><td><i>Free next page</i></td><td>6 · Cleanup</td></tr>
+        <tr><td>Expandable answers</td><td>8 · Answers</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="note green" style="margin-bottom:0"><b>Honest tip:</b> the buttons are not decoration. If you only read the text you get the
+    vocabulary; the state changes are what make the exam sentence make sense.</div>
+</section>
+
+<section class="section" id="bigidea">
+  <div class="section-head"><span class="num">00</span><h2>The hotel picture</h2></div>
+  <p class="sub">A process has an address range. That does not automatically mean every address has a RAM frame behind it.</p>
+  <div class="two">
+    <div class="card">
+      <h3 class="bad">Eager allocation — old behaviour</h3>
+      <div class="flow">
+        <div class="flow-row"><span class="tag">sbrk(30 pages)</span><div class="flow-box amber">reserve address range</div><span class="arrow">→</span></div>
+        <div class="flow-row"><span class="tag">same moment</span><div class="flow-box pink">kalloc 30 data frames</div><span class="arrow">→</span></div>
+        <div class="flow-row"><span class="tag">even unused</span><div class="flow-box">RAM is already occupied</div><span class="arrow">waste</span></div>
+      </div>
+      <div class="note red" style="margin-bottom:0"><b>Promise = room already made.</b> You pay physical memory
+        whether you ever visit the room or not.</div>
+    </div>
+    <div class="card">
+      <h3 class="good">Lazy allocation — Lab 4</h3>
+      <div class="flow">
+        <div class="flow-row"><span class="tag">sbrk(30 pages)</span><div class="flow-box blue">reserve virtual range only</div><span class="arrow">→</span></div>
+        <div class="flow-row"><span class="tag">first access</span><div class="flow-box green">page fault → kalloc 1 frame</div><span class="arrow">→</span></div>
+        <div class="flow-row"><span class="tag">retry</span><div class="flow-box">instruction succeeds</div><span class="arrow">efficient</span></div>
+      </div>
+      <div class="note green" style="margin-bottom:0"><b>Promise = reservation.</b> The bed is made only when
+        the guest opens the door.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>The invariant that changes</h3>
+    <div class="two">
+      <div class="note amber" style="margin:0"><b>Before:</b> reserved address ⇒ mapped frame</div>
+      <div class="note green" style="margin:0"><b>After:</b> reserved address ⇒ maybe a hole; first valid access repairs it</div>
+    </div>
+    <p class="small muted" style="margin:14px 0 0">That is why every old cleanup/counting path must learn to tolerate missing PTEs.</p>
+  </div>
+</section>
+
+<section class="section" id="counts">
+  <div class="section-head"><span class="num">01</span><h2>Virtual pages vs physical frames</h2></div>
+  <p class="sub">Use the simulator as the lab test: reserve 30 pages, then touch one page at a time.</p>
+  <div class="sim" id="count-sim">
+    <div class="simbar">
+      <button class="btn primary" data-count="eager">Run eager</button>
+      <button class="btn green" data-count="lazy">Run lazy</button>
+      <button class="btn" data-touch-one>Touch next page</button>
+      <button class="btn" data-touch-all>Touch all pages</button>
+      <button class="btn" data-count-reset>Reset ↺</button>
+    </div>
+    <div class="stat-grid">
+      <div class="stat blue"><div class="label">virtual pages</div><div class="value" id="count-vp">4</div></div>
+      <div class="stat green"><div class="label">physical frames</div><div class="value" id="count-pp">4</div></div>
+      <div class="stat amber"><div class="label">reserved by sbrk</div><div class="value" id="count-reserved">0</div></div>
+      <div class="stat pink"><div class="label">pages touched</div><div class="value" id="count-touched">0</div></div>
+    </div>
+    <div class="memline" id="count-pages"></div>
+    <div class="log" id="count-log"></div>
+    <div class="note" id="count-verdict" style="margin-bottom:0">Start with <b>Run lazy</b>. Then touch pages and watch PP rise one at a time.</div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3>What each counter means</h3>
+      <table>
+        <tr><th>Thing</th><th>Meaning</th></tr>
+        <tr><td><code>countvp()</code></td><td>Pages in the range <code>[0, p-&gt;sz)</code>, rounded up.</td></tr>
+        <tr><td><code>countpp()</code></td><td>Mapped physical data frames backing that range.</td></tr>
+        <tr><td>page table frame</td><td>Bookkeeping memory holding PTEs; not counted as process data.</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>The expected lab output</h3>
+      <div class="code" style="margin:0"><pre><code data-c>Before: VP=4, PP=4
+After sbrk(122880): VP=34, PP=4
+Success: PP count unchanged
+Touching pages...
+After touching: PP=34</code></pre></div>
+      <p class="small muted" style="margin-bottom:0">122880 bytes = 30 × 4096. VP rises immediately; PP waits for touches.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sv39">
+  <div class="section-head"><span class="num">02</span><h2>Sv39: split one virtual address</h2></div>
+  <p class="sub">A 64-bit virtual address is treated as three 9-bit filing-cabinet indexes plus a 12-bit byte offset.</p>
+  <div class="card">
+    <div class="address" id="address-viz">
+      <div class="level2 selected"><div class="label">L2 index · 9 bits</div><div class="bits">101010101</div></div>
+      <div class="level1"><div class="label">L1 index · 9 bits</div><div class="bits">010101010</div></div>
+      <div class="level0"><div class="label">L0 index · 9 bits</div><div class="bits">111000111</div></div>
+      <div class="offset"><div class="label">offset · 12 bits</div><div class="bits small-bits">0000 0000 0100</div></div>
+    </div>
+    <div class="button-row" style="justify-content:center;margin-top:14px">
+      <button class="btn" data-addr="0">Show L2 index</button>
+      <button class="btn" data-addr="1">Show L1 index</button>
+      <button class="btn" data-addr="2">Show L0 index</button>
+      <button class="btn" data-addr="3">Show byte offset</button>
+    </div>
+    <div class="note" id="addr-note" style="margin-bottom:0"><b>L2:</b> choose which entry in the root page table to inspect.</div>
+  </div>
+  <div class="card">
+    <h3>How do I calculate the indexes?</h3>
+    <p class="small">“Next bit” means <b>the next group of bits when reading from the right-hand side</b>.
+      We do not take one bit at a time: after the 12 offset bits, take the next 9 bits for L0, then the next 9 for L1,
+      then the next 9 for L2.</p>
+    <div class="explain-grid">
+      <div>
+        <div class="formula">offset = (VA &gt;&gt; 0) &amp; 0xFFF<br>L0 = (VA &gt;&gt; 12) &amp; 0x1FF<br>L1 = (VA &gt;&gt; 21) &amp; 0x1FF<br>L2 = (VA &gt;&gt; 30) &amp; 0x1FF</div>
+        <p class="small muted" style="margin-bottom:0"><code>&gt;&gt;</code> moves the wanted bits to the right edge.
+          <code>&amp;</code> keeps only the required number of bits: <code>0xFFF</code> keeps 12; <code>0x1FF</code> keeps 9.</p>
+      </div>
+      <div>
+        <div class="note amber" style="margin:0"><b>Why start on the right?</b> The bottom 12 bits are the byte
+          position inside a page. Page-table lookup happens for the page, so those offset bits are used last.</div>
+        <div class="note green" style="margin:10px 0 0"><b>Memory phrase:</b> strip off 12, then read 9, then 9, then 9.</div>
+      </div>
+    </div>
+    <h3 style="margin-top:22px">Worked example: <code>VA = 0x52345678</code></h3>
+    <p class="small">Write the address as 39 bits and put separators at the boundaries:</p>
+    <div class="bitline"><span class="l2">000000001</span> <span class="l1">010010001</span> <span class="l0">101000101</span> <span class="off">011001111000</span></div>
+    <div class="result-grid">
+      <div class="result-cell"><div class="label">L2 bits 38–30</div><div class="value">000000001₂ = 1</div></div>
+      <div class="result-cell"><div class="label">L1 bits 29–21</div><div class="value">010010001₂ = 145</div></div>
+      <div class="result-cell"><div class="label">L0 bits 20–12</div><div class="value">101000101₂ = 325</div></div>
+      <div class="result-cell"><div class="label">offset bits 11–0</div><div class="value">0x678 = 1656</div></div>
+    </div>
+    <div class="explain-grid" style="margin-top:12px">
+      <div class="formula"><b>Example L1:</b><br>
+        010010001₂<br>
+        = 0×256 + 1×128 + 0×64 + 0×32 + 1×16 + 0×8 + 0×4 + 0×2 + 1×1<br>
+        = 128 + 16 + 1 = <b>145</b>
+      </div>
+      <div class="formula"><b>Example L0:</b><br>
+        101000101₂<br>
+        = 1×256 + 0×128 + 1×64 + 0×32 + 0×16 + 0×8 + 1×4 + 0×2 + 1×1<br>
+        = 256 + 64 + 4 + 1 = <b>325</b>
+      </div>
+    </div>
+    <div class="note" style="margin-bottom:0"><b>Careful:</b> each 9-bit group is converted separately to a decimal
+      table index. The index is not the whole address and it is not a byte address.</div>
+  </div>
+  <div class="card">
+    <h3>Try your own address</h3>
+    <div class="calc-input">
+      <label for="va-input" class="small muted">hex VA</label>
+      <input id="va-input" value="0x52345678" spellcheck="false" aria-label="Virtual address in hexadecimal">
+      <button class="btn primary" data-calculate-va>Calculate indexes</button>
+    </div>
+    <div class="calc-error" id="va-error" role="status"></div>
+    <div class="bitline" id="va-bits">—</div>
+    <div class="result-grid">
+      <div class="result-cell"><div class="label">L2 = bits 38–30</div><div class="value" id="va-l2">—</div></div>
+      <div class="result-cell"><div class="label">L1 = bits 29–21</div><div class="value" id="va-l1">—</div></div>
+      <div class="result-cell"><div class="label">L0 = bits 20–12</div><div class="value" id="va-l0">—</div></div>
+      <div class="result-cell"><div class="label">offset = bits 11–0</div><div class="value" id="va-offset">—</div></div>
+    </div>
+    <div class="log" id="va-log" style="margin-top:12px"></div>
+  </div>
+  <div class="three">
+    <div class="revcard"><h4>12 offset bits</h4><p class="small" style="margin:0">A page is 4096 bytes = 2¹², so the bottom 12 bits choose the byte inside the page.</p></div>
+    <div class="revcard"><h4>9 bits each</h4><p class="small" style="margin:0">One page holds 4096 / 8 = 512 PTEs = 2⁹ entries, so each level needs 9 bits.</p></div>
+    <div class="revcard"><h4>39 total bits</h4><p class="small" style="margin:0">9 + 9 + 9 + 12 = 39. xv6 uses the low half; bits 63–39 must be zero.</p></div>
+  </div>
+  <div class="card">
+    <h3>PTE flags: the key card</h3>
+    <div class="pte">
+      <div class="ppn">PPN bits → physical frame number</div>
+      <div class="flags">permission flags</div>
+    </div>
+    <div style="margin-top:9px">
+      <span class="flag on">V valid</span><span class="flag on">R read</span><span class="flag on">W write</span>
+      <span class="flag">X execute</span><span class="flag on">U user</span>
+    </div>
+    <div class="note amber" style="margin-bottom:0"><b>V only is special.</b> A PTE with <code>PTE_V</code> but
+      no R/W/X is not a data page — it points to another page-table level.</div>
+  </div>
+</section>
+
+<section class="section" id="walk">
+  <div class="section-head"><span class="num">03</span><h2><code>walk()</code>: the filing-cabinet receptionist</h2></div>
+  <p class="sub">It descends levels 2 → 1, then returns the level-0 slot. It does not decide whether that final slot is occupied.</p>
+  <div class="sim" id="walk-sim">
+    <div class="simbar">
+      <button class="btn primary" data-walk-step>Step through walk()</button>
+      <button class="btn" data-walk-auto>Auto ▶▶</button>
+      <button class="btn" data-walk-reset>Reset ↺</button>
+      <span class="spacer"></span><span class="pill" id="walk-mode">alloc = 0 · lookup only</span>
+    </div>
+    <div class="walk">
+      <div class="node" id="walk-l2"><div class="top">level 2</div><div class="main">root[L2]</div><div class="small muted">PTE_V → descend</div></div>
+      <div class="arrow">→</div>
+      <div class="node" id="walk-l1"><div class="top">level 1</div><div class="main">table[L1]</div><div class="small muted">PTE_V → descend</div></div>
+      <div class="arrow">→</div>
+      <div class="node" id="walk-l0"><div class="top">level 0</div><div class="main">slot[L0]</div><div class="small muted">return address</div></div>
+    </div>
+    <div class="big-number cyan"><div class="label">what walk() returned</div><div class="value" id="walk-result">not started</div></div>
+    <div class="log" id="walk-log"></div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3><code>walk(..., 0)</code></h3>
+      <p class="small">Pure lookup. If a level is missing, return <code>0</code>. It allocates nothing.
+        This is what <code>countpp()</code> and lazy cleanup need.</p>
+      <div class="note green" style="margin-bottom:0"><b>Use for asking:</b> “Does a mapping already exist?”</div>
+    </div>
+    <div class="card">
+      <h3><code>walk(..., 1)</code></h3>
+      <p class="small">Build missing page-table pages with <code>kalloc()</code>, then return the leaf slot.
+        This allocates bookkeeping frames, not process data frames.</p>
+      <div class="note amber" style="margin-bottom:0"><b>Use for preparing:</b> “Make the cabinet shelves exist.”</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3><code>walkaddr()</code> adds a permission check</h3>
+    <div class="flow">
+      <div class="flow-row"><span class="tag">walk</span><div class="flow-box">find leaf PTE</div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">check V</span><div class="flow-box">is it valid?</div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">check U</span><div class="flow-box green">is user mode allowed?</div><span class="arrow">→ PA</span></div>
+    </div>
+    <p class="small muted" style="margin-bottom:0">The guard page is valid and backed, but lacks <code>PTE_U</code>.
+      Raw <code>walk()</code> can see it; <code>walkaddr()</code> rejects it.</p>
+  </div>
+</section>
+
+<section class="section" id="fault">
+  <div class="section-head"><span class="num">04</span><h2>Page faults: classify before allocating</h2></div>
+  <p class="sub">A fault is not automatically “please give me a page.” The kernel must decide whether the address is a valid lazy hole, a protected page, or nonsense.</p>
+  <div class="sim" id="fault-sim">
+    <div class="simbar">
+      <button class="btn primary" data-fault="heap-read">Heap hole · load</button>
+      <button class="btn primary" data-fault="heap-write">Heap hole · store</button>
+      <button class="btn warn" data-fault="guard">Stack guard</button>
+      <button class="btn" data-fault="outside">Outside p-&gt;sz</button>
+      <button class="btn" data-fault-reset>Reset ↺</button>
+    </div>
+    <div class="two">
+      <div class="fault-box" id="fault-input">
+        <h4>incoming trap</h4>
+        <p id="fault-scause">scause = —</p>
+        <p id="fault-va">stval (fault address) = —</p>
+        <p id="fault-pte">PTE state = —</p>
+      </div>
+      <div class="fault-box" id="fault-decision">
+        <h4>usertrap() decision</h4>
+        <p id="fault-condition">Choose a fault above.</p>
+      </div>
+    </div>
+    <div class="decision">
+      <div class="branch" id="branch-valid"><div class="title">valid lazy hole</div><div class="result">kalloc → memset → mappages → retry</div></div>
+      <div class="branch" id="branch-protected"><div class="title">present but protected</div><div class="result">setkilled → exit</div></div>
+      <div class="branch" id="branch-invalid"><div class="title">outside reservation</div><div class="result">diagnostic → setkilled → exit</div></div>
+    </div>
+    <div class="log" id="fault-log"></div>
+  </div>
+  <div class="card">
+    <h3>The three-way test in code</h3>
+    <div class="code"><pre><code data-c>if (va &lt; p-&gt;sz &amp;&amp; va &lt; MAXVA) {
+  pte = walk(p-&gt;pagetable, va, 0);
+  if (pte == 0 || (*pte &amp; PTE_V) == 0)
+    lazy = 1;                 // reserved, but no mapping yet
+}
+
+if (lazy)
+  kalloc() + memset() + mappages(..., PTE_W|PTE_R|PTE_U);
+else
+  setkilled(p);               // guard page or wild address</code></pre></div>
+    <div class="note amber" style="margin-bottom:0"><b>Important:</b> <code>sepc</code> is not advanced.
+      After the new PTE exists, the faulting instruction is retried and succeeds.</div>
+  </div>
+</section>
+
+<section class="section" id="lazy">
+  <div class="section-head"><span class="num">05</span><h2>First touch: repair the missing mapping</h2></div>
+  <p class="sub">This is the exact lifecycle of writing to a reserved but unmapped heap page.</p>
+  <div class="sim" id="lazy-sim">
+    <div class="simbar">
+      <button class="btn primary" data-lazy-step>Step ▶</button>
+      <button class="btn" data-lazy-auto>Auto ▶▶</button>
+      <button class="btn" data-lazy-reset>Reset ↺</button>
+      <span class="spacer"></span><span class="pill" id="lazy-status">ready</span>
+    </div>
+    <div class="timeline" id="lazy-timeline">
+      <div class="timeline-row"><div class="dot">1</div><div class="body"><b>User instruction:</b> store to address <code>0x8000</code>.</div></div>
+      <div class="timeline-row"><div class="dot">2</div><div class="body"><b>Hardware trap:</b> scause 15 (store page fault), stval = <code>0x8000</code>.</div></div>
+      <div class="timeline-row"><div class="dot">3</div><div class="body"><b>Classify:</b> address is below <code>p-&gt;sz</code>, and its PTE is absent.</div></div>
+      <div class="timeline-row"><div class="dot">4</div><div class="body"><b>Allocate:</b> <code>kalloc()</code> gets a frame; <code>memset()</code> zeros it.</div></div>
+      <div class="timeline-row"><div class="dot">5</div><div class="body"><b>Map:</b> <code>mappages()</code> installs a leaf PTE with <code>R|W|U|V</code>.</div></div>
+      <div class="timeline-row"><div class="dot">6</div><div class="body"><b>Return:</b> sepc stays unchanged, so the original store is retried.</div></div>
+    </div>
+    <div class="two">
+      <div class="big-number cyan"><div class="label">physical frames</div><div class="value" id="lazy-pp">4</div></div>
+      <div class="big-number"><div class="label">PTE for 0x8000</div><div class="value" id="lazy-pte">absent</div></div>
+    </div>
+    <div class="log" id="lazy-log"></div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3>Why zero the frame?</h3>
+      <p class="small">A newly allocated physical page may contain old bytes from another process.
+        <code>memset(mem, 0, PGSIZE)</code> prevents the new user page from exposing stale data.</p>
+    </div>
+    <div class="card">
+      <h3>Why map the rounded address?</h3>
+      <p class="small"><code>stval</code> may point anywhere inside the page. <code>PGROUNDDOWN(va)</code>
+        finds the page boundary so the whole 4096-byte page gets one PTE.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cleanup">
+  <div class="section-head"><span class="num">06</span><h2>Holes are normal during cleanup</h2></div>
+  <p class="sub">Lazy allocation creates reserved pages that were never touched. Unmapping must skip holes instead of panicking.</p>
+  <div class="sim" id="cleanup-sim">
+    <div class="simbar">
+      <button class="btn primary" data-clean-step>Free next page ▶</button>
+      <button class="btn" data-clean-all>Free all ▶▶</button>
+      <button class="btn" data-clean-reset>Reset ↺</button>
+    </div>
+    <div class="memline" id="cleanup-pages"></div>
+    <div class="stat-grid">
+      <div class="stat blue"><div class="label">reserved pages</div><div class="value" id="clean-vp">10</div></div>
+      <div class="stat green"><div class="label">mapped frames</div><div class="value" id="clean-pp">4</div></div>
+      <div class="stat amber"><div class="label">holes skipped</div><div class="value" id="clean-holes">0</div></div>
+      <div class="stat pink"><div class="label">panic?</div><div class="value" id="clean-panic">no</div></div>
+    </div>
+    <div class="log" id="cleanup-log"></div>
+  </div>
+  <div class="card">
+    <h3>Why only two panics become <code>continue</code>?</h3>
+    <table>
+      <tr><th>Condition</th><th>Meaning</th><th>Action</th></tr>
+      <tr><td><code>walk(...) == 0</code></td><td>No lower page table exists: untouched lazy region.</td><td class="good">continue</td></tr>
+      <tr><td><code>!(*pte &amp; PTE_V)</code></td><td>Leaf slot exists but is empty: another untouched hole.</td><td class="good">continue</td></tr>
+      <tr><td><code>PTE_FLAGS(*pte) == PTE_V</code></td><td>Valid non-leaf points to a lower table; caller made a structural mistake.</td><td class="bad">panic</td></tr>
+    </table>
+    <div class="note green" style="margin-bottom:0"><b>Hole = normal.</b> Non-leaf where a leaf should be = bug.</div>
+  </div>
+</section>
+
+<section class="section" id="syscalls">
+  <div class="section-head"><span class="num">07</span><h2>How the new counting syscalls travel</h2></div>
+  <p class="sub"><code>countvp()</code> and <code>countpp()</code> are ordinary xv6 syscalls. The interesting work is in the kernel handlers.</p>
+  <div class="card">
+    <div class="flow">
+      <div class="flow-row"><span class="tag">user</span><div class="flow-box">lazytest.c calls <code>countvp()</code> / <code>countpp()</code></div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">stub</span><div class="flow-box">usys.pl generates an <code>ecall</code> stub</div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">dispatch</span><div class="flow-box amber">syscall number indexes <code>syscalls[]</code></div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">handler</span><div class="flow-box green"><code>sys_countvp()</code> or <code>sys_countpp()</code></div><span class="arrow">→</span></div>
+      <div class="flow-row"><span class="tag">answer</span><div class="flow-box pink">return VP count or mapped-frame count</div><span class="arrow">done</span></div>
+    </div>
+  </div>
+  <div class="two">
+    <div class="card">
+      <h3><code>countvp()</code></h3>
+      <div class="code" style="margin:0"><pre><code data-c>return PGROUNDUP(myproc()-&gt;sz) / PGSIZE;</code></pre></div>
+      <p class="small muted" style="margin-bottom:0">A partly used final page still counts as one virtual page.</p>
+    </div>
+    <div class="card">
+      <h3><code>countpp()</code></h3>
+      <div class="code" style="margin:0"><pre><code data-c>pte = walk(p-&gt;pagetable, a, 0);
+if (pte == 0 || !(*pte &amp; PTE_V)) continue;
+if (PTE_FLAGS(*pte) == PTE_V) continue;
+n++;</code></pre></div>
+      <p class="small muted" style="margin-bottom:0">Count only valid leaf mappings; skip missing tables, holes, and non-leaf entries.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>File map: what changed</h3>
+    <table>
+      <tr><th>File</th><th>Role</th></tr>
+      <tr><td><code>kernel/proc.c</code></td><td><code>growproc(n &gt; 0)</code> moves <code>p-&gt;sz</code> without <code>uvmalloc()</code>.</td></tr>
+      <tr><td><code>kernel/trap.c</code></td><td>Repairs valid load/store faults; kills protected or invalid accesses.</td></tr>
+      <tr><td><code>kernel/vm.c</code></td><td><code>uvmunmap()</code> skips holes, but still panics on non-leaf misuse.</td></tr>
+      <tr><td><code>kernel/sysproc.c</code></td><td>Adds <code>sys_countvp()</code> and <code>sys_countpp()</code>.</td></tr>
+      <tr><td><code>kernel/syscall.h/.c</code>, <code>user/usys.pl</code></td><td>Wires syscall numbers and generated user stubs.</td></tr>
+      <tr><td><code>user/lazytest.c</code></td><td>Measures reservation first, then physical frames after touching.</td></tr>
+      <tr><td><code>user/fault.c</code></td><td>Negative control: access one page outside the reserved range; it must die.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="answers">
+  <div class="section-head"><span class="num">08</span><h2>Checkpoints: question, then answer</h2></div>
+  <p class="sub">Every bullet below is copied verbatim from the <b>Lab 4 manual</b>, under its own
+    “You are ready when you can:” heading. The manual phrases each checkpoint as a capability, so read it as a question:
+    “can you do this?” Answer out loud first, then open the answer.</p>
+
+  <div class="checkpoint">
+    <h3>Checkpoint 0 — Orient yourself before editing</h3>
+    <ol class="qa-list">
+
+      <li>
+        <p class="q">Confirm that the checkout is on <code>lab4</code> and boots to the xv6 shell.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li><code>git checkout lab4</code>, then <code>git branch --show-current</code> must print <code>lab4</code>.</li>
+            <li><code>make qemu</code> must reach the shell: <code>xv6 kernel is booting</code>, the <code>hart … starting</code> lines, then <code>init: starting sh</code>.</li>
+            <li>Quit with <code>Ctrl-a x</code>. If the branch is wrong, every later count is meaningless — check this first.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Locate <code>sys_sbrk()</code>, <code>walk()</code>, <code>usertrap()</code>, and the two placeholders in <code>lazytest.c</code>.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <table>
+            <tr><th>Item</th><th>File</th><th>What it does</th></tr>
+            <tr><td><code>sys_sbrk()</code></td><td><code>kernel/sysproc.c</code></td><td>reads <code>n</code>, saves the old <code>p-&gt;sz</code>, calls <code>growproc(n)</code></td></tr>
+            <tr><td><code>walk()</code></td><td><code>kernel/vm.c</code></td><td>descends Sv39 levels 2 → 1, returns the level-0 slot</td></tr>
+            <tr><td><code>usertrap()</code></td><td><code>kernel/trap.c</code></td><td>handles syscalls, device interrupts, and exceptions from user mode</td></tr>
+            <tr><td>placeholders</td><td><code>user/lazytest.c</code></td><td><code>countvp()</code> and <code>countpp()</code> defined in user space, both returning <code>0</code></td></tr>
+          </table>
+          <p>The placeholders are the trap: while they exist, the test never reaches your kernel syscalls.</p>
+        </div></details>
+      </li>
+
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Checkpoint 1 — Explain address translation and allocation</h3>
+    <ol class="qa-list">
+
+      <li>
+        <p class="q">Distinguish and give definitions of a virtual address, a PTE, and a physical frame.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <table>
+            <tr><th></th><th>Virtual address</th><th>PTE</th><th>Physical frame</th></tr>
+            <tr><td>Definition</td><td>the address the program uses; the CPU translates it before touching RAM</td><td>8-byte page-table entry holding a physical page number plus permission flags</td><td>a 4096-byte block of real RAM</td></tr>
+            <tr><td>Created by</td><td><code>sbrk()</code> moving <code>p-&gt;sz</code></td><td><code>mappages()</code></td><td><code>kalloc()</code></td></tr>
+          </table>
+          <p>Sv39 splits the virtual address into <b>9 / 9 / 9 / 12</b> bits: L2 index, L1 index, L0 index, then the byte offset inside the page.</p>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Explain what <code>walk()</code> may allocate and how that differs from allocating heap data.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li>With <code>alloc = 1</code>, <code>walk()</code> may <code>kalloc()</code> <b>page-table pages</b> — bookkeeping that stores PTEs — and marks the parent entry <code>PTE_V</code> only.</li>
+            <li>Heap data comes from an explicit <code>kalloc()</code> in <code>uvmalloc()</code>, whose frame is then installed as a <b>leaf</b> PTE with <code>R|W|U</code>.</li>
+            <li>So <code>walk()</code> builds cabinet shelves; it never puts the document in the drawer. Counting one as the other is a real bug.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Trace a positive <code>sbrk()</code> request and identify where eager allocation occurs.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <div class="formula">ecall → <b>syscall()</b> → <b>sys_sbrk()</b> → <b>growproc(n)</b> → <b>uvmalloc()</b> → <b>kalloc()</b> + <code>memset</code> + <b>mappages()</b></div>
+          <p>Eager allocation happens inside <code>uvmalloc()</code>'s loop: one <code>kalloc()</code> per page, before the program has touched anything. That is why <code>PP</code> rises together with <code>VP</code> at the moment <code>sbrk()</code> returns.</p>
+        </div></details>
+      </li>
+
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Checkpoint 2 — Defend the page and frame counts</h3>
+    <ol class="qa-list">
+
+      <li>
+        <p class="q">Explain the counting boundary and the treatment of the guard page.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li><b>Boundary:</b> both counters describe <code>[0, p-&gt;sz)</code>, rounded up to a page — code, data, heap, user stack, and the stack guard page.</li>
+            <li><b>Guard page:</b> <code>exec()</code> allocates <code>USERSTACK+1</code> pages and calls <code>uvmclear()</code> on the lowest, clearing <code>PTE_U</code> but keeping <code>PTE_V</code> and the frame.</li>
+            <li>So the guard page <b>is</b> counted by <code>countpp()</code>: the frame exists and must later be freed, even though user mode cannot touch it.</li>
+            <li><b>Excluded:</b> page-table frames, plus <code>TRAMPOLINE</code> and <code>TRAPFRAME</code>, which sit near <code>MAXVA</code>, far above <code>p-&gt;sz</code>.</li>
+            <li>This is why the counter uses raw <code>walk()</code>: <code>walkaddr()</code> rejects <code>!PTE_U</code> and would drop the guard page.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Show that <code>lazytest</code> reaches your system calls rather than its former placeholders.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li>The supplied <code>lazytest.c</code> used to define its own <code>countvp()</code>/<code>countpp()</code> returning <code>0</code>. While they exist, the compiler binds the calls to them and your kernel handlers never run.</li>
+            <li><b>Fix:</b> delete both placeholder definitions from <code>lazytest.c</code>. The only remaining definition is the generated stub in <code>usys.S</code>, produced from <code>entry("countvp")</code> in <code>usys.pl</code>.</li>
+            <li><b>Evidence it reached the kernel:</b> the output prints <code>Before: VP=4, PP=4</code>. Placeholders would print <code>VP=0, PP=0</code>.</li>
+            <li>Second piece of evidence: <code>usys.S</code> now contains <code>li a7, SYS_countvp</code> / <code>SYS_countpp</code>, and <code>syscalls[]</code> in <code>syscall.c</code> has entries at those numbers.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Explain the eager-allocation counts within one run of the test.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <div class="code" style="margin:0 0 10px"><pre><code data-c>Before: VP=4, PP=4
+After sbrk(122880): VP=34, PP=34      ← eager: both rise
+After touching: PP=34                 ← no change, nothing was left to fault</code></pre></div>
+          <ul>
+            <li><b>Before 4/4:</b> two program pages (text/data), one guard page, one user stack page (<code>USERSTACK</code> is 1). <code>PP = VP</code> because every page is backed.</li>
+            <li><b>After sbrk:</b> +30 virtual pages and +30 frames <b>at once</b>, because <code>uvmalloc()</code> mapped them all.</li>
+            <li><b>After touching:</b> unchanged — the pages were already mapped, so no faults occur.</li>
+            <li>Quote this as the flaw the lab removes: 30 frames are committed before a single byte is used.</li>
+          </ul>
+        </div></details>
+      </li>
+
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Checkpoint 3 — Explain the fault path</h3>
+    <ol class="qa-list">
+
+      <li>
+        <p class="q">Demonstrate a load or store fault and distinguish its address from the instruction address.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li>Run <code>fault read</code> or <code>fault write</code> in the xv6 shell. Both must terminate the process.</li>
+            <li><b><code>stval</code> = the faulting data address</b> — the memory the load or store tried to reach.</li>
+            <li><b><code>sepc</code> = the faulting instruction address</b> — the program counter of the <code>lw</code>/<code>sb</code> that caused it.</li>
+            <li><code>scause</code> tells you which: <b>13</b> load page fault, <b>15</b> store page fault.</li>
+          </ul>
+          <p>Say it as: <i>stval is what it touched, sepc is where it stood.</i></p>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Explain why <code>fault</code> selects an unallocated page and how its printed target relates to the kernel diagnostic.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li><code>fault.c</code> calls <code>sbrk(0)</code>, which only <b>reports</b> the break — <code>n == 0</code> changes nothing, so no space is reserved.</li>
+            <li>It then targets <code>PGROUNDUP(end)</code>: the first page boundary at or past the break, which is outside the process.</li>
+            <li>The printed <code>target</code> is exactly the value that appears as <code>stval</code> in the kernel's diagnostic — same address, one from user space and one from the trap.</li>
+            <li>Because <code>va &gt;= p-&gt;sz</code>, this stays invalid even after lazy allocation: it must be killed, never repaired.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Trace trap entry and explain the shared trampoline mapping.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <div class="flow" style="margin:10px 0">
+            <div class="flow-row"><span class="tag">trap</span><div class="flow-box">CPU jumps to <code>uservec</code> at <code>TRAMPOLINE</code></div><span class="arrow">→</span></div>
+            <div class="flow-row"><span class="tag">save</span><div class="flow-box">saves user registers into the trapframe; loads kernel <code>sp</code>, <code>satp</code>, and the <code>usertrap</code> address from it</div><span class="arrow">→</span></div>
+            <div class="flow-row"><span class="tag">switch</span><div class="flow-box amber">writes <code>satp</code> to the kernel page table and jumps to <code>usertrap()</code></div><span class="arrow">→</span></div>
+            <div class="flow-row"><span class="tag">return</span><div class="flow-box green"><code>usertrapret()</code> → <code>userret</code> restores <code>satp</code> and registers, then <code>sret</code></div><span class="arrow">→</span></div>
+          </div>
+          <ul>
+            <li>The trampoline is mapped at the <b>same virtual address in both page tables</b>, so the instruction being executed stays valid across the <code>satp</code> switch.</li>
+            <li>That is why the switch can happen at all: without an identity-mapped region, the next instruction fetch would fault.</li>
+          </ul>
+        </div></details>
+      </li>
+
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Checkpoint 4 — Explain allocation on demand</h3>
+    <ol class="qa-list">
+
+      <li>
+        <p class="q">Show reservation without immediate physical allocation, followed by allocation on first touch.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <div class="code" style="margin:0 0 10px"><pre><code data-c>Before: VP=4, PP=4
+After sbrk(122880): VP=34, PP=4      ← reserved only
+After touching: PP=34                 ← one frame per first touch</code></pre></div>
+          <ul>
+            <li>In <code>growproc()</code>, the <code>n &gt; 0</code> branch stops calling <code>uvmalloc()</code> and only moves <code>p-&gt;sz</code>.</li>
+            <li>The first load or store to each reserved page faults; <code>usertrap()</code> allocates one zeroed frame and maps it.</li>
+            <li><code>VP</code> rises by 30 immediately; <code>PP</code> rises one at a time as pages are touched.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Explain how the handler distinguishes a missing heap page from a protection fault.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <p>All three conditions must hold for a lazy repair:</p>
+          <div class="formula">scause == 13 or 15<br>
+            va = r_stval(); &nbsp; va &lt; p-&gt;sz &nbsp;&amp;&amp;&nbsp; va &lt; MAXVA<br>
+            pte = walk(p-&gt;pagetable, va, 0); &nbsp; pte == 0 || !(*pte &amp; PTE_V)</div>
+          <table>
+            <tr><th>Case</th><th>Test result</th><th>Action</th></tr>
+            <tr><td>untouched heap page</td><td>below <code>p-&gt;sz</code>, no valid PTE</td><td class="good">allocate + map + retry</td></tr>
+            <tr><td>stack guard page</td><td>PTE valid but <code>PTE_U</code> cleared</td><td class="bad">kill — it is protection, not absence</td></tr>
+            <tr><td>wild pointer</td><td><code>va &gt;= p-&gt;sz</code></td><td class="bad">kill — never promised</td></tr>
+          </table>
+          <p>The distinction is <b>absence inside the promise</b> versus <b>presence with denied permission</b> or <b>outside the promise</b>.</p>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Explain why a repaired page fault retries the same instruction.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li>The trap saved the user PC in the trapframe, and <code>usertrapret()</code> restores it into <code>sepc</code>.</li>
+            <li><code>usertrap()</code> never advances <code>sepc</code>, so <code>sret</code> returns to the <b>same</b> <code>lw</code>/<code>sw</code>.</li>
+            <li>On the retry the PTE exists, translation succeeds, and the access completes — the program never observes the fault.</li>
+            <li>If you advanced <code>sepc</code>, you would <b>skip</b> the access: the write would silently vanish and the register would hold garbage.</li>
+          </ul>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">Show that a partially touched heap can be released without a panic.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <p>Reserved-but-untouched pages are normal, so <code>uvmunmap()</code> must skip them:</p>
+          <table>
+            <tr><th>Situation</th><th>Meaning</th><th>Action</th></tr>
+            <tr><td><code>walk(..., 0) == 0</code></td><td>no lower page table exists</td><td class="good">continue</td></tr>
+            <tr><td><code>!(*pte &amp; PTE_V)</code></td><td>empty leaf slot</td><td class="good">continue</td></tr>
+            <tr><td><code>PTE_FLAGS(*pte) == PTE_V</code></td><td>valid non-leaf where a leaf was expected</td><td class="bad">panic — structural bug</td></tr>
+          </table>
+          <p>Demonstrate by touching a few pages, then calling <code>sbrk(-n)</code> or exiting: the hole pages are skipped, the mapped ones are freed, and no panic appears. The old code panicked on exactly these holes.</p>
+        </div></details>
+      </li>
+
+      <li>
+        <p class="q">State why lazy allocation saves memory when reserved pages remain unused, and identify the test's limits.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li><b>Why it saves:</b> a frame is committed only for a page that is actually touched. Unused reserved pages cost <code>p-&gt;sz</code> arithmetic and nothing else, so a process can reserve a large heap cheaply.</li>
+            <li><b>Limit 1:</b> <code>lazytest</code> touches <i>every</i> page, so its own run ends with <code>PP = VP</code> — it proves the timing of allocation, not long-run savings.</li>
+            <li><b>Limit 2:</b> the final <code>Success: PP count increased after touching pages</code> is a false positive on an eager kernel: the check is <code>pp_after_touch - pp_before &gt;= 30</code>, which is <code>34 - 4</code> from the <code>sbrk()</code> moment. Only the <i>After sbrk</i> line proves laziness.</li>
+            <li><b>Limit 3:</b> the test says nothing about fragmentation, swapping, or multi-process pressure.</li>
+          </ul>
+        </div></details>
+      </li>
+
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Optional discussion — Stack growth</h3>
+    <ol class="qa-list">
+      <li>
+        <p class="q">How would you recognize legitimate downward stack growth, allocate new stack pages, and retain a guard page that detects overflow? Relate your answer to the fixed stack and guard-page setup in <code>exec()</code>.</p>
+        <details class="answer"><summary>Show answer</summary><div class="body">
+          <ul>
+            <li><b>Recognise:</b> a store fault whose address is <i>just below</i> the current stack bottom, within a bounded window (say one page plus slack), and <b>strictly above</b> the guard page. Compare against a stored stack-low bound, not against <code>p-&gt;sz</code>, which also covers the heap.</li>
+            <li><b>Allocate:</b> <code>kalloc()</code>, zero, <code>mappages()</code> with <code>R|W|U</code>, and move the stack-low bound down — one page at a time, exactly like the heap repair.</li>
+            <li><b>Retain the guard:</b> never allocate the page at or below the guard address. A fault <i>inside</i> the guard page means overflow, so kill rather than grow; otherwise the guard is defeated and overflow silently corrupts data.</li>
+            <li><b>In <code>exec()</code>:</b> the stack is fixed — <code>USERSTACK+1</code> pages are mapped and <code>uvmclear()</code> clears <code>PTE_U</code> on the lowest, which is why the current design cannot grow at all. Adding growth means tracking a stack-low bound in <code>struct proc</code> and bounding total growth.</li>
+          </ul>
+          <p>This is a discussion question, not a code requirement — say the mechanism and the guard-page rule, and stop.</p>
+        </div></details>
+      </li>
+    </ol>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Traps that cost marks <span class="pill" style="margin-left:8px">not from the manual</span></h3>
+    <details class="answer"><summary>Show the five traps</summary><div class="body"><ul>
+      <li>Allocating a frame for every fault without checking <code>va &lt; p-&gt;sz</code> turns wild pointers into valid memory.</li>
+      <li>Allocating over a present guard PTE turns stack overflow into silent corruption.</li>
+      <li>Counting page-table frames as process frames confuses the cabinet with the room.</li>
+      <li>Using <code>walkaddr()</code> for <code>countpp()</code> drops the guard page because it has no <code>PTE_U</code>.</li>
+      <li>Advancing <code>sepc</code> skips the user's instruction instead of retrying it.</li>
+    </ul></div></details>
+  </div>
+</section>
+
+<section class="section" id="revision">
+  <div class="section-head"><span class="num">09</span><h2>One-screen revision card</h2></div>
+  <p class="sub">The shapes to remember for the checkpoint.</p>
+  <div class="rev">
+    <div class="revcard"><h4>reservation</h4><ul><li><code>sbrk</code> moves <code>p-&gt;sz</code></li><li>virtual pages can be holes</li><li>VP count rises immediately</li></ul></div>
+    <div class="revcard"><h4>first touch</h4><ul><li>load/store fault enters kernel</li><li>valid hole gets one frame</li><li>retry same instruction</li></ul></div>
+    <div class="revcard"><h4>Sv39</h4><ul><li>9 / 9 / 9 / 12 bits</li><li>L2 → L1 → L0 → offset</li><li>V-only PTE = next table</li></ul></div>
+    <div class="revcard"><h4>guard page</h4><ul><li>backed but no <code>PTE_U</code></li><li>must not be lazily allocated</li><li>overflow kills process</li></ul></div>
+    <div class="revcard"><h4>cleanup</h4><ul><li>holes are normal</li><li>skip absent/invalid leaves</li><li>panic on non-leaf misuse</li></ul></div>
+    <div class="revcard"><h4>the sentence</h4><ul><li><b>Reserve now; materialise on first valid use; reject everything outside the promise.</b></li></ul></div>
+  </div>
+  <div class="note green"><b>Lab 3 connection:</b> Lab 3 fixed a gap between checking and acting. Lab 4 makes the same move for memory:
+    classify the gap, repair it only when valid, and re-check the invariant everywhere else.</div>
+</section>
+</main>
+<footer>SC2005 · Lab 4 visual companion — based on the source tree in <code>xv6-lab4/</code>.</footer>
+<script>
+(() => {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const keywords = new Set(['void','int','char','struct','while','if','else','return','for','const','uint','uint64','static','sizeof','pte_t']);
+  function highlight(src) {
+    const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|(\b0x[0-9a-fA-F]+\b|\b\d+\b)|([A-Za-z_]\w*)/g;
+    let out = '', last = 0, m;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      out += m[1] ? `<span class="c">${esc(m[1])}</span>` :
+        m[2] ? `<span class="s">${esc(m[2])}</span>` :
+        m[3] ? `<span class="n">${esc(m[3])}</span>` :
+        keywords.has(m[4]) ? `<span class="k">${esc(m[4])}</span>` : esc(m[4]);
+      last = m.index + m[0].length;
+    }
+    return out + esc(src.slice(last));
+  }
+  $$('code[data-c]').forEach(el => { el.innerHTML = highlight(el.textContent); });
+
+  /* Reservation and first-touch counter. */
+  (() => {
+    const pagesEl = $('#count-pages'), log = $('#count-log'), verdict = $('#count-verdict');
+    let mode = 'lazy', reserved = 0, touched = 0, timer;
+    function render() {
+      $('#count-vp').textContent = 4 + reserved;
+      $('#count-pp').textContent = 4 + (mode === 'eager' ? reserved : touched);
+      $('#count-reserved').textContent = reserved;
+      $('#count-touched').textContent = touched;
+      pagesEl.innerHTML = Array.from({length: 30}, (_, i) =>
+        `<div class="page ${i < touched ? 'mapped' : i < reserved ? 'reserved' : ''}"><span class="pg-label">p${i}</span>${i < touched ? 'RAM' : i < reserved ? '—' : ''}</div>`).join('');
+      if (mode === 'eager') verdict.innerHTML = '<b class="bad">Eager:</b> all reserved pages already have frames. Touching changes nothing.';
+      else if (!reserved) verdict.innerHTML = 'Click <b>Run lazy</b> to reserve 30 pages without allocating their frames.';
+      else if (touched < reserved) verdict.innerHTML = `<b class="good">Lazy:</b> ${reserved - touched} reserved pages are still holes. Touch the next one.`;
+      else verdict.innerHTML = '<b class="good">Lazy verified:</b> every reserved page has now been materialised.';
+    }
+    function add(text, cls = '') { const d = document.createElement('div'); d.className = cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; }
+    function reset() { clearInterval(timer); mode = 'lazy'; reserved = 0; touched = 0; log.innerHTML = ''; add('Initial process: VP=4, PP=4.', 'dim'); render(); }
+    function run(next) {
+      clearInterval(timer); mode = next; reserved = 30; touched = next === 'eager' ? 30 : 0; log.innerHTML = '';
+      add(`sbrk(122880): reserved ${reserved} virtual pages.`, 'a');
+      add(next === 'eager' ? 'uvmalloc: kalloc + mappages for all 30 pages.' : 'growproc: moved p->sz only; no data frames yet.', next === 'eager' ? 'bad' : 'ok');
+      render();
+    }
+    function touch() {
+      if (!reserved || touched >= reserved) return;
+      touched++;
+      add(`Touch page ${touched - 1}: ${mode === 'lazy' ? 'fault → kalloc 1 frame → map → retry.' : 'already mapped; no new frame.'}`, mode === 'lazy' ? 'ok' : 'dim');
+      render();
+    }
+    $$('[data-count]').forEach(b => b.addEventListener('click', () => run(b.dataset.count)));
+    $('[data-touch-one]').addEventListener('click', touch);
+    $('[data-touch-all]').addEventListener('click', () => { while (touched < reserved) touch(); });
+    $('[data-count-reset]').addEventListener('click', reset);
+    reset();
+  })();
+
+  /* Address bit-field selector. */
+  (() => {
+    const notes = [
+      '<b>L2:</b> choose which entry in the root page table to inspect.',
+      '<b>L1:</b> use the next 9 bits to choose an entry in the level-1 table.',
+      '<b>L0:</b> use the next 9 bits to choose the final leaf PTE slot.',
+      '<b>Offset:</b> choose the byte inside the 4096-byte physical page.'
+    ];
+    $$('[data-addr]').forEach(b => b.addEventListener('click', () => {
+      const i = Number(b.dataset.addr);
+      $$('.address > div').forEach((el, n) => el.classList.toggle('selected', n === i));
+      $('#addr-note').innerHTML = notes[i];
+    }));
+  })();
+
+  /* Sv39 index calculator. */
+  (() => {
+    const maxva = 1n << 39n;
+    const fields = [
+      ['va-l2', 30n, 0x1ffn],
+      ['va-l1', 21n, 0x1ffn],
+      ['va-l0', 12n, 0x1ffn],
+      ['va-offset', 0n, 0xfffn]
+    ];
+    function calculate() {
+      const input = $('#va-input').value.trim();
+      const error = $('#va-error');
+      let va;
+      try {
+        if (!/^0x[0-9a-f]+$/i.test(input)) throw new Error('Use hexadecimal, for example 0x52345678.');
+        va = BigInt(input);
+        if (va < 0n || va >= maxva) throw new Error('Use a Sv39 address from 0x0 up to (but not including) 0x8000000000.');
+      } catch (e) {
+        error.textContent = e.message;
+        $('#va-bits').textContent = '—';
+        fields.forEach(([id]) => { $('#' + id).textContent = '—'; });
+        return;
+      }
+      error.textContent = '';
+      const bits = va.toString(2).padStart(39, '0');
+      $('#va-bits').innerHTML = `<span class="l2">${bits.slice(0, 9)}</span> <span class="l1">${bits.slice(9, 18)}</span> <span class="l0">${bits.slice(18, 27)}</span> <span class="off">${bits.slice(27)}</span>`;
+      fields.forEach(([id, shift, mask]) => {
+        const value = (va >> shift) & mask;
+        $('#' + id).textContent = `${value} (0x${value.toString(16)})`;
+      });
+      $('#va-log').innerHTML = `<div class="ok">Split from the right: 12 offset bits → 9 L0 bits → 9 L1 bits → 9 L2 bits.</div><div class="a">The indexes are table-entry numbers, so each is between 0 and 511.</div>`;
+    }
+    $('[data-calculate-va]').addEventListener('click', calculate);
+    $('#va-input').addEventListener('keydown', e => { if (e.key === 'Enter') calculate(); });
+    calculate();
+  })();
+
+  /* walk() stepper. */
+  (() => {
+    const steps = [
+      ['walk-l2', 'L2 index: root PTE is valid → descend to level-1 table.'],
+      ['walk-l1', 'L1 index: next PTE is valid → descend to level-0 table.'],
+      ['walk-l0', 'L0 index: return the address of this leaf slot. Do not assume it is valid.'],
+      [null, 'Caller now checks *pte & PTE_V. walk() succeeding did not create a data mapping.']
+    ];
+    let i = 0, timer;
+    function render() {
+      $$('.walk .node').forEach(el => el.classList.remove('active'));
+      if (i) {
+        const node = steps[Math.min(i - 1, steps.length - 1)][0];
+        if (node) $('#' + node).classList.add('active');
+      }
+      $('#walk-result').textContent = i >= 3 ? 'leaf PTE slot' : i ? 'descending…' : 'not started';
+    }
+    function step() {
+      if (i >= steps.length) return;
+      const row = steps[i++];
+      const d = document.createElement('div'); d.className = i === 4 ? 'ok' : 'a'; d.textContent = row[1];
+      $('#walk-log').appendChild(d); $('#walk-log').scrollTop = $('#walk-log').scrollHeight; render();
+    }
+    function reset() { clearInterval(timer); i = 0; $('#walk-log').innerHTML = ''; render(); }
+    $('[data-walk-step]').addEventListener('click', step);
+    $('[data-walk-auto]').addEventListener('click', () => { clearInterval(timer); timer = setInterval(() => { if (i >= steps.length) clearInterval(timer); else step(); }, 900); });
+    $('[data-walk-reset]').addEventListener('click', reset);
+    reset();
+  })();
+
+  /* Fault classification playground. */
+  (() => {
+    const cases = {
+      'heap-read': ['scause = 13 · load page fault', 'stval = 0x8000 · below p->sz', 'PTE = absent / invalid leaf', 'valid', 'Lazy heap read: allocate a zeroed frame and map it with R|W|U|V.'],
+      'heap-write': ['scause = 15 · store page fault', 'stval = 0x8000 · below p->sz', 'PTE = absent / invalid leaf', 'valid', 'Lazy heap write: allocate a zeroed frame and map it with R|W|U|V.'],
+      guard: ['scause = 13 · load page fault', 'stval = 0xfe90 · inside stack guard', 'PTE = V, but PTE_U = 0', 'protected', 'Guard page is present but user-inaccessible. Do not allocate over it.'],
+      outside: ['scause = 15 · store page fault', 'stval = 0x40000000 · at/above p->sz', 'PTE = absent', 'invalid', 'Address was never reserved. Treat it as an invalid access.']
+    };
+    function choose(kind) {
+      const c = cases[kind];
+      $('#fault-scause').textContent = c[0]; $('#fault-va').textContent = c[1]; $('#fault-pte').textContent = c[2];
+      $('#fault-condition').textContent = c[4];
+      $('#fault-input').classList.add('active'); $('#fault-decision').classList.add('active');
+      $$('.decision .branch').forEach(el => el.classList.remove('active', 'bad-active'));
+      const id = c[3] === 'valid' ? 'branch-valid' : c[3] === 'protected' ? 'branch-protected' : 'branch-invalid';
+      $('#' + id).classList.add(c[3] === 'valid' ? 'active' : 'bad-active');
+      const d = document.createElement('div'); d.className = c[3] === 'valid' ? 'ok' : 'bad'; d.textContent = `${kind}: ${c[4]}`;
+      $('#fault-log').appendChild(d); $('#fault-log').scrollTop = $('#fault-log').scrollHeight;
+    }
+    $$('[data-fault]').forEach(b => b.addEventListener('click', () => choose(b.dataset.fault)));
+    $('[data-fault-reset]').addEventListener('click', () => {
+      $('#fault-log').innerHTML = ''; $$('.decision .branch').forEach(el => el.classList.remove('active', 'bad-active'));
+      $('#fault-scause').textContent = 'scause = —'; $('#fault-va').textContent = 'stval (fault address) = —'; $('#fault-pte').textContent = 'PTE state = —'; $('#fault-condition').textContent = 'Choose a fault above.';
+      $('#fault-input').classList.remove('active'); $('#fault-decision').classList.remove('active');
+    });
+  })();
+
+  /* Lazy repair timeline. */
+  (() => {
+    let i = 0, timer;
+    const rows = $$('#lazy-timeline .timeline-row');
+    function render() {
+      rows.forEach((row, n) => row.classList.toggle('active', n < i));
+      $('#lazy-status').textContent = i >= rows.length ? 'instruction succeeds' : i ? 'kernel is repairing the fault' : 'ready';
+      $('#lazy-pp').textContent = i >= 5 ? '5' : '4';
+      $('#lazy-pte').textContent = i >= 5 ? 'R|W|U|V' : 'absent';
+    }
+    function step() {
+      if (i >= rows.length) return;
+      i++;
+      const d = document.createElement('div'); d.className = i >= 5 ? 'ok' : 'a'; d.textContent = rows[i - 1].textContent.trim(); $('#lazy-log').appendChild(d); $('#lazy-log').scrollTop = $('#lazy-log').scrollHeight; render();
+    }
+    function reset() { clearInterval(timer); i = 0; $('#lazy-log').innerHTML = ''; render(); }
+    $('[data-lazy-step]').addEventListener('click', step);
+    $('[data-lazy-auto]').addEventListener('click', () => { clearInterval(timer); timer = setInterval(() => { if (i >= rows.length) clearInterval(timer); else step(); }, 850); });
+    $('[data-lazy-reset]').addEventListener('click', reset);
+    reset();
+  })();
+
+  /* Cleanup holes. */
+  (() => {
+    const pages = [true, false, true, false, false, true, false, true, false, false];
+    let next = 0, holes = 0;
+    function render() {
+      $('#cleanup-pages').innerHTML = pages.map((mapped, i) => `<div class="page ${mapped ? 'mapped' : 'reserved'}"><span class="pg-label">p${i}</span>${mapped ? 'RAM' : 'hole'}</div>`).join('');
+      $('#clean-vp').textContent = pages.length; $('#clean-pp').textContent = pages.filter(Boolean).length; $('#clean-holes').textContent = holes; $('#clean-panic').textContent = 'no';
+    }
+    function step() {
+      while (next < pages.length && !pages[next]) { holes++; add(`p${next}: no mapping → continue (normal lazy hole).`, 'ok'); next++; }
+      if (next >= pages.length) return;
+      pages[next] = false; add(`p${next}: valid leaf → kfree frame → clear PTE.`, 'a'); next++; render();
+    }
+    function add(text, cls) { const d = document.createElement('div'); d.className = cls; d.textContent = text; $('#cleanup-log').appendChild(d); $('#cleanup-log').scrollTop = $('#cleanup-log').scrollHeight; }
+    function reset() { next = 0; holes = 0; pages.splice(0, pages.length, true, false, true, false, false, true, false, true, false, false); $('#cleanup-log').innerHTML = ''; add('Reserved 10 pages; only p0, p2, p5, p7 were touched.', 'dim'); render(); }
+    $('[data-clean-step]').addEventListener('click', step);
+    $('[data-clean-all]').addEventListener('click', () => { while (next < pages.length) step(); });
+    $('[data-clean-reset]').addEventListener('click', reset);
+    reset();
+  })();
+})();
+</script>
+</body>
+</html>
