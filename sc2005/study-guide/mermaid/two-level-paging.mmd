@@ -1,0 +1,5 @@
+flowchart LR
+ V["VA: p1, p2, offset"] -->|"p1"| O["Outer table"]
+ O -->|"Locates inner table"| I["Inner table, indexed by p2"]
+ I --> F["Data frame and original offset"]
+ V -.->|"Offset unchanged"| F

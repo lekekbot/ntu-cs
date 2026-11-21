@@ -1,0 +1,8 @@
+flowchart LR
+ T["Trap enters usertrap()"] --> S["Save sepc in trapframe epc"]
+ S -->|"User ecall: cause 8"| A["Add 4, then dispatch syscall"]
+ S -->|"Load or store page fault: 13 or 15"| F["Check fault address and mapping"]
+ F -->|"Repairable"| R["Map the page, leave epc at faulting instruction"]
+ F -->|"Invalid access"| K["Mark process killed"]
+ A --> N["Return after ecall"]
+ R --> O["Retry the same instruction"]

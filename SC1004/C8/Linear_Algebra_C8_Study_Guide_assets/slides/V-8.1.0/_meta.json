@@ -1,0 +1,39 @@
+{
+  "unit": "V-8.1.0",
+  "video": "001 8 1 0 pg1 2.mp4",
+  "videos": [
+    "001 8 1 0 pg1 2.mp4",
+    "001 8 1 0 pg1 2.mp4"
+  ],
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 0.0,
+      "frame": 0,
+      "video": "001 8 1 0 pg1 2.mp4",
+      "video_title": "8 1 0 pg1 2"
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 26.0,
+      "frame": 26,
+      "video": "001 8 1 0 pg1 2.mp4",
+      "video_title": "8 1 0 pg1 2"
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 0.0,
+      "frame": 0,
+      "video": "001 8 1 0 pg1 2.mp4",
+      "video_title": "8 1 0 pg1 2"
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 26.0,
+      "frame": 26,
+      "video": "001 8 1 0 pg1 2.mp4",
+      "video_title": "8 1 0 pg1 2"
+    }
+  ]
+}

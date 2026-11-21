@@ -1,0 +1,7 @@
+flowchart TD
+ subgraph K["Kernel address space"]
+  S["Scheduling queues"] --> B1["PCB 1"]
+  S --> B2["PCB 2"]
+ end
+ B1 --> P1["Process 1 user memory"]
+ B2 --> P2["Process 2 user memory"]

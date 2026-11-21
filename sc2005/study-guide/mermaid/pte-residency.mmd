@@ -1,0 +1,5 @@
+flowchart TD
+ P["PTE in the lecture model"] --> V["Present: field identifies a RAM frame"]
+ P --> I["Absent: OS checks whether access is legal"]
+ I --> B["Legal: find backing or initialise page"]
+ I --> T["Illegal: reject access"]

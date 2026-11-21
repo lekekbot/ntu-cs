@@ -1,0 +1,4 @@
+flowchart LR
+ R["Read logical data blocks 3 and 4"] -->|"Consecutive run"| C["Contiguous: two data transfers"]
+ R -->|"Cold index"| I["Indexed: index plus two data transfers"]
+ R -->|"Follow next pointers"| L["Linked: read blocks 0 through 4"]

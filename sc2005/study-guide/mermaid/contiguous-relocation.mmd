@@ -1,0 +1,4 @@
+flowchart LR
+ A["Logical address: offset d"] --> C{"0 ≤ d < limit?"}
+ C -->|"Yes"| P["Physical address = base + d"]
+ C -->|"No"| T["Protection trap"]

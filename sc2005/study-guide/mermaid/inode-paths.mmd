@@ -1,0 +1,7 @@
+flowchart LR
+ I["Inode"] -->|"Direct"| D["Data block"]
+ I -->|"Single indirect"| A["Index block"]
+ A --> D
+ I -->|"Double indirect"| B["Outer index block"]
+ B --> C["Inner index block"]
+ C --> D

@@ -1,0 +1,9 @@
+stateDiagram-v2
+ direction LR
+ [*] --> Child
+ Child --> Zombie: exit
+ Zombie --> Reaped: wait
+ Reaped --> [*]
+ state "Running child" as Child
+ state "Exited child" as Zombie
+ state "Reaped" as Reaped

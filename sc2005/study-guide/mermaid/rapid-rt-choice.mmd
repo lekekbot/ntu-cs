@@ -1,0 +1,3 @@
+flowchart TD
+ R["At time 8, jobs A and B are ready"] -->|"RM compares periods"| M["A wins: 4 is shorter than 7"]
+ R -->|"EDF compares absolute deadlines"| E["B wins: 11 is earlier than 12"]

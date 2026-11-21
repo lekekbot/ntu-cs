@@ -1,0 +1,10 @@
+sequenceDiagram
+ participant A as Application
+ participant L as Logical file system
+ participant D as Storage layer
+ A->>L: open(path)
+ L->>L: Resolve path and cache metadata
+ L-->>A: Return descriptor
+ A->>L: read(fd, buffer, n)
+ L->>D: Resolve data blocks and request transfer
+ D-->>A: Return bytes through the kernel

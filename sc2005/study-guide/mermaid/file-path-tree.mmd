@@ -1,0 +1,6 @@
+flowchart LR
+ R["Root /"] --> S["spell"]
+ S --> M["mail"]
+ M --> P["prt"]
+ P --> F(("file"))
+ M -.->|"Another name is resolved under the same directory"| X["Other entry"]

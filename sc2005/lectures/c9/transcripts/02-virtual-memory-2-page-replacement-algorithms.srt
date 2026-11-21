@@ -1,0 +1,1232 @@
+1
+00:00:00,000 --> 00:00:15,000
+Okay, so this is the second lecture of virtual memory management.
+
+2
+00:00:15,000 --> 00:00:22,000
+So recall, in the last lecture we're talking about what happened if there is a page fault.
+
+3
+00:00:22,000 --> 00:00:27,000
+So that means the record page is not in the memory.
+
+4
+00:00:27,000 --> 00:00:36,000
+So in this case, then OIs need to first of all find a free available page frame
+
+5
+00:00:36,000 --> 00:00:42,000
+and then copy the missing page from the back-in store into the memory.
+
+6
+00:00:42,000 --> 00:00:48,000
+Now the question is, what happened if OIs cannot find a free available frame?
+
+7
+00:00:48,000 --> 00:00:55,000
+So what happened if all the frames are currently occupied?
+
+8
+00:00:55,000 --> 00:01:01,000
+Then in this case, then OIs need to find some page that is in the memory
+
+9
+00:01:01,000 --> 00:01:07,000
+and that page is not really in use and the page that page off.
+
+10
+00:01:07,000 --> 00:01:10,000
+So that means replace that page.
+
+11
+00:01:10,000 --> 00:01:14,000
+Then if that's the case, right?
+
+12
+00:01:14,000 --> 00:01:22,000
+So if there's a page fault and the memory is full, in this case, then the OIs need to first of all
+
+13
+00:01:22,000 --> 00:01:31,000
+to find a page that is not really in use and paste that page off to free off the frame occupied by that page,
+
+14
+00:01:31,000 --> 00:01:35,000
+and then page in the missing page.
+
+15
+00:01:35,000 --> 00:01:39,000
+Then in this case, then we require two disk IOs.
+
+16
+00:01:39,000 --> 00:01:44,000
+So one for paging out and the other one for paging in.
+
+17
+00:01:44,000 --> 00:01:50,000
+So this will definitely further increase the page for handling time.
+
+18
+00:01:50,000 --> 00:01:56,000
+And how to identify which page to be replaced?
+
+19
+00:01:56,000 --> 00:02:01,000
+So how to identify which page that's not really in use and replace that page?
+
+20
+00:02:01,000 --> 00:02:07,000
+So in this case, there are a number of algorithms which I will cover later on in this lecture.
+
+21
+00:02:07,000 --> 00:02:19,000
+Right, so now let's look at a particular example to further illustrate this page replacement idea.
+
+22
+00:02:19,000 --> 00:02:20,000
+Right.
+
+23
+00:02:20,000 --> 00:02:25,000
+So first of all, the OIs will find a victim page.
+
+24
+00:02:25,000 --> 00:02:26,000
+Right.
+
+25
+00:02:26,000 --> 00:02:29,000
+So you using a page replacement algorithm.
+
+26
+00:02:29,000 --> 00:02:30,000
+Right.
+
+27
+00:02:30,000 --> 00:02:36,000
+And then copy the victim page into the backing stop.
+
+28
+00:02:36,000 --> 00:02:37,000
+Right.
+
+29
+00:02:37,000 --> 00:02:39,000
+So this is called page out.
+
+30
+00:02:39,000 --> 00:02:40,000
+Right.
+
+31
+00:02:40,000 --> 00:02:47,000
+So once the victim page is copied into the backing stop, then the frame occupied by the page will become available.
+
+32
+00:02:47,000 --> 00:02:48,000
+Right.
+
+33
+00:02:48,000 --> 00:02:55,000
+Then in this case, second, then OIs also need to change page table entry.
+
+34
+00:02:55,000 --> 00:02:56,000
+Right.
+
+35
+00:02:56,000 --> 00:02:59,000
+So indicating, no, this page is no longer in the memory.
+
+36
+00:02:59,000 --> 00:03:00,000
+Right.
+
+37
+00:03:00,000 --> 00:03:04,000
+So change the valid bit, invalid bit to I, invalid.
+
+38
+00:03:04,000 --> 00:03:07,000
+Third, the next slide.
+
+39
+00:03:07,000 --> 00:03:15,000
+So now the OS will be able to bring in the missing page from the backing stop into the memory.
+
+40
+00:03:15,000 --> 00:03:18,000
+So that's called the page in.
+
+41
+00:03:18,000 --> 00:03:19,000
+Right.
+
+42
+00:03:19,000 --> 00:03:29,000
+So after bringing in the missing page into the memory, then OIs also need to modify the page table for the corresponding entry page.
+
+43
+00:03:29,000 --> 00:03:30,000
+Page entry.
+
+44
+00:03:30,000 --> 00:03:31,000
+Right.
+
+45
+00:03:31,000 --> 00:03:35,000
+So indicating now that page is in the memory.
+
+46
+00:03:35,000 --> 00:03:38,000
+So changing valid, invalid bit to valid.
+
+47
+00:03:38,000 --> 00:03:40,000
+So that's basically the procedure.
+
+48
+00:03:40,000 --> 00:03:41,000
+Right.
+
+49
+00:03:41,000 --> 00:03:46,000
+To handle when there's a page full and the memory is full.
+
+50
+00:03:46,000 --> 00:03:52,000
+So now the question is, right, so do we always need to page all this victim page?
+
+51
+00:03:52,000 --> 00:03:53,000
+Right.
+
+52
+00:03:53,000 --> 00:03:57,000
+So recall what we assume.
+
+53
+00:03:57,000 --> 00:04:04,000
+So we assume all the pages are always available in the backing stop.
+
+54
+00:04:04,000 --> 00:04:05,000
+Right.
+
+55
+00:04:05,000 --> 00:04:07,000
+So backing stop basically is hard disk.
+
+56
+00:04:07,000 --> 00:04:13,000
+So that's large enough to accommodate the present image of all the processes.
+
+57
+00:04:13,000 --> 00:04:21,000
+So the pages of all the pages of a process are always in the backing stop.
+
+58
+00:04:21,000 --> 00:04:30,000
+So in this case, so if the victim page is not really modified since it was loaded into the memory.
+
+59
+00:04:30,000 --> 00:04:37,000
+So the copy of this page and the copy of the same page in the backing stop will be the same.
+
+60
+00:04:37,000 --> 00:04:43,000
+So that means we don't really need to copy this page to the backing stop.
+
+61
+00:04:43,000 --> 00:04:45,000
+So this page out, that will not be required.
+
+62
+00:04:45,000 --> 00:04:46,000
+Right.
+
+63
+00:04:46,000 --> 00:04:50,000
+We just simply bring in the missing page to overwrite that page.
+
+64
+00:04:50,000 --> 00:04:51,000
+Right.
+
+65
+00:04:51,000 --> 00:05:00,000
+So that's basically means what we need to do is we only need to page out a dirty page.
+
+66
+00:05:00,000 --> 00:05:02,000
+So what's the definition of dirty page?
+
+67
+00:05:02,000 --> 00:05:03,000
+Right.
+
+68
+00:05:03,000 --> 00:05:11,000
+So dirty page, that's basically means the page that has been modified since it was loaded into the memory.
+
+69
+00:05:11,000 --> 00:05:12,000
+Right.
+
+70
+00:05:12,000 --> 00:05:17,000
+So for example, the page contains the data and that data is modified during the process execution.
+
+71
+00:05:17,000 --> 00:05:18,000
+Right.
+
+72
+00:05:18,000 --> 00:05:21,000
+So that patient will identify as a dirty page.
+
+73
+00:05:21,000 --> 00:05:26,000
+Then how the OS will know which page is dirty and which page is clean.
+
+74
+00:05:26,000 --> 00:05:27,000
+Right.
+
+75
+00:05:27,000 --> 00:05:30,000
+So in this case, so we have a modified bit.
+
+76
+00:05:30,000 --> 00:05:33,000
+So the system will maintain this modified bit.
+
+77
+00:05:33,000 --> 00:05:34,000
+Right.
+
+78
+00:05:34,000 --> 00:05:39,000
+So whenever the page is modified, then the speed will be set.
+
+79
+00:05:39,000 --> 00:05:40,000
+Right.
+
+80
+00:05:40,000 --> 00:05:47,000
+So during the page replacement, then the OS will only replace the dirty bit.
+
+81
+00:05:47,000 --> 00:05:53,000
+Meaning only replace the page whose modified bit is set.
+
+82
+00:05:53,000 --> 00:05:54,000
+Right.
+
+83
+00:05:54,000 --> 00:05:57,000
+So let's look at the page replacement algorithm.
+
+84
+00:05:57,000 --> 00:05:58,000
+Right.
+
+85
+00:05:58,000 --> 00:06:02,000
+So before we look at the page replacement algorithm.
+
+86
+00:06:02,000 --> 00:06:07,000
+So we need to understand what the algorithm aiming to achieve.
+
+87
+00:06:07,000 --> 00:06:08,000
+Right.
+
+88
+00:06:08,000 --> 00:06:16,000
+So the objective of a page replacement algorithm basically is trying to minimize the number of page flows.
+
+89
+00:06:16,000 --> 00:06:17,000
+Right.
+
+90
+00:06:17,000 --> 00:06:19,000
+So we don't really want to replace the page.
+
+91
+00:06:19,000 --> 00:06:21,000
+And then that page will require immediately.
+
+92
+00:06:21,000 --> 00:06:22,000
+Right.
+
+93
+00:06:22,000 --> 00:06:27,000
+So the objective then is to minimizing the number of page flows.
+
+94
+00:06:27,000 --> 00:06:32,000
+So how do we evaluate different page replacement algorithms?
+
+95
+00:06:32,000 --> 00:06:39,000
+So in this case, the evaluation is done by using a page reference string.
+
+96
+00:06:39,000 --> 00:06:40,000
+Now recall.
+
+97
+00:06:40,000 --> 00:06:47,000
+So when a memory reference generated, that refers to a particular page.
+
+98
+00:06:47,000 --> 00:06:49,000
+We say that page is in demand.
+
+99
+00:06:49,000 --> 00:06:50,000
+Right.
+
+100
+00:06:50,000 --> 00:06:55,000
+Then to evaluate the page replacement algorithm, then we use a page reference string.
+
+101
+00:06:55,000 --> 00:06:56,000
+Right.
+
+102
+00:06:56,000 --> 00:07:02,000
+So in the following examples, we always using this reference string.
+
+103
+00:07:02,000 --> 00:07:03,000
+Right.
+
+104
+00:07:03,000 --> 00:07:05,000
+So one, two, three, four, and so on, so forth.
+
+105
+00:07:05,000 --> 00:07:06,000
+Right.
+
+106
+00:07:06,000 --> 00:07:11,000
+So one, so that means reference generated that refers to a location on page one.
+
+107
+00:07:11,000 --> 00:07:12,000
+Right.
+
+108
+00:07:12,000 --> 00:07:17,000
+And two, a reference generated that refers to a location in page two and so on, so forth.
+
+109
+00:07:17,000 --> 00:07:18,000
+Right.
+
+110
+00:07:18,000 --> 00:07:22,000
+Now let's look at the FIFO algorithm.
+
+111
+00:07:22,000 --> 00:07:23,000
+Right.
+
+112
+00:07:23,000 --> 00:07:29,000
+So for FIFO algorithm, right, so the idea is just very straightforward.
+
+113
+00:07:29,000 --> 00:07:30,000
+Right.
+
+114
+00:07:30,000 --> 00:07:37,000
+So basically what we do is the algorithm will replace the oldest page in the memory.
+
+115
+00:07:37,000 --> 00:07:38,000
+Right.
+
+116
+00:07:38,000 --> 00:07:40,000
+So recall the amount of paging.
+
+117
+00:07:40,000 --> 00:07:44,000
+So initially none of the page is in the memory.
+
+118
+00:07:44,000 --> 00:07:45,000
+Right.
+
+119
+00:07:45,000 --> 00:07:48,000
+So initially, so memory is free.
+
+120
+00:07:48,000 --> 00:07:52,000
+So in this case, the example, we assume there are four free pages.
+
+121
+00:07:52,000 --> 00:07:56,000
+There are four free frames available for this process.
+
+122
+00:07:56,000 --> 00:07:59,000
+So initially all these four frames are free.
+
+123
+00:07:59,000 --> 00:08:00,000
+Right.
+
+124
+00:08:00,000 --> 00:08:03,000
+So the pages will bring into memory on demand.
+
+125
+00:08:03,000 --> 00:08:04,000
+Right.
+
+126
+00:08:04,000 --> 00:08:09,000
+So the frames are filled up by paging force.
+
+127
+00:08:09,000 --> 00:08:10,000
+Right.
+
+128
+00:08:10,000 --> 00:08:15,000
+So page one is required, then bring into memory.
+
+129
+00:08:15,000 --> 00:08:17,000
+And two require bring into memory.
+
+130
+00:08:17,000 --> 00:08:19,000
+Three require bring into memory.
+
+131
+00:08:19,000 --> 00:08:22,000
+And page four require bring into the memory.
+
+132
+00:08:22,000 --> 00:08:24,000
+Now the memory is full.
+
+133
+00:08:24,000 --> 00:08:25,000
+The next reference is page number one.
+
+134
+00:08:25,000 --> 00:08:26,000
+Right.
+
+135
+00:08:26,000 --> 00:08:29,000
+So when page number one is referenced, it's already in the memory.
+
+136
+00:08:29,000 --> 00:08:31,000
+So there's now page four.
+
+137
+00:08:31,000 --> 00:08:33,000
+The next reference is page two.
+
+138
+00:08:33,000 --> 00:08:34,000
+Page two is in memory.
+
+139
+00:08:34,000 --> 00:08:35,000
+Now page four.
+
+140
+00:08:35,000 --> 00:08:45,000
+And the next one, page five and five is not in the memory.
+
+141
+00:08:45,000 --> 00:08:50,000
+Then we need to run the algorithm to identify a weekly page.
+
+142
+00:08:50,000 --> 00:08:58,000
+Then among these four pages that are currently in the memory, we need to identify the oldest page.
+
+143
+00:08:58,000 --> 00:09:04,000
+So the page that has been in the memory for the longest of time.
+
+144
+00:09:04,000 --> 00:09:07,000
+But in this case, obviously, is page number one.
+
+145
+00:09:07,000 --> 00:09:13,000
+So that's oldest page that identify as a weekly page and replace.
+
+146
+00:09:13,000 --> 00:09:14,000
+Right.
+
+147
+00:09:14,000 --> 00:09:17,000
+So you can apply this algorithm in this manner.
+
+148
+00:09:17,000 --> 00:09:22,000
+And in this case, in total, so number of page four we have is 10.
+
+149
+00:09:22,000 --> 00:09:25,000
+So that's the five algorithm.
+
+150
+00:09:25,000 --> 00:09:26,000
+Right.
+
+151
+00:09:26,000 --> 00:09:28,000
+So really, really very straightforward.
+
+152
+00:09:28,000 --> 00:09:29,000
+Right.
+
+153
+00:09:29,000 --> 00:09:32,000
+Now let's look at what best we can do.
+
+154
+00:09:32,000 --> 00:09:33,000
+Right.
+
+155
+00:09:33,000 --> 00:09:35,000
+So that's called optimal algorithm.
+
+156
+00:09:35,000 --> 00:09:36,000
+Right.
+
+157
+00:09:36,000 --> 00:09:38,000
+So how does algorithm works?
+
+158
+00:09:38,000 --> 00:09:42,000
+So this algorithm basically will replace a page that we know.
+
+159
+00:09:42,000 --> 00:09:46,000
+That may not be used for the longest period of time.
+
+160
+00:09:46,000 --> 00:09:47,000
+Right.
+
+161
+00:09:47,000 --> 00:09:49,000
+So again, the amount of paging.
+
+162
+00:09:49,000 --> 00:09:53,000
+Initially, all four frames are empty.
+
+163
+00:09:53,000 --> 00:09:58,000
+And the pages are bring into the memory by page four.
+
+164
+00:09:58,000 --> 00:10:00,000
+Now memory is full.
+
+165
+00:10:00,000 --> 00:10:02,000
+So next page reference is one.
+
+166
+00:10:02,000 --> 00:10:05,000
+And page one already in the memory.
+
+167
+00:10:05,000 --> 00:10:06,000
+Now page four.
+
+168
+00:10:06,000 --> 00:10:07,000
+And two.
+
+169
+00:10:07,000 --> 00:10:09,000
+And two already in the memory.
+
+170
+00:10:09,000 --> 00:10:11,000
+Now page four.
+
+171
+00:10:11,000 --> 00:10:12,000
+And five.
+
+172
+00:10:12,000 --> 00:10:15,000
+So five now in the memory.
+
+173
+00:10:15,000 --> 00:10:17,000
+Then we need to run the algorithm.
+
+174
+00:10:17,000 --> 00:10:31,000
+Then among the current four pages that's currently in the memory, then we need to identify the page that will now be referenced for the longest period of time.
+
+175
+00:10:31,000 --> 00:10:35,000
+So we need to look into the future reference string.
+
+176
+00:10:35,000 --> 00:10:36,000
+Right.
+
+177
+00:10:36,000 --> 00:10:38,000
+Then identify among these four.
+
+178
+00:10:38,000 --> 00:10:43,000
+Which one will now be referenced for the longest period of time.
+
+179
+00:10:43,000 --> 00:10:48,000
+Then in this case, so that is page number four.
+
+180
+00:10:48,000 --> 00:10:49,000
+Right.
+
+181
+00:10:49,000 --> 00:10:52,000
+So page number four is identified as a victim page.
+
+182
+00:10:52,000 --> 00:10:53,000
+Then replace.
+
+183
+00:10:53,000 --> 00:10:54,000
+Then page four.
+
+184
+00:10:54,000 --> 00:10:58,000
+And page number one that's already in the memory.
+
+185
+00:10:58,000 --> 00:10:59,000
+Now page four.
+
+186
+00:10:59,000 --> 00:11:01,000
+And two in the memory.
+
+187
+00:11:01,000 --> 00:11:02,000
+Now page four.
+
+188
+00:11:02,000 --> 00:11:03,000
+And three in the memory.
+
+189
+00:11:03,000 --> 00:11:04,000
+Now page four.
+
+190
+00:11:04,000 --> 00:11:06,000
+Now page number four.
+
+191
+00:11:32,000 --> 00:11:38,880
+the page 5 will be referenced in the near future but among these three pages one two three we don't
+
+192
+00:11:38,880 --> 00:11:47,120
+have any information right so in this case then we need a rule to break the time right so we don't
+
+193
+00:11:47,120 --> 00:11:53,920
+know which page among the three that will be will not be will not be referenced for the longest
+
+194
+00:11:53,920 --> 00:12:00,320
+period of time right so we need a time breaker right so in this particular case right so we
+
+195
+00:12:00,320 --> 00:12:08,080
+assume we use first in first off to break the time right so when there's time then we replace the
+
+196
+00:12:08,080 --> 00:12:15,920
+audience page right so page number one is audience page then identify as a victim page then replace
+
+197
+00:12:16,720 --> 00:12:25,840
+the last reference five in the memory now page four right so if you're using optimism then the total
+
+198
+00:12:25,840 --> 00:12:35,680
+number of page four is six right so compared to five four so this is a great reduction right now the
+
+199
+00:12:35,680 --> 00:12:44,720
+question right so to apply this algorithm we need to know which page will now be referenced for the
+
+200
+00:12:44,720 --> 00:12:52,320
+longest period of time so that's basically means we need to know the future reference stream now the
+
+201
+00:12:52,320 --> 00:13:02,560
+question is is this really possible right so how how do we know the future reference stream so in theory
+
+202
+00:13:02,560 --> 00:13:09,840
+so this is not really possible right so we don't really know which page will be referenced by a process
+
+203
+00:13:09,840 --> 00:13:19,360
+in the future right although we can have a prediction or rather accurate prediction prediction but in reality
+
+204
+00:13:19,360 --> 00:13:29,920
+we don't really know what are the pages will be referenced by the process so in reality so this algorithm
+
+205
+00:13:30,800 --> 00:13:38,080
+really cannot be applied right so then why do we need still need to this to have this algorithm
+
+206
+00:13:39,120 --> 00:13:46,320
+so basically if you use this algorithm as a benchmark so we know this the best we can do right then we can
+
+207
+00:13:46,320 --> 00:13:51,600
+benchmark our algorithms are the best we can do right so we can do right so we can do right so we can do right
+
+208
+00:13:51,600 --> 00:14:02,000
+so this is bias performance we can achieve now we don't know the future reference stream right so we don't know
+
+209
+00:14:02,000 --> 00:14:15,040
+what our references page references will be referenced by the process but what what we do know is we know the history so we know what
+
+210
+00:14:15,040 --> 00:14:29,120
+the features that has already been referenced by the process right so in this case then we can use this this as a heuristic right so that's the next algorithm so that's called
+
+211
+00:14:29,840 --> 00:14:38,400
+least recently used algorithm so how does algorithm work so this algorithm basically replace the page
+
+212
+00:14:38,400 --> 00:14:56,000
+that has not been used for the longest period of time so we look back into the history right so among the pages that's currently in the memory identify the one that hasn't been used for the longest period of time
+
+213
+00:14:56,560 --> 00:15:05,200
+so use so that means either the page is read or write right so if the page hasn't been read or write
+
+214
+00:15:05,200 --> 00:15:09,440
+for the longest period of time for the longest period of time among all the pages currently in the memory
+
+215
+00:15:09,440 --> 00:15:18,640
+then we identify as a page as a victim page and the replace again demand paging all right so initially all
+
+216
+00:15:19,680 --> 00:15:30,080
+frames are available so we bring in the pages by paging first all right now the memory is full the next reference page number one
+
+217
+00:15:30,080 --> 00:15:42,560
+page number one is in the memory is in the memory is in the memory and page number two is in the memory not page forward right and page number five is not in the memory
+
+218
+00:15:43,360 --> 00:15:55,360
+so among these four pages that's currently in the memory then we need to identify the page that hasn't been used for the longest period of time
+
+219
+00:15:55,360 --> 00:16:07,440
+among these four pages look back into the history right then we know page three is the one that hasn't been referenced for the longest period of time
+
+220
+00:16:08,080 --> 00:16:18,720
+then this is identified as a victim page and replace right so page 1 page 3 patient page 5 all right page 4
+
+221
+00:16:18,720 --> 00:16:33,600
+then the next reference page 1 in the memory and no page 4 and 3 not in the memory we need to run the algorithm again
+
+222
+00:16:34,320 --> 00:16:45,040
+among these four pages identify the victim page so we look back into the reference string right then among these four pages
+
+223
+00:16:45,040 --> 00:16:51,280
+just currently in the memory then the one that hasn't been used for the longest period of time
+
+224
+00:16:51,280 --> 00:17:02,720
+is page number four so page 4 identify as a victim page and replace right so the next reference 4
+
+225
+00:17:03,280 --> 00:17:09,920
+so page number four and just been replaced not in the memory so we need to run the algorithm again
+
+226
+00:17:10,480 --> 00:17:14,560
+among these four pages look back into the reference string then among these four pages look back into the reference
+
+227
+00:17:14,560 --> 00:17:24,560
+string the history and page number five then it's the page that hasn't been used for the longest period of time
+
+228
+00:17:25,120 --> 00:17:34,400
+then replace right the last one page number five just been replaced right again need to run the algorithm
+
+229
+00:17:34,400 --> 00:17:42,080
+so look back into the piece tree and the page number one that is identified as victim page
+
+230
+00:17:42,080 --> 00:17:50,000
+and replace so in this case the total number of page force is eight right so it's better than
+
+231
+00:17:50,000 --> 00:17:59,360
+five four so for the same reference trend five four generate 10 page force but in this case is
+
+232
+00:17:59,360 --> 00:18:07,680
+this algorithm is worse than optimal right similar reference trend optimal right so we just covered
+
+233
+00:18:07,680 --> 00:18:15,440
+optimal right so recall this optimal so optimal generates six page force right so this least
+
+234
+00:18:15,440 --> 00:18:28,560
+recent use so generate generate eight page force right so that's basically the page replace algorithm
+
+235
+00:18:28,560 --> 00:18:36,800
+we covered right so we covered and five algorithm right so optimal algorithm and at least recently
+
+236
+00:18:36,800 --> 00:18:47,920
+used algorithm right so now let's look at how this least recently used algorithm that can be implemented
+
+237
+00:18:48,640 --> 00:18:57,680
+right so basically right so to implement this least recent use algorithm right so
+
+238
+00:18:58,560 --> 00:19:08,800
+normally right so there are two different approaches right so which both approach will incur a lot of
+
+239
+00:19:08,800 --> 00:19:19,280
+overhands right so hardware support then will be required to implement the least recent use algorithm
+
+240
+00:19:20,480 --> 00:19:24,880
+so instead of using hardware support to implement the least recent use algorithm
+
+241
+00:19:24,880 --> 00:19:33,520
+then normally what do we do right so is we try to use some approximation algorithm right so this algorithm
+
+242
+00:19:33,520 --> 00:19:42,560
+approximate the behavior the performance of least recently used algorithm and this algorithm right so in general
+
+243
+00:19:42,560 --> 00:19:51,520
+we use what do we call this reference bit right so reference bit so what's the meaning of reference bit
+
+244
+00:19:51,520 --> 00:20:06,640
+so initially when a page is loaded into the memory its reference bit is set to zero right so when page load into memory the reference bit is set to zero
+
+245
+00:20:06,640 --> 00:20:16,080
+so this one reference bit associated with each page when the page is referenced meaning as it is read or write
+
+246
+00:20:16,080 --> 00:20:37,440
+then the hardware will set the page reference bit to one right then when there's a need to replace a page right so what we can do is right that we can find a page right that's with reference bit equals zero and replace that page
+
+247
+00:20:37,440 --> 00:21:01,440
+now the question is right there may be many pages right there may be many pages whose reference bit is zero then among these pages we don't really know which page is the least recent use page right so we need a kind of algorithm right then to determine which page to replace if we're using this reference bit
+
+248
+00:21:01,440 --> 00:21:14,720
+so now this is a possible approximation algorithm which we will cover next is called second chance or clock algorithm
+
+249
+00:21:14,720 --> 00:21:22,800
+so this algorithm basically is a variation of first in first out right so how this algorithm works
+
+250
+00:21:23,360 --> 00:21:31,200
+so basically so first of all this algorithm will choose the oldest page as a candidate to replace
+
+251
+00:21:31,440 --> 00:21:41,680
+right right but before replacing that page right then the os will also look at the reference bit of that candidate page
+
+252
+00:21:42,880 --> 00:21:55,120
+so if a reference bit is one then we give that page a second chance so we replace the page we will then we reset the reference bit to zero
+
+253
+00:21:56,160 --> 00:22:00,960
+right we clear the reference bit then we move to look at the next or this page
+
+254
+00:22:02,080 --> 00:22:27,440
+so if a reference bit is zero then we replace the page so that's basically how the algorithm works right so in general this algorithm is implemented by using a clock algorithm right so basically for clock algorithm so we have a clock hand right so we have a first of all we have a list of
+
+255
+00:22:27,440 --> 00:22:36,080
+page references so this list of page references so this list of page references is arranged according to the five order in a circular manner
+
+256
+00:22:36,080 --> 00:22:50,480
+right and we have a clock hand the clock hand then we are pointing to the oldest page in the list all right so when there's a page fault then
+
+257
+00:22:50,480 --> 00:22:57,120
+the old eyes will examine the reference bit of the reference bit of the page pointed by the clock hand
+
+258
+00:22:57,120 --> 00:23:09,120
+so if reference bit is set then the reference bit of the page is set reset to zero then the clock hand will advance to the next page
+
+259
+00:23:09,120 --> 00:23:17,760
+so otherwise if reference bit of the reference bit of the page is zero then we replace the page
+
+260
+00:23:17,760 --> 00:23:25,760
+then we replace the page and move the clock hand to the next page in the list
+
+261
+00:23:25,760 --> 00:23:42,400
+so this is an illustration of how this clock algorithm is working right so the pages are arranged in a circular list
+
+262
+00:23:42,400 --> 00:23:50,800
+according to the file order and the clock hand is pointing to the oldest page all right so when there's a page
+
+263
+00:23:50,800 --> 00:23:58,880
+forward then the old eyes will examine the reference bit of the page that's currently puncted by the clock hand
+
+264
+00:23:59,760 --> 00:24:10,240
+is reference bit is this one then reset reference bit to zero and move the clock hand to the next page in the list
+
+265
+00:24:10,240 --> 00:24:40,080
+right so in this case so the cloud hand is always parking to the oldest page
+
+266
+00:24:40,080 --> 00:24:49,600
+right in the oldest page right in the list so this is the clock algorithm so that's implementation of the second chance
+
+267
+00:24:50,800 --> 00:24:59,200
+now let's again look at a reference string right to illustrate so how this clock algorithm works
+
+268
+00:24:59,920 --> 00:25:08,000
+all right so to illustrate how it works so in this case we still assume like four
+
+269
+00:25:08,000 --> 00:25:22,480
+page frames and each entry here there are two elements the first element so that's the page number and the second element so that's the reference bit
+
+270
+00:25:23,680 --> 00:25:29,440
+and the sheet of the field so that indicating where the clock hand is currently at right
+
+271
+00:25:29,440 --> 00:25:45,440
+right so again demand paging right so we load the page into the frame when page is required right so the memory is filled up by
+
+272
+00:25:45,440 --> 00:25:57,440
+page in force right so now the memory is full so recall the pages in the memory are arranged in a circular list right
+
+273
+00:25:57,440 --> 00:26:09,440
+list right so this so this this basically indicating how the clock hand will move so cloud hand is currently here right
+
+274
+00:26:09,440 --> 00:26:19,440
+we'll move in this direction right so in the five order when reaching bottom then we'll go to the up it's a circular list right
+
+275
+00:26:19,440 --> 00:26:26,080
+so the next reference is page number one right now the next reference is page number one is in the memory
+
+276
+00:26:27,200 --> 00:26:36,480
+we set reference speed to one right so recall reference speed initially when the page is loaded into the memory
+
+277
+00:26:36,480 --> 00:26:43,920
+the reference is zero when the page is referenced again then the reference will be set to one
+
+278
+00:26:44,720 --> 00:26:52,800
+so two is referenced set reference speed to one and five is referenced not in the memory then we need to run the
+
+279
+00:26:52,800 --> 00:27:02,640
+algorithm to identify a victim page so cloud hand is currently here right it's currently here so reference is one
+
+280
+00:27:03,280 --> 00:27:13,600
+then we give this page a second chance we set is cloud we set is reference speed to zero then we move the
+
+281
+00:27:13,600 --> 00:27:21,040
+cloud hand to the cloud hand to the next entry in the circular list right so recall it's arranged in this order
+
+282
+00:27:21,680 --> 00:27:29,520
+so next entry is here the reference speed is one again we give this page a second chance and set reference
+
+283
+00:27:29,520 --> 00:27:38,480
+is zero so we treat this page as the newest page and move the cloud hand to the next entry in the circular list
+
+284
+00:27:38,480 --> 00:27:44,480
+so the reference speed is zero so the reference speed is zero so the reference speed is zero and replace so bring in page five
+
+285
+00:27:45,040 --> 00:27:56,960
+right replace replace replace page three so after replacement so five is the newest page so the cloud hand need to move to the next entry
+
+286
+00:27:56,960 --> 00:28:03,760
+right now the cloud hand is here so next reference is one so set
+
+287
+00:28:03,760 --> 00:28:14,640
+r bit resonated to one two so set reference reference to one and three not in the memory
+
+288
+00:28:14,640 --> 00:28:23,680
+among these four pages then we need to identify a waiting page right so among these pages we need to identify a victim page
+
+289
+00:28:23,680 --> 00:28:36,480
+right and the cloud hand is currently here and the reference speed is zero then we replace the page so bring in page three right
+
+290
+00:28:36,480 --> 00:28:45,360
+and after bringing page three so this is the newest page then the cloud hand need to move to the next entry in the circular list
+
+291
+00:28:45,360 --> 00:28:52,800
+so recall so that's how the cloud hand moves right then the cloud hand will move to here
+
+292
+00:28:53,680 --> 00:29:06,400
+right so the next reference page number four reference speed is one so we clear the reference speed move the cloud hand to the next page in the circular list
+
+293
+00:29:07,280 --> 00:29:14,560
+so the reference speed is one clear reference speed move the cloud hand to the next entry in the circular queue
+
+294
+00:29:15,200 --> 00:29:22,080
+right in the list right so in this case so reference be zero replace so bring in page four
+
+295
+00:29:22,800 --> 00:29:30,400
+so this is the newest page the cloud hand need to move to the next entry in the circular queue not cloud hand is here
+
+296
+00:29:31,600 --> 00:29:35,680
+the last reference is five cloud hand is calculated here and r bit is zero replace so after replacement the cloud hand will move to the next entry in the queue right so move to the top right so that's basically how the clock
+
+297
+00:29:35,680 --> 00:29:48,560
+algorithm works so in this case so the clock algorithm also generates eight page force right eight page force right
+
+298
+00:29:48,560 --> 00:30:05,440
+same as rru so that's why this is the approximation of rru
+
+299
+00:30:05,440 --> 00:30:16,320
+of rru least recent algorithm all right however what's the worst case scenario right so recall
+
+300
+00:30:16,320 --> 00:30:22,320
+when you're using this algorithm right so we always look at all this page right that's the victim page replace
+
+301
+00:30:22,320 --> 00:30:32,480
+right so the worst case scenario right so the worst case scenario is what the audience page will be replaced always
+
+302
+00:30:32,480 --> 00:30:43,200
+right for instance right so in the case if a reference speed is all all site for all the pages then
+
+303
+00:30:43,200 --> 00:30:51,200
+eventually all this page will be replaced all right so the worst case scenario is what what's the scenario is
+
+304
+00:30:51,200 --> 00:30:58,880
+so this algorithm will work exactly the same as the five form right so that's the worst case scenario
+
+305
+00:30:58,880 --> 00:31:07,680
+right so the best case scenario is this algorithm will work like rru right to generate some number of
+
+306
+00:31:07,680 --> 00:31:15,840
+page force as rru and the worst case scenario is this algorithm will work like five form all right so that's
+
+307
+00:31:15,840 --> 00:31:23,760
+all for this lecture and for the next lecture then we will look at the frame allocation
+
+308
+00:31:24,640 --> 00:31:35,018
+and the performance issue right so related to the virtual memory support
+

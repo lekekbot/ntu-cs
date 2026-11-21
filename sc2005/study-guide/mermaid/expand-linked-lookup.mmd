@@ -1,0 +1,5 @@
+flowchart LR
+ D["Directory entry"] --> A["Block 7"]
+ A -->|"Next"| B["Block 12"]
+ B -->|"Next"| C["Block 4"]
+ C -.->|"Null"| E(("End"))

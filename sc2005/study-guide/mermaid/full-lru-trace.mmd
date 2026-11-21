@@ -1,0 +1,8 @@
+flowchart LR
+ A["Least to most recent: A, B, C"] -->|"Hit A"| B["B, C, A"]
+ B -->|"Miss D"| C["Evict B"]
+ C --> D["C, A, D"]
+ classDef hit fill:#e9f5f3,stroke:#086c68
+ classDef miss fill:#f9eedc,stroke:#9d692d
+ class B,D hit
+ class C miss

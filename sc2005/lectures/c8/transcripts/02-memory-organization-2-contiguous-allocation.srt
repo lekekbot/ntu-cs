@@ -1,0 +1,2124 @@
+1
+00:00:00,000 --> 00:00:07,000
+Now let's look at the memory allocation approaches.
+
+2
+00:00:07,000 --> 00:00:13,000
+As I already explained, basically there are two different categories.
+
+3
+00:00:13,000 --> 00:00:20,000
+The first one is the contiguous allocation, and the second one is called non-contiguous allocation.
+
+4
+00:00:20,000 --> 00:00:30,000
+So under the contiguous allocation category, that means the physical memory assigned to a process is contiguous.
+
+5
+00:00:30,000 --> 00:00:37,000
+Or in other words, the logical address space of the process remains contiguous in the physical memory.
+
+6
+00:00:37,000 --> 00:00:46,000
+So under contiguous allocation, we have fixed allocation, fixed partitioning, and dynamic partitioning.
+
+7
+00:00:46,000 --> 00:00:52,000
+For non-contiguous allocation, right, so implies by the name.
+
+8
+00:00:52,000 --> 00:00:59,000
+So that basically means the logical address space of the process is no longer contiguous in the physical memory.
+
+9
+00:00:59,000 --> 00:01:04,000
+It's a non-contiguous physical memory is assigned to the process, right.
+
+10
+00:01:04,000 --> 00:01:13,000
+So under this non-contiguous allocation, so we will cover paging and segmentation.
+
+11
+00:01:13,000 --> 00:01:19,000
+Now let's look at fixed partitioning first, right.
+
+12
+00:01:19,000 --> 00:01:27,000
+So for fixed partitioning, so the memory basically is partitioned into regions with fixed boundaries.
+
+13
+00:01:27,000 --> 00:01:29,000
+So what does that mean?
+
+14
+00:01:29,000 --> 00:01:39,000
+So that basically means the physical memory is pre-partitioned into a fixed number of partitions, right.
+
+15
+00:01:39,000 --> 00:01:46,000
+So the number of partitions is fixed, and the size of each partition is also fixed, right.
+
+16
+00:01:46,000 --> 00:01:55,000
+Then given a process, logical address space, logical process image,
+
+17
+00:01:55,000 --> 00:02:05,000
+then what OS will do is OS will find a partition that's large enough that can accommodate this process image,
+
+18
+00:02:05,000 --> 00:02:09,000
+and assign the partition to the process.
+
+19
+00:02:09,000 --> 00:02:18,000
+So this present image may not occupy the entire partition, so that means part of the partition is not really in use.
+
+20
+00:02:18,000 --> 00:02:20,000
+It's wasted, right.
+
+21
+00:02:20,000 --> 00:02:27,000
+So when a process is created, then OS finds a large enough partition for the process to assign to the process.
+
+22
+00:02:27,000 --> 00:02:28,000
+Right.
+
+23
+00:02:28,000 --> 00:02:37,000
+And then when a process is terminated, and the partition is assigned to the process, then it will be reclaimed.
+
+24
+00:02:37,000 --> 00:02:39,000
+It will become free, right.
+
+25
+00:02:39,000 --> 00:02:43,000
+It will become available, so it can be reassigned to another process.
+
+26
+00:02:43,000 --> 00:02:44,000
+Right.
+
+27
+00:02:44,000 --> 00:02:46,000
+So you can see the problem here.
+
+28
+00:02:46,000 --> 00:02:48,000
+So what's the problem here?
+
+29
+00:02:48,000 --> 00:02:53,000
+So obviously, so it's not really possible.
+
+30
+00:02:53,000 --> 00:02:56,000
+It's not really easy, right, to determine.
+
+31
+00:02:56,000 --> 00:03:03,000
+So how many partitions we need to have, and what's the size of each partition.
+
+32
+00:03:03,000 --> 00:03:04,000
+Right.
+
+33
+00:03:04,000 --> 00:03:06,000
+All right.
+
+34
+00:03:06,000 --> 00:03:09,000
+So that's the problem here, right.
+
+35
+00:03:09,000 --> 00:03:15,000
+And it's not easy to determine the number of partitions and the size of each partition.
+
+36
+00:03:15,000 --> 00:03:16,000
+Right.
+
+37
+00:03:16,000 --> 00:03:28,000
+And so because a process is created dynamically, right, and we don't have prior knowledge, right, about the memory requirement of processes.
+
+38
+00:03:28,000 --> 00:03:29,000
+Right.
+
+39
+00:03:29,000 --> 00:03:35,000
+Then the other problem is that a partition will be assigned to a process.
+
+40
+00:03:35,000 --> 00:03:36,000
+Right.
+
+41
+00:03:36,000 --> 00:03:39,000
+And the part of partition will be visited.
+
+42
+00:03:39,000 --> 00:03:40,000
+It's not really used.
+
+43
+00:03:40,000 --> 00:03:41,000
+Right.
+
+44
+00:03:41,000 --> 00:03:44,000
+So this is called internal fragmentation.
+
+45
+00:03:44,000 --> 00:03:45,000
+Right.
+
+46
+00:03:45,000 --> 00:03:47,000
+So this, this tomology fragmentation.
+
+47
+00:03:47,000 --> 00:03:50,000
+So I will, again, cover this later on.
+
+48
+00:03:50,000 --> 00:03:51,000
+Right.
+
+49
+00:03:51,000 --> 00:03:54,000
+So that's a fixed partition.
+
+50
+00:03:54,000 --> 00:04:02,000
+So instead of predetermine how many partitions we're going to have, and what are the size of each partition.
+
+51
+00:04:02,000 --> 00:04:03,000
+Right.
+
+52
+00:04:03,000 --> 00:04:11,000
+So the dynamic partitioning basically is, we try to create the partition dynamically on demand.
+
+53
+00:04:11,000 --> 00:04:12,000
+Right.
+
+54
+00:04:12,000 --> 00:04:20,000
+So in this case, so starting with, right, and the entire physical memory is available.
+
+55
+00:04:20,000 --> 00:04:23,000
+So we use this terminology hole.
+
+56
+00:04:23,000 --> 00:04:24,000
+Right.
+
+57
+00:04:24,000 --> 00:04:29,000
+So it's a hole that refers to a block of available memory.
+
+58
+00:04:29,000 --> 00:04:34,000
+So to starting with, to starting with, the entire physical memory is available.
+
+59
+00:04:34,000 --> 00:04:37,000
+We have a very large, big hole.
+
+60
+00:04:37,000 --> 00:04:38,000
+Right.
+
+61
+00:04:38,000 --> 00:04:46,000
+So when a process arrives, then what OS will do is, OS will find a large enough hole to assign
+
+62
+00:04:46,000 --> 00:04:48,000
+to the process.
+
+63
+00:04:48,000 --> 00:04:49,000
+Right.
+
+64
+00:04:50,000 --> 00:04:56,000
+Then when the process terminates, then the OS will reclaim back the memory space assigned
+
+65
+00:04:56,000 --> 00:04:57,000
+to the process.
+
+66
+00:04:57,000 --> 00:04:59,000
+So you can imagine.
+
+67
+00:04:59,000 --> 00:05:07,000
+So as a process created and terminated, then the memory will become fragmented.
+
+68
+00:05:07,000 --> 00:05:08,000
+Right.
+
+69
+00:05:08,000 --> 00:05:12,000
+So you have a, you have a holes of a different size.
+
+70
+00:05:12,000 --> 00:05:13,000
+Right.
+
+71
+00:05:13,000 --> 00:05:18,000
+Then in order to do the memory allocation using this approach.
+
+72
+00:05:18,000 --> 00:05:23,000
+So OS then need to maintain certain information.
+
+73
+00:05:23,000 --> 00:05:24,000
+Right.
+
+74
+00:05:24,000 --> 00:05:33,000
+So first of all, the OS need to know, so which part of the memory are currently allocated?
+
+75
+00:05:33,000 --> 00:05:36,000
+What are the allocated partitions?
+
+76
+00:05:36,000 --> 00:05:42,000
+Then the OS also need to know, so which part of memory currently not allocated?
+
+77
+00:05:42,000 --> 00:05:45,000
+What are the holes, right, the free partitions?
+
+78
+00:05:45,000 --> 00:05:52,000
+Now let's look at an example to illustrate how this can work.
+
+79
+00:05:52,000 --> 00:05:53,000
+Right.
+
+80
+00:05:53,000 --> 00:05:59,000
+So, assuming that, right, so this number of processes, we have five processes.
+
+81
+00:05:59,000 --> 00:06:05,000
+Then we have a corresponding memory requirement for each process.
+
+82
+00:06:05,000 --> 00:06:08,000
+So that's the size of the process image.
+
+83
+00:06:08,000 --> 00:06:09,000
+Right.
+
+84
+00:06:09,000 --> 00:06:13,000
+Then we also know how long each process may execute.
+
+85
+00:06:13,000 --> 00:06:14,000
+Right.
+
+86
+00:06:14,000 --> 00:06:21,000
+So for instance, for process P1, so the size of process image is 600K.
+
+87
+00:06:21,000 --> 00:06:22,000
+Right.
+
+88
+00:06:22,000 --> 00:06:25,000
+It takes 10 time units to complete.
+
+89
+00:06:25,000 --> 00:06:26,000
+Right.
+
+90
+00:06:26,000 --> 00:06:30,000
+So beginning with a single large hole.
+
+91
+00:06:30,000 --> 00:06:31,000
+Right.
+
+92
+00:06:31,000 --> 00:06:32,000
+The physical memory is free.
+
+93
+00:06:32,000 --> 00:06:34,000
+So everything is free.
+
+94
+00:06:34,000 --> 00:06:37,000
+Now at the time zero.
+
+95
+00:06:37,000 --> 00:06:38,000
+Right.
+
+96
+00:06:38,000 --> 00:06:46,000
+So all these processes are in the job queue, waiting to be loaded into the memory to execute.
+
+97
+00:06:46,000 --> 00:06:47,000
+Right.
+
+98
+00:06:47,000 --> 00:06:50,000
+So recall the state transition diagram.
+
+99
+00:06:50,000 --> 00:06:51,000
+Right.
+
+100
+00:06:51,000 --> 00:06:55,000
+So these are the processes in the job queue.
+
+101
+00:06:55,000 --> 00:07:04,000
+When they are loaded into the memory to execute, then there's a state transition, state change.
+
+102
+00:07:04,000 --> 00:07:05,000
+Right.
+
+103
+00:07:05,000 --> 00:07:06,000
+For the process.
+
+104
+00:07:06,000 --> 00:07:11,000
+So the process then we are changing to the ready state.
+
+105
+00:07:11,000 --> 00:07:12,000
+Right.
+
+106
+00:07:12,000 --> 00:07:17,000
+From the new state change to the ready state and added into the ready queue.
+
+107
+00:07:17,000 --> 00:07:18,000
+Right.
+
+108
+00:07:18,000 --> 00:07:21,000
+So now at time zero.
+
+109
+00:07:21,000 --> 00:07:24,000
+So these processes are in the job queue.
+
+110
+00:07:24,000 --> 00:07:25,000
+Right.
+
+111
+00:07:25,000 --> 00:07:30,000
+And waiting to be loaded into the memory for execution.
+
+112
+00:07:30,000 --> 00:07:37,000
+So at this time, then we have a sufficient amount of memory to assign to P1, P2 and P3.
+
+113
+00:07:37,000 --> 00:07:39,000
+So assign P1, P2 and P3.
+
+114
+00:07:39,000 --> 00:07:46,000
+So after assigning memory for these three processes, then the remaining hole is this one.
+
+115
+00:07:46,000 --> 00:07:48,000
+260K.
+
+116
+00:07:48,000 --> 00:07:51,000
+So 260K is too small.
+
+117
+00:07:51,000 --> 00:07:52,000
+Right.
+
+118
+00:07:52,000 --> 00:07:55,000
+For the memory requirement for P4 and P5.
+
+119
+00:07:55,000 --> 00:08:01,000
+So that means at time zero, then we cannot load P4 and P5.
+
+120
+00:08:01,000 --> 00:08:08,000
+So only P1, P2 and P3 will be able to load into the memory for execution.
+
+121
+00:08:08,000 --> 00:08:12,000
+So P1, P2, P3 will be added into the ready queue.
+
+122
+00:08:12,000 --> 00:08:13,000
+Right.
+
+123
+00:08:13,000 --> 00:08:15,000
+The state will change from new to ready.
+
+124
+00:08:15,000 --> 00:08:17,000
+So that's at time zero.
+
+125
+00:08:17,000 --> 00:08:22,000
+Now, so when P4 and P5 can be loaded.
+
+126
+00:08:22,000 --> 00:08:23,000
+Right.
+
+127
+00:08:23,000 --> 00:08:25,000
+So when this can be loaded is untuned.
+
+128
+00:08:25,000 --> 00:08:29,000
+Until one of these three processes terminates.
+
+129
+00:08:29,000 --> 00:08:36,000
+So when one of the process terminates, then the memory space assigned to the process will be reclaimed.
+
+130
+00:08:36,000 --> 00:08:37,000
+Right.
+
+131
+00:08:37,000 --> 00:08:41,000
+So this three processes, P1, P2 and P3.
+
+132
+00:08:41,000 --> 00:08:42,000
+Right.
+
+133
+00:08:42,000 --> 00:08:46,000
+So this is the corresponding execution time for these processes.
+
+134
+00:08:46,000 --> 00:08:50,000
+So P2 will terminate first at time five.
+
+135
+00:08:50,000 --> 00:08:59,000
+When P2 terminates at time five, the memory space assigned to P2 will be reclaimed become available.
+
+136
+00:08:59,000 --> 00:09:01,000
+We have another hole here.
+
+137
+00:09:01,000 --> 00:09:04,000
+So this hole is 1000K.
+
+138
+00:09:04,000 --> 00:09:09,000
+So this hole is large enough to assign to P4.
+
+139
+00:09:09,000 --> 00:09:10,000
+Right.
+
+140
+00:09:10,000 --> 00:09:19,000
+So at time five, P4 then will be loaded into the memory to execute and added into the ready queue.
+
+141
+00:09:19,000 --> 00:09:20,000
+Right.
+
+142
+00:09:20,000 --> 00:09:25,000
+So after assign the memory for P4, then the left over hole.
+
+143
+00:09:25,000 --> 00:09:27,000
+So this left over hole is 300K.
+
+144
+00:09:27,000 --> 00:09:29,000
+So this is too small for P5.
+
+145
+00:09:29,000 --> 00:09:30,000
+So we have two holes.
+
+146
+00:09:30,000 --> 00:09:32,000
+So this is 300K.
+
+147
+00:09:32,000 --> 00:09:34,000
+So 260K.
+
+148
+00:09:34,000 --> 00:09:39,000
+So both holes are too small for the last process.
+
+149
+00:09:39,000 --> 00:09:43,000
+That's P5, which requires 500K.
+
+150
+00:09:43,000 --> 00:09:47,000
+So we cannot load P5 at time five.
+
+151
+00:09:47,000 --> 00:10:00,000
+We can only load P5 at time when one of these three processes current in the memory terminates.
+
+152
+00:10:00,000 --> 00:10:04,000
+So which one will be terminating next?
+
+153
+00:10:04,000 --> 00:10:09,000
+So P1 is already executed for five time units.
+
+154
+00:10:09,000 --> 00:10:14,000
+When it will terminate at the 10th, require another five time units.
+
+155
+00:10:14,000 --> 00:10:19,000
+P4 just loaded, require eight time units to execute.
+
+156
+00:10:19,000 --> 00:10:28,000
+And P3 already executed five and require another 15 time units to execute.
+
+157
+00:10:28,000 --> 00:10:35,000
+So the next process to terminate, then will be P1 at time 10.
+
+158
+00:10:35,000 --> 00:10:38,000
+At time 10, P1 terminates.
+
+159
+00:10:38,000 --> 00:10:43,000
+Then the memory space allocated to P1 is reclaimed.
+
+160
+00:10:43,000 --> 00:10:45,000
+Then we have a hole here.
+
+161
+00:10:45,000 --> 00:10:48,000
+So this hole is 600K.
+
+162
+00:10:48,000 --> 00:10:51,000
+And the last enough for P5.
+
+163
+00:10:51,000 --> 00:10:57,000
+P5, in this case, can be loaded into the memory for execution at time 10.
+
+164
+00:10:57,000 --> 00:11:03,000
+So after the memory allocation for P5, then we have left our hole.
+
+165
+00:11:03,000 --> 00:11:05,000
+So that's 100K.
+
+166
+00:11:05,000 --> 00:11:08,000
+So in this case, three holes here.
+
+167
+00:11:08,000 --> 00:11:10,000
+So this hole is 100K.
+
+168
+00:11:10,000 --> 00:11:12,000
+And the second hole is 300K.
+
+169
+00:11:12,000 --> 00:11:14,000
+And the last hole is 260K.
+
+170
+00:11:14,000 --> 00:11:15,000
+Right.
+
+171
+00:11:15,000 --> 00:11:18,000
+So that's how this approach works.
+
+172
+00:11:18,000 --> 00:11:19,000
+Right.
+
+173
+00:11:19,000 --> 00:11:27,000
+So you can see here, right, so as I just mentioned, as the process created and terminated, then the memory space will become fragmented.
+
+174
+00:11:27,000 --> 00:11:28,000
+Then we have a hole.
+
+175
+00:11:28,000 --> 00:11:30,000
+Then we have holes.
+
+176
+00:11:30,000 --> 00:11:31,000
+Right.
+
+177
+00:11:31,000 --> 00:11:43,000
+And when there are multiple holes that are large enough to satisfy a request of a process and then which hole to use.
+
+178
+00:11:43,000 --> 00:11:46,000
+So in this case, right, so we have multiple holes.
+
+179
+00:11:46,000 --> 00:11:47,000
+Right.
+
+180
+00:11:47,000 --> 00:11:52,000
+They are all large enough to satisfy a memory requirement of a process.
+
+181
+00:11:52,000 --> 00:11:55,000
+Now the question is which one to choose.
+
+182
+00:11:55,000 --> 00:11:57,000
+So we need a policy.
+
+183
+00:11:57,000 --> 00:11:58,000
+Right.
+
+184
+00:11:58,000 --> 00:12:03,000
+So this policy is called dynamic storage allocation policy.
+
+185
+00:12:03,000 --> 00:12:04,000
+Right.
+
+186
+00:12:04,000 --> 00:12:08,000
+So we did the three policies that can be used.
+
+187
+00:12:08,000 --> 00:12:09,000
+Right.
+
+188
+00:12:09,000 --> 00:12:11,000
+The first policy is called first of feet.
+
+189
+00:12:11,000 --> 00:12:19,000
+So that's basically to allocate the first large enough hole to the process.
+
+190
+00:12:19,000 --> 00:12:20,000
+Right.
+
+191
+00:12:20,000 --> 00:12:25,000
+But remember, remember, recall, the OIS will maintain a list of available holes.
+
+192
+00:12:25,000 --> 00:12:26,000
+Right.
+
+193
+00:12:26,000 --> 00:12:31,000
+Then give a memory requirement of a process.
+
+194
+00:12:31,000 --> 00:12:35,000
+Then in this case, the OIS will search this list.
+
+195
+00:12:35,000 --> 00:12:36,000
+Right.
+
+196
+00:12:36,000 --> 00:12:45,000
+The first large enough hole that can be used to satisfy the memory requirement of the process and that hole that may be used.
+
+197
+00:12:45,000 --> 00:12:47,000
+So that's called first feet.
+
+198
+00:12:47,000 --> 00:12:50,000
+Now what is the bias feet?
+
+199
+00:12:50,000 --> 00:13:00,000
+So for the bias feet, so basically OIS will search the list and found the hole that large enough.
+
+200
+00:13:00,000 --> 00:13:04,000
+And that will generate the smallest level over hole.
+
+201
+00:13:04,000 --> 00:13:05,000
+Right.
+
+202
+00:13:05,000 --> 00:13:19,000
+So basically, so in this case, the OIS will choose the smallest hole in the list that's large enough to satisfy the memory requirement of the process and use that hole.
+
+203
+00:13:19,000 --> 00:13:20,000
+Right.
+
+204
+00:13:20,000 --> 00:13:26,000
+So if you're using that hole, so that means the level over hole will be the smallest.
+
+205
+00:13:26,000 --> 00:13:44,000
+And in contrast to the bias feet, then for the worst feet, then in this case, so the OIS will search the entire list and we found the large, largest hole in the list to satisfy the request.
+
+206
+00:13:44,000 --> 00:13:54,000
+So that's basically means the left over hole will be the largest.
+
+207
+00:13:54,000 --> 00:13:55,000
+Right.
+
+208
+00:13:55,000 --> 00:13:59,000
+So WebR3 different dynamic storage allocation policies.
+
+209
+00:13:59,000 --> 00:14:00,000
+So first feet, bias feet and the worst feet.
+
+210
+00:14:00,000 --> 00:14:01,000
+So for both bias feet and the worst feet.
+
+211
+00:14:01,000 --> 00:14:14,000
+So that's required to search the entire list of the three available holes.
+
+212
+00:14:14,000 --> 00:14:15,000
+Right.
+
+213
+00:14:15,000 --> 00:14:24,000
+In order to find out either the smallest, large enough hole or the largest hole in the list.
+
+214
+00:14:53,180 --> 00:14:56,360
+allocated partitions, right?
+
+215
+00:14:56,860 --> 00:14:58,820
+And internal fragmentation,
+
+216
+00:14:59,460 --> 00:15:01,360
+so that refers to
+
+217
+00:15:01,360 --> 00:15:04,440
+unusable memory space
+
+218
+00:15:04,440 --> 00:15:08,360
+within allocated partitions, right?
+
+219
+00:15:08,800 --> 00:15:09,740
+So for instance,
+
+220
+00:15:10,060 --> 00:15:12,300
+for external fragmentation, right?
+
+221
+00:15:12,700 --> 00:15:16,060
+So we have an external fragmentation here.
+
+222
+00:15:16,540 --> 00:15:17,480
+You see in this case,
+
+223
+00:15:17,480 --> 00:15:18,940
+we have three holes,
+
+224
+00:15:19,360 --> 00:15:21,360
+but all these holes are too small,
+
+225
+00:15:21,500 --> 00:15:22,900
+maybe too small, right?
+
+226
+00:15:22,900 --> 00:15:24,820
+To be useful, right?
+
+227
+00:15:25,080 --> 00:15:26,020
+So in this case,
+
+228
+00:15:26,360 --> 00:15:28,640
+the holes here is in between
+
+229
+00:15:28,640 --> 00:15:30,420
+allocated memory partitions.
+
+230
+00:15:30,700 --> 00:15:33,760
+It's outside allocated memory partition.
+
+231
+00:15:34,280 --> 00:15:35,340
+So this is called
+
+232
+00:15:35,340 --> 00:15:38,420
+external fragmentation, right?
+
+233
+00:15:38,960 --> 00:15:39,860
+And for internal,
+
+234
+00:15:40,200 --> 00:15:42,520
+so this happens here, right?
+
+235
+00:15:42,900 --> 00:15:43,580
+So recall,
+
+236
+00:15:44,120 --> 00:15:46,360
+so we assign a partition
+
+237
+00:15:46,360 --> 00:15:48,060
+to a process,
+
+238
+00:15:48,460 --> 00:15:49,580
+but that present image
+
+239
+00:15:49,580 --> 00:15:52,340
+may not occupy the entire partition.
+
+240
+00:15:52,340 --> 00:15:54,760
+then part of this
+
+241
+00:15:54,760 --> 00:15:56,820
+is not really in use.
+
+242
+00:15:56,900 --> 00:15:58,180
+It's wasted, right?
+
+243
+00:15:58,460 --> 00:15:59,500
+So in this case,
+
+244
+00:15:59,820 --> 00:16:01,500
+so this wastage happening
+
+245
+00:16:01,500 --> 00:16:04,320
+inside an allocated partition,
+
+246
+00:16:04,700 --> 00:16:05,900
+so this refers to
+
+247
+00:16:05,900 --> 00:16:09,080
+internal fragmentation, right?
+
+248
+00:16:09,080 --> 00:16:14,200
+So there are two different types of fragmentation, right?
+
+249
+00:16:14,200 --> 00:16:15,140
+So in particular,
+
+250
+00:16:15,880 --> 00:16:19,220
+to deal with this external fragmentation, right?
+
+251
+00:16:19,500 --> 00:16:21,080
+So the OS commonly
+
+252
+00:16:21,080 --> 00:16:26,060
+will use this compaction strategy, right?
+
+253
+00:16:26,260 --> 00:16:27,820
+So for memory compaction,
+
+254
+00:16:28,360 --> 00:16:30,400
+so that basically refers to
+
+255
+00:16:30,400 --> 00:16:32,780
+shuffle memory contents, right?
+
+256
+00:16:32,780 --> 00:16:35,540
+In order to place,
+
+257
+00:16:35,840 --> 00:16:38,480
+merge smaller holes together
+
+258
+00:16:38,480 --> 00:16:42,120
+to form a larger hole, right?
+
+259
+00:16:42,540 --> 00:16:45,020
+Now let's look at example, right?
+
+260
+00:16:45,440 --> 00:16:46,900
+So the same example,
+
+261
+00:16:47,320 --> 00:16:49,160
+the five processes, right?
+
+262
+00:16:49,420 --> 00:16:50,180
+So it's zero,
+
+263
+00:16:50,540 --> 00:16:51,700
+then we do the memory allocation
+
+264
+00:16:51,700 --> 00:16:53,480
+for P1, P2, and P3.
+
+265
+00:16:53,780 --> 00:16:54,720
+So these three processes
+
+266
+00:16:54,720 --> 00:16:56,720
+are added into ready Q.
+
+267
+00:16:56,720 --> 00:16:59,280
+Then we have a remaining hole
+
+268
+00:16:59,280 --> 00:17:00,240
+that's too small
+
+269
+00:17:00,240 --> 00:17:01,980
+for P4 and P5.
+
+270
+00:17:02,960 --> 00:17:05,000
+Then at time 5, right?
+
+271
+00:17:05,220 --> 00:17:09,200
+At time 5, right?
+
+272
+00:17:09,520 --> 00:17:11,960
+Then P2, P2 terminates, right?
+
+273
+00:17:12,040 --> 00:17:13,900
+Then the OS claim back
+
+274
+00:17:13,900 --> 00:17:14,760
+the memory space
+
+275
+00:17:14,760 --> 00:17:15,980
+are sent to P2,
+
+276
+00:17:16,320 --> 00:17:18,460
+so we have another hole, right?
+
+277
+00:17:18,600 --> 00:17:20,520
+So this hole is large enough
+
+278
+00:17:20,520 --> 00:17:22,760
+to satisfy the memory requirement
+
+279
+00:17:22,760 --> 00:17:24,320
+for P4, right?
+
+280
+00:17:24,700 --> 00:17:26,600
+Then we load P4 into the memory,
+
+281
+00:17:26,600 --> 00:17:27,340
+for execution,
+
+282
+00:17:27,640 --> 00:17:29,240
+so P4 is added into ready Q.
+
+283
+00:17:30,320 --> 00:17:32,640
+So after the memory allocation
+
+284
+00:17:32,640 --> 00:17:33,500
+for P4,
+
+285
+00:17:33,740 --> 00:17:36,360
+there were two smaller holes, right?
+
+286
+00:17:36,420 --> 00:17:39,560
+So this is the first hole,
+
+287
+00:17:39,900 --> 00:17:40,720
+300K,
+
+288
+00:17:41,120 --> 00:17:42,040
+and second hole,
+
+289
+00:17:42,140 --> 00:17:43,040
+260K.
+
+290
+00:17:43,460 --> 00:17:45,180
+So both holes are too small
+
+291
+00:17:45,180 --> 00:17:47,620
+to satisfy the memory requirement
+
+292
+00:17:47,620 --> 00:17:48,420
+for P5.
+
+293
+00:17:49,180 --> 00:17:50,520
+So in this case,
+
+294
+00:17:50,960 --> 00:17:52,100
+then what we can do is
+
+295
+00:17:52,100 --> 00:17:54,280
+we can do the memory compaction
+
+296
+00:17:54,280 --> 00:17:59,020
+by moving P3 up, right?
+
+297
+00:17:59,020 --> 00:18:01,180
+So when P3 moving up,
+
+298
+00:18:01,540 --> 00:18:02,620
+there's two holes
+
+299
+00:18:02,620 --> 00:18:03,140
+will,
+
+300
+00:18:03,300 --> 00:18:04,100
+next to each other,
+
+301
+00:18:04,620 --> 00:18:06,200
+then can be merged
+
+302
+00:18:06,200 --> 00:18:08,620
+into a larger hole, right?
+
+303
+00:18:08,760 --> 00:18:09,880
+So this hole,
+
+304
+00:18:10,280 --> 00:18:12,360
+there is a 500K,
+
+305
+00:18:12,360 --> 00:18:14,500
+and there will be large enough
+
+306
+00:18:14,500 --> 00:18:17,160
+to satisfy the memory requirement
+
+307
+00:18:17,160 --> 00:18:17,900
+for P5.
+
+308
+00:18:18,460 --> 00:18:19,760
+So the P5,
+
+309
+00:18:20,060 --> 00:18:20,860
+then we'll be able
+
+310
+00:18:20,860 --> 00:18:22,160
+to load into the memory
+
+311
+00:18:22,160 --> 00:18:23,220
+to execute,
+
+312
+00:18:23,540 --> 00:18:24,660
+add into ready Q,
+
+313
+00:18:25,020 --> 00:18:27,080
+at time 5, right?
+
+314
+00:18:27,080 --> 00:18:28,780
+So compared to
+
+315
+00:18:28,780 --> 00:18:31,100
+the previous case,
+
+316
+00:18:31,600 --> 00:18:31,740
+right?
+
+317
+00:18:32,100 --> 00:18:32,960
+So P4,
+
+318
+00:18:33,540 --> 00:18:34,240
+or P5,
+
+319
+00:18:34,600 --> 00:18:35,620
+will be unable
+
+320
+00:18:35,620 --> 00:18:37,580
+to load into the memory
+
+321
+00:18:37,580 --> 00:18:38,480
+to execute
+
+322
+00:18:38,480 --> 00:18:40,140
+at the time 10, right?
+
+323
+00:18:40,360 --> 00:18:41,180
+So if you're using
+
+324
+00:18:41,180 --> 00:18:42,120
+memory compaction,
+
+325
+00:18:42,740 --> 00:18:43,900
+so that basically means
+
+326
+00:18:43,900 --> 00:18:45,200
+we're able to
+
+327
+00:18:45,200 --> 00:18:46,980
+load P5 into the memory
+
+328
+00:18:46,980 --> 00:18:47,680
+for execution
+
+329
+00:18:47,680 --> 00:18:50,400
+much earlier, right?
+
+330
+00:18:50,980 --> 00:18:51,980
+Now if we do
+
+331
+00:18:51,980 --> 00:18:52,940
+the memory compaction,
+
+332
+00:18:53,300 --> 00:18:53,620
+right,
+
+333
+00:18:53,740 --> 00:18:55,320
+so what's the requirement?
+
+334
+00:18:55,320 --> 00:18:57,200
+So that's basically required
+
+335
+00:18:57,200 --> 00:19:00,360
+to shuffle the memory content,
+
+336
+00:19:00,780 --> 00:19:00,960
+right?
+
+337
+00:19:01,440 --> 00:19:02,260
+Need to copy
+
+338
+00:19:02,260 --> 00:19:04,420
+the process
+
+339
+00:19:04,420 --> 00:19:05,660
+in the memory
+
+340
+00:19:05,660 --> 00:19:07,160
+from its current location
+
+341
+00:19:07,160 --> 00:19:08,820
+to another location.
+
+342
+00:19:09,120 --> 00:19:10,100
+So this is overhead,
+
+343
+00:19:10,680 --> 00:19:10,980
+right?
+
+344
+00:19:11,340 --> 00:19:12,400
+Another issue is,
+
+345
+00:19:12,780 --> 00:19:12,940
+sorry,
+
+346
+00:19:13,040 --> 00:19:14,300
+so this is only possible,
+
+347
+00:19:14,840 --> 00:19:15,000
+right?
+
+348
+00:19:15,060 --> 00:19:16,100
+So if address binding,
+
+349
+00:19:16,420 --> 00:19:17,280
+so I mentioned
+
+350
+00:19:17,280 --> 00:19:19,160
+this address translation
+
+351
+00:19:19,160 --> 00:19:21,520
+from the logical
+
+352
+00:19:21,520 --> 00:19:23,040
+to physical address,
+
+353
+00:19:23,380 --> 00:19:23,680
+right?
+
+354
+00:19:23,680 --> 00:19:25,320
+So this is only possible,
+
+355
+00:19:25,600 --> 00:19:26,700
+is this address translation
+
+356
+00:19:26,700 --> 00:19:27,380
+from logical
+
+357
+00:19:27,380 --> 00:19:28,100
+to physical
+
+358
+00:19:28,100 --> 00:19:29,600
+is carried out
+
+359
+00:19:29,600 --> 00:19:30,900
+during the execution time.
+
+360
+00:19:33,160 --> 00:19:33,980
+All right,
+
+361
+00:19:34,040 --> 00:19:34,460
+so
+
+362
+00:19:34,460 --> 00:19:37,480
+for address translation,
+
+363
+00:19:37,740 --> 00:19:37,960
+again,
+
+364
+00:19:38,260 --> 00:19:38,740
+so as,
+
+365
+00:19:38,980 --> 00:19:39,160
+right,
+
+366
+00:19:39,240 --> 00:19:39,760
+so we mentioned
+
+367
+00:19:39,760 --> 00:19:41,040
+this address translation
+
+368
+00:19:41,040 --> 00:19:42,220
+from logical
+
+369
+00:19:42,220 --> 00:19:43,460
+to physical address,
+
+370
+00:19:43,960 --> 00:19:44,200
+right?
+
+371
+00:19:44,200 --> 00:19:46,040
+So if you're using
+
+372
+00:19:46,040 --> 00:19:48,300
+this contiguous allocation,
+
+373
+00:19:48,800 --> 00:19:49,720
+the slides here
+
+374
+00:19:49,720 --> 00:19:50,640
+basically shows
+
+375
+00:19:50,640 --> 00:19:52,480
+how the address translation
+
+376
+00:19:52,480 --> 00:19:54,120
+can be carried out,
+
+377
+00:19:54,560 --> 00:19:54,860
+right?
+
+378
+00:19:55,220 --> 00:19:56,300
+So address translation
+
+379
+00:19:56,300 --> 00:19:57,180
+in this case
+
+380
+00:19:57,180 --> 00:19:58,220
+can be carried out
+
+381
+00:19:58,220 --> 00:19:59,740
+by using this
+
+382
+00:19:59,740 --> 00:20:00,840
+kind of mechanism,
+
+383
+00:20:01,420 --> 00:20:01,740
+right?
+
+384
+00:20:02,640 --> 00:20:03,260
+So we have
+
+385
+00:20:03,260 --> 00:20:04,900
+a relocation register,
+
+386
+00:20:05,460 --> 00:20:05,660
+right?
+
+387
+00:20:05,780 --> 00:20:07,320
+So relocation register
+
+388
+00:20:07,320 --> 00:20:08,540
+basically will remember
+
+389
+00:20:08,540 --> 00:20:09,400
+the base address.
+
+390
+00:20:09,400 --> 00:20:10,840
+So that's the starting
+
+391
+00:20:10,840 --> 00:20:11,980
+physical address
+
+392
+00:20:11,980 --> 00:20:13,780
+where the precise image
+
+393
+00:20:13,780 --> 00:20:15,760
+is in the physical memory,
+
+394
+00:20:16,100 --> 00:20:16,280
+right?
+
+395
+00:20:16,380 --> 00:20:17,000
+For instance,
+
+396
+00:20:17,360 --> 00:20:18,160
+in this case,
+
+397
+00:20:18,600 --> 00:20:20,700
+so the precise image
+
+398
+00:20:20,700 --> 00:20:22,200
+is loaded into
+
+399
+00:20:22,200 --> 00:20:23,780
+the physical memory
+
+400
+00:20:23,780 --> 00:20:25,040
+starting from
+
+401
+00:20:25,040 --> 00:20:25,880
+1024.
+
+402
+00:20:26,160 --> 00:20:27,080
+So that's the
+
+403
+00:20:27,080 --> 00:20:28,040
+base address,
+
+404
+00:20:28,360 --> 00:20:28,520
+right?
+
+405
+00:20:28,580 --> 00:20:29,900
+The starting address,
+
+406
+00:20:30,240 --> 00:20:30,380
+right?
+
+407
+00:20:30,460 --> 00:20:32,440
+So if I draw,
+
+408
+00:20:33,160 --> 00:20:33,460
+okay,
+
+409
+00:20:33,640 --> 00:20:34,560
+I try to draw,
+
+410
+00:20:35,300 --> 00:20:35,580
+right?
+
+411
+00:20:35,580 --> 00:20:38,540
+So this is
+
+412
+00:20:38,540 --> 00:20:39,720
+the precise image
+
+413
+00:20:39,720 --> 00:20:40,440
+is loaded into
+
+414
+00:20:40,440 --> 00:20:41,160
+physical memory
+
+415
+00:20:41,160 --> 00:20:42,320
+and the starting
+
+416
+00:20:42,320 --> 00:20:43,640
+address is
+
+417
+00:20:43,640 --> 00:20:45,780
+1024,
+
+418
+00:20:46,300 --> 00:20:46,560
+right?
+
+419
+00:20:46,900 --> 00:20:47,800
+So it's the base address.
+
+420
+00:20:48,160 --> 00:20:48,840
+It's where
+
+421
+00:20:48,840 --> 00:20:50,000
+the precise image
+
+422
+00:20:50,000 --> 00:20:51,660
+is started
+
+423
+00:20:51,660 --> 00:20:53,080
+at the physical memory,
+
+424
+00:20:53,300 --> 00:20:53,460
+right?
+
+425
+00:20:53,500 --> 00:20:54,240
+It's 1024.
+
+426
+00:20:54,600 --> 00:20:55,260
+So this is
+
+427
+00:20:55,260 --> 00:20:56,400
+loaded into
+
+428
+00:20:56,400 --> 00:20:57,700
+the relocation
+
+429
+00:20:57,700 --> 00:20:58,460
+register,
+
+430
+00:20:59,040 --> 00:21:01,740
+right?
+
+431
+00:21:01,860 --> 00:21:03,040
+So I go back,
+
+432
+00:21:03,160 --> 00:21:03,660
+change back
+
+433
+00:21:03,660 --> 00:21:04,880
+to the laser pointer,
+
+434
+00:21:04,880 --> 00:21:05,640
+right?
+
+435
+00:21:05,700 --> 00:21:06,220
+So this is
+
+436
+00:21:06,220 --> 00:21:07,320
+remembered by
+
+437
+00:21:07,320 --> 00:21:08,140
+the relocation
+
+438
+00:21:08,140 --> 00:21:08,580
+register,
+
+439
+00:21:09,140 --> 00:21:09,380
+right?
+
+440
+00:21:10,340 --> 00:21:10,700
+When
+
+441
+00:21:10,700 --> 00:21:11,920
+a screened instruction,
+
+442
+00:21:12,340 --> 00:21:12,820
+the instruction
+
+443
+00:21:12,820 --> 00:21:13,860
+may generate
+
+444
+00:21:13,860 --> 00:21:14,980
+address reference,
+
+445
+00:21:15,380 --> 00:21:15,840
+recall,
+
+446
+00:21:16,520 --> 00:21:17,340
+the address reference
+
+447
+00:21:17,340 --> 00:21:17,880
+always
+
+448
+00:21:17,880 --> 00:21:20,060
+reference to
+
+449
+00:21:20,060 --> 00:21:21,600
+a space
+
+450
+00:21:21,600 --> 00:21:22,580
+is a location
+
+451
+00:21:22,580 --> 00:21:24,020
+in the logic
+
+452
+00:21:24,020 --> 00:21:24,620
+address space.
+
+453
+00:21:24,840 --> 00:21:25,180
+Again,
+
+454
+00:21:25,460 --> 00:21:26,620
+if I draw a picture,
+
+455
+00:21:27,720 --> 00:21:27,960
+right?
+
+456
+00:21:28,420 --> 00:21:29,240
+So this is
+
+457
+00:21:29,240 --> 00:21:30,440
+a logical
+
+458
+00:21:30,440 --> 00:21:31,320
+address
+
+459
+00:21:31,320 --> 00:21:34,820
+starting from
+
+460
+00:21:34,820 --> 00:21:35,080
+zero,
+
+461
+00:21:35,440 --> 00:21:35,980
+so this is
+
+462
+00:21:35,980 --> 00:21:36,440
+logical,
+
+463
+00:21:39,440 --> 00:21:40,180
+right?
+
+464
+00:21:40,380 --> 00:21:41,260
+So this is
+
+465
+00:21:41,260 --> 00:21:41,660
+physical,
+
+466
+00:21:43,660 --> 00:21:44,160
+right?
+
+467
+00:21:44,420 --> 00:21:44,900
+Starting with
+
+468
+00:21:44,900 --> 00:21:45,200
+zero.
+
+469
+00:21:46,140 --> 00:21:46,520
+So
+
+470
+00:21:46,520 --> 00:21:47,640
+as good
+
+471
+00:21:47,640 --> 00:21:48,160
+instruction,
+
+472
+00:21:48,680 --> 00:21:48,840
+right,
+
+473
+00:21:48,940 --> 00:21:49,480
+the CPU
+
+474
+00:21:49,480 --> 00:21:50,300
+will generate
+
+475
+00:21:50,300 --> 00:21:51,080
+address reference
+
+476
+00:21:51,080 --> 00:21:51,900
+refers to this
+
+477
+00:21:51,900 --> 00:21:52,400
+location
+
+478
+00:21:52,400 --> 00:21:54,060
+in the logic
+
+479
+00:21:54,060 --> 00:21:54,820
+address space,
+
+480
+00:21:55,420 --> 00:21:55,740
+right?
+
+481
+00:21:56,060 --> 00:21:56,500
+So
+
+482
+00:21:56,500 --> 00:21:58,120
+this location,
+
+483
+00:21:58,360 --> 00:21:58,680
+then,
+
+484
+00:21:59,280 --> 00:22:00,500
+this logic address,
+
+485
+00:22:00,640 --> 00:22:01,180
+then can be
+
+486
+00:22:01,180 --> 00:22:02,000
+translated to the
+
+487
+00:22:02,000 --> 00:22:02,760
+physical address
+
+488
+00:22:02,760 --> 00:22:03,500
+address by
+
+489
+00:22:03,500 --> 00:22:05,500
+adding the
+
+490
+00:22:05,500 --> 00:22:07,660
+base address
+
+491
+00:22:07,660 --> 00:22:09,500
+with the
+
+492
+00:22:09,500 --> 00:22:10,520
+logic address.
+
+493
+00:22:10,740 --> 00:22:11,200
+By adding
+
+494
+00:22:11,200 --> 00:22:13,000
+base with the
+
+495
+00:22:13,000 --> 00:22:13,760
+logic address,
+
+496
+00:22:14,280 --> 00:22:14,740
+then we will
+
+497
+00:22:14,740 --> 00:22:15,340
+generate the
+
+498
+00:22:15,340 --> 00:22:16,040
+physical address,
+
+499
+00:22:16,280 --> 00:22:16,500
+right?
+
+500
+00:22:16,920 --> 00:22:17,320
+So
+
+501
+00:22:17,320 --> 00:22:19,020
+this is the
+
+502
+00:22:19,020 --> 00:22:19,880
+place we're
+
+503
+00:22:19,880 --> 00:22:20,660
+going to access.
+
+504
+00:22:21,100 --> 00:22:22,100
+So logic address
+
+505
+00:22:22,100 --> 00:22:22,920
+basically is the
+
+506
+00:22:22,920 --> 00:22:23,240
+offset,
+
+507
+00:22:23,580 --> 00:22:23,760
+right,
+
+508
+00:22:23,840 --> 00:22:24,660
+from the beginning
+
+509
+00:22:24,660 --> 00:22:25,680
+of the
+
+510
+00:22:25,680 --> 00:22:26,800
+present image,
+
+511
+00:22:27,140 --> 00:22:27,420
+right?
+
+512
+00:22:27,420 --> 00:22:28,360
+So base
+
+513
+00:22:28,360 --> 00:22:29,600
+plus offset,
+
+514
+00:22:29,600 --> 00:22:30,400
+so that will
+
+515
+00:22:30,400 --> 00:22:31,260
+generate the
+
+516
+00:22:31,260 --> 00:22:32,480
+physical address.
+
+517
+00:22:33,940 --> 00:22:34,280
+All right,
+
+518
+00:22:34,320 --> 00:22:35,080
+so we stop
+
+519
+00:22:35,080 --> 00:22:36,140
+here for
+
+520
+00:22:36,140 --> 00:22:38,040
+the first part
+
+521
+00:22:38,040 --> 00:22:38,900
+of the
+
+522
+00:22:38,900 --> 00:22:40,220
+memory allocation,
+
+523
+00:22:40,820 --> 00:22:41,020
+right?
+
+524
+00:22:41,320 --> 00:22:42,280
+In the next video,
+
+525
+00:22:42,480 --> 00:22:43,220
+then we'll continue
+
+526
+00:22:43,220 --> 00:22:44,040
+to look at
+
+527
+00:22:44,040 --> 00:22:44,720
+the second part.
+
+528
+00:22:45,120 --> 00:22:45,960
+So the second part,
+
+529
+00:22:46,240 --> 00:22:46,880
+then we'll look at
+
+530
+00:22:46,880 --> 00:22:48,180
+the non-contiguous
+
+531
+00:22:48,180 --> 00:22:49,260
+memory allocation.
+

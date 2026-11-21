@@ -1,0 +1,6 @@
+flowchart LR
+ B0["Logical 0: disk block 9"] --> B1["Logical 1: disk block 16"]
+ B1 --> B2["Logical 2: disk block 1"]
+ B2 --> B3["Logical 3: disk block 10"]
+ B3 --> B4["Logical 4: disk block 25"]
+ B4 -.->|"Next pointer, if present"| Next["Remaining chain"]

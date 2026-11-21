@@ -1,0 +1,7 @@
+flowchart TD
+ M["Physical memory allocation"] --> C["Contiguous: one extent per process"]
+ M --> N["Non-contiguous: multiple locations per process"]
+ C --> F["Fixed partitions: internal fragmentation"]
+ C --> V["Dynamic partitions: external fragmentation"]
+ N --> P["Paging: equal-size pages and frames"]
+ N --> S["Segmentation: variable-size segments"]

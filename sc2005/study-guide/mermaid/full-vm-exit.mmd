@@ -1,0 +1,11 @@
+sequenceDiagram
+ participant A as Guest app
+ participant G as Guest kernel
+ participant V as Hypervisor
+ participant H as Hardware
+ A->>H: Ordinary compatible instruction
+ A->>G: System call
+ G->>V: Selected device operation exits guest
+ V->>V: Update virtual device state
+ V-->>G: Resume guest
+ G-->>A: Return from system call

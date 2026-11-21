@@ -1,0 +1,6 @@
+flowchart TD
+ subgraph P["One process"]
+  S["Shared: code, data, heap and open resources"]
+  T1["Thread 1: PC, registers and stack"] --> S
+  T2["Thread 2: PC, registers and stack"] --> S
+ end

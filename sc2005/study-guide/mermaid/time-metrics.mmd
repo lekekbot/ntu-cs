@@ -1,0 +1,6 @@
+flowchart LR
+ A["Arrival"] -->|"W1"| B["First dispatch"]
+ B -->|"CPU 1"| C["I/O wait"]
+ C --> D["Ready again"]
+ D -->|"W2 and CPU 2"| E["Finish"]
+ A -.->|"Turnaround"| E

@@ -1,0 +1,5 @@
+flowchart LR
+ O["Byte offset 2748"] -->|"Divide by 1024"| L["Logical block 2"]
+ O -->|"Remainder"| R["Offset 700"]
+ L -->|"Contiguous start = 20"| B["Physical block 22"]
+ R -->|"Same offset"| B

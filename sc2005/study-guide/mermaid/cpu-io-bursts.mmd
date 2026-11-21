@@ -1,0 +1,6 @@
+stateDiagram-v2
+ direction LR
+ Ready --> CPU: dispatch
+ CPU --> IO: request I/O
+ IO --> Ready: I/O completes
+ CPU --> [*]: process finishes

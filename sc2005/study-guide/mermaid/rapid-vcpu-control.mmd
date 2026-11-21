@@ -1,0 +1,4 @@
+flowchart TD
+ A["Guest scheduler picks a thread"] --> V["Thread runs on a virtual CPU"]
+ H["Host scheduler picks a vCPU"] --> P["vCPU runs on a physical core"]
+ V -.->|"Thread can advance only while the vCPU has this core"| P

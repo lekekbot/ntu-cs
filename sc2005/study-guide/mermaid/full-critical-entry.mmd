@@ -1,0 +1,5 @@
+flowchart LR
+ A["Entry section"] -->|"Acquire permission"| B["Critical section"]
+ B --> C["Exit section"]
+ C -->|"Release permission"| D["Remainder section"]
+ D --> A

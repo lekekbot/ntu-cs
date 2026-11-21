@@ -1,0 +1,7 @@
+flowchart TD
+ X["Four disks, A1 fails"] --> S["RAID 0+1"]
+ X --> M["RAID 1+0"]
+ S --> SL["Stripe A becomes unavailable"]
+ SL --> SR["Any failure in stripe B stops the array"]
+ M --> ML["Mirror A runs on A2"]
+ ML --> MR["B1 can fail while B2 stays up"]

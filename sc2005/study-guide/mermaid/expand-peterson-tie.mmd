@@ -1,0 +1,7 @@
+flowchart TD
+ A["P0 and P1 both raise their flags"] --> B["P0 writes turn = 1"]
+ B --> C["P1 writes turn = 0 last"]
+ C --> D["P0 enters: turn favours P0"]
+ C --> E["P1 waits: P0 wants in and turn = 0"]
+ D --> F["P0 clears its flag"]
+ F --> G["P1 enters: P0 has left"]

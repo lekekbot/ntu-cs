@@ -1,0 +1,5 @@
+flowchart TD
+ V["Logical address: segment and offset"] --> T["Select segment table entry"]
+ T --> Q{"Offset below limit?"}
+ Q -->|"Yes"| A["Add segment base to offset"]
+ Q -->|"No"| F["Raise protection exception"]

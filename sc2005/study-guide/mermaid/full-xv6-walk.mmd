@@ -1,0 +1,5 @@
+flowchart LR
+ V["Virtual address"] --> W["walk(..., 0): find leaf PTE slot"]
+ W -->|"Inspect entry and flags"| C["Use PTE for mapping checks"]
+ W -->|"walkaddr also checks V and U"| A["Return physical page base or zero"]
+ A -->|"If successful"| P["Add byte offset when needed"]

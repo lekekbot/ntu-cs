@@ -1,0 +1,5 @@
+flowchart TD
+ U1["User thread 1"] --> K["Single kernel thread"]
+ U2["User thread 2"] --> K
+ U3["User thread 3"] --> K
+ K -->|"If blocked in I/O"| B["No user thread in this process can execute"]

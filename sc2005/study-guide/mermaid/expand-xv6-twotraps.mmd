@@ -1,0 +1,5 @@
+flowchart TD
+ A["ecall at 0x1500"] -->|"Advance saved PC"| B["Return at 0x1504"]
+ B --> C["Store at 0x1504 faults"]
+ C -->|"Install legal mapping"| D["Retry store at 0x1504"]
+ D --> E["Store completes"]

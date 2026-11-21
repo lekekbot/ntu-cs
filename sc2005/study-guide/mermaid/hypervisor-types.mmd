@@ -1,0 +1,10 @@
+flowchart TD
+ subgraph Bare["Type 1: bare metal"]
+  G1["Guest OS and apps"] --> V1["Hypervisor"]
+  V1 --> P1["Hardware"]
+ end
+ subgraph Hosted["Type 2: hosted"]
+  G2["Guest OS and apps"] --> V2["Hypervisor"]
+  V2 --> OS["Host OS"]
+  OS --> P2["Hardware"]
+ end

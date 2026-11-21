@@ -1,0 +1,5 @@
+flowchart LR
+ A["Guest marks thread Running"] --> B{"Does its vCPU have a core?"}
+ B -->|"Yes"| C["Guest thread executes instructions"]
+ B -->|"No"| D["Thread makes no instruction progress"]
+ D -->|"Host dispatches vCPU"| C

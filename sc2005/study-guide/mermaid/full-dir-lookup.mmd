@@ -1,0 +1,6 @@
+flowchart LR
+ A["Path /spell/mail/prt/file"] --> B["Walk directory names in order"]
+ B --> C["Resolve final entry"]
+ C -->|"Regular entry"| I["Inode"]
+ C -->|"Symbolic link"| L["Resolve the stored target path"]
+ L --> I

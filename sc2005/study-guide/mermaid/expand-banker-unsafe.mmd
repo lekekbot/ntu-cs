@@ -1,0 +1,8 @@
+flowchart TD
+ S["Free units = 1"] --> C{"Grant one more to P0?"}
+ C -->|"Keep current state"| Y["P1 needs 1"]
+ Y --> Z["P1 finishes and releases 2"]
+ Z --> L["P0 can finish"]
+ C -->|"Tentative grant"| U["Free units = 0"]
+ U --> N["P0 and P1 each still need 1"]
+ N --> R["Unsafe: reject grant"]

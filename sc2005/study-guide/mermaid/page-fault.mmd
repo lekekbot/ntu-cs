@@ -1,0 +1,6 @@
+flowchart TD
+ Ref["Memory reference"] --> M{"Resident and permitted?"}
+ M -->|"Yes"| Access["Access page"]
+ M -->|"No"| Trap{"Can the kernel resolve the fault?"}
+ Trap -->|"No"| Bad["Reject access"]
+ Trap -->|"Yes"| Fix["Install mapping and retry"]

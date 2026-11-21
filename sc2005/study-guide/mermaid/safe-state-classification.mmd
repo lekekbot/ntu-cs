@@ -1,0 +1,5 @@
+flowchart TD
+ S["All states"] --> Q["Safe: a safe sequence exists"]
+ S --> U["Unsafe: no safe sequence exists"]
+ U --> D["Already deadlocked"]
+ U --> N["No current deadlock"]

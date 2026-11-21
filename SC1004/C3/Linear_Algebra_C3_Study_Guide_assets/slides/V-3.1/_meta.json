@@ -1,0 +1,56 @@
+{
+  "video": "V-3.1.mp4",
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 0.0,
+      "frame": 0
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 50.0,
+      "frame": 50
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 178.0,
+      "frame": 178
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 208.0,
+      "frame": 208
+    },
+    {
+      "file": "slide_005.jpg",
+      "time": 446.0,
+      "frame": 446
+    },
+    {
+      "file": "slide_006.jpg",
+      "time": 563.0,
+      "frame": 563
+    },
+    {
+      "file": "slide_007.jpg",
+      "time": 593.0,
+      "frame": 593
+    },
+    {
+      "file": "slide_008.jpg",
+      "time": 757.0,
+      "frame": 757
+    },
+    {
+      "file": "slide_009.jpg",
+      "time": 861.0,
+      "frame": 861
+    },
+    {
+      "file": "slide_010.jpg",
+      "time": 1090.0,
+      "frame": 1090
+    }
+  ]
+}

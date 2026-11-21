@@ -1,0 +1,5 @@
+flowchart LR
+ P0(("P0")) -->|"Requests"| B["Resource B"]
+ B -->|"Assigned to"| P1(("P1"))
+ P1 -->|"Requests"| A["Resource A"]
+ A -->|"Assigned to"| P0

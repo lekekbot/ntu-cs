@@ -1,0 +1,31 @@
+{
+  "video": "V-4.13.mp4",
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 0.0,
+      "frame": 0
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 227.0,
+      "frame": 227
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 250.0,
+      "frame": 250
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 315.0,
+      "frame": 315
+    },
+    {
+      "file": "slide_005.jpg",
+      "time": 384.0,
+      "frame": 384
+    }
+  ]
+}

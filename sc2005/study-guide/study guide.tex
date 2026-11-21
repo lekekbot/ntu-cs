@@ -1,0 +1,985 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=20mm,bottom=18mm,left=21mm,right=21mm,headheight=15pt]{geometry}
+\ifdefined\XeTeXversion
+\IfFileExists{/System/Library/Fonts/Supplemental/Georgia.ttf}{
+\DeclareFontFamily{TU}{guiderm}{}
+\DeclareFontShape{TU}{guiderm}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{bx}{n}{<->ssub * guiderm/b/n}{}
+\DeclareFontShape{TU}{guiderm}{m}{sl}{<->ssub * guiderm/m/it}{}
+\DeclareFontShape{TU}{guiderm}{bx}{it}{<->ssub * guiderm/b/it}{}
+\DeclareFontFamily{TU}{guidess}{}
+\DeclareFontShape{TU}{guidess}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Arial.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Arial Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{bx}{n}{<->ssub * guidess/b/n}{}
+\DeclareFontShape{TU}{guidess}{m}{sl}{<->ssub * guidess/m/it}{}
+\DeclareFontShape{TU}{guidess}{bx}{it}{<->ssub * guidess/b/it}{}
+\DeclareFontFamily{TU}{guidett}{}
+\DeclareFontShape{TU}{guidett}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{bx}{n}{<->ssub * guidett/b/n}{}
+\DeclareFontShape{TU}{guidett}{m}{sl}{<->ssub * guidett/m/it}{}
+\DeclareFontShape{TU}{guidett}{bx}{it}{<->ssub * guidett/b/it}{}
+\renewcommand{\rmdefault}{guiderm}
+\renewcommand{\sfdefault}{guidess}
+\renewcommand{\ttdefault}{guidett}
+}{}
+\else
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\fi
+\usepackage[cmex10]{amsmath}\usepackage{amssymb}
+\DeclareFontShape{OMX}{cmex}{m}{n}{<->sfixed*lmex10}{}
+\DeclareFontShape{OT1}{cmr}{m}{n}{<-> rm-lmr10}{}
+\DeclareFontShape{OML}{cmm}{m}{it}{<-> lmmi10}{}
+\DeclareFontShape{OMS}{cmsy}{m}{n}{<-> lmsy10}{}
+\usepackage[table]{xcolor}
+\usepackage{array,tabularx,booktabs}
+\usepackage{enumitem,fancyhdr,fancyvrb,needspace,graphicx,ragged2e}
+\usepackage[unicode,colorlinks=true,linkcolor=teal!60!black,urlcolor=teal!60!black,bookmarksopen=true]{hyperref}
+
+\definecolor{ink}{HTML}{152D42}
+\definecolor{accent}{HTML}{086C68}
+\definecolor{pale}{HTML}{E9F5F3}
+\definecolor{mist}{HTML}{EDF2F6}
+\definecolor{amber}{HTML}{F9EEDC}
+\definecolor{muted}{HTML}{415971}
+\hypersetup{pdftitle={SC2005 Operating Systems Study Guide},pdfsubject={Visual explanations, worked traces, and practice}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.23}
+\setlist{leftmargin=*,itemsep=3pt,topsep=3pt}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\raggedbottom
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\sffamily\small\color{muted}SC2005 Operating Systems}
+\fancyhead[R]{\sffamily\small\color{muted}Study Guide}
+\fancyfoot[R]{\sffamily\small\color{muted}\thepage}
+\renewcommand{\headrulewidth}{.25pt}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\heading}[1]{{\sffamily\RaggedRight\bfseries\color{ink}\fontsize{28}{32}\selectfont #1\par}\smallskip}
+\newcommand{\minor}[1]{\par\medskip{\sffamily\bfseries\color{accent}#1\par}\smallskip}
+\newcommand{\tagline}[1]{{\small\sffamily\bfseries\color{accent}#1\par}\smallskip}
+\newcommand{\boxline}[2]{\par\medskip\noindent
+  \colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{#1}\enspace #2}}\par}
+\newcommand{\eli}[1]{\boxline{ELI5.}{#1}}
+\newcommand{\ruleline}[1]{\boxline{Key rule.}{#1}}
+\newcommand{\fig}[2]{\mermaidfigure{61mm}{#1}{#2}}
+\newcommand{\largefig}[2]{\mermaidfigure{86mm}{#1}{#2}}
+\newcommand{\mermaidfigure}[3]{\par\medskip{\centering
+  \includegraphics[width=.98\linewidth,height=#1,keepaspectratio]{mermaid/rendered/#2.pdf}\par
+  \smallskip{\small\color{muted}#3\par}}\medskip}
+\newcommand{\chapterstart}[4]{%
+  \clearpage\phantomsection\label{#1}\pdfbookmark[0]{#3}{bm-#1}%
+  \tagline{#2}\heading{#3}{\color{muted}#4\par}%
+  {\small\sffamily
+  \hyperref[theory-#1]{Theory}\enspace\textbullet\enspace
+  \ifcsname r@deeper-#1\endcsname
+  \hyperref[deeper-#1]{More theory}\enspace\textbullet\enspace\fi
+  \hyperref[work-#1]{Worked example}\enspace\textbullet\enspace
+  \hyperref[extra-#1]{Second example}\enspace\textbullet\enspace
+  \hyperref[try-#1]{Practice}\enspace\textbullet\enspace
+  \hyperref[map]{Topic map}\par}}
+\newcommand{\partstart}[4]{%
+  \clearpage\phantomsection\label{#1-#2}%
+  \tagline{#3}\heading{#4}{\small\sffamily\hyperref[#2]{Back to topic}\enspace\textbullet\enspace
+  \hyperref[map]{Topic map}\par}}
+\newcommand{\theory}[3]{\partstart{theory}{#1}{#2 / THEORY}{#3}}
+\newcommand{\deepen}[3]{\partstart{deeper}{#1}{#2 / THEORY}{#3}}
+\newcommand{\extraexample}[3]{\partstart{extra}{#1}{#2 / WORKED EXAMPLE}{#3}}
+\newcommand{\lectureref}[1]{{\small\color{muted}Source. #1\par}}
+\newenvironment{theorytable}
+  {\par\medskip\tabularx{\linewidth}{@{}>{\RaggedRight\arraybackslash}p{.29\linewidth}Y@{}}\toprule
+   \rowcolor{mist}\textbf{Concept}&\textbf{How it works}\\\midrule}
+  {\bottomrule\endtabularx}
+\newcommand{\worked}[3]{\partstart{work}{#1}{#2 / WORKED EXAMPLE}{#3}}
+\newcommand{\practice}[3]{\partstart{try}{#1}{#2 / PRACTICE}{#3}}
+\newcommand{\questions}[2]{\minor{Try it}\begin{enumerate}\item #1\item #2\end{enumerate}}
+\newcommand{\answers}[2]{\minor{Check your answers}\begin{enumerate}\item #1\item #2\end{enumerate}}
+\newcommand{\topicrow}[3]{\hyperref[#1]{#2}& #3 &\pageref{#1}&%
+  \ifcsname r@theory-#1\endcsname\pageref{theory-#1}\fi\\}
+\begin{document}
+\phantomsection\label{map}
+\tagline{SC2005}
+\heading{Operating Systems Study Guide}
+{\large\color{muted}See the mechanism. Trace the example. Try it yourself.}\par
+\vspace{4mm}
+\begin{tabularx}{\linewidth}{@{}p{.32\linewidth}Yrr@{}}
+\toprule\rowcolor{mist}\textbf{Topic}&\textbf{What you will trace}&\textbf{Page}&\textbf{Theory}\\\midrule
+\topicrow{os}{OS basics and protection}{Kernel entry, DMA and bounds checks}
+\topicrow{proc}{Processes and threads}{Process states, IPC, fork and exec}
+\topicrow{cpu}{CPU scheduling}{Ready queues, preemption and timing metrics}
+\topicrow{sync}{Synchronisation}{Races, locks and semaphores}
+\topicrow{dead}{Deadlocks}{Resource graphs and safe sequences}
+\topicrow{mem}{Memory organisation}{Address translation and page-table walks}
+\topicrow{vm}{Virtual memory}{Page faults, replacement and working sets}
+\topicrow{fs}{File systems}{Descriptors, allocation and inode lookup}
+\topicrow{io}{I/O systems and disks}{Disk timing, seek order and RAID}
+\topicrow{rt}{Real-time operating systems}{Deadline windows, RM and EDF}
+\topicrow{virt}{Virtualisation}{Guest and host scheduling, VM exits}
+\topicrow{xv}{xv6 and mixed practice}{Trap return and links across topics}
+\bottomrule
+\end{tabularx}
+\minor{Two quiz modes}
+\textbf{Concept quiz.} Use Theory and More theory. Explain the diagrams out loud, then try the checks.\par
+\textbf{Algorithm quiz.} Follow a worked example, then rebuild the second example from its inputs. Use Practice to check your steps.\par
+{\small\color{muted}Based on the SC2005 lecture materials and the full guide's worked examples. All figures have editable Mermaid sources.}
+\chapterstart{os}{01 / KERNEL ENTRY}{OS basics and protection}{Who requested kernel work, and what happens afterward?}
+\eli{The kernel is the building manager. An app knocks for service. A device rings the bell when its work finishes.}
+\fig{full-os-events}{A system call and an exception are synchronous. A device or timer interrupt is asynchronous.}
+\fig{dma}{The CPU configures DMA. The controller moves the data and can interrupt on completion.}
+\minor{Know the distinction}
+\begin{tabularx}{\linewidth}{@{}p{.26\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Term}&\textbf{What changes}\\\midrule
+Multiprogramming&Another ready job can use the CPU while one waits for I/O.\\
+Time-sharing&Frequent scheduling gives interactive tasks a turn.\\
+Multiprocessing&Multiple cores can run work in parallel.\\
+User / kernel mode&Privilege determines which instructions and addresses are allowed.\\
+Context switch&The scheduler changes which task runs. A trap can return to the same task.\\
+\bottomrule\end{tabularx}
+
+\theory{os}{01}{What the kernel is responsible for}
+\fig{protection-layers}{Hardware checks enforce the boundary that the kernel sets up.}
+\begin{theorytable}
+\textbf{Kernel roles}&The resource allocator decides who gets CPU time, memory and devices. The control program supervises execution and enforces protection.\\
+\textbf{Batch systems}&Jobs run with little or no interactive input. Multiprogramming keeps several jobs available so another can run during an I/O wait.\\
+\textbf{Time-sharing}&Timer interrupts let the kernel regain control. Frequent CPU turns make interactive work responsive.\\
+\textbf{Interrupt vector and handler}&An interrupt identifies an event. The vector directs the CPU to the corresponding interrupt service routine.\\
+\textbf{Privileged operations}&The kernel can configure devices, timers and protection registers. User programs request these services through system calls.\\
+\textbf{Programmed I/O and DMA}&In programmed I/O the CPU moves data itself. With DMA it sets up a transfer that the controller performs.\\
+\end{theorytable}
+\minor{Check your understanding}
+If a user process loops forever, what gives the kernel another chance to schedule?
+\boxline{Answer.}{A timer interrupt. Its handler can run even if the process never calls the OS.}
+
+\deepen{os}{01}{Who moves the bytes?}
+\eli{You can keep checking whether your food is ready, wait for the buzzer, or have someone bring the whole tray over.}
+\largefig{expand-io-modes}{Separate how the CPU hears about the device from who actually copies the data.}
+\begin{theorytable}
+\textbf{Polling}&The CPU repeatedly reads device status. It can be useful for very short waits or when the kernel is already doing related work.\\
+\textbf{Interrupt-driven I/O}&The device signals the CPU when attention is needed. The CPU runs the handler and transfers the data in this model.\\
+\textbf{DMA}&The CPU sets up the transfer. The controller moves a block between the device and memory and can signal when it finishes.\\
+\textbf{Buffer}&Holds data in transit. A controller's buffer and the program's memory buffer can sit at different points in the path.\\
+\end{theorytable}
+\boxline{Check.}{With DMA, what does the CPU still do? It sets up the transfer and can handle the completion interrupt.}
+\lectureref{c1, slides S24--S28}
+
+\worked{os}{01}{Trace a blocking disk read}
+\fig{full-io-completion}{A disk interrupt can make the caller ready. Dispatch determines when that caller continues.}
+\minor{Check the protection boundary}
+\fig{rapid-protection}{The base is 300040. The limit is 120900 bytes.}
+\ruleline{\(300040 \leq a < 300040+120900=420940\). The final permitted physical address is \(420939\).}
+\minor{Read the state changes}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}YY@{}}\toprule
+\rowcolor{mist}\textbf{Event}&\textbf{Caller}&\textbf{Kernel}\\\midrule
+Read request&Enters through a trap&Checks the request and starts I/O\\
+Transfer pending&Waiting&Can schedule another task\\
+Device finishes&Becomes Ready&Handles the interrupt and wakes the caller\\
+Caller dispatched&Running&Returns the read result\\
+\bottomrule\end{tabularx}
+
+\extraexample{os}{01}{From a library call to kernel work}
+\largefig{libc-open}{A user-space library wrapper prepares the arguments and uses the system-call interface.}
+\begin{theorytable}
+\textbf{User code calls \code{fopen}}&The program calls \code{fopen()}. Its library wrapper passes a pathname and flags to the \code{open()} system call.\\
+\textbf{Kernel checks the request}&The handler checks the arguments and permissions. It can return a file descriptor or an error.\\
+\textbf{Kernel returns}&The library can wrap the descriptor in a stream. The same process continues in user mode.\\
+\textbf{A timer arrives later}&The interrupt is asynchronous. After handling it, the kernel may resume this process or schedule another.\\
+\end{theorytable}
+\begin{theorytable}
+\textbf{Kernel mode}&A CPU privilege level that allows protected operations.\\
+\textbf{Root user}&An identity the OS uses for permission checks. Ordinary instructions in a root-owned application still execute in user mode.\\
+\end{theorytable}
+\boxline{Check.}{Why does root still call the kernel to configure a device? The kernel controls the protected device operations.}
+\lectureref{c1, slides S31--S44}
+
+\practice{os}{01}{Predict the transition}
+\fig{privilege-switch}{Entering kernel mode changes privilege. Returning from a trap restores the appropriate user state.}
+\questions{A timer interrupt arrives while a user program runs. Must the scheduler switch to another process?}{A physical range starts at 8000 and has limit 64. Does address 8064 pass? What about 8063?}
+\answers{No. The kernel can handle the interrupt and resume the same task.}{8064 is the exclusive upper bound and traps. 8063 passes.}
+\minor{Spot the trigger}
+\begin{tabularx}{\linewidth}{@{}p{.33\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Event}&\textbf{Kernel entry}\\\midrule
+App executes a syscall instruction&Synchronous system-call trap\\
+Instruction accesses an absent page&Synchronous page fault\\
+Disk finishes a DMA transfer&Asynchronous device interrupt\\
+\bottomrule\end{tabularx}
+
+\chapterstart{proc}{02 / EXECUTION STATE}{Processes and threads}{Ready tasks can run. Waiting tasks need an event first.}
+\eli{A process is a kitchen. Each thread is a cook with its own bookmark and workspace.}
+\fig{process-states}{Watch the three exits from Running: preempt, block or exit.}
+\fig{rapid-thread-stacks}{Threads share the address space and resources. Each keeps its own PC, registers and stack.}
+\minor{What the kernel keeps}
+The PCB tracks process information such as state, address space and scheduling data. Saving an execution context lets a preempted task resume where it stopped.
+
+\theory{proc}{02}{Process and thread state}
+\fig{address-space}{A process has an address space with code, static data, heap and stacks.}
+\begin{theorytable}
+\textbf{Program and process}&A program is stored code. A process is a running instance with an address space, execution state and resources.\\
+\textbf{Process control block}&The PCB holds management information such as process state, saved registers, scheduling data and memory information.\\
+\textbf{Context switch}&Save the old execution context and restore the next. This takes CPU time even when neither program advances.\\
+\textbf{Threads and sharing}&Threads in a process share code, data and open files. Each thread has its own PC, registers and stack.\\
+\textbf{Thread mapping}&Many-to-one can block all user threads on a blocking system call. One-to-one permits parallelism. Many-to-many multiplexes user threads over kernel threads.\\
+\textbf{Message passing}&Direct IPC names a peer. Indirect IPC names a mailbox. A blocking receive waits for data when the mailbox is empty.\\
+\end{theorytable}
+\minor{Check your understanding}
+Two threads update the same global variable. Why can both reach it?
+\boxline{Answer.}{Their process gives them a shared address space. They need synchronisation to coordinate the update.}
+
+\deepen{proc}{02}{How processes start and finish}
+\largefig{expand-wait-lifetime}{An exited child retains a status record until a parent or reaper collects it.}
+\begin{theorytable}
+\textbf{\code{fork()}}&Creates a child. The parent sees the child's PID as the return value. The child sees zero.\\
+\textbf{\code{exec()}}&Replaces the calling process's program image. Success starts the new image with the same PID.\\
+\textbf{\code{exit()}}&Ends execution and leaves an exit status for collection. In Unix, an exited child awaiting collection is a zombie.\\
+\textbf{\code{wait()}}&Collects a child's status. It can block while an eligible child is still running.\\
+\textbf{Parent exits first}&A living child can become an orphan. In the Unix model, a reaper can adopt it and later collect its exit status.\\
+\end{theorytable}
+\boxline{Check.}{A child calls \code{exec()} successfully. Which PID should the parent expect to reap? The original child PID.}
+\lectureref{c2, slides S17--S21}
+
+\worked{proc}{02}{Follow parent and child}
+\fig{full-fork-image}{Parent and child resume after fork with different return values. A successful exec starts a new program image with the same PID.}
+\fig{full-ipc-block}{A blocking receive can park a task. A send supplies its message and makes it eligible for dispatch.}
+\minor{Compare IPC mechanisms}
+\begin{tabularx}{\linewidth}{@{}p{.26\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{IPC}&\textbf{State to track}\\\midrule
+Shared memory&Who may access or update the shared region now?\\
+Message passing&Which message is queued or delivered, and who is blocked?\\
+\bottomrule\end{tabularx}
+
+\extraexample{proc}{02}{What else can run during I/O?}
+\largefig{many-to-one}{The kernel schedules the single kernel thread behind several user threads.}
+\minor{One thread reads from an empty pipe while a peer can still calculate}
+\begin{theorytable}
+\textbf{Many-to-one}&The only kernel thread blocks in the read. The peer cannot run until that kernel thread becomes runnable again.\\
+\textbf{One-to-one}&The reader's kernel thread blocks. The peer has its own kernel thread and can be scheduled independently.\\
+\textbf{Many-to-many}&The peer can run if the runtime has another runnable kernel thread to carry it. The runtime manages the mapping.\\
+\end{theorytable}
+\minor{Now compare two ways to pass a byte}
+\begin{theorytable}
+\textbf{Shared memory}&Both processes map a common region. They can use a lock or semaphore to coordinate access.\\
+\textbf{Message passing}&Sender and receiver use communication operations. A blocking receive waits for a message when the mailbox or channel is empty.\\
+\end{theorytable}
+\boxline{Check.}{Can four runnable user threads in a many-to-one model use four cores at once? One kernel thread can occupy one core at a time.}
+\lectureref{c2, slides S21--S40}
+
+\practice{proc}{02}{Map threads to kernel threads}
+\fig{thread-mapping}{Kernel threads are the units that can be scheduled on physical cores in these models.}
+\questions{One kernel thread supports five user threads. A user thread makes a blocking kernel call. Can another user thread in that process use a second core?}{The parent gets PID 52 from fork. The child then successfully calls exec. What PID does the new program run under?}
+\answers{No in the many-to-one model. The single kernel thread is blocked.}{52. Exec replaces the calling process image.}
+\minor{Scheduling levels}
+\begin{tabularx}{\linewidth}{@{}p{.27\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Scheduler}&\textbf{Decision}\\\midrule
+Long-term&Admit jobs into the active system.\\
+Short-term&Choose the next Ready task.\\
+Medium-term&Suspend or resume a process to manage load.\\
+\bottomrule\end{tabularx}
+
+\chapterstart{cpu}{03 / READY QUEUES}{CPU scheduling}{Pick the next job, draw its slice, then calculate the metrics.}
+\eli{One cashier, different queue rules. Round robin gives each customer a turn before circling back.}
+\fig{rapid-cpu-choice}{SJF chooses at dispatch. SRTF can preempt when a ready job has less remaining CPU work.}
+\fig{full-rr-events}{Requeue a runnable job on quantum expiry. A blocked job rejoins after its event.}
+\minor{Policy trade-offs}
+\begin{tabularx}{\linewidth}{@{}p{.23\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Choice}&\textbf{Consequence}\\\midrule
+FCFS&A long job can delay short jobs behind it.\\
+Priority&Aging can reduce starvation.\\
+Round robin&Smaller quanta usually mean more context switches.\\
+Multilevel queues&Choose both a policy within each queue and a policy between queues.\\
+\bottomrule\end{tabularx}
+
+\theory{cpu}{03}{What scheduling policies optimise}
+\fig{time-metrics}{Waiting accumulates in the ready queue. Turnaround includes time spent blocked on I/O.}
+\begin{theorytable}
+\textbf{Preemptive and nonpreemptive}&Preemption can take the CPU from a runnable job. Nonpreemptive scheduling keeps it until it blocks or finishes.\\
+\textbf{Scheduler and dispatcher}&The scheduler chooses a ready task. The dispatcher hands over the CPU and restores the chosen task's execution context.\\
+\textbf{Utilisation and throughput}&Utilisation is the fraction of time the CPU is busy. Throughput is the number of jobs completed per unit time.\\
+\textbf{SJF and SRTF}&With all jobs ready and known single CPU bursts, SJF minimises average waiting. SRTF compares remaining times and can preempt on an arrival.\\
+\textbf{Round robin}&A shorter quantum gives earlier turns but can increase switching overhead. A quantum long enough for every CPU burst gives FCFS order.\\
+\textbf{Priority and aging}&Continually arriving high-priority work can starve a low-priority job. Aging improves its priority as it waits.\\
+\end{theorytable}
+\minor{Check your understanding}
+A job gets CPU immediately and then waits a long time for I/O. Which metric can stay small?
+\boxline{Answer.}{Its response time, measured from arrival to first dispatch. Turnaround can still be large.}
+
+\deepen{cpu}{03}{Which queue gets the CPU?}
+\largefig{expand-queue-policy}{Multilevel queue scheduling chooses a queue and then a job inside that queue.}
+\begin{theorytable}
+\textbf{Between queues}&With strict priority, foreground jobs are served first. With a time share, the background queue gets an assigned portion.\\
+\textbf{Within a queue}&Each queue can have its own policy. Round robin gives foreground jobs turns. FCFS serves background jobs by arrival.\\
+\textbf{Convoy effect}&A long CPU-bound job at the front of FCFS makes short jobs wait behind it. They may keep their I/O devices idle during the wait.\\
+\textbf{Per-core queues}&Partitioning avoids some coordination. One core can sit idle while another has a backlog unless the load is balanced.\\
+\textbf{Shared ready queue}&Available cores draw from common runnable work. Coordination and migration can carry costs.\\
+\end{theorytable}
+\boxline{Check.}{The foreground queue never empties under strict priority. What can happen to background work? It can starve.}
+\lectureref{c3, slides S11--S13 and S22--S30}
+
+\worked{cpu}{03}{Read a preemptive schedule}
+\fig{srtf-practice}{P arrives at 0 with burst 7. Q arrives at 2 with burst 2. R arrives at 3 with burst 1. Keep the current job on an equal-remaining-time tie.}
+\begin{tabularx}{\linewidth}{@{}lYY@{}}\toprule
+\rowcolor{mist}\textbf{Job}&\textbf{Execution}&\textbf{First start / finish}\\\midrule
+P&0--2 and 5--10&0 / 10\\
+Q&2--4&2 / 4\\
+R&4--5&4 / 5\\
+\bottomrule\end{tabularx}
+\minor{Calculate the metrics}
+\begin{tabularx}{\linewidth}{@{}lYYY@{}}\toprule
+\rowcolor{mist}\textbf{Job}&\textbf{Turnaround \(C-A\)}&\textbf{Response \(S-A\)}&\textbf{Waiting}\\\midrule
+P&\(10-0=10\)&\(0-0=0\)&\(10-7=3\)\\
+Q&\(4-2=2\)&\(2-2=0\)&\(2-2=0\)\\
+R&\(5-3=2\)&\(4-3=1\)&\(2-1=1\)\\
+\bottomrule\end{tabularx}
+\ruleline{Waiting is time Ready. Subtract only the CPU burst from turnaround when there is no blocked time. \(C\) is completion, \(A\) arrival and \(S\) first start.}
+
+\extraexample{cpu}{03}{Round robin with a changing queue}
+\largefig{expand-rr-switch}{Quantum \(q=2\), with zero switch overhead. A arrives at 0 for 5 units, B at 1 for 3, and C at 3 for 2.}
+\begin{theorytable}
+\textbf{At \(t=2\)}&B was waiting. Put unfinished A behind B. Run B, with A waiting.\\
+\textbf{At \(t=4\)}&C arrived at 3 behind A. Put unfinished B behind C. Run A.\\
+\textbf{At \(t=6\)}&The ready queue is C, B, A after A is requeued. Run C to completion at 8.\\
+\textbf{At \(t=8\)}&B has 1 unit left and finishes at 9. A finishes its last unit at 10.\\
+\end{theorytable}
+\begin{tabularx}{\linewidth}{@{}Yrrrr@{}}\toprule
+\rowcolor{mist}\textbf{Job}&\textbf{Finish}&\textbf{Turnaround}&\textbf{Ready wait}&\textbf{Response}\\\midrule
+A&10&10&5&0\\
+B&9&8&5&1\\
+C&8&5&3&3\\
+\bottomrule\end{tabularx}
+\boxline{Check.}{Why does C go ahead of B at 6? C joined at 3, while B returned to the queue at 4.}
+\lectureref{c3, slides S18--S21}
+
+\practice{cpu}{03}{Trace round robin}
+\fig{multicore-queues}{Partitioned scheduling assigns tasks to per-core queues. Global scheduling selects from a shared queue.}
+\questions{A arrives at 0 with burst 5. B arrives at 1 with burst 2. With \(q=3\), when does each finish? What is the ready queue just after dispatch at time 3?}{In the worked SRTF example, why does R fail to preempt Q when it arrives?}
+\answers{Run A 0--3, B 3--5, A 5--7. B finishes at 5, A at 7. Just after 3, B is running and the queue is \([A]\).}{Q has one CPU unit left at time 3, equal to R's burst. The tie rule keeps Q running.}
+\minor{For an algorithm trace}
+Write down arrival, ready queue, current job and remaining burst at each event. Turnaround starts at arrival. Response ends at first dispatch.
+
+\chapterstart{sync}{04 / SHARED STATE}{Synchronisation}{Find the shared access and the interleaving that breaks it.}
+\eli{Two people read the same scoreboard. If they write independent updates, the last writer can erase the first.}
+\fig{lost-update}{Both read 5. The consumer's 4 overwrites the producer's 6.}
+\fig{full-critical-entry}{Enter with permission, do the shared work, then release permission.}
+\minor{Three properties}
+\begin{tabularx}{\linewidth}{@{}YYY@{}}\toprule
+\rowcolor{mist}\textbf{Mutual exclusion}&\textbf{Progress}&\textbf{Bounded waiting}\\\midrule
+Only one is in the critical section.&Eligible contenders can decide who enters.&A requester can be overtaken only a bounded number of times.\\
+\bottomrule\end{tabularx}
+
+\theory{sync}{04}{Critical-section guarantees}
+\fig{sync-roadmap}{Evaluate a protocol against all three critical-section requirements.}
+\begin{theorytable}
+\textbf{Mutual exclusion}&At most one participant can execute the critical section at a time.\\
+\textbf{Progress}&When the section is free and someone wants in, entry cannot be postponed indefinitely by the selection protocol.\\
+\textbf{Bounded waiting}&After a participant requests entry, there is a bound on how many times others may enter ahead of it.\\
+\textbf{Strict alternation and Peterson}&Strict alternation can wait for a peer that never tries to enter. Peterson uses interest flags and a turn to break a tie.\\
+\textbf{Spin and block}&A spinner keeps checking and uses CPU time. A blocked thread sleeps until woken, with scheduling overhead on the way back.\\
+\textbf{Semaphore meaning}&An initial count of one can protect a critical section. A count of zero can order events. A count of \(N\) can represent \(N\) permits. Operations must be atomic.\\
+\end{theorytable}
+\minor{Check your understanding}
+Which requirement fails if a free lock can only be taken by a peer that has no interest in entering?
+\boxline{Answer.}{Progress.}
+
+\deepen{sync}{04}{How Peterson breaks a tie}
+\largefig{expand-peterson-tie}{In the two-process teaching model, each contender sets its own flag and gives the other the turn.}
+\begin{theorytable}
+\textbf{Turn only}&A task can wait for an uninterested peer. Progress fails even while the section is empty.\\
+\textbf{Flags only}&Both can raise their flags before either checks. Each sees the other interested and waits.\\
+\textbf{Peterson}&A task waits while its peer both wants in and has the turn. The last write of \code{turn} settles a simultaneous attempt.\\
+\textbf{Test-and-set lock}&An atomic operation reads the old lock value and sets it. The task seeing the old value as free acquires the lock.\\
+\textbf{Fairness}&A plain test-and-set lock gives contenders another race on each release. A queue can give older waiters priority.\\
+\end{theorytable}
+\boxline{Check.}{If P0 is the last writer of \code{turn}, who goes first while both flags are raised? P1, because P0 wrote \code{turn = 1}.}
+\lectureref{c5, slides S15--S27}
+
+\worked{sync}{04}{Watch the lock and permits}
+\fig{rapid-buffer}{Initial values: empty \(=N\), full \(=0\), mutex \(=1\). Reserve the slot or item first, then lock around the shared buffer operation.}
+\fig{full-priority-spin}{Under strict preemptive priority on one core, a runnable high-priority spinner can keep the lock owner from running.}
+\minor{Primitive comparison}
+\begin{tabularx}{\linewidth}{@{}p{.29\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Mechanism}&\textbf{What it does}\\\midrule
+Peterson&Two participants use flags and a turn tie-break in the teaching memory model.\\
+TestAndSet&Atomically returns the old lock value and sets it. Simple spinning can allow starvation.\\
+Blocking semaphore&Wait reserves a permit or parks the task. Signal returns a permit or wakes a waiter.\\
+\bottomrule\end{tabularx}
+
+\extraexample{sync}{04}{A buffer can deadlock while empty}
+\largefig{expand-buffer-stall}{The consumer waits for an item while holding the same mutex the producer needs to insert it.}
+\begin{theorytable}
+\textbf{Producer}&Wait on \code{empty}, then \code{mutex}. Insert, release \code{mutex}, then signal \code{full}.\\
+\textbf{Consumer}&Wait on \code{full}, then \code{mutex}. Remove, release \code{mutex}, then signal \code{empty}.\\
+\textbf{Blocking \code{Wait}}&In the lecture's implementation, decrement first. A negative count means the caller queues and blocks.\\
+\textbf{Blocking \code{Signal}}&Increment first. A resulting count of zero or below means there was a waiter to wake.\\
+\textbf{Reader and writer policies}&Reader preference can starve writers. Writer preference can starve readers. Each policy decides who may join next.\\
+\end{theorytable}
+\boxline{Check.}{If the buffer starts full, which side risks the same mistake? A producer that locks the buffer before waiting on \code{empty}.}
+\lectureref{c5, slides S28--S53}
+
+\practice{sync}{04}{Spot the stuck task}
+\fig{semaphore-ordering}{A semaphore starting at zero can order two actions across tasks.}
+\questions{A producer holds the mutex while waiting on empty in a full buffer. Draw the two waits.}{A low-priority task needs two more CPU units to release a lock. At \(t=1\) a high-priority task blocks waiting for it. With no other work or overhead, when can it release?}
+\answers{Producer waits for a free slot. Consumer needs the held mutex to remove an item. Reserve the slot before taking the mutex.}{The high-priority waiter sleeps. The owner can run from 1 to 3 and release at 3.}
+\minor{Other classic patterns}
+\begin{tabularx}{\linewidth}{@{}p{.30\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Problem}&\textbf{What to track}\\\midrule
+Dining philosophers&Which forks are held and which acquisition order creates a cycle?\\
+Readers--writers&Readers can share. A writer needs exclusive access. Admission policy affects starvation.\\
+\bottomrule\end{tabularx}
+
+\chapterstart{dead}{05 / RESOURCE CLAIMS}{Deadlocks}{Trace the current waits, then test whether future claims can be satisfied.}
+\eli{Each person holds a tool the other needs. Both must wait unless someone can release a tool.}
+\fig{resource-cycle}{Process to resource means request. Resource to process means assignment. With one instance per type, this cycle is a deadlock.}
+\fig{safe-state-classification}{Unsafe means no safe completion order under maximum claims. A current deadlock is one possible unsafe state.}
+\minor{Ways to handle deadlock}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Approach}&\textbf{Decision}\\\midrule
+Prevention&Break mutual exclusion, hold-and-wait, no preemption, or circular wait.\\
+Avoidance&Only commit grants that leave a safe state.\\
+Detection and recovery&Check actual waits and recover if deadlocked.\\
+Ignore&Leave management to the workload or operator.\\
+\bottomrule\end{tabularx}
+
+\theory{dead}{05}{What a deadlock policy guarantees}
+\fig{deadlock-strategies}{The strategies differ by when they intervene and what guarantee they provide.}
+\begin{theorytable}
+\textbf{Four necessary conditions}&Mutual exclusion, hold and wait, no preemption and circular wait must all hold for a deadlock to occur.\\
+\textbf{Prevention}&Break a necessary condition. Requesting all resources together breaks hold and wait. A global acquisition order breaks circular wait.\\
+\textbf{Avoidance}&Check each tentative grant against possible future claims. Grant it only if a safe completion order still exists.\\
+\textbf{Detection and recovery}&Permit allocations, detect actual deadlock, then recover by terminating a process or reclaiming resources where feasible.\\
+\textbf{Safe, unsafe and deadlocked}&A safe state has a guaranteed completion order under declared claims. An unsafe state may still run. Deadlocked processes are already stuck.\\
+\textbf{Cycles and resource instances}&A cycle proves deadlock with one instance per resource type. With multiple instances, another holder might finish and release one.\\
+\end{theorytable}
+\minor{Check your understanding}
+Every process acquires locks in increasing ID order. Which condition does this remove?
+\boxline{Answer.}{Circular wait. A cycle would have to return to a lower lock ID.}
+
+\deepen{dead}{05}{When a cycle has a way out}
+\largefig{expand-cycle-with-exit}{P1 holds one A and requests B. P2 holds B and requests an A. P3 holds the second A and has no pending request. Follow what happens when P3 finishes.}
+\begin{theorytable}
+\textbf{Read the arrows}&A process-to-resource arrow is a request. A resource-to-process arrow is an assignment.\\
+\textbf{Identify the cycle}&Follow \(P1\to B\to P2\to A\to P1\).\\
+\textbf{Check for other instances}&P3 can finish and release its A. P2 can then use it, finish, and release B for P1.\\
+\textbf{Change one fact}&If there were only one A, assigned to P1, the cycle would be a deadlock under the stated requests.\\
+\textbf{Recovery has costs}&Terminating or rolling back a victim can lose work and affect dependent tasks. Repeatedly choosing the same victim can starve it.\\
+\end{theorytable}
+\boxline{Check.}{Can a cycle with multiple instances still be a deadlock? Yes. Look for a holder that can actually finish and release what the cycle needs.}
+\lectureref{c7, slides S08--S13 and S18--S27}
+
+\worked{dead}{05}{Run Banker by hand}
+\fig{full-banker-request}{For a request, check Need first and Available second, then test the tentative state.}
+\ruleline{\(\mathrm{Need}=\mathrm{Max}-\mathrm{Allocation}\). Start the safety test with \(\mathrm{Work}=\mathrm{Available}\).}
+\begin{tabularx}{\linewidth}{@{}llllY@{}}\toprule
+\rowcolor{mist}\textbf{Job}&\textbf{Need}&\textbf{Allocation}&\textbf{Work before}&\textbf{Work after finish}\\\midrule
+\(P_0\)&\((1,1)\)&\((1,0)\)&\((2,2)\)&\((3,2)\)\\
+\(P_1\)&\((3,2)\)&\((0,1)\)&\((3,2)\)&\((3,3)\)\\
+\bottomrule\end{tabularx}
+\minor{Replay the steps}
+\(P_1\) cannot finish first because it needs three A units and Work has two. \(P_0\) can finish. Its held \((1,0)\) returns to Work, so \(P_1\) can now finish. The sequence \(P_0,P_1\) is safe.
+\fig{rapid-bank-steps}{Adding Allocation gives the net resources released. The simulated Need was borrowed and returned within the same step.}
+
+\extraexample{dead}{05}{Why Banker rejects this grant}
+\largefig{expand-banker-unsafe}{There are four units of one resource. A safe test simulates future releases under maximum claims.}
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
+\rowcolor{mist}\textbf{Process}&\textbf{Allocation}&\textbf{Max}&\textbf{Need}\\\midrule
+P0&1&3&2\\
+P1&2&3&1\\
+\bottomrule\end{tabularx}
+\begin{theorytable}
+\textbf{Before the request}&Work starts at 1. P1 can finish and return 2 held units, so Work becomes 3. P0 can finish next.\\
+\textbf{Test P0's request of 1}&It fits both Need and Available. Tentatively give P0 the unit. Work becomes 0, and both processes still need 1.\\
+\textbf{Decide}&The safety test finds nobody who can finish under the remaining claims. Roll back the tentative grant.\\
+\end{theorytable}
+\boxline{Check.}{Could the processes in the tentative state still be executing? Yes. Their potential future requests make the state unsafe.}
+\lectureref{c7, slides S28--S37}
+
+\practice{dead}{05}{Test a grant and a cycle}
+\fig{full-prevention}{Requiring a fixed acquisition order rules out circular wait.}
+\questions{In the worked example, \(P_1\) requests \((2,1)\). Does it pass the initial checks? Can the system commit it?}{A graph has a cycle involving a resource type with two instances. What extra fact would let one process in the cycle proceed?}
+\answers{It fits Need and Available. Tentative Work is \((0,1)\). Both jobs need one A unit, so neither can finish. Roll back and make \(P_1\) wait.}{Another holder can finish and release an instance that one waiting process can use. Check the actual allocations and requests.}
+\chapterstart{mem}{06 / ADDRESS TRANSLATION}{Memory organisation}{Identify what is being mapped. Keep the byte offset.}
+\eli{The page table is a locker directory. It tells you which real locker holds your page. The offset says where inside to look.}
+\fig{page-address}{With 2 KiB pages, \(6155=3(2048)+11\). Page 3 maps to frame 9, giving \(PA=9(2048)+11=18443\).}
+\fig{rapid-fragmentation}{Unused bytes inside an assigned region are internal fragmentation. Free holes between allocations are external fragmentation.}
+\minor{Allocation choices}
+\begin{tabularx}{\linewidth}{@{}p{.27\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Scheme}&\textbf{Translation or placement}\\\midrule
+Contiguous&Check \(0\leq d<\mathrm{limit}\), then add base. First fit picks the first adequate hole, best fit the smallest, and worst fit the largest.\\
+Paging&Equal-sized pages map to physical frames. Split address into page number and byte offset.\\
+Segmentation&Select the segment. Check its limit, then add that segment's base.\\
+Inverted page table&One row per physical frame. Find the resident mapping by address space and virtual page number.\\
+\bottomrule\end{tabularx}
+
+\theory{mem}{06}{When addresses get bound}
+\fig{program-loading}{Compilation, linking and loading prepare a process image. Address translation can still happen during execution.}
+\begin{theorytable}
+\textbf{Compile-time and load-time binding}&Compile-time binding fixes addresses when the placement is known. Load-time binding resolves relocatable addresses when the image is loaded.\\
+\textbf{Execution-time binding}&The MMU translates addresses while the program runs. The OS can change a process's physical placement by updating the translation.\\
+\textbf{Contiguous allocation}&Each process gets a contiguous range. Free space can split into holes, even if the sum of their sizes is large.\\
+\textbf{Paging and segmentation}&Paging uses fixed-size pages and frames. Segmentation uses variable-size logical regions and checks an offset against each segment's limit.\\
+\textbf{Page size}&Larger pages reduce the number of page-table entries for the same address span. They can waste more space in partly used pages.\\
+\textbf{Page-table organisations}&A flat table indexes directly by virtual page. Multilevel tables can omit unused branches. An inverted table tracks physical frames.\\
+\textbf{TLB miss and page fault}&A TLB miss means the translation is absent from the cache. A page-table walk may still find a resident page. A legal absent page needs fault handling.\\
+\end{theorytable}
+\minor{Check your understanding}
+There are 12 KiB free across three holes of 4 KiB each. Why can an 8 KiB contiguous request fail?
+\boxline{Answer.}{External fragmentation. No individual hole is large enough.}
+
+\deepen{mem}{06}{When memory has space in pieces}
+\largefig{allocation-models}{Each layout makes a different promise about the shape of a process's allocation.}
+\begin{theorytable}
+\textbf{Fixed partitions}&Choose a partition large enough. If a 6 KiB process gets an 8 KiB partition, 2 KiB are unused inside it.\\
+\textbf{First fit}&Use the first hole that is large enough in the free-list order.\\
+\textbf{Best fit}&Use the smallest fitting hole. The leftover may be too small for later requests.\\
+\textbf{Worst fit}&Use the largest hole. It tends to leave a larger leftover.\\
+\textbf{Coalesce and compact}&Coalescing merges adjacent free holes. Compaction moves live allocations so separated free space can come together.\\
+\end{theorytable}
+\boxline{Try the same request.}{Free holes in address order are 10, 6, and 14 KiB. For 5 KiB, first fit picks 10, best fit picks 6, and worst fit picks 14.}
+\lectureref{c8, part 02}
+
+\worked{mem}{06}{Walk a two-level page table}
+\fig{two-level-address-fields}{With 32-bit virtual addresses, 4 KiB pages, and four-byte entries, the 20 VPN bits split into two 10-bit indexes.}
+\fig{full-multilevel-index}{Outer index 1 selects the inner table. Inner index 3 selects frame 0x2A. The offset 0xABC is copied.}
+\begin{tabularx}{\linewidth}{@{}p{.34\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Quantity}&\textbf{Derivation}\\\midrule
+Offset bits&\(4096=2^{12}\) bytes per page, so 12 bits.\\
+Entries per table page&\(4096/4=1024=2^{10}\), so 10 index bits per level.\\
+Flat table size&\(2^{20}\cdot4\) bytes \(=4\) MiB per address space in this model.\\
+Two mapped outer regions&One outer table plus two inner tables \(=12\) KiB.\\
+\bottomrule\end{tabularx}
+
+\extraexample{mem}{06}{Segment bounds and TLB cost}
+\largefig{expand-segment-translation}{The segment number picks the entry. The offset must pass the bounds check before the physical address is used.}
+\begin{theorytable}
+\textbf{Segment 3}&Its base is 3200 and its limit is 1100 bytes.\\
+\textbf{Offset 128}&\(128 < 1100\). The physical address is \(3200+128=3328\).\\
+\textbf{Offset 1100}&The limit is exclusive. This access fails the check.\\
+\end{theorytable}
+\minor{Flat page table with a TLB}
+\begin{theorytable}
+\textbf{Hit, 90\%}&5 ns for the TLB plus 100 ns for the data access gives 105 ns.\\
+\textbf{Miss, 10\%}&5 ns for the TLB plus 100 ns each for the page table and data gives 205 ns. Assume the page is resident.\\
+\textbf{Average}&\(0.9(105)+0.1(205)=115\) ns in this serial lookup model.\\
+\end{theorytable}
+\lectureref{c8, parts 03 and 05}
+
+\practice{mem}{06}{Distinguish a TLB miss from a fault}
+\fig{full-tlb-vs-fault}{A TLB miss makes the CPU look up a translation. The page-table entry may already describe a resident page.}
+\questions{Page size is 4096 bytes. Split VA \code{0x00801004} into outer index, inner index and offset.}{The TLB takes 5 ns, memory takes 100 ns, and 98\% of lookups hit. With one page-table level, serial lookup and resident pages, find mean access time.}
+\answers{Outer 2, inner 1, offset 4.}{Hit \(=105\) ns. Miss \(=205\) ns. Mean \(=0.98(105)+0.02(205)=107\) ns.}
+\ruleline{With these TLB assumptions, mean access time is \(\epsilon+(2-h)\mu\), where \(h\) is the hit rate and \(\mu\) is memory access time.}
+
+\chapterstart{vm}{07 / RESIDENT PAGES}{Virtual memory}{Find a frame, bring in the page, and retry the instruction.}
+\eli{Keep the pages you use on your desk. When it is full, move one page out before bringing another in.}
+\fig{rapid-demand}{A legal absent page can be loaded from backing storage or initialised. A dirty victim may need write-back before its frame is reused.}
+\fig{full-frames-scope}{Local and global describe which frames are eligible. Allocation describes how many frames each process gets.}
+\minor{Replacement policies}
+\begin{tabularx}{\linewidth}{@{}lYY@{}}\toprule
+\rowcolor{mist}\textbf{Policy}&\textbf{What it remembers}&\textbf{Victim}\\\midrule
+FIFO&Load order&Earliest loaded\\
+LRU&Most recent use, including hits&Least recently used\\
+OPT&Next use in the future&Furthest next use\\
+Clock&Reference bit and hand position&First zero after giving set bits a second chance\\
+\bottomrule\end{tabularx}
+
+\theory{vm}{07}{Why paging can speed up or stall}
+\fig{thrashing-curve}{CPU utilisation can fall as too many active processes compete for frames. The curve is schematic.}
+\begin{theorytable}
+\textbf{Swapping and demand paging}&Whole-process swapping moves a process image. Demand paging brings individual pages into RAM as references require them.\\
+\textbf{Page-table bits}&Present tracks residency. Dirty records a write since load or write-back. Referenced records recent use for policies such as Clock.\\
+\textbf{Frame allocation and victim scope}&Allocation sets how many frames a process gets. Local replacement picks its own victim. Global replacement can take a frame from another process.\\
+\textbf{Locality and working set}&A working set approximates the pages used in a recent reference window. If active working sets exceed RAM, processes can repeatedly evict useful pages.\\
+\textbf{Page-fault frequency}&A high fault rate suggests giving a process more frames. A low rate can allow the OS to take some away.\\
+\textbf{Belady's anomaly}&FIFO can fault more with more frames. Stack algorithms such as LRU keep the smaller resident set within the larger one for the same trace.\\
+\end{theorytable}
+\minor{Check your understanding}
+The CPU is often idle and the paging disk is busy. How could admitting another process make it worse?
+\boxline{Answer.}{Its pages could displace active working sets and cause more faults.}
+
+\deepen{vm}{07}{What a page fault costs}
+\largefig{fault-frame-recovery}{A free frame skips eviction. A dirty victim can require another transfer before the faulting page is brought in.}
+\begin{theorytable}
+\textbf{Check the access}&A legal missing page can be brought in or initialised. The OS rejects an illegal access.\\
+\textbf{Find space}&Use a free frame if available. Otherwise choose a victim according to the replacement policy and its scope.\\
+\textbf{Clean or dirty victim}&A clean page with a valid backing copy can be discarded. A dirty page that must be preserved needs write-back.\\
+\textbf{Resume execution}&Install the translation and retry the faulting instruction.\\
+\end{theorytable}
+\minor{A small fault rate can still matter}
+Memory access takes 100 ns. Assume a faulting access takes 8 ms in total, and the fault probability is one in 100,000.
+\[
+(1-0.00001)(100)+0.00001(8000000)\approx 180\ \text{ns}.
+\]
+\boxline{Check.}{The fault path is rare. Why is the average still much higher than 100 ns? Each fault takes about 80,000 normal access times.}
+\lectureref{c9, parts 01--02}
+
+\worked{vm}{07}{Trace global LRU across processes}
+\fig{full-lru-trace}{A hit refreshes recency. In this diagram, hitting A makes B the next LRU victim.}
+{\small An inverted page table has one entry per frame. \(A0\) and \(B0\) represent different \((\mathrm{PID},\mathrm{VPN})\) pairs.}
+\begin{tabularx}{\linewidth}{@{}lcccY@{}}\toprule
+\rowcolor{mist}\textbf{Ref.}&\textbf{Frame 0}&\textbf{Frame 1}&\textbf{Frame 2}&\textbf{Decision}\\\midrule
+A0&A0&--&--&Fault, use free frame 0\\
+B0&A0&B0&--&Fault, use free frame 1\\
+A1&A0&B0&A1&Fault, use free frame 2\\
+A0&A0&B0&A1&Hit, refresh A0\\
+B2&A0&B2&A1&Fault, evict B0\\
+A1&A0&B2&A1&Hit, refresh A1\\
+B0&B0&B2&A1&Fault, evict A0\\
+B2&B0&B2&A1&Hit, refresh B2\\
+\bottomrule\end{tabularx}
+\ruleline{Five faults. Recency is measured across both processes because the replacement scope is global.}
+
+\extraexample{vm}{07}{Why adding a frame can hurt FIFO}
+\minor{FIFO on the lecture reference string}
+\begin{tabularx}{\linewidth}{@{}p{.18\linewidth}*{12}{>{\centering\arraybackslash}X}@{}}\toprule
+\rowcolor{mist}\textbf{Reference}&1&2&3&4&1&2&5&1&2&3&4&5\\\midrule
+3 frames&F&F&F&F&F&F&F&H&H&F&F&H\\
+4 frames&F&F&F&F&H&H&F&F&F&F&F&F\\
+\bottomrule\end{tabularx}
+{\small\color{muted}F = fault. H = hit. Start empty. Read each row from left to right.}\par
+\begin{theorytable}
+\textbf{At reference 7}&Page 5 arrives. With 3 frames, FIFO evicts 4 and retains 1 and 2. With 4 frames, FIFO evicts 1.\\
+\textbf{At references 8 and 9}&With 3 frames, both 1 and 2 hit. With 4 frames, 1 misses and evicts 2, so 2 also misses.\\
+\textbf{Count the faults}&There are 9 faults with 3 frames and 10 with 4. This is Belady's anomaly.\\
+\textbf{Why LRU avoids this}&Every resident page in a smaller LRU cache is also in the larger one for the same trace. The larger one keeps more of the recency order.\\
+\end{theorytable}
+\largefig{expand-fifo-order}{These are FIFO contents immediately after reference 7, ordered from oldest to newest.}
+\boxline{Check.}{A page hits in FIFO. Does its position in the eviction queue change? Its insertion order stays the same.}
+\lectureref{c9, parts 02--03}
+
+\practice{vm}{07}{Predict the next victim}
+\fig{clock-scan}{Clock clears a 1 and advances. The first candidate with a 0 can be replaced.}
+\questions{At a fault, the hand visits reference bits 1, 1, 0, 0 in order. Which candidate leaves?}{The FIFO trace \(1,2,3,4,1,2,5,1,2,3,4,5\) gives 9 faults with three frames and 10 with four. What is this called?}
+\answers{The third candidate. The first two get a second chance and have their bits cleared.}{Belady's anomaly. For LRU, each smaller resident set is included in the corresponding larger set.}
+\minor{When faults dominate}
+\fig{thrashing-loop}{When active working sets do not fit, frequent faults can keep tasks blocked on paging I/O.}
+\ruleline{If \(p\) is the probability of a fault, mean time is \((1-p)t_{\mathrm{hit}}+pt_{\mathrm{fault}}\). A working set counts the distinct pages touched in a recent window.}
+
+\chapterstart{fs}{08 / BYTE TO BLOCK}{File systems}{Resolve the name, look up the descriptor, then locate the block.}
+\eli{The descriptor is a checkout slip. The inode is the catalogue card. The offset is your bookmark.}
+\fig{open-file-objects}{Independent opens have independent offsets. Duplicated descriptors can share one open description and offset.}
+\fig{full-dir-lookup}{Directories map names to file-system objects. A symbolic link stores a target path. A hard link adds another name for the same inode.}
+\minor{Allocation and free space}
+\begin{tabularx}{\linewidth}{@{}p{.26\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Method}&\textbf{How to reach logical block \(q\)}\\\midrule
+Contiguous&Add \(q\) to the starting block. Growth needs suitable free space.\\
+Linked&Follow \(q\) links from the start. Pointer bytes can reduce usable bytes per block.\\
+Indexed&Read index entry \(q\). A cold index adds an I/O.\\
+Free-space bitmap&One bit per disk block tracks whether the block is free.\\
+\bottomrule\end{tabularx}
+
+\theory{fs}{08}{What file-system metadata tells you}
+\fig{file-system-layers}{Path lookup, block mapping and device I/O operate at different layers.}
+\begin{theorytable}
+\textbf{Sequential and direct access}&Sequential access follows the current position. Direct access can seek to a chosen offset or block.\\
+\textbf{Directory and inode}&A directory entry maps a name to an inode. The inode holds metadata and information used to locate file data.\\
+\textbf{Open file description}&The open description keeps runtime state such as an offset. Independent opens have separate offsets. Duplicated descriptors can share one.\\
+\textbf{Hard and symbolic links}&A hard link adds a name for the same inode. A symbolic link stores a path and can dangle after its target name is removed.\\
+\textbf{Allocation methods}&Contiguous allocation computes the location from the start block. Linked allocation follows pointers. Indexed allocation looks up a block address.\\
+\textbf{Free-space tracking}&A bitmap marks one bit per block and can reveal contiguous runs. A free list chains free blocks for allocation.\\
+\end{theorytable}
+\minor{Check your understanding}
+A file's last name is unlinked while a process still has it open. Can the process keep reading?
+\boxline{Answer.}{Yes. The open reference keeps the file accessible until it closes.}
+
+\deepen{fs}{08}{Names, open files and permissions}
+\largefig{expand-file-lifetime}{Unlinking removes a name. An existing open description can keep access to the same inode.}
+\begin{theorytable}
+\textbf{Absolute path}&Starts from the root directory. An initial slash selects that starting point.\\
+\textbf{Relative path}&Starts from the process's current working directory. Each name is resolved in the directory reached so far.\\
+\textbf{Directory organisation}&A single-level directory has one namespace. A tree lets directories contain subdirectories and reuse names in different places.\\
+\textbf{Directory permissions}&Read permits listing names. Execute permits searching a directory for a known name. Creating or removing an entry normally requires write and search permissions on the parent.\\
+\textbf{Lifetime}&The inode remains available through a hard link or a live open reference. A symbolic link can remain after its stored target path stops resolving.\\
+\end{theorytable}
+\boxline{Check.}{You know a filename in a directory you can search but cannot list. Can lookup work? Yes, assuming permission checks on the rest of the path and file also pass.}
+\lectureref{c11, parts 01--02}
+
+\worked{fs}{08}{Follow the inode's pointers}
+\fig{inode-paths}{One direct pointer reaches a data block. Single and double indirection introduce one and two index blocks respectively.}
+\minor{Worked example with 1 KiB blocks and four-byte pointers}
+\begin{tabularx}{\linewidth}{@{}p{.26\linewidth}YY@{}}\toprule
+\rowcolor{mist}\textbf{Region}&\textbf{Logical blocks}&\textbf{Index calculation}\\\midrule
+12 direct&0--11&Use \(q\).\\
+Single indirect&12--267&Use \(q-12\).\\
+Double indirect&268--65803&Let \(k=q-268\). Use \(\lfloor k/256\rfloor\) outside and \(k\bmod256\) inside.\\
+Triple indirect&Starts at 65804&Split the remaining index into three base-256 digits.\\
+\bottomrule\end{tabularx}
+\ruleline{Fan-out is \(E=B/p\). A teaching inode with 12 direct pointers and three indirect levels addresses \(12+E+E^2+E^3\) data blocks.}
+\fig{rapid-file-lookup}{In contiguous allocation, byte 2748 is at logical block 2, byte 700. Starting disk block 20 gives disk block 22.}
+
+\extraexample{fs}{08}{A byte offset in linked allocation}
+\largefig{expand-linked-lookup}{Each disk block reserves its first four bytes for the next pointer. The data bytes follow.}
+\begin{theorytable}
+\textbf{Available data per block}&A 1024-byte block stores \(1024-4=1020\) file bytes in this layout.\\
+\textbf{Find the logical block}&Byte offset 2045 is \(2(1020)+5\). It is in logical block 2, five bytes into that block's payload.\\
+\textbf{Follow the chain}&Start at disk block 7 and follow two links to block 4. With a cold cache, the first two blocks must be read for their pointers.\\
+\textbf{Find the disk byte}&The payload starts at offset 4. The requested byte is at offset \(4+5=9\) in disk block 4.\\
+\end{theorytable}
+\minor{Use the same offset with the other layouts}
+\begin{theorytable}
+\textbf{Contiguous}&With 1024 data bytes per block, the logical block is 1, byte 1021. Add 1 to the start block.\\
+\textbf{Indexed}&The logical block and byte are also 1 and 1021. Look up entry 1 of the index block.\\
+\end{theorytable}
+\lectureref{c11, part 03}
+
+\practice{fs}{08}{Cross a block boundary}
+\fig{full-read-path}{The current offset and the byte count determine which logical blocks the read touches.}
+\questions{A 100-byte read starts at offset 1000 inside logical block 267. Blocks are 1024 bytes. How many bytes come from each block, and which pointer paths reach them?}{Two processes independently open the same file. One seeks to byte 900. What changes for the other?}
+\answers{24 bytes from block 267 at single-indirect index 255. The remaining 76 bytes are in block 268 at double-indirect indexes \([0][0]\).}{Its offset does not change. Each independent open has its own open description.}
+\minor{Directory permissions}
+\begin{tabularx}{\linewidth}{@{}lY@{}}\toprule
+\rowcolor{mist}\textbf{Bit}&\textbf{Effect on a directory}\\\midrule
+Read&List entry names.\\
+Write&Modify entries, typically with search permission too.\\
+Execute&Search or traverse the directory.\\
+\bottomrule\end{tabularx}
+
+\chapterstart{io}{09 / REQUEST TO DEVICE}{I/O systems and disks}{Separate the request order from the time to position and transfer.}
+\eli{A disk is a record player. Move to the ring, wait for the right spot to rotate under the head, then read.}
+\fig{disk-latency}{Access time adds seek, rotational latency and transfer. Queueing time comes before service.}
+\fig{double-buffer-pipeline}{One buffer can fill while the other is processed.}
+\minor{I/O subsystem roles}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Mechanism}&\textbf{What it does}\\\midrule
+Driver&Turns a generic request into device-specific operations.\\
+Buffer&Stores data while it moves between stages.\\
+Cache&Keeps a copy for reuse.\\
+Spool&Queues work for a shared device such as a printer.\\
+\bottomrule\end{tabularx}
+
+\theory{io}{09}{Why I/O policies behave differently}
+\fig{disk-policy}{A sweep policy chooses both a direction rule and a boundary.}
+\begin{theorytable}
+\textbf{Track, sector and cylinder}&A track is a ring on a platter surface. A sector is a subdivision of a track. A cylinder groups tracks at the same radius.\\
+\textbf{Buffer, cache and spool}&A buffer smooths timing differences. A cache keeps data for reuse. A spool queues jobs for a device that serves one at a time.\\
+\textbf{Blocking and asynchronous I/O}&A blocking call waits for its result. With asynchronous I/O, the request can complete later while the caller does other work.\\
+\textbf{FCFS and SSTF}&FCFS serves by arrival order. SSTF can reduce seek movement but may starve a faraway request if nearby work keeps arriving.\\
+\textbf{SCAN and LOOK}&SCAN uses the physical end as the sweep boundary. LOOK turns at the last pending request. Circular variants wrap and resume in the same direction.\\
+\textbf{RAID 0+1 and 1+0}&In 0+1, a failed disk can take a whole stripe set out of service. In 1+0, multiple disks can fail if each mirror pair keeps a survivor.\\
+\end{theorytable}
+\minor{Check your understanding}
+Why can picking the nearest disk request lead to starvation?
+\boxline{Answer.}{New requests near the head can keep a distant request waiting.}
+
+\deepen{io}{09}{What disk management prepares}
+\largefig{io-stack-layers}{Device-independent operations flow down through a driver. Completion can flow back through an interrupt.}
+\begin{theorytable}
+\textbf{Physical formatting}&Organises the medium into sectors and records information needed to identify and check them.\\
+\textbf{Partitioning}&Divides the disk into address ranges that can be managed as separate logical regions.\\
+\textbf{Logical formatting}&Creates file-system structures such as allocation metadata and a root directory.\\
+\textbf{Boot and swap}&A boot block provides bootstrap code on applicable designs. Swap space stores pages or process data displaced from memory.\\
+\textbf{Bad sectors}&A spare sector can take over a damaged sector's logical address. Sector slipping shifts placements during formatting to preserve order.\\
+\end{theorytable}
+\boxline{Check.}{Why can the file system keep using a logical sector number after remapping? The drive or storage layer redirects it to a spare.}
+\lectureref{c12, slides S4--S8 and S38--S39}
+
+\worked{io}{09}{Trace movement and timing}
+\fig{rapid-disk-movement}{SSTF from head 100, with requests 40, 125 and 135 already queued. Total movement \(=25+10+95=130\) cylinders.}
+\fig{scan-head}{Downward SCAN goes to 0, then reverses. Downward LOOK reverses at 14 in this example. Circular versions wrap and keep the service direction.}
+\minor{Translate the disk model into milliseconds}
+\begin{tabularx}{\linewidth}{@{}lYrr@{}}\toprule
+\rowcolor{mist}\textbf{Allocation}&\textbf{Reads for logical blocks 3--4}&\textbf{Positions}&\textbf{Time}\\\midrule
+Contiguous&Two adjacent data blocks&1&10 ms\\
+Indexed&Cold index plus two data blocks&3&27 ms\\
+Linked&Data blocks 0, 1, 2, 3 and 4&5&45 ms\\
+\bottomrule\end{tabularx}
+{\small Assumptions: 8 ms per positioning, 1 ms per transfer, cold reads, independent positioning for indexed and linked, one positioning for the contiguous run.}
+
+\extraexample{io}{09}{Two failures across four disks}
+\largefig{expand-raid-failure}{Use disks A1, A2, B1 and B2. In RAID 0+1, A and B are stripe sets. In RAID 1+0, A and B are mirror pairs.}
+\begin{theorytable}
+\textbf{RAID 0}&Stripes data for parallelism. Four equal disks of capacity \(C\) provide \(4C\). One failure can make the array unusable.\\
+\textbf{RAID 1}&Mirroring keeps another copy. With two independent mirror pairs, four disks provide \(2C\) of usable capacity.\\
+\textbf{0+1 after A1 fails}&Stripe A is unavailable. B1 and B2 both matter because the surviving stripe contains data spread across them.\\
+\textbf{1+0 after A1 fails}&A2 still covers mirror A. If B1 then fails, B2 covers mirror B. Both halves of the data remain accessible.\\
+\end{theorytable}
+\boxline{Check.}{What if A2 fails immediately after A1 in RAID 1+0? Mirror A has lost both copies and the array cannot supply all data.}
+\lectureref{c12, slides S40--S44}
+
+\practice{io}{09}{Replay the head and disk speed}
+\fig{full-rotating-disk}{Average rotational wait is half a revolution when the target position is uniform.}
+\questions{From head 50, all requests 10, 45 and 55 are pending. Use SSTF and break a tie toward the lower cylinder. What is the order and total movement?}{The disk spins at 6000 rpm. Find one revolution and average rotational wait.}
+\answers{\(50\to45\to55\to10\). The movement is \(5+10+45=60\) cylinders.}{6000/60 \(=100\) revolutions per second. One turn takes 10 ms and the average wait is 5 ms.}
+\fig{raid-layouts}{RAID 0 stripes. RAID 1 mirrors. RAID 0+1 mirrors stripes, while RAID 1+0 stripes across mirrored pairs.}
+\chapterstart{rt}{10 / DEADLINE WINDOWS}{Real-time operating systems}{A job must finish by its own absolute deadline.}
+\eli{A correct answer is still too late if the gate has already closed.}
+\fig{deadline-window}{The job can receive its CPU time in several slices within its release-to-deadline window.}
+\fig{period-and-deadline}{Period determines the next release. Relative deadline determines when the current job is due.}
+\ruleline{A job released at \(R\) with relative deadline \(D\) is on time if it completes by \(R+D\). A synchronous periodic job \(k\) releases at \(kT\).}
+
+\theory{rt}{10}{Real-time scheduling rules}
+\fig{rtos-roadmap}{RM and EDF assign priority using different timing information.}
+\begin{theorytable}
+\textbf{Correctness and timeliness}&A real-time result must be correct and arrive by its deadline. Good average response can still hide a missed deadline.\\
+\textbf{Task and job}&A task describes repeated work. Each release creates a job with its own window and execution requirement.\\
+\textbf{Relative and absolute deadline}&With release time \(R\) and relative deadline \(D\), the job is due at \(R+D\).\\
+\textbf{Periodic and sporadic releases}&Periodic jobs release every \(T\) time units. For sporadic jobs, \(T\) gives the minimum separation between releases.\\
+\textbf{Rate monotonic}&Shorter period gives higher fixed task priority. A later release of the same task keeps that priority.\\
+\textbf{Earliest deadline first}&Earlier absolute deadline gives higher job priority. A new release can outrank the running job and trigger preemption.\\
+\end{theorytable}
+\minor{Check your understanding}
+Two ready jobs have the same relative deadline but were released at different times. Which one does EDF favour?
+\boxline{Answer.}{The earlier release has the earlier absolute deadline.}
+
+\deepen{rt}{10}{What changes under overload}
+\largefig{expand-rt-overload}{Rate monotonic preserves fixed priorities. Earliest deadline first reorders ready jobs as deadlines and arrivals change.}
+\begin{theorytable}
+\textbf{Feasible workload}&A schedule exists that finishes every job by its deadline under the given assumptions.\\
+\textbf{Why FCFS, SJF and RR struggle}&They prioritise arrival, burst length, or queue rotation. A less urgent job can consume time a nearer deadline needs.\\
+\textbf{RM under load}&Its fixed ranking makes it easier to reason about which tasks receive CPU first. Lower priorities can miss while higher priorities still meet their deadlines.\\
+\textbf{EDF under load}&The ready queue can change order at each release. Under overload, misses can affect different tasks as urgency changes.\\
+\textbf{Execution window}&A job can use multiple slices. Its required CPU time must fit between release and the absolute deadline. Finishing exactly at the deadline counts.\\
+\end{theorytable}
+\boxline{Check.}{Can a schedule run with high CPU utilisation and still fail? Yes. A job can finish after its deadline while the CPU stays busy.}
+\lectureref{c6a, slides S12--S19}
+
+\worked{rt}{10}{Compare RM and EDF at time 8}
+\fig{rapid-rt-choice}{Both jobs are ready. A has period 4 and is due at 12. B has period 7 and is due at 11.}
+\begin{tabularx}{\linewidth}{@{}lYYY@{}}\toprule
+\rowcolor{mist}\textbf{Policy}&\textbf{Rule}&\textbf{First run after 8}&\textbf{Next}\\\midrule
+RM&Shorter period has fixed priority.&A on 8--9.&B on 9--11, finishing exactly at its deadline.\\
+EDF&Earliest absolute deadline wins.&B on 8--10.&A on 10--11, finishing before 12.\\
+\bottomrule\end{tabularx}
+{\small A needs 1 CPU unit. B has 2 remaining at \(t=8\). Assume no further release before 11.}
+\minor{Simulation method}
+At each release or completion, update remaining work, compare eligible jobs, and mark any unfinished job at its deadline.
+
+\extraexample{rt}{10}{RM and EDF on the same jobs}
+\largefig{expand-edf-over-rm}{Trace the first jobs on one preemptive core with no switching cost. Both release at time 0.}
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
+\rowcolor{mist}\textbf{Task}&\textbf{Period \(T\)}&\textbf{Execution \(C\)}&\textbf{Relative deadline \(D\)}\\\midrule
+A&4&2&4\\
+B&6&1&2\\
+\bottomrule\end{tabularx}
+\begin{theorytable}
+\textbf{Rate monotonic}&A has the shorter period. A finishes at 2 and B finishes at 3. B was due at 2 and misses by one unit.\\
+\textbf{Earliest deadline first}&B is due first and finishes at 1. A then finishes at 3, ahead of its deadline at 4.\\
+\textbf{What the trace proves}&EDF meets both deadlines in this first window. To assess later jobs, continue through future releases and deadlines.\\
+\end{theorytable}
+\boxline{Check.}{At \(t=4\), when is A's next job due? At \(4+4=8\). A new job is released at 8.}
+\lectureref{c6a, slides S15--S19}
+
+\practice{rt}{10}{Find a missed deadline}
+\fig{rm-missed-deadline}{In this trace, the first P3 job is due at 14 and runs from 16 to 18.}
+\questions{A job is released at 9 with \(D=5\) and finishes at 14. Is it late?}{A's period is 4 and it needs 3 CPU units per release. B's period is 8 and it needs 3. Could both meet their deadlines indefinitely on one core?}
+\answers{It meets its absolute deadline of 14 exactly.}{No. The utilisation is \(3/4+3/8=9/8\), greater than one core can provide.}
+\ruleline{For arbitrary relative deadlines, \(U\leq1\) alone does not establish feasibility. Inspect the deadlines and the scheduling assumptions.}
+
+\chapterstart{virt}{11 / TWO SCHEDULERS}{Virtualisation}{A guest thread advances only while its vCPU is on a physical core.}
+\eli{The team chooses the speaker. The school decides when the team gets the microphone.}
+\fig{rapid-vcpu-control}{Guest scheduler: task to vCPU. Host or hypervisor: vCPU to physical core.}
+\fig{hypervisor-types}{Type 1 runs directly on hardware. Type 2 uses a host OS. Paravirtualisation uses cooperation from the guest.}
+\minor{Mechanisms you can recognise}
+\begin{tabularx}{\linewidth}{@{}p{.25\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Mechanism}&\textbf{Example}\\\midrule
+Multiplexing&Two guests take turns using one core.\\
+Aggregation&Several physical drives appear as one logical drive.\\
+Emulation&The guest sees a different device interface.\\
+\bottomrule\end{tabularx}
+
+\theory{virt}{11}{What the hypervisor controls}
+\fig{virtual-machine-layers}{The guest handles its own system calls. Selected operations reach the hypervisor.}
+\begin{theorytable}
+\textbf{Ways to present hardware}&Multiplexing shares a physical resource among guests. Aggregation combines resources into one logical resource. Emulation reproduces a different device or instruction set.\\
+\textbf{Type 1 and type 2}&A type 1 hypervisor runs directly on hardware. A type 2 hypervisor uses a host operating system.\\
+\textbf{Full and paravirtualisation}&Full virtualisation can run an unmodified guest. A paravirtualised guest cooperates with the hypervisor through explicit interfaces.\\
+\textbf{Limited direct execution}&Compatible ordinary instructions execute on the CPU. Selected operations trap to the hypervisor, which implements their virtual effect and resumes the guest.\\
+\textbf{Isolation and sharing}&Guests see private virtual resources. The hypervisor maps them to shared physical CPUs, memory and devices and enforces isolation.\\
+\textbf{Guest and host scheduling}&The guest assigns threads to vCPUs. The host or hypervisor assigns vCPUs to physical CPUs. A runnable guest thread can wait for its vCPU to run.\\
+\end{theorytable}
+\minor{Check your understanding}
+A guest thread is marked Running, but the host deschedules its vCPU. Does the thread make progress?
+\boxline{Answer.}{It resumes making progress when that vCPU runs again.}
+
+\deepen{virt}{11}{What virtual hardware represents}
+\largefig{expand-virt-hardware}{The same virtual machine can use all three techniques across different resources.}
+\begin{theorytable}
+\textbf{Multiplexing}&Share one physical resource across several virtual uses. A physical core takes turns running vCPUs.\\
+\textbf{Aggregation}&Combine multiple physical resources into a larger logical resource. Several drives can appear as one.\\
+\textbf{Emulation}&Present a device interface or instruction set that software expects. The implementation reproduces its behaviour.\\
+\textbf{Limited direct execution}&Ordinary compatible instructions run directly. Selected sensitive operations transfer to the hypervisor so it can preserve isolation.\\
+\textbf{Two separate classifications}&Type 1 or type 2 describes where the hypervisor runs. Full or paravirtualisation describes the guest interface and how much the guest cooperates.\\
+\end{theorytable}
+\boxline{Check.}{Three virtual machines share one physical CPU in turns. Which technique is that? Multiplexing.}
+\lectureref{Virtualisation lecture, parts 1--2}
+
+\worked{virt}{11}{Watch a lock holder lose its core}
+\fig{vcpu-ledger}{A0 holds the lock. A1 spins in the amber interval.}
+\begin{tabularx}{\linewidth}{@{}lYY@{}}\toprule
+\rowcolor{mist}\textbf{Time}&\textbf{Core 0 / holder}&\textbf{Core 1 / contender}\\\midrule
+0--4&A0 acquires the lock.&B1 runs.\\
+4--8&B0 runs. A0 is off-core.&A1 spins on the held lock.\\
+8--12&A0 resumes and releases at 10.&B1 runs.\\
+12--16&B0 runs.&A1 resumes and can acquire.\\
+\bottomrule\end{tabularx}
+\ruleline{A guest's Running state describes the guest's choice. Check the host schedule to see whether instructions actually execute.}
+
+\extraexample{virt}{11}{Host time and guest CPU time}
+\largefig{expand-vcpu-clock}{Assume one physical core. Count guest CPU time only while V0 executes. Task A needs three units of CPU.}
+\begin{theorytable}
+\textbf{Wall time 0 to 2}&The host runs V0. Its guest scheduler runs A for two units. A has one unit left.\\
+\textbf{Wall time 2 to 4}&The host runs V1. V0 receives zero CPU time. The guest can still show A as its selected thread.\\
+\textbf{Wall time 4 to 5}&V0 runs again. A receives its final unit and completes at wall time 5.\\
+\textbf{Wall time 5 to 6}&V0 remains scheduled. The guest dispatches task B onto it.\\
+\end{theorytable}
+\boxline{Check.}{A starts at wall time 0 and completes at 5. How much CPU work did it receive? Three units, split across two host slices.}
+\lectureref{Virtualisation lecture, parts 1--2}
+
+\practice{virt}{11}{Follow a guest operation}
+\fig{full-vm-exit}{Ordinary compatible instructions can execute directly. The guest kernel handles its app's system call. Selected guest operations exit to the hypervisor.}
+\questions{In the lock trace, how many CPU units does the contender spend spinning during 4--8? Why can it still be unable to acquire at time 10?}{The guest application issues an ordinary system call. Which layer gets control first?}
+\answers{Four units. The lock is free at 10, but the host is running B1 on that core. A1 resumes at 12.}{The guest kernel. An intercepted operation from that kernel can then exit to the hypervisor.}
+\minor{When a waiter blocks}
+The guest can deschedule the waiter. If its vCPU has no other work, it can yield the physical core.
+
+\chapterstart{xv}{12 / LAB CONNECTIONS}{xv6 and mixed practice}{Link a lecture mechanism to the state xv6 actually changes.}
+\fig{full-xv6-return}{The Lab 4 path saves \code{sepc} as the return PC. Cause 8 advances it past \code{ecall}. A repaired load or store fault preserves it.}
+\fig{full-xv6-walk}{\code{walk(...,0)} follows existing table levels to locate the leaf slot. \code{walkaddr()} checks for a valid user mapping and returns the physical page base on success.}
+\ruleline{\code{r\_scause()} tells the kernel why it trapped. The saved PC tells it where execution should resume.}
+
+\theory{xv}{12}{Two xv6 page-table helpers}
+\largefig{expand-xv6-pte-check}{The lab's \code{walkaddr()} checks a user mapping and returns the physical page base.}
+\begin{theorytable}
+\textbf{\code{walk(..., 0)}}&Traverses existing intermediate tables and returns a pointer to the leaf slot if the path exists. The leaf entry itself can still be invalid.\\
+\textbf{\code{walkaddr()}}&Checks the address range, locates the leaf, and requires valid and user flags. A successful result is a page base.\\
+\textbf{Load or store permissions}&Validity and user accessibility describe the mapping. Hardware also checks the access type against the relevant permission bits.\\
+\textbf{Fault handling}&The trap cause identifies the event. The kernel can install a mapping for a legal absent page, then resume at the saved instruction.\\
+\end{theorytable}
+\boxline{Check.}{\code{walk(..., 0)} returns a slot pointer whose valid bit is zero. What can \code{walkaddr()} return for the address? It returns zero.}
+\lectureref{Lab 4, \code{kernel/vm.c} and \code{kernel/trap.c}}
+
+\worked{xv}{12}{Follow a user load through paging}
+\fig{translation-and-residency}{The hardware uses the resident translation when permitted. A legal absent page can be brought in, mapped, and accessed on retry.}
+\minor{Worked address}
+\begin{tabularx}{\linewidth}{@{}p{.31\linewidth}Y@{}}\toprule
+\rowcolor{mist}\textbf{Step}&\textbf{Result}\\\midrule
+Split \(VA=\code{0x3ABC}\)&With 4 KiB pages, VPN \(=3\) and offset \(=\code{0xABC}\).\\
+TLB lookup misses&Consult the page table. A present, readable entry can supply the frame immediately.\\
+Frame \code{0x12}&Append the original offset to get \code{0x12ABC}.\\
+Legal page absent&Handle the fault, install a mapping, then retry the same load.\\
+\bottomrule\end{tabularx}
+
+\extraexample{xv}{12}{Syscall return and fault retry}
+\largefig{expand-xv6-twotraps}{The saved PC identifies where to resume. The cause tells the kernel how to handle the event.}
+\begin{theorytable}
+\textbf{\code{ecall} at \code{0x1500}}&The kernel handles the system call and advances the saved PC by 4 to \code{0x1504}.\\
+\textbf{Store at \code{0x1504}}&An absent page causes the store to fault before it finishes. The saved PC is \code{0x1504}.\\
+\textbf{Mapping installed}&The repaired fault returns to \code{0x1504}, so the store gets another attempt.\\
+\textbf{Address register}&The faulting virtual address identifies the affected memory location. It can be very different from the PC of the instruction accessing it.\\
+\end{theorytable}
+\boxline{Check.}{A store at \code{0x1504} faults while touching \code{0x6000}. Which value identifies the page to map? \code{0x6000}.}
+\lectureref{Lab 4, \code{kernel/trap.c}}
+
+\practice{xv}{12}{Connect two topics at once}
+\fig{full-file-disk-cost}{A file's allocation method determines the required reads. The disk timing model determines how those reads translate to elapsed time.}
+\questions{A read touches two consecutive data blocks. It needs one cold index block first. The index and data run each require a separate 8 ms positioning. Transfers cost 1 ms per block. What is total service time?}{An \code{ecall} at \code{0x1500} returns successfully. A store at the same PC later faults and the kernel repairs its mapping. What PC is resumed after each trap?}
+\answers{Two positionings and three transfers give \(2(8)+3=19\) ms.}{After \code{ecall}, \code{0x1504}. After the repaired fault, \code{0x1500}.}
+{\small\color{muted}Lab references: \code{lab4/kernel/trap.c} and \code{lab4/kernel/vm.c}.}
+\end{document}

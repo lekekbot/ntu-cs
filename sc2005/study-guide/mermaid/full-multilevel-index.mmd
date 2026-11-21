@@ -1,0 +1,5 @@
+flowchart LR
+ V["VA 0x00403ABC"] -->|"Outer index 1"| O["Outer entry locates inner table"]
+ O -->|"Inner index 3"| I["Inner entry supplies frame 0x2A"]
+ I --> P["PA 0x2AABC"]
+ V -.->|"Offset 0xABC is copied"| P

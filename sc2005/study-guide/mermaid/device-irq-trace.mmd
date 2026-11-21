@@ -1,0 +1,8 @@
+sequenceDiagram
+ participant D as Device
+ participant C as CPU
+ participant K as Kernel
+ D-->>C: Signal completion
+ C->>K: Enter interrupt handler
+ K->>K: Acknowledge interrupt and process completion
+ K-->>C: Restore state or schedule work

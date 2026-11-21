@@ -1,0 +1,7 @@
+flowchart TD
+ A["User process"] -->|"System calls"| K["Device-independent I/O subsystem"]
+ K -->|"Device-specific operation"| D["Driver"]
+ D -->|"Program the device"| C["Controller"]
+ C --> H["Device"]
+ C -.->|"Completion interrupt"| IRQ["Interrupt handler"]
+ IRQ --> D

@@ -1,0 +1,5 @@
+flowchart TD
+ Fork["fork()"] --> Parent["Parent receives the child's PID"]
+ Fork --> Child["Child receives 0"]
+ Parent --> Wait["wait() can reap the child"]
+ Child --> Exec["exec() can replace the process image"]

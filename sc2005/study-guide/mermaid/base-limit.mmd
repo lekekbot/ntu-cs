@@ -1,0 +1,7 @@
+flowchart LR
+ A["Addresses below base"] --- B["Legal addresses: base through base + limit − 1"]
+ B --- C["Addresses at or above base + limit"]
+ classDef legal fill:#e9f5f3,stroke:#086c68
+ classDef outside fill:#f9eedc,stroke:#9d692d
+ class B legal
+ class A,C outside

@@ -1,0 +1,6 @@
+flowchart TD
+ R["Runnable tasks"] --> F["Foreground queue"]
+ R --> B["Background queue"]
+ F -->|"Round robin within queue"| C{"Choose a queue"}
+ B -->|"FCFS within queue"| C
+ C -->|"Strict priority or time share"| D["Dispatch next task"]

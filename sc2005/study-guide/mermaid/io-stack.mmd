@@ -1,0 +1,12 @@
+sequenceDiagram
+ participant A as Application
+ participant K as Kernel I/O
+ participant R as Device driver
+ participant D as Controller and device
+ A->>K: read() or write()
+ K->>K: Validate, buffer, cache or queue
+ K->>R: Issue device-specific request
+ R->>D: Program transfer
+ D-->>R: Interrupt on completion
+ R-->>K: Report result
+ K-->>A: Return or notify completion

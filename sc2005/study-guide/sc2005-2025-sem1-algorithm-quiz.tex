@@ -1,0 +1,246 @@
+\newcommand{\DocumentName}{Algorithm Quiz Practice}
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=21mm,bottom=20mm,left=21mm,right=21mm,headheight=15pt]{geometry}
+\ifdefined\XeTeXversion
+\IfFileExists{/System/Library/Fonts/Supplemental/Georgia.ttf}{
+\DeclareFontFamily{TU}{guiderm}{}
+\DeclareFontShape{TU}{guiderm}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{bx}{n}{<->ssub * guiderm/b/n}{}
+\DeclareFontShape{TU}{guiderm}{m}{sl}{<->ssub * guiderm/m/it}{}
+\DeclareFontShape{TU}{guiderm}{bx}{it}{<->ssub * guiderm/b/it}{}
+\DeclareFontFamily{TU}{guidess}{}
+\DeclareFontShape{TU}{guidess}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Arial.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Arial Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{bx}{n}{<->ssub * guidess/b/n}{}
+\DeclareFontShape{TU}{guidess}{m}{sl}{<->ssub * guidess/m/it}{}
+\DeclareFontShape{TU}{guidess}{bx}{it}{<->ssub * guidess/b/it}{}
+\DeclareFontFamily{TU}{guidett}{}
+\DeclareFontShape{TU}{guidett}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{bx}{n}{<->ssub * guidett/b/n}{}
+\DeclareFontShape{TU}{guidett}{m}{sl}{<->ssub * guidett/m/it}{}
+\DeclareFontShape{TU}{guidett}{bx}{it}{<->ssub * guidett/b/it}{}
+\renewcommand{\rmdefault}{guiderm}
+\renewcommand{\sfdefault}{guidess}
+\renewcommand{\ttdefault}{guidett}
+}{}
+\else
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\fi
+\usepackage[cmex10]{amsmath}\usepackage{amssymb}
+\DeclareFontShape{OMX}{cmex}{m}{n}{<->sfixed*lmex10}{}
+\DeclareFontShape{OT1}{cmr}{m}{n}{<-> rm-lmr10}{}
+\DeclareFontShape{OML}{cmm}{m}{it}{<-> lmmi10}{}
+\DeclareFontShape{OMS}{cmsy}{m}{n}{<-> lmsy10}{}
+\usepackage[table]{xcolor}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem,fancyhdr,fancyvrb,needspace,graphicx,ragged2e}
+\usepackage[unicode,colorlinks=true,linkcolor=teal!60!black,urlcolor=teal!60!black,bookmarksopen=true]{hyperref}
+
+\definecolor{ink}{HTML}{152D42}
+\definecolor{accent}{HTML}{086C68}
+\definecolor{pale}{HTML}{E9F5F3}
+\definecolor{mist}{HTML}{EDF2F6}
+\definecolor{amber}{HTML}{F9EEDC}
+\definecolor{muted}{HTML}{415971}
+\hypersetup{pdftitle={SC2005 \DocumentName}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.16}
+\setlist{leftmargin=*,itemsep=3pt,topsep=3pt,parsep=1pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{muted}SC2005 Operating Systems}
+\fancyhead[R]{\small\sffamily\color{muted}\DocumentName}
+\fancyfoot[R]{\small\sffamily\color{muted}\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\raggedbottom
+\newcommand{\titleline}[1]{{\sffamily\bfseries\color{ink}\fontsize{29}{34}\selectfont #1\par}\vspace{3pt}}
+\newcommand{\sectionline}[1]{\par\smallskip{\sffamily\bfseries\color{accent}#1\par}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\boxtext}[2]{\par\medskip\noindent\colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{#1}\enspace #2}}\par\smallskip}
+\newcommand{\diag}[2]{\par\begin{center}
+\includegraphics[width=.94\linewidth,height=45mm,keepaspectratio]{mermaid/rendered/#1.pdf}\par
+{\small\color{muted}#2\par}\end{center}}
+\newcommand{\topic}[4]{\clearpage\phantomsection\label{#2}\pdfbookmark[0]{#1: #3}{bm-#2}
+{\sffamily\bfseries\color{accent}#1\par}\titleline{#3}{\color{muted}#4\par}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\begin{document}
+\titleline{SC2005 Algorithm Quiz Practice}
+{\large\color{muted}2025 Semester 1 question types}\par
+The \href{https://www.reddit.com/r/NTU/comments/1p8610x/sc2005_quiz_format/}{r/NTU student recap posted on 27 November 2025} describes six algorithm question types. The original questions and inputs are unavailable. The exercises below are newly written practice. Question 3 uses a two-variable request as one interpretation of the post's brief description of a Banker problem involving \(x\) and \(y\).
+
+\sectionline{Reported format and where to revise}
+\begin{tabularx}{\linewidth}{@{}lYY@{}}
+\toprule
+\rowcolor{mist}\textbf{Q}&\textbf{Reported question type}&\textbf{Full study guide}\\
+\midrule
+1 & Round robin with quantum 3, a wait between processes, ready queue at two times, and turnaround & Chapters 2--3, processes and CPU scheduling\\
+2 & TestAndSet with priority scheduling & Chapter 4, synchronisation\\
+3 & Banker's algorithm with \(x\) and \(y\) & Chapter 5, deadlocks\\
+4 & Inverted page table with LRU & Chapters 6--7, memory and virtual memory\\
+5 & Two-level page-table calculation & Chapter 6, memory organisation\\
+6 & Disk access time for contiguous, indexed and linked allocation & Chapters 8--9, file systems and I/O\\
+\bottomrule
+\end{tabularx}
+\sectionline{Practice sequence}
+Try the six questions with the solutions closed. Show the queue, table, or intermediate computation at each decision. Then compare your first differing row with the worked solution. The question types are a historical revision reference. The recap gives no official time limit, marking scheme, or current-semester format.
+\sectionline{Separate concept quiz}
+Use \textit{SC2005 Rapid Revision} for concept recall across all 11 lecture topics. Explain each mechanism in words and give one consequence. Use this file to practise the corresponding calculations and traces.
+
+\topic{QUESTIONS 1--2}{q12}{Scheduling and locks}{Track the running task, the ready queue and the blocked tasks separately.}
+\sectionline{Q1. Round robin with a wakeup}
+On a single CPU, use round robin with quantum \(q=3\) and zero overhead. A arrives at \(t=0\), runs for two CPU units, then blocks until B signals. Once woken, A needs four more CPU units. B arrives at \(t=1\), needs six CPU units in total, and signals A after its own fourth CPU unit.
+
+An arrival or wakeup joins the tail and does not interrupt a running quantum. When a runnable unfinished process uses all of its quantum, it goes to the tail. An immediate redispatch starts a fresh quantum. At a boundary, record the state after processing all events and any dispatch. The ready queue excludes the running process.
+\begin{enumerate}
+\item Draw the execution intervals. Mark the wakeup and each quantum boundary.
+\item Give the ready queue, front to back, just after \(t=5\) and just after \(t=7\).
+\item Give each process's completion and turnaround times.
+\end{enumerate}
+\vspace{8pt}
+\sectionline{Q2. TestAndSet under strict priority}
+Use a single CPU with strictly preemptive fixed priorities, with H ranked above L. L arrives at \(t=0\) and immediately acquires a free lock. L needs three CPU units in the protected region before it can release the lock. At \(t=1\), H arrives, preempts L, and runs \code{while (TestAndSet(lock)) \{\}}. \code{TestAndSet} atomically returns the previous value and sets the lock to true. H stays runnable while it spins.
+\begin{enumerate}
+\item Show who runs on \([0,1)\) and from \(t=1\) onward. Can H enter the critical section? Can L release the lock?
+\item Explain the roles of mutual exclusion and scheduler priority in this outcome.
+\item Replace the spin with a blocking wait. With zero overhead and no other tasks, when can L release the lock?
+\end{enumerate}
+\boxtext{Trace template.}{Write time, CPU owner, ready queue, and event for Q1. For Q2, write time, CPU owner, lock owner, and lock waiter.}
+
+\topic{QUESTIONS 3--4}{q34}{Resource safety and replacement}{Show each resource vector or frame update.}
+\sectionline{Q3. A two-variable Banker request}
+There are two resource types \(A,B\). Initially, \(\mathrm{Available}=(2,2)\).
+\begin{center}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\rowcolor{mist}\textbf{Process}&\textbf{Allocation \((A,B)\)}&\textbf{Max \((A,B)\)}\\
+\midrule
+\(P_0\)&\((1,0)\)&\((2,1)\)\\
+\(P_1\)&\((0,1)\)&\((3,3)\)\\
+\bottomrule
+\end{tabular}
+\end{center}
+\(P_1\) requests \((x,y)\), where \(x,y\) are nonnegative integers.
+\begin{enumerate}
+\item Compute both initial Need vectors.
+\item Find every \((x,y)\) that can be granted while preserving safety.
+\item For \((1,1)\), write the safe sequence and Work after each simulated finish. Explain why a request of \((2,1)\) must wait.
+\end{enumerate}
+\sectionline{Q4. Inverted page table and global LRU}
+An inverted page table has one entry per physical frame. A resident page is identified by \((\mathrm{PID},\mathrm{VPN})\). Physical frames 0, 1 and 2 are initially empty. Use the lowest-numbered free frame, then use exact global LRU across both processes when all frames are occupied. Each hit updates recency.
+\[
+(A,0),\ (B,0),\ (A,1),\ (A,0),\ (B,2),\ (A,1),\ (B,0),\ (B,2)
+\]
+\begin{enumerate}
+\item For each reference, state hit or fault and give the frame contents. Name the victim when one is evicted.
+\item Give the number of faults and the final table.
+\item Why do the first two references both fault even though their VPNs are equal?
+\end{enumerate}
+\boxtext{Trace template.}{For Q3, use Need and Work. For Q4, write the three frame numbers as columns and track each entry's last-use time.}
+
+\topic{QUESTIONS 5--6}{q56}{Page tables and disk access}{Keep address bits, bytes, blocks and milliseconds explicit.}
+\sectionline{Q5. Two-level paging}
+A system uses 32-bit virtual addresses, 4 KiB pages and 4-byte entries in both levels of the page table. The outer table occupies one page, and each allocated inner table also occupies one page. Allocate an inner table only when a mapping needs it.
+\begin{enumerate}
+\item Derive the outer index, inner index and offset widths.
+\item Give the outer and inner indexes and the byte offset for each virtual address \code{0x00403ABC}, \code{0x00801000} and \code{0x00400004}.
+\item For exactly these three mapped pages, how much RAM is used by the page tables alone? Compare it with a flat single-level table.
+\item If virtual address \code{0x00403ABC} maps to frame \code{0x2A}, give its physical byte address.
+\end{enumerate}
+\sectionline{Q6. Disk time under three allocation methods}
+A file read needs logical data blocks 3 and 4, with blocks numbered from 0. Directory information is already available in memory. All required data blocks are cold. Each independent positioning costs 6 ms seek plus 2 ms rotational latency. Every block transferred costs 1 ms. Adjacent blocks in a contiguous run share one positioning. Use these assumptions for each separate scenario.
+\begin{enumerate}
+\item \textbf{Contiguous.} Logical blocks 3 and 4 are physically consecutive.
+\item \textbf{Indexed.} The relevant index occupies one cold block. Its block and the two data blocks each require independent positioning.
+\item \textbf{Linked.} The first block address is known, and each next pointer is inside the preceding data block. All blocks you visit require independent positioning. There are no cached links or current-position hints.
+\end{enumerate}
+For each case, list the physical reads by role and compute total elapsed time. Explain why the linked allocation must read blocks outside the requested range.
+\boxtext{Trace template.}{For paging, split the address before doing any lookups. For disk, count transfers and positioning events separately.}
+
+\topic{SOLUTIONS 1--2}{s12}{Scheduling and locks}{Compare your first queue or lock-state mismatch with the corresponding event.}
+\sectionline{Q1. Round robin}
+\begin{tabularx}{\linewidth}{@{}llY@{}}
+\toprule
+\rowcolor{mist}\textbf{Interval}&\textbf{CPU}&\textbf{Event}\\
+\midrule
+0--2&A&A blocks at 2. B has been ready since 1.\\
+2--5&B&B consumes three CPU units and reaches quantum expiry.\\
+5--8&B&At 5, B is the only runnable job and gets a fresh quantum. Its fourth CPU unit finishes at 6, so A wakes and joins the ready queue. B completes at 8.\\
+8--11&A&A uses three of its four remaining units.\\
+11--12&A&A is the only runnable job at 11 and completes at 12.\\
+\bottomrule
+\end{tabularx}
+Just after \(t=5\), the ready queue is empty because B is running and A is blocked. Just after \(t=7\), it is \([A]\) because B is still running after the wakeup at 6.
+
+A completes at 12, so turnaround is \(12-0=12\). B completes at 8, so turnaround is \(8-1=7\).
+\sectionline{Q2. TestAndSet}
+L holds the lock on \([0,1)\) and still needs two CPU units when H arrives. From \(t=1\), H wins every scheduling decision. Every TestAndSet sees the lock already set. H spins and never enters. L remains ready but does not run, so it never reaches the unlock.
+
+The lock preserves mutual exclusion. Strict priority and busy waiting together prevent progress in this execution. If H blocks, L can run its last two units on \([1,3)\), release at 3, and wake H.
+\boxtext{Check your reasoning.}{For Q1, measure B's signal after four units of \emph{its own} CPU time. For Q2, the owner remains L even when H has the CPU.}
+
+\topic{SOLUTIONS 3--4}{s34}{Resource safety and replacement}{Check the precise row that makes a process eligible or a frame least recently used.}
+\sectionline{Q3. Banker's algorithm}
+Initial Need is \((1,1)\) for \(P_0\) and \((3,2)\) for \(P_1\). The availability check limits \(x,y\) to \(0,1,2\). After tentative allocation:
+\[
+\mathrm{Work}=(2-x,2-y),\qquad
+\mathrm{Need}'_1=(3-x,2-y).
+\]
+\(P_1\) cannot finish first because \(3-x>2-x\) for every \(x\). Therefore \(P_0\) must finish first. Its Need \((1,1)\) fits exactly when \(x\leq1\) and \(y\leq1\). It returns \((1,0)\), making Work \((3-x,2-y)\), which equals \(P_1\)'s remaining Need. The safe grants are \((0,0),(0,1),(1,0),(1,1)\).
+
+For \((1,1)\), Work goes \((1,1)\to(2,1)\to(3,3)\) along \(\langle P_0,P_1\rangle\). For \((2,1)\), tentative Work is \((0,1)\). Both processes need one more unit of \(A\), so restore the original state and make the request wait.
+\sectionline{Q4. IPT and global LRU}
+\begin{tabularx}{\linewidth}{@{}llcccY@{}}
+\toprule
+\rowcolor{mist}\textbf{Step}&\textbf{Ref.}&\textbf{Frame 0}&\textbf{Frame 1}&\textbf{Frame 2}&\textbf{Result}\\
+\midrule
+1&\(A0\)&\(A0\)&--&--&Fault\\
+2&\(B0\)&\(A0\)&\(B0\)&--&Fault\\
+3&\(A1\)&\(A0\)&\(B0\)&\(A1\)&Fault\\
+4&\(A0\)&\(A0\)&\(B0\)&\(A1\)&Hit, refresh \(A0\)\\
+5&\(B2\)&\(A0\)&\(B2\)&\(A1\)&Fault, evict \(B0\)\\
+6&\(A1\)&\(A0\)&\(B2\)&\(A1\)&Hit, refresh \(A1\)\\
+7&\(B0\)&\(B0\)&\(B2\)&\(A1\)&Fault, evict \(A0\)\\
+8&\(B2\)&\(B0\)&\(B2\)&\(A1\)&Hit, refresh \(B2\)\\
+\bottomrule
+\end{tabularx}
+The final table is \([B0,B2,A1]\) by frame, with five faults. The first two references have different PIDs. Page 0 of A and page 0 of B are distinct mappings.
+
+\topic{SOLUTIONS 5--6}{s56}{Page tables and disk access}{Audit the count of pages, positioning events and transferred blocks.}
+\sectionline{Q5. Two-level paging}
+A page has \(2^{12}\) bytes, so the offset takes 12 bits. A table page holds \(4096/4=1024=2^{10}\) entries. The 20 VPN bits split into 10 outer bits and 10 inner bits. \diag{two-level-address-fields}{Outer uses bits 31--22, inner uses bits 21--12, and offset uses bits 11--0.}
+\begin{center}
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+\rowcolor{mist}\textbf{Virtual address}&\textbf{Outer}&\textbf{Inner}&\textbf{Offset}\\
+\midrule
+\code{0x00403ABC}&1&3&\code{0xABC}\\
+\code{0x00801000}&2&1&\code{0x000}\\
+\code{0x00400004}&1&0&\code{0x004}\\
+\bottomrule
+\end{tabular}
+\end{center}
+Outer entries 1 and 2 need two different inner tables. Total page-table memory is one outer page plus two inner pages, \(3(4096)=12288\) bytes or 12 KiB. A flat table has \(2^{20}\) entries of four bytes, or 4 MiB. Frame \code{0x2A} gives base \code{0x2A000}. Add \code{0xABC} to get \code{0x2AABC}.
+\sectionline{Q6. Disk time}
+\begin{tabularx}{\linewidth}{@{}lYrr@{}}
+\toprule
+\rowcolor{mist}\textbf{Allocation}&\textbf{Blocks read}&\textbf{Positionings}&\textbf{Time}\\
+\midrule
+Contiguous&Data 3 and 4&1&\(8+2=10\) ms\\
+Indexed&Index, then data 3 and 4&3&\(3(8)+3=27\) ms\\
+Linked&Data 0, 1, 2, 3 and 4&5&\(5(8)+5=45\) ms\\
+\bottomrule
+\end{tabularx}
+In the linked case, reaching each successor first requires reading its predecessor to obtain the next pointer. This is why the calculation includes blocks 0, 1 and 2. In the indexed case, the cold index block is an extra transfer with its own positioning cost.
+\end{document}

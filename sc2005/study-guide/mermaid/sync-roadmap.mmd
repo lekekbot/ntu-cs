@@ -1,0 +1,7 @@
+flowchart TD
+ R["Concurrent access to shared mutable state"] --> P["Critical section"]
+ P --> G["Mutual exclusion, progress and bounded waiting"]
+ G --> S["Software protocols"]
+ G --> H["Atomic hardware instructions"]
+ G --> A["Semaphores and higher-level primitives"]
+ A --> C["Bounded buffer, dining philosophers, readers–writers"]

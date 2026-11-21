@@ -1,0 +1,6 @@
+flowchart TD
+ P{"Resident and permitted?"} -->|"Yes"| A["Translate and access"]
+ P -->|"No"| F["Enter kernel"]
+ F -->|"Invalid access"| X["Reject access"]
+ F -->|"Legal absent page"| R["Get free frame or evict victim"]
+ R --> M["Install page and retry"]

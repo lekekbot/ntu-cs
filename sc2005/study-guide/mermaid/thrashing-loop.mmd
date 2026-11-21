@@ -1,0 +1,6 @@
+flowchart LR
+ A["Too few frames per active process"] --> B["Fault rate rises"]
+ B --> C["More time waiting for paging"]
+ C --> D["CPU utilisation falls"]
+ D --> E["Naive scheduler admits more jobs"]
+ E --> A

@@ -1,0 +1,5 @@
+flowchart LR
+ R["Release R"] --> F["Finish at F, with F ≤ R + D"]
+ F --> D["Absolute deadline R + D"]
+ R -.->|"Relative deadline D"| D
+ R -->|"Period T"| N["Next release R + T"]

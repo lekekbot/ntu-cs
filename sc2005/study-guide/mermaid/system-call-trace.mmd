@@ -1,0 +1,8 @@
+sequenceDiagram
+ participant A as Application
+ participant C as CPU
+ participant K as Kernel
+ A->>C: Execute system-call instruction
+ C->>K: Trap with saved user PC and cause
+ K->>K: Dispatch system call
+ K-->>A: Restore user state and resume

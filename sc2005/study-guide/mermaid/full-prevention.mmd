@@ -1,0 +1,6 @@
+flowchart TD
+ D["Deadlock needs all four conditions"] --> A["Mutual exclusion"]
+ D --> B["Hold and wait"]
+ D --> C["No preemption"]
+ D --> E["Circular wait"]
+ E -->|"Request resources in a fixed order"| F["Remove the cycle condition"]

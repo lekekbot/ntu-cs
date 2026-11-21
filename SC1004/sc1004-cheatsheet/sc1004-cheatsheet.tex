@@ -1,0 +1,404 @@
+% SC1004 Linear Algebra. Print on one A4 sheet, landscape, double-sided.
+\documentclass[10pt,a4paper,landscape]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=7.5mm]{geometry}
+\usepackage{amsmath,amssymb,array,xcolor}
+
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{ink}{HTML}{19252C}
+\definecolor{accent}{HTML}{173E50}
+\definecolor{rulegray}{HTML}{A7B7BF}
+\definecolor{wash}{HTML}{EDF2F4}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.9pt}
+\setlength{\fboxsep}{4pt}
+\setlength{\tabcolsep}{3pt}
+\setlength{\emergencystretch}{1em}
+\raggedbottom
+
+\newlength{\sheetcol}
+\setlength{\sheetcol}{\dimexpr(\textwidth-8mm)/3\relax}
+\newcommand{\Col}{\operatorname{Col}}
+\newcommand{\Row}{\operatorname{Row}}
+\newcommand{\Null}{\operatorname{N}}
+\newcommand{\RREF}{\operatorname{rref}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\smat}[1]{\bigl[\begin{smallmatrix}#1\end{smallmatrix}\bigr]}
+\newcommand{\formula}[1]{\par\noindent\(\displaystyle #1\)\par}
+\newcommand{\topic}[1]{%
+  \par\addvspace{4.0pt}{\color{accent}\bfseries #1\par}\nobreak\vspace{-1pt}}
+\newcommand{\labelside}[2]{%
+  \noindent{\color{accent}\bfseries\fontsize{17}{19}\selectfont SC1004 Linear Algebra}%
+  \hfill{\color{accent}\bfseries\fontsize{9}{11}\selectfont #1\enspace\textbar\enspace #2}\par
+  \vspace{1.5pt}{\color{rulegray}\hrule height .55pt}\vspace{2.3pt}}
+\newcommand{\route}[1]{%
+  \noindent\colorbox{wash}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{#1}}\par\vspace{3.8pt}}
+\newenvironment{panel}[1]{%
+  \begin{minipage}[t]{\sheetcol}\vspace{0pt}%
+  \raggedright\setlength{\parskip}{1.9pt}%
+  {\color{accent}\bfseries\fontsize{11}{12.5}\selectfont \strut #1\par}%
+  \vspace{1.2pt}{\color{rulegray}\hrule height .45pt}\vspace{1.5pt}%
+}{\end{minipage}}
+\newcommand{\cue}[1]{\textbf{#1}}
+\newcommand{\rowend}{\tabularnewline[1.4pt]}
+
+% Use the standard fonts on full TeX installations. A partial macOS
+% XeTeX cache can use local STIX glyphs for the missing math fonts.
+\newif\ifpartialfontcache
+\ifdefined\XeTeXversion
+  \IfFileExists{lmex10.pfb}{}{%
+    \IfFileExists{/System/Library/Fonts/Supplemental/STIXTwoMath.otf}{%
+      \partialfontcachetrue
+    }{}%
+  }
+\fi
+\ifpartialfontcache
+\makeatletter
+\input{ot1lmr.fd}
+\input{omllmm.fd}
+\input{omslmsy.fd}
+\makeatother
+\DeclareFontShape{OT1}{lmr}{m}{n}{<->rm-lmr9}{}
+\DeclareFontShape{OML}{lmm}{m}{it}{<-6.5>lmmi5 <6.5-10>lmmi9 <10->lmmi10}{}
+\DeclareFontShape{OMS}{lmsy}{m}{n}{<-6.5>lmsy5 <6.5-10>lmsy8 <10->lmsy10}{}
+\font\sheetSTIX="STIX Two Math" at 8pt
+\font\sheetSTIXDisplay="STIX Two Math" at 10.5pt
+\font\sheetSTIXBrackets="STIX Two Math" at 15pt
+\renewcommand{\RR}{\mathord{\hbox{\sheetSTIX\char"211D}}}
+\renewcommand{\CC}{\mathord{\hbox{\sheetSTIX\char"2102}}}
+\renewcommand{\sum}{\mathop{\mathchoice{\vcenter{\hbox{\sheetSTIXDisplay\char"2211}}}{\vcenter{\hbox{\sheetSTIX\char"2211}}}{\hbox{\sheetSTIX\char"2211}}{\hbox{\sheetSTIX\char"2211}}}\displaylimits}
+\renewcommand{\prod}{\mathop{\mathchoice{\vcenter{\hbox{\sheetSTIXDisplay\char"220F}}}{\vcenter{\hbox{\sheetSTIX\char"220F}}}{\hbox{\sheetSTIX\char"220F}}{\hbox{\sheetSTIX\char"220F}}}\displaylimits}
+\renewcommand{\smat}[1]{\mathopen{\vcenter{\hbox{\sheetSTIXBrackets[}}}\begin{smallmatrix}#1\end{smallmatrix}\mathclose{\vcenter{\hbox{\sheetSTIXBrackets]}}}}
+\fi
+
+\begin{document}
+\fontsize{8.65}{10.25}\selectfont
+\color{ink}
+\labelside{FRONT}{Systems, determinants and coordinates}
+\route{\cue{Start with what the question gives you.}\quad
+  Pivots $\to$ solutions and dimensions \quad
+  Determinant $\to$ invertibility and scale \quad
+  Basis $\to$ coordinates and matrix of a map}
+
+\noindent\begin{panel}{Rank, pivots and solutions}
+\topic{What the equation says}
+For $A=[a_1\,\cdots\,a_n]\in\RR^{m\times n}$,
+$Ax=\sum_i x_i a_i$ is a combination of the columns.
+The unknowns $x_i$ are the weights. To test whether $b$ is
+in their span, solve $Ax=b$ by reducing $[A\mid b]$.
+
+\topic{What each pivot tells you}
+In REF, zero rows come last and leading entries move right
+as you go down. RREF is unique. It has pivot $1$s and zeros elsewhere
+in each pivot column. Swap rows, scale by a nonzero scalar,
+or add a multiple of another row. Apply each operation to $b$ too.
+
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.43\linewidth}>{\raggedright\arraybackslash}p{.54\linewidth}@{}}
+\cue{What you find} & \cue{What you can conclude}\rowend
+$[0\ \cdots\ 0\mid c]$, $c\ne0$ & No exact solution.\rowend
+Consistent, $r=n$ & Unique solution. Back-substitute.\rowend
+Consistent, $r<n$ & Infinitely many. Set $n-r$ variables free.\rowend
+Each column of $A$ has a pivot & Columns are LI. The map is one-to-one.\rowend
+Each row of $A$ has a pivot & Columns span $\RR^m$. The map is onto.\rowend
+\end{tabular}
+
+Here $r=\rank A$ counts pivots of $A$. For a particular $b$,
+\formula{Ax=b\text{ is consistent}\iff b\in\Col A\iff\rank[A\mid b]=r.}
+Find one solution $x_p$. All solutions are $x_p+\Null(A)$.
+When $b=0$, the solution set is the null space itself.
+
+\topic{Get bases and dimensions from rank}
+\begin{tabular}{@{}p{.27\linewidth}p{.11\linewidth}>{\raggedright\arraybackslash}p{.56\linewidth}@{}}
+\cue{Space} & \cue{Dim.} & \cue{Basis recipe}\rowend
+$\Col A\subseteq\RR^m$ & $r$ & Pivot columns of the \textbf{original} $A$. \rowend
+$\Row A\subseteq\RR^n$ & $r$ & Nonzero rows of REF. \rowend
+$\Null(A)\subseteq\RR^n$ & $n-r$ & Solve $Ax=0$. Set each free variable to $1$ with the others $0$ in turn. \rowend
+$\Null(A^{\top})\subseteq\RR^m$ & $m-r$ & Solve $A^{\top}y=0$ the same way. \rowend
+\end{tabular}
+
+$\Row A=\Col(A^{\top})$ and $\rank A^{\top}=r$.
+Row operations preserve the row space, null space and relations
+among columns. \cue{Rank--nullity} is $r+\dim\Null(A)=n$.
+
+\topic{Use the same rank test in other problems}
+$\Null(A)=\{0\}$ gives unique coefficients for a consistent
+system or a least-squares fit. A nonzero null space of
+$A-\lambda I$ gives eigenvectors. If all you know is the shape,
+$m<n$ forces free variables and $m>n$ forces a proper column space.
+\end{panel}%
+\hfill
+\begin{panel}{Invertibility and determinants}
+\topic{For square \(A\), these tests are equivalent}
+\formula{\begin{aligned}
+ & A\text{ invertible}\iff\det A\ne0\iff\rank A=n\\
+ & \iff\RREF(A)=I\iff\Null(A)=\{0\}\\
+ & \iff\text{columns (or rows) form a basis of }\RR^n\\
+ & \iff 0\text{ is not an eigenvalue of }A\\
+ & \iff Ax=b\text{ has a unique solution for every }b.
+\end{aligned}}
+Any one proves all the others. A left or right inverse alone
+also proves invertibility for square $A$.
+
+\cue{If \(\det A=0\)} the map collapses volume,
+at least one input direction goes to $0$, and any attainable
+$b$ has infinitely many preimages. The zero eigenspace is $\Null(A)$.
+
+\topic{Choose a way to find the determinant}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.27\linewidth}>{\raggedright\arraybackslash}p{.69\linewidth}@{}}
+\cue{What you see} & \cue{Calculation}\rowend
+$2\times2$ & $ad-bc$ for entries $a,b$ on top and $c,d$ below.\rowend
+Triangular & Product of diagonal entries.\rowend
+Sparse row $i$ & $\sum_j(-1)^{i+j}a_{ij}\det A_{ij}$. Delete row $i$ and column $j$ for $A_{ij}$.\rowend
+Eigenvalues & $\det A=\prod_i\lambda_i$, counting multiplicity.\rowend
+\end{tabular}
+
+\cue{Row or column operations} A swap flips sign. Scaling
+one row by $c$ multiplies the determinant by $c$. Adding a
+multiple of another row preserves it. Track these changes
+when reducing to triangular form. Equal or zero rows give $0$.
+
+$\det(AB)=\det A\,\det B$, $\det A^{\top}=\det A$,
+$\det(cA)=c^n\det A$ and $\det(A^{-1})=1/\det A$ when invertible.
+$\abs{\det A}$ is the area or volume scale factor.
+For a nonzero determinant, the sign gives orientation.
+
+\topic{Use an inverse or reuse a factorisation}
+\cue{Undo a map} Row reduce $[A\mid I]\to[I\mid A^{-1}]$,
+then $x=A^{-1}b$. For $2\times2$,
+$A^{-1}=\smat{d&-b\\-c&a}/\det A$ when $\det A\ne0$.
+$(AB)^{-1}=B^{-1}A^{-1}$ and $(A^\top)^{-1}=(A^{-1})^\top$.
+
+\cue{Apply a row operation} Apply it to $I$ to get $E$.
+$EA$ performs the operation on $A$, and $E^{-1}$ undoes it.
+
+\cue{Solve for many \(b\)} Factor $PA=LU$, where $P$ records
+row swaps ($I$ if none), $L$ stores elimination multipliers
+below its unit diagonal, and $U$ is the result of elimination.
+Solve $Ly=Pb$ forward, then $Ux=y$ back.
+\end{panel}%
+\hfill
+\begin{panel}{Bases, coordinates and linear maps}
+\topic{Test a set or extract a basis}
+A vector space has closed addition and scalar multiplication,
+with the vector-space axioms. For a subset $W\subseteq V$
+under the same operations, test $0\in W$ and closure under
+$\alpha u+\beta v$ for all $u,v\in W$ and scalars.
+Spans, kernels and ranges are subspaces.
+
+\cue{Span} is the set of attainable combinations.
+\cue{Linear independence (LI)} means $\sum_i c_iv_i=0$
+forces every $c_i=0$. A nontrivial relation lets you remove
+a dependent vector while preserving the span.
+
+\cue{A basis} is independent and spans. Put vectors into
+columns in known coordinates and keep the original pivot columns
+to get a basis for the span. Its size is the dimension.
+With exactly $\dim W$ vectors in $W$, either LI or spanning
+establishes a basis. For polynomials of degree $\le d$,
+use the coefficient basis $\{1,t,\ldots,t^d\}$.
+
+\topic{Use a basis to describe the same vector}
+For a basis $\mathcal B=(b_1,\dots,b_n)$ of $\RR^n$,
+put $P_{\mathcal B}=[b_1\,\cdots\,b_n]$.
+Synthesize $x=P_{\mathcal B}[x]_{\mathcal B}$.
+Extract weights by solving that equation, or apply $P_{\mathcal B}^{-1}$.
+An orthonormal basis gives weights directly via $P_{\mathcal B}^{\top}x$.
+\formula{[x]_{\mathcal C}=P_{\mathcal C}^{-1}P_{\mathcal B}[x]_{\mathcal B}.}
+Column $i$ of the coordinate-change matrix is $[b_i]_{\mathcal C}$.
+
+\topic{Build or change the matrix of a map}
+Test $T(\alpha u+\beta v)=\alpha T(u)+\beta T(v)$.
+For a linear $T\colon\RR^n\to\RR^m$, $T(x)=Ax$ where
+column $i$ of $A$ is $T(e_i)$.
+$\ker T=\Null(A)$ identifies directions sent to zero.
+$\operatorname{range}T=\Col A$ gives reachable outputs.
+\formula{[T]_{\mathcal C\leftarrow\mathcal B}=P_{\mathcal C}^{-1}AP_{\mathcal B}.}
+Read right to left. Convert input coordinates, apply $A$,
+then convert output coordinates. With the same basis
+at both ends this is similarity. An eigenbasis makes it diagonal.
+
+\cue{Compose maps} $AB$ applies $B$ first. The inner dimensions
+must agree, $(AB)_{ij}=\sum_k a_{ik}b_{kj}$ and column $j$ is $Ab_j$.
+$(AB)^\top=B^\top A^\top$. Add matrices of the same size
+entrywise. Transpose swaps rows and columns.
+
+\topic{Read a line or plane as an affine space}
+Use $x=p+tv$ for a line, $x=p+su+tv$ for a plane with LI
+directions, or $a^\top(x-p)=0$ for a hyperplane with normal $a\ne0$.
+$u$ is parallel to $v\ne0$ when $u=cv$. Given a normal,
+find directions by solving $a^\top v=0$.
+\end{panel}
+
+\newpage
+\labelside{BACK}{Projections, eigendirections and frequencies}
+\route{\cue{Choose a basis that fits the operation.}\quad
+  Orthogonal $\to$ dot products give weights and closest fits \quad
+  Eigenvectors $\to$ powers by scaling \quad
+  Fourier $\to$ frequency analysis}
+
+\noindent\begin{panel}{Orthogonality and closest fits}
+\topic{Start with a dot product}
+$u^\top v=\sum_i u_i v_i$. For nonzero vectors,
+$\cos\theta=u^\top v/(\norm u\norm v)$.
+Zero dot product means orthogonal. $\norm v=\sqrt{v^\top v}$,
+$d(u,v)=\norm{u-v}$ and $v/\norm v$ is unit for $v\ne0$.
+$\abs{u^\top v}\le\norm u\norm v$ (Cauchy--Schwarz) and
+$\norm{u+v}\le\norm u+\norm v$.
+
+\topic{Extract weights and project}
+$W^\perp$ contains the vectors orthogonal to every vector in $W$.
+In $\RR^n$, its dimension is $n-\dim W$.
+$\Col(A)^\perp=\Null(A^\top)$ and $\Row(A)^\perp=\Null(A)$.
+
+With an orthogonal basis $u_i$ of $W$, take the component
+of $y$ along each basis vector and add the components.
+\formula{c_i=\frac{u_i^\top y}{u_i^\top u_i},\qquad
+  \hat y=\proj_W y=\textstyle\sum_i c_i u_i.}
+$y=\hat y+e$ with $e\in W^\perp$. Pythagoras gives
+$\norm{y-w}^2=\norm e^2+\norm{\hat y-w}^2$ for $w\in W$.
+So $\hat y$ is the unique closest point and $\norm e$ is the
+distance. For $p+W$, project $y-p$ and add $p$.
+
+\topic{Get an orthonormal basis and a QR factorisation}
+Nonzero orthogonal vectors are LI. $Q^\top Q=I$ means
+orthonormal columns, so $Q$ preserves dot products. $QQ^\top$
+projects onto $\Col Q$. For square $Q$, $Q^{-1}=Q^\top$.
+
+\cue{Gram--Schmidt} Subtract earlier components using
+$v_j=a_j-\sum_{i<j}q_i(q_i^\top a_j)$, then $q_j=v_j/\norm{v_j}$.
+Skip zero remainders when building a basis. For $n$ LI columns,
+$A=QR$ with $Q$ of size $m\times n$ and $R=Q^\top A$
+upper triangular. $r_{ij}=q_i^\top a_j$, $r_{jj}=\norm{v_j}$.
+Full QR completes $Q$ to an orthonormal basis of $\RR^m$.
+In either form $\rank A=\rank R$.
+
+\topic{Find the closest attainable \(Ax\)}
+\cue{Least squares} Minimises $\norm{b-Ax}^2$. It projects
+$b$ onto $\Col A$. The residual is orthogonal to the columns.
+\formula{e=b-A\hat x,\quad A^\top e=0
+  \iff A^\top A\hat x=A^\top b.}
+Solve by elimination. For LI columns, use
+$\hat x=(A^\top A)^{-1}A^\top b$ or back-solve
+$R\hat x=Q^\top b$ from reduced QR. For dependent columns,
+all minimisers are $\hat x+\Null(A)$.
+The fitted vector $A\hat x$ is unique in either case.
+$e=0$ exactly when the original system is consistent.
+For a model $\sum_j c_j\phi_j(t)$, set $A_{ij}=\phi_j(t_i)$
+and $b_i=y_i$ to fit the coefficients $c_j$.
+\end{panel}%
+\hfill
+\begin{panel}{Eigenvalues and matrix structure}
+\topic{Turn an eigenvalue question into a null-space question}
+$Av=\lambda v$ with $v\ne0$ means $A$ scales that direction.
+\formula{\det(A-\lambda I)=0,\qquad E_\lambda=\Null(A-\lambda I).}
+Roots give eigenvalues. Solve the shifted homogeneous system
+to get eigenspace bases. For triangular $A$, read the diagonal.
+For $2\times2$, use $\det(tI-A)=t^2-(\tr A)t+\det A$.
+
+\cue{Algebraic multiplicity} counts copies of a root.
+\cue{Geometric multiplicity} is $\dim E_\lambda=n-\rank(A-\lambda I)$.
+It lies between $1$ and the algebraic multiplicity.
+Eigenvectors from distinct eigenvalues are LI.
+
+\topic{Decide whether you can diagonalise}
+Need $n$ independent eigenvectors over the chosen field.
+When the characteristic polynomial splits, check that the
+two multiplicities match at every root. $n$ distinct eigenvalues
+suffice. Set $P=[v_1\,\cdots\,v_n]$ and
+$D=\diag(\lambda_1,\dots,\lambda_n)$ in matching order.
+\formula{AP=PD\ \Longrightarrow\ A=PDP^{-1},\qquad A^k=PD^kP^{-1}.}
+For $x_{k+1}=Ax_k$, turn $x_0$ into eigenbasis coordinates with
+$P^{-1}$, then scale coordinate $i$ by $\lambda_i^k$.
+Active modes decay for $\abs\lambda<1$, keep their magnitude
+for $\abs\lambda=1$ and grow for $\abs\lambda>1$.
+
+\cue{Read invariants} Similar matrices share the characteristic
+polynomial, determinant, trace and rank. $\tr A=\sum_i\lambda_i$.
+$A^\top$ shares the spectrum. The same eigenvector has
+eigenvalue $\lambda^k$ for $A^k$, $\lambda+c$ for $A+cI$,
+or $1/\lambda$ for invertible $A^{-1}$.
+
+\topic{Let structure tell you what is possible}
+\cue{Real symmetric \(S\)} satisfies $S^\top=S$. It has real
+eigenvalues and an orthonormal eigenbasis, so $S=QDQ^\top$. Positive definite
+means $x^\top Sx>0$ for $x\ne0$, equivalent to all eigenvalues
+being positive for symmetric $S$.
+
+\cue{Gram matrix} $G=A^\top A$ gives $x^\top Gx=\norm{Ax}^2$.
+$\Null(G)=\Null(A)$, so $G$ is invertible (and positive definite)
+exactly when the columns are LI. Use this to test uniqueness of
+the least-squares coefficients.
+
+\cue{Orthogonal projection} $P^\top=P$ and $P^2=P$ together
+characterise an orthogonal projector. $P$ fixes its range
+and sends its orthogonal complement to zero.
+Use $P=QQ^\top$ for an orthonormal basis of the target.
+For LI columns of $A$, $P=A(A^\top A)^{-1}A^\top$ projects
+onto $\Col A$. Then $\hat b=Pb$ and $e=(I-P)b$.
+
+\cue{Complex pair for real \(A\)} Conjugate eigenvalues and
+eigenvectors pair up. A non-real $\lambda=a+jb$ acts on the
+real plane with basis $(\Re v,-\Im v)$ by the block
+$\smat{a&-b\\b&a}$, scale $\abs\lambda$ and rotation $\arg\lambda$.
+\end{panel}%
+\hfill
+\begin{panel}{Complex numbers and frequency}
+\topic{Choose a form for the operation}
+$z=a+jb=re^{j\theta}$, $j^2=-1$, $\bar z=a-jb$,
+$r=\sqrt{a^2+b^2}$ and $\theta=\operatorname{atan2}(b,a)$ for $z\ne0$.
+Euler gives $e^{j\theta}=\cos\theta+j\sin\theta$.
+Add componentwise. Multiply by multiplying moduli and
+adding angles. Divide by dividing moduli and subtracting
+angles, or use $1/z=\bar z/r^2$.
+\formula{z^p=r^pe^{jp\theta},\qquad
+ \text{\(p\)th roots }\;r^{1/p}e^{j(\theta+2\pi\ell)/p},\quad
+ \ell=0,\dots,p-1.}
+
+\topic{Apply orthogonality with conjugation}
+$u^H=\bar u^\top$ and $\langle u,v\rangle=u^Hv$.
+$\norm u^2=u^Hu=\sum_n\abs{u_n}^2$.
+The coefficient along an orthogonal basis vector $u$ is
+$u^Hy/(u^Hu)$. For an orthonormal basis, the denominator is $1$.
+
+\topic{DFT gives weights. IDFT rebuilds samples.}
+Let $\Omega_k=2\pi k/N$ and $w_k[n]=e^{j\Omega_k n}$,
+for $n,k=0,\dots,N-1$. $w_k^Hw_\ell=N\delta_{k\ell}$,
+so this is an orthogonal basis and $\norm{w_k}^2=N$.
+\formula{X[k]=\sum_{n=0}^{N-1}x[n]e^{-j\Omega_k n}=w_k^Hx.}
+\formula{x[n]=\frac1N\sum_{k=0}^{N-1}X[k]e^{j\Omega_k n}.}
+The synthesis weight is $X[k]/N$. With $W_{kn}=e^{-j\Omega_k n}$,
+$X=Wx$ and $W^{-1}=W^H/N$. Use row $k$ of $W$ for a
+single bin or the corresponding column of $W^H$ and $1/N$
+to reconstruct that bin's contribution.
+
+\topic{Read the signal from the bins}
+\cue{Frequency and direction} Reduce the phase step modulo
+$2\pi$ to $(-\pi,\pi]$. The synthesis basis uses $+\Omega_k$.
+The analysis row uses $-\Omega_k$. A step strictly between
+$0$ and $\pi$ rotates anticlockwise. A step strictly between
+$-\pi$ and $0$ rotates clockwise. A zero step is constant
+and $\pi$ alternates. Bin $k>N/2$ has signed index $k-N$
+in synthesis. Bins $k$ and $k+N$ are aliases.
+
+\cue{Amplitude and phase} For a complex tone $a\,w_k$,
+only bin $k$ is active, with $X[k]=Na$. Read amplitude
+$\abs{X[k]}/N$ and phase $\arg X[k]$. For real inputs,
+$X[N-k]=\overline{X[k]}$ modulo $N$. A paired real sinusoid
+has amplitude $2\abs{X[k]}/N$. At DC and Nyquist use the
+signed weight $X[k]/N$.
+
+\cue{Check a result} $X[0]/N$ is the sample mean.
+Parseval gives $\sum_n\abs{x[n]}^2=\sum_k\abs{X[k]}^2/N$.
+\end{panel}
+\end{document}

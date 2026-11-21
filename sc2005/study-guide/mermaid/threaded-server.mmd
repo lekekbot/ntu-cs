@@ -1,0 +1,6 @@
+flowchart LR
+ C["Client request"] --> L["Listening thread"]
+ L --> W1["Worker 1 serves request"]
+ L --> W2["Worker 2 serves another request"]
+ W1 -.-> S["Shared server address space"]
+ W2 -.-> S

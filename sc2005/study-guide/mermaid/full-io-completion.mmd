@@ -1,0 +1,9 @@
+sequenceDiagram
+ participant A as Application
+ participant K as Kernel
+ participant D as Device
+ A->>K: Blocking read
+ K->>D: Start I/O
+ Note over A,K: Caller waits, and the CPU can run another task
+ D-->>K: Completion interrupt
+ K-->>A: Wake caller, then return when dispatched

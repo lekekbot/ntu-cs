@@ -1,0 +1,6 @@
+flowchart LR
+ A["Process A: fd 3"] --> OA["Open description A: offset 40"]
+ B["Process B: fd 3"] --> OB["Open description B: offset 0"]
+ OA --> I["Shared inode"]
+ OB --> I
+ I --> D["Data blocks"]

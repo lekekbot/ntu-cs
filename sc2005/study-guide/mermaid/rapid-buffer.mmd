@@ -1,0 +1,6 @@
+flowchart LR
+ E["Reserve an empty slot"] --> P["Lock, insert, unlock"]
+ P --> F["Publish a full slot"]
+ F --> C["Reserve an item"]
+ C --> R["Lock, remove, unlock"]
+ R -->|"Publish a free slot"| E

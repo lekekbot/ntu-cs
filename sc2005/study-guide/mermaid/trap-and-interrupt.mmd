@@ -1,0 +1,5 @@
+flowchart TD
+ App["Application executes system-call instruction"] -->|"Synchronous trap"| Sys["System-call handler"]
+ Device["Device completes a transfer"] -->|"Asynchronous interrupt"| IRQ["Interrupt handler"]
+ Sys --> Resume["Return or schedule another task"]
+ IRQ --> Resume

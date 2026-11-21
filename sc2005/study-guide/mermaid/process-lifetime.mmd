@@ -1,0 +1,6 @@
+stateDiagram-v2
+ direction LR
+ [*] --> Child
+ Child --> Exited: exits or is terminated
+ Exited --> Reaped: parent collects exit status
+ Reaped --> [*]

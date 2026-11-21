@@ -1,0 +1,5 @@
+flowchart TD
+ B["Increase the disk block size"] --> T["Fewer transfers for a long sequential stream"]
+ B --> F["More unused space in the final block can occur"]
+ T --> D["Possible throughput improvement"]
+ F --> U["Lower space utilisation for small files"]

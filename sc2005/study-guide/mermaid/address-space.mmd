@@ -1,0 +1,5 @@
+flowchart TD
+ T["Text: executable instructions"] --- D["Data: global and static objects"]
+ D --- H["Heap: dynamic allocations"]
+ H -->|"Grows towards higher addresses"| G["Unallocated address range"]
+ S["Stack: calls, parameters and local variables"] -->|"Grows towards lower addresses"| G

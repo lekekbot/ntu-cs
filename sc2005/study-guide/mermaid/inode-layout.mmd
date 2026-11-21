@@ -1,0 +1,5 @@
+flowchart TD
+ I["Inode: file metadata and block pointers"] --> D["12 direct pointers"]
+ I --> S["Single indirect: one index level"]
+ I --> B["Double indirect: two index levels"]
+ I --> T["Triple indirect: three index levels"]

@@ -1,0 +1,5 @@
+flowchart LR
+ V["VA 6155: page 3"] --> PT["Page table: page 3 maps to frame 9"]
+ PT --> P["PA 18443: frame 9, offset 11"]
+ V --> D["Offset 11"]
+ D -->|"Unchanged"| P

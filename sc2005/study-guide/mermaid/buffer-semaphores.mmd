@@ -1,0 +1,5 @@
+flowchart LR
+ E["empty: free-slot permits"] --> P["Producer inserts under mutex"]
+ P --> F["full: available-item permits"]
+ F --> C["Consumer removes under mutex"]
+ C --> E

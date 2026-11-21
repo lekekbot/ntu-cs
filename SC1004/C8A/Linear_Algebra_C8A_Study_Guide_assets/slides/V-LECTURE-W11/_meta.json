@@ -1,0 +1,1074 @@
+{
+  "unit": "V-LECTURE-W11",
+  "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+  "videos": [
+    "039 LA Week11.1 DFT (TutQ 5,6).mp4"
+  ],
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 6.0,
+      "frame": 6,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 26.0,
+      "frame": 26,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 33.0,
+      "frame": 33,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 40.0,
+      "frame": 40,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_005.jpg",
+      "time": 50.0,
+      "frame": 50,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_006.jpg",
+      "time": 75.0,
+      "frame": 75,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_007.jpg",
+      "time": 84.0,
+      "frame": 84,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_008.jpg",
+      "time": 102.0,
+      "frame": 102,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_009.jpg",
+      "time": 139.0,
+      "frame": 139,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_010.jpg",
+      "time": 145.0,
+      "frame": 145,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_011.jpg",
+      "time": 187.0,
+      "frame": 187,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_012.jpg",
+      "time": 212.0,
+      "frame": 212,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_013.jpg",
+      "time": 236.0,
+      "frame": 236,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_014.jpg",
+      "time": 265.0,
+      "frame": 265,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_015.jpg",
+      "time": 358.0,
+      "frame": 358,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_016.jpg",
+      "time": 374.0,
+      "frame": 374,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_017.jpg",
+      "time": 385.0,
+      "frame": 385,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_018.jpg",
+      "time": 395.0,
+      "frame": 395,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_019.jpg",
+      "time": 414.0,
+      "frame": 414,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_020.jpg",
+      "time": 438.0,
+      "frame": 438,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_021.jpg",
+      "time": 474.0,
+      "frame": 474,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_022.jpg",
+      "time": 495.0,
+      "frame": 495,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_023.jpg",
+      "time": 505.0,
+      "frame": 505,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_024.jpg",
+      "time": 554.0,
+      "frame": 554,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_025.jpg",
+      "time": 597.0,
+      "frame": 597,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_026.jpg",
+      "time": 603.0,
+      "frame": 603,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_027.jpg",
+      "time": 625.0,
+      "frame": 625,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_028.jpg",
+      "time": 633.0,
+      "frame": 633,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_029.jpg",
+      "time": 640.0,
+      "frame": 640,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_030.jpg",
+      "time": 650.0,
+      "frame": 650,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_031.jpg",
+      "time": 666.0,
+      "frame": 666,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_032.jpg",
+      "time": 674.0,
+      "frame": 674,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_033.jpg",
+      "time": 713.0,
+      "frame": 713,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_034.jpg",
+      "time": 745.0,
+      "frame": 745,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_035.jpg",
+      "time": 774.0,
+      "frame": 774,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_036.jpg",
+      "time": 785.0,
+      "frame": 785,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_037.jpg",
+      "time": 801.0,
+      "frame": 801,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_038.jpg",
+      "time": 847.0,
+      "frame": 847,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_039.jpg",
+      "time": 865.0,
+      "frame": 865,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_040.jpg",
+      "time": 946.0,
+      "frame": 946,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_041.jpg",
+      "time": 950.0,
+      "frame": 950,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_042.jpg",
+      "time": 961.0,
+      "frame": 961,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_043.jpg",
+      "time": 985.0,
+      "frame": 985,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_044.jpg",
+      "time": 1023.0,
+      "frame": 1023,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_045.jpg",
+      "time": 1044.0,
+      "frame": 1044,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_046.jpg",
+      "time": 1062.0,
+      "frame": 1062,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_047.jpg",
+      "time": 1070.0,
+      "frame": 1070,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_048.jpg",
+      "time": 1074.0,
+      "frame": 1074,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_049.jpg",
+      "time": 1109.0,
+      "frame": 1109,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_050.jpg",
+      "time": 1145.0,
+      "frame": 1145,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_051.jpg",
+      "time": 1178.0,
+      "frame": 1178,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_052.jpg",
+      "time": 1183.0,
+      "frame": 1183,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_053.jpg",
+      "time": 1187.0,
+      "frame": 1187,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_054.jpg",
+      "time": 1190.0,
+      "frame": 1190,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_055.jpg",
+      "time": 1201.0,
+      "frame": 1201,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_056.jpg",
+      "time": 1214.0,
+      "frame": 1214,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_057.jpg",
+      "time": 1227.0,
+      "frame": 1227,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_058.jpg",
+      "time": 1258.0,
+      "frame": 1258,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_059.jpg",
+      "time": 1299.0,
+      "frame": 1299,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_060.jpg",
+      "time": 1313.0,
+      "frame": 1313,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_061.jpg",
+      "time": 1336.0,
+      "frame": 1336,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_062.jpg",
+      "time": 1377.0,
+      "frame": 1377,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_063.jpg",
+      "time": 1385.0,
+      "frame": 1385,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_064.jpg",
+      "time": 1423.0,
+      "frame": 1423,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_065.jpg",
+      "time": 1444.0,
+      "frame": 1444,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_066.jpg",
+      "time": 1452.0,
+      "frame": 1452,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_067.jpg",
+      "time": 1458.0,
+      "frame": 1458,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_068.jpg",
+      "time": 1500.0,
+      "frame": 1500,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_069.jpg",
+      "time": 1512.0,
+      "frame": 1512,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_070.jpg",
+      "time": 1516.0,
+      "frame": 1516,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_071.jpg",
+      "time": 1526.0,
+      "frame": 1526,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_072.jpg",
+      "time": 1544.0,
+      "frame": 1544,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_073.jpg",
+      "time": 1555.0,
+      "frame": 1555,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_074.jpg",
+      "time": 1568.0,
+      "frame": 1568,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_075.jpg",
+      "time": 1585.0,
+      "frame": 1585,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_076.jpg",
+      "time": 1605.0,
+      "frame": 1605,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_077.jpg",
+      "time": 1621.0,
+      "frame": 1621,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_078.jpg",
+      "time": 1630.0,
+      "frame": 1630,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_079.jpg",
+      "time": 1710.0,
+      "frame": 1710,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_080.jpg",
+      "time": 1775.0,
+      "frame": 1775,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_081.jpg",
+      "time": 1786.0,
+      "frame": 1786,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_082.jpg",
+      "time": 1793.0,
+      "frame": 1793,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_083.jpg",
+      "time": 1867.0,
+      "frame": 1867,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_084.jpg",
+      "time": 1886.0,
+      "frame": 1886,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_085.jpg",
+      "time": 1926.0,
+      "frame": 1926,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_086.jpg",
+      "time": 1929.0,
+      "frame": 1929,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_087.jpg",
+      "time": 1938.0,
+      "frame": 1938,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_088.jpg",
+      "time": 1953.0,
+      "frame": 1953,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_089.jpg",
+      "time": 1956.0,
+      "frame": 1956,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_090.jpg",
+      "time": 1989.0,
+      "frame": 1989,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_091.jpg",
+      "time": 2007.0,
+      "frame": 2007,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_092.jpg",
+      "time": 2030.0,
+      "frame": 2030,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_093.jpg",
+      "time": 2039.0,
+      "frame": 2039,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_094.jpg",
+      "time": 2061.0,
+      "frame": 2061,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_095.jpg",
+      "time": 2065.0,
+      "frame": 2065,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_096.jpg",
+      "time": 2068.0,
+      "frame": 2068,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_097.jpg",
+      "time": 2072.0,
+      "frame": 2072,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_098.jpg",
+      "time": 2138.0,
+      "frame": 2138,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_099.jpg",
+      "time": 2190.0,
+      "frame": 2190,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_100.jpg",
+      "time": 2270.0,
+      "frame": 2270,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_101.jpg",
+      "time": 2278.0,
+      "frame": 2278,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_102.jpg",
+      "time": 2318.0,
+      "frame": 2318,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_103.jpg",
+      "time": 2364.0,
+      "frame": 2364,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_104.jpg",
+      "time": 2381.0,
+      "frame": 2381,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_105.jpg",
+      "time": 2389.0,
+      "frame": 2389,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_106.jpg",
+      "time": 2409.0,
+      "frame": 2409,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_107.jpg",
+      "time": 2452.0,
+      "frame": 2452,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_108.jpg",
+      "time": 2473.0,
+      "frame": 2473,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_109.jpg",
+      "time": 2505.0,
+      "frame": 2505,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_110.jpg",
+      "time": 2518.0,
+      "frame": 2518,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_111.jpg",
+      "time": 2523.0,
+      "frame": 2523,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_112.jpg",
+      "time": 2530.0,
+      "frame": 2530,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_113.jpg",
+      "time": 2556.0,
+      "frame": 2556,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_114.jpg",
+      "time": 2586.0,
+      "frame": 2586,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_115.jpg",
+      "time": 2589.0,
+      "frame": 2589,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_116.jpg",
+      "time": 2595.0,
+      "frame": 2595,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_117.jpg",
+      "time": 2611.0,
+      "frame": 2611,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_118.jpg",
+      "time": 2627.0,
+      "frame": 2627,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_119.jpg",
+      "time": 2635.0,
+      "frame": 2635,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_120.jpg",
+      "time": 2638.0,
+      "frame": 2638,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_121.jpg",
+      "time": 2660.0,
+      "frame": 2660,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_122.jpg",
+      "time": 2699.0,
+      "frame": 2699,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_123.jpg",
+      "time": 2730.0,
+      "frame": 2730,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_124.jpg",
+      "time": 2748.0,
+      "frame": 2748,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_125.jpg",
+      "time": 2788.0,
+      "frame": 2788,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_126.jpg",
+      "time": 2807.0,
+      "frame": 2807,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_127.jpg",
+      "time": 2841.0,
+      "frame": 2841,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_128.jpg",
+      "time": 2855.0,
+      "frame": 2855,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_129.jpg",
+      "time": 2881.0,
+      "frame": 2881,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_130.jpg",
+      "time": 2904.0,
+      "frame": 2904,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_131.jpg",
+      "time": 2940.0,
+      "frame": 2940,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_132.jpg",
+      "time": 2947.0,
+      "frame": 2947,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_133.jpg",
+      "time": 2955.0,
+      "frame": 2955,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_134.jpg",
+      "time": 2978.0,
+      "frame": 2978,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_135.jpg",
+      "time": 2998.0,
+      "frame": 2998,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_136.jpg",
+      "time": 3067.0,
+      "frame": 3067,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_137.jpg",
+      "time": 3104.0,
+      "frame": 3104,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_138.jpg",
+      "time": 3116.0,
+      "frame": 3116,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_139.jpg",
+      "time": 3165.0,
+      "frame": 3165,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_140.jpg",
+      "time": 3173.0,
+      "frame": 3173,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_141.jpg",
+      "time": 3188.0,
+      "frame": 3188,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_142.jpg",
+      "time": 3228.0,
+      "frame": 3228,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_143.jpg",
+      "time": 3269.0,
+      "frame": 3269,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_144.jpg",
+      "time": 3320.0,
+      "frame": 3320,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_145.jpg",
+      "time": 3339.0,
+      "frame": 3339,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_146.jpg",
+      "time": 3385.0,
+      "frame": 3385,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_147.jpg",
+      "time": 3400.0,
+      "frame": 3400,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_148.jpg",
+      "time": 3410.0,
+      "frame": 3410,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_149.jpg",
+      "time": 3471.0,
+      "frame": 3471,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_150.jpg",
+      "time": 3517.0,
+      "frame": 3517,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_151.jpg",
+      "time": 3526.0,
+      "frame": 3526,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    },
+    {
+      "file": "slide_152.jpg",
+      "time": 3575.0,
+      "frame": 3575,
+      "video": "039 LA Week11.1 DFT (TutQ 5,6).mp4",
+      "video_title": "LA Week11.1 DFT (TutQ 5,6)"
+    }
+  ]
+}

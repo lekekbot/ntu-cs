@@ -1,0 +1,6 @@
+flowchart LR
+ A["Guest application"] -->|"System call"| OS["Guest kernel"]
+ OS --> V["Virtual hardware interface"]
+ V -->|"Intercept selected operations"| H["VMM / hypervisor"]
+ H --> P["Physical hardware"]
+ A -.->|"Ordinary compatible instructions execute directly"| P

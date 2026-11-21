@@ -1,0 +1,5 @@
+flowchart TD
+ U["Application: read, write, open"] --> L["Logical file system: paths, metadata and protection"]
+ L --> O["File organisation: allocation, block map and free space"]
+ O --> B["Basic file system: block requests and buffers"]
+ B --> I["I/O control: drivers and interrupts"]

@@ -1,0 +1,301 @@
+[00:00] All right, so this is the second lecture on memory organization. And in this lecture we will focus
+on paging. So paging is a memory allocation under the non-contiguous memory allocation approach. So
+for paging, right, so the memory, the physical memory, is located to a process. It's no longer
+contiguous, right. Or in other words, so the process image or logical address space of the process
+will be assigned to non-contiguous physical memory. Right. And using paging, right, so the physical
+memory will be divided into fixed size blocks. So each of these blocks is called a frame. Typically
+the size of the frame
+
+[01:05] is a power of 2, between 512 and 8192 bytes. Correspondingly, we also divide the logical address
+space or logical memory into blocks of the same size. So each of these, that is called a page. So we
+divide the physical memory into frames and then we divide the logical address space into pages. So
+using paging, right, so what all I need to keep track is the available frames in the physical
+memory. So to load the process whose logical address space consists of n pages, recall, we divide
+the logical address space of a process into pages, right. So with this process, logical address
+space consists of n pages. So that basically means in order to load
+
+[02:13] the logical address of the logical address of this process, the process image into the physical
+memory, then we need to find unavailable frames in the physical memory. Right, so then the OS need
+to know, right, need to keep track. So which frame is currently occupied and which frame is
+currently free. So OS will keep track of all the free frames. So OS also need to remember, right, so
+which page of the logical address space is loaded into which frame in the physical memory. So this
+is done by using a page table. As I explain it around, so page table is also used for address
+translation to translate from the logical address
+
+[03:06] and then the physical address. If you're using a page table. If you're using a page table. Right, so
+in this case, as long as a frame is available, then it can be assigned to a page of a process. So in
+this case, we don't really have an external fragmentation. So recall in the last lecture, we covered
+the two different type of fragmentation. So one is internal, the other one is external. Right. So
+external fragmentation refers to a usable memory space in between allocated memory space. Right. So
+if you're using paging, every single frame can be in use as long as it's free. So in this case, we
+don't really have external fragmentation. Right. But internal
+
+[03:57] fragmentation is still possible. So internal fragmentation recall, so that refers to a usable memory
+space within a partition. Right. So the process may not occupy the entire partition. Right. I look
+at the partition, then part of the allocated partition is not really used. So if you're using
+paging, so internal fragmentation may still happen. Right. And this is just happened to the last
+page. Right. The reason means because the logical address space may not divide into exact number of
+pages. Right. So the last page, in this case, may not occupy the entire frame and part of frame will
+not be in use.
+
+[04:44] So in this case, we are assuming that the frame size, as well as the page size, right, so is 4
+bytes. Right. And we divide logical memory, logical address space into pages. So in this case, we
+are assuming that the size of logical address space is 16 bytes. So page size is 4 bytes. So this
+logical address space will be divided into 4 pages. logical address space in the logical address
+space. Right. So 4 bytes will be divided into 8 bytes. You'll remember this particular case in this
+specific case. So for example, we assume that the physical memory consists of 32 bytes. Right. So
+the frame size is 4 bytes. So 32 bytes will be divided into 8 frames. Right.
+
+[05:48] So we have 4 pages in the logical address space and 8 frames in the physical memory. So to load this
+process into the physical memory, then we need to find four free page frames. So in this specific
+example, so page 0 is loaded into frame 5. So ABCD is here, so page 0 is loaded into frame 5, and
+page 1 is loaded into frame 6. Page 2 is loaded into frame 1, and page 3 is loaded into frame 2. So
+which page is loaded into which frame? So this information is maintained in the page table. So in
+page table, there is one entry per page. So in this case, the logical address space, we have four
+pages. So for the page table, there are four entries. There is one entry per page.
+
+[06:58] So the entry contains the frame number. That's where the corresponding page is in the physical
+memory. So for instance, entry 0 contains 5. So that means page 0 is in frame 5. So this is a
+specific example to illustrate how the paging scheme works. So as you can see here, if you're using
+paging, this logical address space or process is no longer contiguous in the physical memory. So
+page 0 is in frame 5. Page 1 is in frame 6. And so on and so forth. It's not in the contiguous
+physical memory space. So this is a specific example. So to use the paging scheme, then what's the
+logical address format?
+
+[08:01] Now let's try to figure out. So to identify a specific location in the logical address space. So for
+example, this particular location here, right? Then we need to know this position, right? So it's in
+which page? And what's the offset of this position within that page? Right? So for instance, so for
+this particular location, So this is a byte and recall, but logical address space is always byte
+addressable. We address this byte by byte. It's sequence of bytes, right? So for this particular
+byte, so this byte is in page 1, right? And the offset. So this is 0, 1, 0, 1, 2. So this is the
+position of this, the third byte within this page.
+
+[09:04] Right? So this first, second, and the third, right? And the third byte within that page. So to
+identify a specific position, then we need this two information, right? So the page number and
+offset. So that's basically implies, right? So for the logical address, right? So logical address,
+then we contain two components, the page number and offset. Right? So given a logical address,
+number of bits, right? Then we divide this number of bits into two portions. Right? So page number
+and offset. So the page number, then we use the page number to index into the page table to locate
+the record entry, right? And from entry, we obtain the frame number.
+
+[09:56] Then we use the frame number together with offset, combined with the offset to form the physical
+address. Right? Now let's look at, so given a specific logical address in terms of a number of bits,
+right? How can we divide this logical address into two portions, page number and offset? Right? Now,
+again, so let's look at the example, right? So, I'll assume that, so the page size is 2^n bytes,
+right? So in page size 2^n bytes, right? And the logical address space is 2^m bytes. So if you have
+logical address space, 2^m bytes, so that basically means we need m bits for the logical address.
+Right? We need to recall, again, I mentioned this multiple times, right?
+
+[10:52] So for logical address, it's byte address symbol. So we address this byte by byte. In order to
+address every single byte in this logical address space, which is 2^m bytes, then we need at least,
+we need m bits. Right? Okay, so just for you to understand this better, right? So for instance, if
+logical address space is 4 bytes, right? So 4 bytes is 2^2 bytes, right? Then in this case, we need
+2 bits to address every single byte in this logical address space. 2 bits. So 0.0, 0.1, 1, 0, and 1.
+Right? So we have 4 bytes, that's 2^2 bytes, right? So if you have 2^2 bytes, then we need 2 bits.
+Alright? So in this case, the logical address has m bits, right?
+
+[11:48] So given this m bits, then we need to determine how many bits will be used for the page number, how
+many bits will be used to identify the offset. Right? So given this logical address, alright, so
+logical address space 2^m bytes, and page size 2^n bytes, how many pages this logical address can be
+divided into? Right? So 2^m bytes, divided by 2^n bytes, then we have 2^(m-n), so this address space
+can be divided into this number of pages. Right? So in total, we have a m bits for the logical
+address space. For the logical address space, for the logical address space, we have m bits, as I
+just explained, right?
+
+[12:53] For this m bits, right, so given that the page size is 2^n, so that means the lower n bits, so that
+will be used to identify the offset. Right? So the lower n bits will be used to identify the offset.
+Then the higher m minus n bits, then will be used to identify the page number. So where this
+particular byte is in which page, and what's the offset of this particular byte within that page.
+Alright? So that's given our logical address, how can we identify, so this address is belong to
+which page, and what's offset of this address within that page. Right? So once we are able to
+identify the page number and offset for this address, then we can use the page table to do the
+address translation.
+
+[13:56] So we use the page number to index into the page table. So recall, for the page table, we have one
+entry per page. Right? So the page table entry is arranged according to the page number order.
+Right? So given this page number, then we can identify the entry in the page table. From the entry,
+they obtain the frame number. That's indicating this page is mapped into this frame. Right? Then we
+use the frame number together with the offset to form the physical address. So that's how the
+logical address is translated to the physical address, if you're using the paging scheme. Now again,
+look at an example here.
+
+[14:45] Right? So in this example, right? So assuming we have this logical address, right? So that's 0, 1,
+1, 1. Right? So recall, so in this example, right? So the space, the size of logical address space
+is 2^4. 16 bytes, 2^4. So that means we need the 4 bits for the logical address. Right? In order to
+identify every single byte. Right? So there's 16 bytes, right? 2^4. Then we need the 4 bits. And the
+page size is 4 bytes. The page size is 4 bytes. Right? So page size is 4 bytes. So that 2^2, so that
+means the lower 2 bits. Right? So we'll be used to identify the offset, right?
+
+[15:41] Of this byte. Right? So this byte was the offset of this byte within the page. Right? The lower 2
+bits. The higher 2 bits. In this case, that will be used to identify the page number. Right? So 0,
+1, 1, 1. So that means, so this particular byte is in page 1 and offset is 3. Right? So which one
+are we looking at? So, okay, so I use pen. Okay? So page 1 and offset 3. So that basically means
+this one here. Right? Okay? So offset starting from 0. So 0, 1, 2, 3. Right? So that's the last byte
+within page 1. Right? So this is the logical address. Right? So that's the address we try to access
+in this logical address space of the process.
+
+[16:52] Right? But this particular page is mapped to a frame in the physical memory. Right? So this page is
+mapped into this frame. Frame 6. And this particular byte is here in the physical memory. Right? So
+again, so use pen. So this particular byte is here in the physical memory. Right? So to access this
+position, then we need to use this address here. Right? So the other two access this, then this is
+the physical address. Need to be used. Right? To access this. So this physical address. So what is
+the physical address here? So this is the last byte of frame 6. Right? In numerical number. So this
+is a 27.
+
+[17:49] Right? To access this location, so we need to use this. All right. Now what we have here is the
+logical address. The hardest logical address can be translated into this physical address. Right? In
+order to get the corresponding data or instruction in this position here. Right? The translation.
+Right? So as illustrated in the last slide. Right? This is done using this manner. Right? So given
+the page number, then we identify the corresponding entry in the page table. From entry, we obtain
+the frame number. Using frame number together with the offset to form the physical address. Now
+continue. Right?
+
+[18:41] So look at this example. Right? Continue to look at this example. Right? So we already know for this
+logical address. It's in page 1 with offset 3. So page 1. So we use this page 1. Page 1. Right? To
+index into the page table to locate entry. We locate this entry. Right? So this entry for page 1.
+Right? From this entry here, we obtain the frame number. The frame number together with the offset.
+The frame number together with offset. To form the physical address. Right? So now we have the
+physical address. So 1 1 0 1 1. So this is a binary. Right? Numerical number. Right? So for this 1 1
+0 1 1.
+
+[19:40] Right? So this is a thread. Right? So it's exactly 27. Right? So that's basically how the logical
+address is translated into the physical address. If you're using paging. Now, you may ask. Right? So
+how the OS will know where the page table is? Right? So you can see here, to do this address
+translation, it's rely on the page table. So where is the page table? Right? So the page table
+itself. Right? So the page table itself. Right? It's also stored in the physical memory. Right? Then
+the OS will use these two registers to locate where the page table of the current running process is
+in the memory.
+
+[20:35] Right? So these two registers are the page table base register. So that's passed to the starting
+location of the page table in the physical memory. The other one is the page table length register.
+So that's basically indicating the size of the page table. As I mentioned, right, so these two
+registers are for the current running process. Process in the running state. Right? So recall the
+concept of a context switch. Right? So when the process is changing from running state, right, to
+other state, for example, to the ready state or to the waiting state, then the value of these two
+registers then will be saved into the process control block.
+
+[21:29] Right? So it will be saved into the present control block. Right? So when the process is changing
+from the ready state to the running state, then the value in the process control block that will be
+used to initialize these two registers. Right? So that's basically how the OS will know where to
+locate page table for the process. Right? So when the process is not running, this information will
+be kept in the process control block PCB. Right? Now what's the problem? Right? So the problem you
+look at here. To do this address translation, so we need to rely on the page table. And the page
+table itself is stored in the physical memory.
+
+[22:18] So that basically means effectively the memory access time will be doubled. Right? So given a
+logical address, so we need to access the page table once which is in the memory to do the address
+translation. So once we have the physical address, then we access the physical memory to get
+corresponding data or instruction. So to access physical memory effectively the memory access time
+will be doubled. Right? So if I'm assuming that the memory access time is mu, then the effective
+memory access time will become 2 mu, will be doubled. So that's the problem. Right? Now in order to
+improve on this, right?
+
+[23:05] So make this memory access time more efficient, right? Then we can use this associative register or
+translation look-aside buffer. Right? So in order to improve the performance, right? Now let's look
+at how this can be used. So this translation look-aside buffer. Right? So this is the, you can
+consider this is a fast memory. Right? So we use this one to cache the frequent access entry in the
+page table. All right? So if an entry is frequently accessed in the page table, okay, so I use the
+pen. If entry is frequently accessed in the page table, then that entry will be a fast memory.
+Right? So if an entry is frequently accessed in the page table, okay, so I use the pen.
+
+[23:48] Alright? So the page number and the frame number. Right, so if the entry is frequently accessed,
+then we'll be cached in the TLB. Okay, go back, go back. Okay, cached in the TLB. Alright, so given
+the logical address, so we already explained, so given this logical address, so how to divide this
+into page number and offset, right? So given the page number of this logical address, then first of
+all, we will search a matching entry in the TLB. So recall TLB, adding cache, the most frequently
+assessed page table entries. If able to locate an entry in the TLB, then we use the frame number
+together with offset to form the physical address.
+
+[25:21] Right, because the TLB does not contain all the page table entries, so there will be a miss. So if
+you're not able to locate a matching entry in the TLB, so that means the TLB miss, then we still
+have to do the page table lookup, right, locate entry in the page table. And from here we obtain the
+frame number together with offset to form the physical address. So that's how the TLB can be used.
+So typically, the access time of TLB is much, much faster than the access time of the physical
+memory. Now let's try to figure out, right, so if you're using TLB, then what will be the effective
+memory access time?
+
+[26:11] So assuming that, so the TLB access time is epsilon, and the memory access time is mu, right? So
+epsilon is much, much less than mu, right? So assuming that the hit ratio, right? So the percentage
+of time, right, we're able to locate entry in the TLB is alpha, right? Now for the effective memory
+access time, effective memory access time, right? So if there's a heat, so that means we're able to
+locate entry in the TLB, then, we will use the TLB to do the address translation, right? So we
+obtain the frame number from the TLB. So that's, that's, sorry, this is epsilon, right? Okay. So we
+use the TLB, right?
+
+[27:25] To do the address translation, locate entry in TLB, obtain the frame number. So that's epsilon,
+right? So once we obtain the physical address, then we can access the physical memory, that's mu.
+All right, so if epsilon is to access TLB to do the logical to physical address translation, and mu,
+so after we got a physical address, then we access the physical memory to get the required data or
+instruction. So that's in terms when there's a hit. In terms of it's a miss, so that's one minus
+alpha, right? It's a miss. So for miss, we already access the TLB, so that's epsilon, right? But
+it's a miss, we're not able to locate entry in the TLB.
+
+[28:20] Then we still have to use the page table, right? So that's one mu, right? We still have to use the
+page table to do the address translation, that's one mu. Right, so recall page table is in the
+memory. Then once we obtain the physical address, then we use this to access physical memory, to
+obtain the required data or instruction, right? So if there's a miss, then there's one epsilon and
+two mu. Right, so this is how we obtain the effective memory access time, right, for this TLB
+scheme, right? So that's basically showing the slides here, right? So this is exactly what we went
+through, right? So this term then can be simplified into this.
+
+[29:11] So that's for using TLB, right? So recall, so up to now, so what we assume. So we assume, so this is
+one page table per process, right? So every process there, there's a corresponding page table,
+right? And in the page table, there's one entry per page. And the page table entry is arranged
+according to the page number order, right? And the page table itself is also in the physical memory,
+right? So this also occupies memory space, right? So you can imagine. So if the logical address
+space of a process is very large, so that means there are a lot of pages in the logical address
+space. So that will translate into the lot of entries in the page table, right?
+
+[30:12] So the page table itself can also get really big and occupy a lot of memory space, right? One
+solution to overcome this issue is, so instead of one page table per process, then what we can do is
+we can have one inverted page table for the entire system and share among all the processes, right?
+So that's the inverted page table scheme, right? So in inverted page table scheme, so in this case,
+so what we assume is, there's only one inverted page table, right? So in this inverted page table,
+there's one entry for every frame in the physical memory, right? So the size of this inverted page
+table is proportional to the size of your physical memory, right?
+
+[31:16] So if there are 10 frames in the physical memory, then there will be 10 entries in the inverted page
+table, right? And the entries in this inverted page table is arranged according to the frame number
+order, right? Then what entry contains? The entry will contains a process ID and the frame number.
+Because the inverted page table is shared among all the processes, right? Then if the entry only
+contains a page number, then we do know that page is belong to which process, right? So in order to
+identify this page belongs to which process, so the entry in the inverted page table will contain
+the PID,
+
+[32:02] process ID together with the page number, right? So that's why this is called inverted page table.
+It's kind of an inversion of the page table, right? Page table, so there's one entry per page and
+arranged according to page number and order, So the entry will contain the page number, right? So
+the inverted page table is kind of an inversion of the page table, right? So there's one entry per
+frame and the entry arranged according to frame number order, then the entry will contain the page
+number together with the process ID, right? Now given a logical address, right? So that's the page
+number and offset.
+
+[32:50] Then what do we do is we also prefix this page number and offset with the process ID, right? Now
+let's look at how the logical address can be translated into the physical address if if you're using
+this inverted page table screen. Right. So give a logical address, as I just mentioned, then we
+prefix this page number and offset with the process ID, PID. Right. Then what do we do? So we use
+the PID and the page number to search this inverted page table to find a matching entry. Right. So
+if a matching entry is found in the entry I, so that's basically means this page of this process is
+in frame I.
+
+[33:49] Right. It's in frame I. Then we use I together with the offset to form the physical address. So
+that's how the address translation is carried out. Right. So in this case, if you're using inverted
+page table. Right. So using inverted page table. So in this case, we don't need to maintain a page
+table for each process. Right. So I only have one single inverted page table that will share among
+all the processes. So that will translate into save other memory space. Right. For keeping track,
+this, the page table information. Right. But the downside, the drag back is this. Right. So this is
+the logical address to physical address translation.
+
+[34:40] The time required for doing this translation will become longer. Right. So why is that so? So that's
+because, so given logical address, then we have to use this process ID and the page number part to
+search the entire inverted page table to locate entry. Right. So required is a searching. Right. So
+unlike the, the paging scheme. Right. So recall for paging scheme. So given logical address, so
+that's the page number offset. Then we can use the page number to directly index into the page table
+to locate entry. Right. Because the page table is arranged according to the page number order. But
+in this case,
+
+[35:31] for inverted page table is arranged according to the frame number order. So given this PID and the
+page number, then in this case, to locate a matching entry, then we have to search the entire page
+table. Right. The entire inverted page table. So this logical address to physical address
+translation, then will be increased. Right. So we stop here for this lecture and the next lecture,
+then we will look at the segmentation. So we will look at the segmentation scheme.

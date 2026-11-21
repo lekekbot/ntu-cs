@@ -1,0 +1,7 @@
+flowchart TD
+ S["Reference 7: load page 5"] --> A["3 frames"]
+ S --> B["4 frames"]
+ A --> C["Order: 1, 2, 5"]
+ B --> D["Order: 2, 3, 4, 5"]
+ C --> E["Next reference to 1 hits"]
+ D --> F["Next reference to 1 evicts 2"]

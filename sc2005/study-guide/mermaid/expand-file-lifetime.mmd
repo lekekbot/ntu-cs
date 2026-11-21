@@ -1,0 +1,5 @@
+flowchart TD
+ N["Directory name"] --> I["Inode and file data"]
+ F["Open description"] --> I
+ N -.->|"Unlink removes this name"| U["Directory entry removed"]
+ F -->|"Last close after final unlink"| R["File space can be reclaimed"]

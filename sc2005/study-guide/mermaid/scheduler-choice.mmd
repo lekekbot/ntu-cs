@@ -1,0 +1,7 @@
+flowchart LR
+ Q["Ready queue"] --> P["Choose next process"]
+ P --> D{"Preemptive?"}
+ D -->|"Yes"| T["Can interrupt a running process"]
+ D -->|"No"| F["Run until block or exit"]
+ T --> M["Evaluate schedule"]
+ F --> M

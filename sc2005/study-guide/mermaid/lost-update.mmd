@@ -1,0 +1,8 @@
+sequenceDiagram
+ participant P as Producer
+ participant S as Shared counter
+ participant C as Consumer
+ P->>S: Read counter, initially 5
+ C->>S: Read counter, still 5
+ P->>S: Write 6
+ C->>S: Write 4, overwriting 6

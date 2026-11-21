@@ -1,0 +1,11 @@
+sequenceDiagram
+ participant L as Low-priority task
+ participant S as Scheduler
+ participant H as High-priority task
+ L->>L: Acquire lock
+ H->>S: Arrive and become ready
+ S-->>H: Preempt low-priority owner
+ loop High-priority task stays runnable
+  H->>H: TestAndSet sees lock held
+ end
+ Note over L,H: Owner needs CPU time to release the lock

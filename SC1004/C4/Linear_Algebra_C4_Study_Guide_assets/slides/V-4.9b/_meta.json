@@ -1,0 +1,31 @@
+{
+  "video": "V-4.9b.mp4",
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 0.0,
+      "frame": 0
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 172.0,
+      "frame": 172
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 215.0,
+      "frame": 215
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 356.0,
+      "frame": 356
+    },
+    {
+      "file": "slide_005.jpg",
+      "time": 393.0,
+      "frame": 393
+    }
+  ]
+}

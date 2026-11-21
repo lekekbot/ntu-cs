@@ -1,0 +1,11 @@
+flowchart TD
+ R["Read from device"] --> P["Polling"]
+ R --> I["Interrupt-driven I/O"]
+ R --> D["DMA"]
+ P --> PS["CPU checks readiness"]
+ PS --> PT["CPU transfers data"]
+ I --> IS["Device signals readiness"]
+ IS --> IT["CPU handles data transfer"]
+ D --> DS["CPU configures a block"]
+ DS --> DT["Controller transfers to RAM"]
+ DT --> DC["Controller signals completion"]

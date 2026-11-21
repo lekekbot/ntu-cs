@@ -1,0 +1,9 @@
+sequenceDiagram
+ participant I as Process i
+ participant S as Semaphore, initially 0
+ participant K as Process k
+ K->>S: Wait and block
+ I->>I: Execute A
+ I->>S: Signal
+ S-->>K: Permit available
+ K->>K: Execute B after A

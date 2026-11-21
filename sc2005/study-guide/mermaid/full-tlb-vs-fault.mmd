@@ -1,0 +1,6 @@
+flowchart LR
+ A["CPU issues a virtual address"] --> T{"TLB hit?"}
+ T -->|"Yes"| P["Use cached translation and check permissions"]
+ T -->|"No"| W["Read page-table entries"]
+ W -->|"Resident and allowed"| P
+ W -->|"Missing or denied"| F["Fault into kernel"]

@@ -1,0 +1,10 @@
+sequenceDiagram
+ participant A as Job 1
+ participant K as Kernel / CPU
+ participant D as Device
+ A->>K: Request I/O
+ K->>D: Start transfer
+ Note over K,D: Another ready job can run during transfer
+ D-->>K: Completion interrupt
+ K->>K: Handle completion and mark Job 1 ready
+ K-->>A: Resume Job 1 when dispatched

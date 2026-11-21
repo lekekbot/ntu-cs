@@ -1,0 +1,14 @@
+flowchart TD
+ subgraph M["Many to one"]
+  M1["User thread 1"] --> MK["One kernel thread"]
+  M2["User thread 2"] --> MK
+ end
+ subgraph O["One to one"]
+  O1["User thread 1"] --> K1["Kernel thread 1"]
+  O2["User thread 2"] --> K2["Kernel thread 2"]
+ end
+ subgraph N["Many to many"]
+  N1["Runnable user threads"] --> NS["User-space scheduler"]
+  NS --> N2["Kernel thread A"]
+  NS --> N3["Kernel thread B"]
+ end

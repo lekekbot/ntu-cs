@@ -1,0 +1,5 @@
+flowchart TD
+ R["Ready queue"] -->|"Arrival order"| F["FCFS"]
+ R -->|"Shortest next burst"| J["SJF at dispatch"]
+ R -->|"Shortest remaining work"| T["SRTF can preempt"]
+ R -->|"Head gets a quantum"| Q["Round robin"]

@@ -1,0 +1,8 @@
+sequenceDiagram
+ participant A as Program
+ participant L as C library
+ participant K as Kernel
+ A->>L: fopen()
+ L->>K: open() system call
+ K-->>L: Return descriptor or error
+ L-->>A: Return stream or error

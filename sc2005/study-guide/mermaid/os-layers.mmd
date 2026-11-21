@@ -1,0 +1,5 @@
+flowchart LR
+ U["Users"] --> A["Application programs"]
+ A --> OS["Operating system"]
+ OS --> H["CPU, memory and devices"]
+ A -.->|"Request privileged services"| OS

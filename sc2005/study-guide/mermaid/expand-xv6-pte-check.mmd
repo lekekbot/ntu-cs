@@ -1,0 +1,7 @@
+flowchart TD
+ V["Virtual address"] --> W["walk with alloc = 0"]
+ W --> Q{"Leaf slot found?"}
+ Q -->|"No"| N["walkaddr returns 0"]
+ Q -->|"Yes"| P{"Valid and user flags set?"}
+ P -->|"No"| N
+ P -->|"Yes"| A["walkaddr returns physical page base"]

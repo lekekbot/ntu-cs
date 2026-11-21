@@ -1,0 +1,102 @@
+{
+  "unit": "V-8A.3.0",
+  "video": "022 8A 3 0 pg1 3.mp4",
+  "videos": [
+    "022 8A 3 0 pg1 3.mp4",
+    "023 8A 3 0 pg4 7.mp4"
+  ],
+  "fps": 1.0,
+  "slides": [
+    {
+      "file": "slide_001.jpg",
+      "time": 0.0,
+      "frame": 0,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_002.jpg",
+      "time": 28.0,
+      "frame": 28,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_003.jpg",
+      "time": 43.0,
+      "frame": 43,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_004.jpg",
+      "time": 131.0,
+      "frame": 131,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_005.jpg",
+      "time": 205.0,
+      "frame": 205,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_006.jpg",
+      "time": 308.0,
+      "frame": 308,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_007.jpg",
+      "time": 348.0,
+      "frame": 348,
+      "video": "022 8A 3 0 pg1 3.mp4",
+      "video_title": "8A 3 0 pg1 3"
+    },
+    {
+      "file": "slide_008.jpg",
+      "time": 0.0,
+      "frame": 0,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    },
+    {
+      "file": "slide_009.jpg",
+      "time": 103.0,
+      "frame": 103,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    },
+    {
+      "file": "slide_010.jpg",
+      "time": 107.0,
+      "frame": 107,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    },
+    {
+      "file": "slide_011.jpg",
+      "time": 171.0,
+      "frame": 171,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    },
+    {
+      "file": "slide_012.jpg",
+      "time": 201.0,
+      "frame": 201,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    },
+    {
+      "file": "slide_013.jpg",
+      "time": 327.0,
+      "frame": 327,
+      "video": "023 8A 3 0 pg4 7.mp4",
+      "video_title": "8A 3 0 pg4 7"
+    }
+  ]
+}

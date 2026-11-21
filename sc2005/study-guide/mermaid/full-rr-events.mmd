@@ -1,0 +1,6 @@
+flowchart LR
+ A["Running process"] -->|"Quantum expires"| R["Ready queue tail"]
+ A -->|"Blocks for an event"| W["Waiting"]
+ A -->|"Completes"| D["Terminated"]
+ W -->|"Event occurs"| R
+ R -->|"Dispatch from head"| A

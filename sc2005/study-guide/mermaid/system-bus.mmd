@@ -1,0 +1,6 @@
+flowchart TD
+ CPU["CPU"] <--> BUS["System bus"]
+ RAM["Main memory"] <--> BUS
+ BUS <--> C["Disk controller and local buffer"]
+ C <--> D["Disk"]
+ C -.->|"Interrupt"| CPU

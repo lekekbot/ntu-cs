@@ -1,0 +1,4 @@
+flowchart LR
+ H["53: initial head"] -->|"Decreasing; service 37 and 14"| L["0: physical endpoint"]
+ L -->|"Reverse; service higher requests"| R["183: final request"]
+ H -.->|"LOOK reverses earlier"| Q["14: last lower request"]

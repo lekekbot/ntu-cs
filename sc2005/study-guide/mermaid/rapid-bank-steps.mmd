@@ -1,0 +1,7 @@
+flowchart LR
+ A["Work = Available"] --> B{"Any unfinished Need fits?"}
+ B -->|"Yes"| C["Add that job's Allocation"]
+ C -->|"Mark it finished"| B
+ B -->|"No"| D{"Everyone finished?"}
+ D -->|"Yes"| E["Safe"]
+ D -->|"No"| F["Unsafe"]

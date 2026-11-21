@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/bryangoh/Work/shtudy/sc1008/p1'
+relocations:     []
+...

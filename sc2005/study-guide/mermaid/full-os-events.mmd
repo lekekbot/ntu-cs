@@ -1,0 +1,6 @@
+flowchart LR
+ A["App asks for a service"] -->|"System call"| K["Enter kernel"]
+ B["Instruction cannot complete"] -->|"Exception"| K
+ C["Device or timer signals"] -->|"Interrupt"| K
+ K --> R["Resume a task"]
+ K --> S["Schedule another task"]

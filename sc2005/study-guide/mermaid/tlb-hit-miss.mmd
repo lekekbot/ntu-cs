@@ -1,0 +1,6 @@
+flowchart LR
+ V["Virtual address"] --> T{"Translation in TLB?"}
+ T -->|"Hit: get frame"| M["Access physical memory"]
+ T -->|"Miss"| P["Walk the page table"]
+ P -->|"Present PTE: get frame"| M
+ P -->|"Absent or denied"| F["Page fault"]

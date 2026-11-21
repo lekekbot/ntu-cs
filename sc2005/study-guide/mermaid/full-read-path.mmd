@@ -1,0 +1,5 @@
+flowchart LR
+ R["read(fd, buffer, n)"] --> D["Look up descriptor"]
+ D --> O["Get current offset and requested byte range"]
+ O --> I["Map logical blocks via inode"]
+ I --> B["Read blocks and copy requested bytes"]

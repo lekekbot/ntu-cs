@@ -1,0 +1,104 @@
+[00:00] This video recording focuses on two-level paging scheme, right? And to understand why a multi-level
+paging scheme is necessary, let's look at an example. So in this example, we assume a computer
+system with a 32-bit logical address and the page size is 4K byte. So 4K is 2^12, right? So given
+these assumptions, right, then we know, so there are 32 bits in the logical address, right? Then
+they divide into two parts, so page number and offset. So page size is 2^12, so the lower 12 bits
+are for the offset and the remaining bits. So that will be for the page number, right? So the 32
+bits in the logical address and the logical address space, that will be 2^32 bytes.
+
+[01:16] Page size is 2^12, so 2^32 divided by 2^12, so that's equal to 2^20. So that basically means we have
+2^20 pages in the logical address space. As I already mentioned in the previous lecture, so there is
+one entry in the page table per page. So if you have 2^20 pages in the logical address space, then
+correspondingly, then we will have 2^20 entries in the page table. So page table entry, so contains
+information such as the frame number where the corresponding page is in the physical memory, and
+also some other information which I will cover later on, right? So each entry will occupy certain
+amount of space, right?
+
+[02:11] So in this case, let's assume each entry occupies 4 bytes. So we have this amount of entries and
+each entry occupies 4 bytes, then in total, then the page table will require 4 times 2^20 bytes
+space, right? So that's 4 megabytes. So recall, page table needs to be in the memory, right? Then to
+find a hole that large enough in the memory to accommodate the page table will become an issue,
+right? So in this case, so we need to find a contiguous memory space, right? So that's 4 megabytes,
+right? To accommodate, to accommodate, to assign, to allocate to the page table. So this will become
+a huge issue, right?
+
+[03:06] Big issue. Now what we can do? So what we can do is we can page this page, big page table into
+pages, right? Then load the pages of this big page table into available frames. So that means we
+don't need to assign contiguous memory space, right? In for the page table, right? So we load the
+pages of the page table into available frames, right? So that's basically the motivation, right,
+behind multi-level paging, right? So in this particular case, two-level paging. Now let's look at
+how exactly this works, right? If you look at the example here, right? So in this example, right, so
+logical address space is 2^32 bytes, right?
+
+[04:02] So it's the 32 bits in the logical address, and each page occupies 4 x 2^10 bytes. So that's 2^12
+bytes. So this logical address space, then we'll be divided into 2^20 pages, right? So 2^32 divided
+by 2^12, so that's equal to 2^20. So correspondingly, then we have 2^20 entries, right, in the page
+table. So this is a page table, this is a logical address space, page table. We have 2^20 entries in
+this page table. If each entry occupies 4 bytes, then the size of this page table is 4 times 2^20
+bytes, right? So this page table is too big, then we divide this page table into pages, and load the
+page table into available memory frames, right?
+
+[05:04] But we need to remember where they are in the memory, right? To remember where they are in the
+memory, in this case, we need another level of page table, right? So this big page table, the size
+is 4 times 2^20 bytes, right? Page size is 4 x 2^10 bytes. So this big page table will be divided
+into 2^10 pages. So correspondingly, in the next level of page table, then there will be 2^20
+entries, right? Now to do address translation, right, as we already covered, right? Then to locate,
+for example, this particular page of the logical address space in the memory, then we need a
+specific entry in the page table, right?
+
+[06:07] The entry in the page table contains the frame where the page is located in the memory, right? But
+to locate the page that contains this page entry in the big page table, where it is in the physical
+memory, then we need an entry in the second level of page table, right? So the entry can be contains
+the frame where the page of the big page table is in the physical memory, right? So for the big page
+table, we refer this as the first level page table or inner page table. And for the second level of
+page table, so this is also referred to as the outer page table, right? So that's the arrangement
+for the multi-level paging.
+
+[07:15] So basic idea, divide the big page table into pages, right? And load the pages of this big page
+table into available frames, right? Now, as I just illustrated, right? To do address translation,
+then we need an entry in the first level of page table. To locate the page that contains this entry
+where it is in the physical memory, then we need an entry in the second level of page table, right?
+So the entry index, right? So this is called P1 and this is called P2, right? So we need this two
+index. Now let's look at, right? So given the logical address, right? So that's 32 bits in total,
+right? Then if you're using this two-level paging,
+
+[08:14] then we need to divide the page number portion into two parts, right? The lower 12 bits, so that's
+for the offset, right? Because the page size is 2^12 bytes, right? So we need the 12 bits for the
+offset. Then the P1 is indexed into the second level of page table or outer level of page table. So
+the number of bits is indexed into the inner level of page table. Now let's try to figure out how
+many bits will be required for P1 and how many bits will be required for P2. So the number of bits
+required for P1, if you look at the figure here, that will determine by the number of entries,
+right, in this outer level or second level of page table, right?
+
+[09:07] So in this case, we already figured out, so there will be two parts of 10 entries, right? So we need
+10 bits for P1. So number of bits required for P2, right? So that will determine by how many entries
+in a page of the first level of page table or the inner level of page table. So how many entries in
+a page, right? So we know the page size. So page size is 4 times 2^10, without page size. We also
+know the entry size, which is 4. Then how many entries contain in a page? So that's basically is the
+page size divided by entry size, right? So that's 2^10. So there are 2^10 entries here.
+
+[09:55] So that means for P2, we also need 10 bits. So P1 is used as an index into the outer or second level
+of page table, right? In this case, right, so determined by the number of entries in the outer or
+second level of page table. So P2 is used as index into a page of the inner or first level of page
+table, right? So the number of entries is determined by how many entries in a page in the inner or
+first level of page table, right? Now let's look at finally the address translation by using this
+double level of page table, right? So given a logical address is divided into three parts, P1, P2,
+and D, right?
+
+[10:50] So for the outer level of page table, we can locate where it is in the physical memory by using this
+page table base register, right? So this is this register value pointing to the starting location of
+where the outer page table is in the physical memory. Then P1 is used as index into this outer level
+of page table to locate entry. So this entry contains a frame number. This frame number indicating
+where the required page of the first level of page table is. in the physical memory. So this is a
+page of the first level of page table or inner level of page table, right? Then we know by using
+this frame number that we know where it is in the physical memory.
+
+[11:48] And the P2 is used as index to locate entry in this page of the first level of page table, right?
+And from there, we obtain the frame number. And together with the offset, then we form the physical
+address. Right. So what I explained here basically is how two-level paging works. The same concept
+can also apply to three-level paging. So that means you page this page table again, right? And to
+generate another level of page table, right? Or even the four-level paging and so on. I understand
+this is a difficult topic, right? To follow, right? And to help you to understand this better. So in
+the supplement material folder,
+
+[12:46] so there is a concrete example to illustrate how two-level paging actually works.

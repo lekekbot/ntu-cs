@@ -1,0 +1,9 @@
+sequenceDiagram
+ participant A as Sender
+ participant M as Mailbox
+ participant B as Receiver
+ B->>M: Receive on empty mailbox
+ Note over M,B: Receiver waits for a message
+ A->>M: Send message
+ M-->>B: Deliver message and make task ready
+ Note over B: Receiver resumes when dispatched

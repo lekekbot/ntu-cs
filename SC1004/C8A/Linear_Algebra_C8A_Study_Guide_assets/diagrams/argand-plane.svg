@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="350" viewBox="0 0 550 350" role="img" aria-labelledby="title description">
+  <title id="title">Argand diagram for 3 + 2j</title>
+  <desc id="description">The real axis is horizontal and the imaginary axis is vertical. The unit circle crosses the axes at 1, j, minus 1, and minus j. The vector to 3 plus 2j has length square root of 13 and forms a 33.7-degree angle from the positive real axis. Dashed guides mark its real part 3 and imaginary part 2.</desc>
+  <rect width="550" height="350" rx="12" fill="#f8fafc"/>
+  <!-- The origin is at (166, 232) with 72 pixels per unit along both axes. -->
+  <circle cx="166" cy="232" r="72" fill="none" stroke="#8295ab" stroke-width="1.5"/>
+  <path d="M166 88 H382 V232" fill="none" stroke="#8295ab" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <path d="M38 232 H484 M166 323 V45" fill="none" stroke="#475569" stroke-width="1.6"/>
+  <path d="M490 232 L481 227 V237 Z M166 39 L161 48 H171 Z" fill="#475569"/>
+  <path d="M166 232 L382 88" fill="none" stroke="#1d4ed8" stroke-width="2.6"/>
+  <path d="M382 88 L370 90 L376 99 Z" fill="#1d4ed8"/>
+  <path d="M213 232 A47 47 0 0 0 205.106 205.928" fill="none" stroke="#9a3412" stroke-width="1.8"/>
+
+  <g fill="#475569">
+    <circle cx="94" cy="232" r="3.3"/>
+    <circle cx="166" cy="160" r="3.3"/>
+    <circle cx="238" cy="232" r="3.3"/>
+    <circle cx="166" cy="304" r="3.3"/>
+    <path d="M162 88 H170 M382 228 V236" stroke="#475569" stroke-width="1.6"/>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="17" fill="#334155">
+    <text x="501" y="238">Re</text>
+    <text x="166" y="30" text-anchor="middle">Im</text>
+    <text x="149" y="254" text-anchor="end">0</text>
+    <text x="94" y="255" text-anchor="middle">−1</text>
+    <text x="150" y="166" text-anchor="end">j</text>
+    <text x="238" y="255" text-anchor="middle">1</text>
+    <text x="150" y="310" text-anchor="end">−j</text>
+    <text x="154" y="94" text-anchor="end">2</text>
+    <text x="382" y="255" text-anchor="middle">3</text>
+  </g>
+  <g font-family="system-ui, sans-serif" font-size="17" font-weight="600">
+    <text x="392" y="86" fill="#1d4ed8">z = 3 + 2j</text>
+    <text x="258" y="140" fill="#1d4ed8" text-anchor="middle">r = √13</text>
+    <text x="252" y="212" fill="#9a3412">θ ≈ 33.7°</text>
+  </g>
+</svg>

@@ -1,0 +1,4 @@
+flowchart LR
+ S["Source files"] -->|"Compile"| O["Object modules"]
+ O -->|"Link libraries and resolve references"| E["Executable image"]
+ E -->|"Load"| P["Process address space"]

@@ -1,0 +1,6 @@
+flowchart LR
+ subgraph S["Shared process resources"]
+  M["Code, data, heap and open files"]
+ end
+ A["Thread A: PC, registers, stack"] --> M
+ B["Thread B: PC, registers, stack"] --> M

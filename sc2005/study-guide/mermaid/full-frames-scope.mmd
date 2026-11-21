@@ -1,0 +1,4 @@
+flowchart LR
+ F["Process A faults with RAM full"] -->|"Local replacement"| L["Pick from A's resident frames"]
+ F -->|"Global replacement"| G["Pick from the system-wide eligible frames"]
+ G --> B["A can take a frame held by B"]

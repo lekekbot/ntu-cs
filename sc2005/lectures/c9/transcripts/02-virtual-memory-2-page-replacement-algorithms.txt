@@ -1,0 +1,271 @@
+[00:00] Okay, so this is the second lecture of virtual memory management. So recall, in the last lecture
+we're talking about what happened if there is a page fault. So that means the required page is not
+in the memory. So in this case, then OS need to first of all find a free available page frame and
+then copy the missing page from the backing store into the memory. Now the question is, what
+happened if OS cannot find a free available frame? So what happened if all the frames are currently
+occupied? Then in this case, then OS need to find some page that is in the memory and that page is
+not really in use and the page out.
+
+[01:07] So that means replace that page. Then if that's the case, right? So if there's a page fault and the
+memory is full, in this case, then the OS need to first of all to find a page that is not really in
+use and page that page out to free up the frame occupied by that page, and then page in the missing
+page. Then in this case, then we require two disk IOs. So one for paging out and the other one for
+paging in. So this will definitely further increase the page-fault handling time. And how to
+identify which page to be replaced? So how to identify which page that's not really in use and
+replace that page?
+
+[02:01] So in this case, there are a number of algorithms which I will cover later on in this lecture.
+Right, so now let's look at a particular example to further illustrate this page replacement idea.
+Right. So first of all, the OS will find a victim page. Right. So you using a page replacement
+algorithm. Right. And then copy the victim page into the backing store. Right. So this is called
+page out. Right. So once the victim page is copied into the backing store, then the frame occupied
+by the page will become available. Right. Then in this case, second, then OS also need to change
+page table entry. Right.
+
+[02:56] So indicating, no, this page is no longer in the memory. Right. So change the valid bit, invalid bit
+to I, invalid. Third, the next slide. So now the OS will be able to bring in the missing page from
+the backing store into the memory. So that's called the page in. Right. So after bringing in the
+missing page into the memory, then OS also need to modify the page table for the corresponding entry
+page. Page entry. Right. So indicating now that page is in the memory. So changing valid, invalid
+bit to valid. So that's basically the procedure. Right. To handle when there's a page fault and the
+memory is full.
+
+[03:46] So now the question is, right, so do we always need to page all this victim page? Right. So recall
+what we assume. So we assume all the pages are always available in the backing store. Right. So
+backing store basically is hard disk. So that's large enough to accommodate the process image of all
+the processes. So the pages of all the pages of a process are always in the backing store. So in
+this case, so if the victim page is not really modified since it was loaded into the memory. So the
+copy of this page and the copy of the same page in the backing store will be the same. So that means
+we don't really need to copy this page to the backing store.
+
+[04:43] So this page out, that will not be required. Right. We just simply bring in the missing page to
+overwrite that page. Right. So that's basically means what we need to do is we only need to page out
+a dirty page. So what's the definition of dirty page? Right. So dirty page, that's basically means
+the page that has been modified since it was loaded into the memory. Right. So for example, the page
+contains the data and that data is modified during the process execution. Right. So that patient
+will identify as a dirty page. Then how the OS will know which page is dirty and which page is
+clean. Right.
+
+[05:27] So in this case, so we have a modified bit. So the system will maintain this modified bit. Right. So
+whenever the page is modified, then the bit will be set. Right. So during the page replacement, then
+the OS will only replace the dirty bit. Meaning only replace the page whose modified bit is set.
+Right. So let's look at the page replacement algorithm. Right. So before we look at the page
+replacement algorithm. So we need to understand what the algorithm aiming to achieve. Right. So the
+objective of a page replacement algorithm basically is trying to minimize the number of page flows.
+Right. So we don't really want to replace the page.
+
+[06:19] And then that page will require immediately. Right. So the objective then is to minimizing the
+number of page flows. So how do we evaluate different page replacement algorithms? So in this case,
+the evaluation is done by using a page reference string. Now recall. So when a memory reference
+generated, that refers to a particular page. We say that page is in demand. Right. Then to evaluate
+the page replacement algorithm, then we use a page reference string. Right. So in the following
+examples, we always using this reference string. Right. So one, two, three, four, and so on, so
+forth. Right. So one, so that means reference generated that refers to a location on page one.
+
+[07:11] Right. And two, a reference generated that refers to a location in page two and so on, so forth.
+Right. Now let's look at the FIFO algorithm. Right. So for FIFO algorithm, right, so the idea is
+just very straightforward. Right. So basically what we do is the algorithm will replace the oldest
+page in the memory. Right. So recall the demand paging. So initially none of the page is in the
+memory. Right. So initially, so memory is free. So in this case, the example, we assume there are
+four free pages. There are four free frames available for this process. So initially all these four
+frames are free.
+
+[07:59] Right. So the pages will bring into memory on demand. Right. So the frames are filled up by paging
+force. Right. So page one is required, then bring into memory. And two require bring into memory.
+Three require bring into memory. And page four require bring into the memory. Now the memory is
+full. The next reference is page number one. Right. So when page number one is referenced, it's
+already in the memory. So there's now page four. The next reference is page two. Page two is in
+memory. Now page four. And the next one, page five and five is not in the memory. Then we need to
+run the algorithm to identify a victim page.
+
+[08:50] Then among these four pages that are currently in the memory, we need to identify the oldest page.
+So the page that has been in the memory for the longest of time. But in this case, obviously, is
+page number one. So that's oldest page that identify as a victim page and replace. Right. So you can
+apply this algorithm in this manner. And in this case, in total, so number of page four we have is
+10. So that's the FIFO algorithm. Right. So really, really very straightforward. Right. Now let's
+look at what best we can do. Right. So that's called optimal algorithm. Right. So how does algorithm
+works?
+
+[09:38] So this algorithm basically will replace a page that we know. That may not be used for the longest
+period of time. Right. So again, the demand paging. Initially, all four frames are empty. And the
+pages are bring into the memory by page four. Now memory is full. So next page reference is one. And
+page one already in the memory. Now page four. And two. And two already in the memory. Now page
+four. And five. So five now in the memory. Then we need to run the algorithm. Then among the current
+four pages that's currently in the memory, then we need to identify the page that will now be
+referenced for the longest period of time.
+
+[10:31] So we need to look into the future reference string. Right. Then identify among these four. Which
+one will now be referenced for the longest period of time. Then in this case, so that is page number
+four. Right. So page number four is identified as a victim page. Then replace. Then page four. And
+page number one that's already in the memory. Now page four. And two in the memory. Now page four.
+And three in the memory. Now page four. Now page number four. the page 5 will be referenced in the
+near future but among these three pages one two three we don't have any information right so in this
+case then we need a rule to break the time right so we don't
+
+[11:47] know which page among the three that will be will not be will not be referenced for the longest
+period of time right so we need a tie-breaker right so in this particular case right so we assume we
+use first in first off to break the time right so when there's a tie then we replace the oldest page
+right so page number one is oldest page then identify as a victim page then replace the last
+reference five in the memory now page four right so if you're using optimal algorithm then the total
+number of page four is six right so compared to FIFO so this is a great reduction right now the
+question right so to apply this algorithm we need to know which page will now be referenced for the
+
+[12:44] longest period of time so that's basically means we need to know the future reference stream now the
+question is is this really possible right so how how do we know the future reference stream so in
+theory so this is not really possible right so we don't really know which page will be referenced by
+a process in the future right although we can have a prediction or rather accurate prediction
+prediction but in reality we don't really know what are the pages will be referenced by the process
+so in reality so this algorithm really cannot be applied right so then why do we need still need to
+this to have this algorithm
+
+[13:39] so basically if you use this algorithm as a benchmark so we know this the best we can do right then
+we can benchmark our algorithms are the best we can do right so we can do right so we can do right
+so we can do right so this is bias performance we can achieve now we don't know the future reference
+stream right so we don't know what our references page references will be referenced by the process
+but what what we do know is we know the history so we know what the features that has already been
+referenced by the process right so in this case then we can use this this as a heuristic right so
+that's the next algorithm so that's called
+
+[14:29] least recently used algorithm so how does algorithm work so this algorithm basically replace the
+page that has not been used for the longest period of time so we look back into the history right so
+among the pages that's currently in the memory identify the one that hasn't been used for the
+longest period of time so use so that means either the page is read or write right so if the page
+hasn't been read or write for the longest period of time for the longest period of time among all
+the pages currently in the memory then we identify as a page as a victim page and the replace again
+demand paging all right so initially all
+
+[15:19] frames are available so we bring in the pages by paging first all right now the memory is full the
+next reference page number one page number one is in the memory is in the memory is in the memory
+and page number two is in the memory not page fault right and page number five is not in the memory
+so among these four pages that's currently in the memory then we need to identify the page that
+hasn't been used for the longest period of time among these four pages look back into the history
+right then we know page three is the one that hasn't been referenced for the longest period of time
+then this is identified as a victim page and replace right so page 1 page 3 patient page 5 all right
+page 4
+
+[16:18] then the next reference page 1 in the memory and no page 4 and 3 not in the memory we need to run
+the algorithm again among these four pages identify the victim page so we look back into the
+reference string right then among these four pages just currently in the memory then the one that
+hasn't been used for the longest period of time is page number four so page 4 identify as a victim
+page and replace right so the next reference 4 so page number four and just been replaced not in the
+memory so we need to run the algorithm again among these four pages look back into the reference
+string then among these four pages look back into the reference
+
+[17:14] string the history and page number five then it's the page that hasn't been used for the longest
+period of time then replace right the last one page number five just been replaced right again need
+to run the algorithm so look back into the piece tree and the page number one that is identified as
+victim page and replace so in this case the total number of page faults is eight right so it's
+better than five four so for the same reference trend five four generate 10 page faults but in this
+case is this algorithm is worse than optimal right similar reference trend optimal right so we just
+covered optimal right so recall this optimal so optimal generates six page faults right so this
+least
+
+[18:15] recent use so generate generate eight page faults right so that's basically the page replace
+algorithm we covered right so we covered and FIFO algorithm right so optimal algorithm and at least
+recently used algorithm right so now let's look at how this least recently used algorithm that can
+be implemented right so basically right so to implement this least recent use algorithm right so
+normally right so there are two different approaches right so which both approach will incur a lot
+of overhands right so hardware support then will be required to implement the least recent use
+algorithm so instead of using hardware support to implement the least recent use algorithm
+
+[19:24] then normally what do we do right so is we try to use some approximation algorithm right so this
+algorithm approximate the behavior the performance of least recently used algorithm and this
+algorithm right so in general we use what do we call this reference bit right so reference bit so
+what's the meaning of reference bit so initially when a page is loaded into the memory its reference
+bit is set to zero right so when page load into memory the reference bit is set to zero so this one
+reference bit associated with each page when the page is referenced meaning as it is read or write
+then the hardware will set the page reference bit to one right then when there's a need to replace a
+page right so what we can do is right that we can find a page right that's with reference bit equals
+zero and replace that page
+
+[20:37] now the question is right there may be many pages right there may be many pages whose reference bit
+is zero then among these pages we don't really know which page is the least recent use page right so
+we need a kind of algorithm right then to determine which page to replace if we're using this
+reference bit so now this is a possible approximation algorithm which we will cover next is called
+second chance or clock algorithm so this algorithm basically is a variation of first in first out
+right so how this algorithm works so basically so first of all this algorithm will choose the oldest
+page as a candidate to replace
+
+[21:31] right right but before replacing that page right then the os will also look at the reference bit of
+that candidate page so if a reference bit is one then we give that page a second chance so we
+replace the page we will then we reset the reference bit to zero right we clear the reference bit
+then we move to look at the next or this page so if a reference bit is zero then we replace the page
+so that's basically how the algorithm works right so in general this algorithm is implemented by
+using a clock algorithm right so basically for clock algorithm so we have a clock hand right so we
+have a first of all we have a list of
+
+[22:27] page references so this list of page references so this list of page references is arranged
+according to the five order in a circular manner right and we have a clock hand the clock hand then
+we are pointing to the oldest page in the list all right so when there's a page fault then the OS
+will examine the reference bit of the reference bit of the page pointed by the clock hand so if
+reference bit is set then the reference bit of the page is set reset to zero then the clock hand
+will advance to the next page so otherwise if reference bit of the reference bit of the page is zero
+then we replace the page
+
+[23:17] then we replace the page and move the clock hand to the next page in the list so this is an
+illustration of how this clock algorithm is working right so the pages are arranged in a circular
+list according to the file order and the clock hand is pointing to the oldest page all right so when
+there's a page fault then the OS will examine the reference bit of the page that's currently puncted
+by the clock hand is reference bit is this one then reset reference bit to zero and move the clock
+hand to the next page in the list right so in this case so the clock hand is always parking to the
+oldest page
+
+[24:40] right in the oldest page right in the list so this is the clock algorithm so that's implementation
+of the second chance now let's again look at a reference string right to illustrate so how this
+clock algorithm works all right so to illustrate how it works so in this case we still assume like
+four page frames and each entry here there are two elements the first element so that's the page
+number and the second element so that's the reference bit and the sheet of the field so that
+indicating where the clock hand is currently at right right so again demand paging right so we load
+the page into the frame when page is required right so the memory is filled up by
+
+[25:45] page in force right so now the memory is full so recall the pages in the memory are arranged in a
+circular list right list right so this so this this basically indicating how the clock hand will
+move so clock hand is currently here right we'll move in this direction right so in the five order
+when reaching bottom then we'll go to the up it's a circular list right so the next reference is
+page number one right now the next reference is page number one is in the memory we set reference
+bit to one right so recall reference bit initially when the page is loaded into the memory the
+reference is zero when the page is referenced again then the reference will be set to one
+
+[26:44] so two is referenced set reference bit to one and five is referenced not in the memory then we need
+to run the algorithm to identify a victim page so clock hand is currently here right it's currently
+here so reference is one then we give this page a second chance we set is cloud we set is reference
+bit to zero then we move the clock hand to the clock hand to the next entry in the circular list
+right so recall it's arranged in this order so next entry is here the reference bit is one again we
+give this page a second chance and set reference is zero so we treat this page as the newest page
+and move the clock hand to the next entry in the circular list
+
+[27:38] so the reference bit is zero so the reference bit is zero so the reference bit is zero and replace
+so bring in page five right replace replace replace page three so after replacement so five is the
+newest page so the clock hand need to move to the next entry right now the clock hand is here so
+next reference is one so set r bit resonated to one two so set reference reference to one and three
+not in the memory among these four pages then we need to identify a victim page right so among these
+pages we need to identify a victim page right and the clock hand is currently here and the reference
+bit is zero then we replace the page so bring in page three right
+
+[28:36] and after bringing page three so this is the newest page then the clock hand need to move to the
+next entry in the circular list so recall so that's how the clock hand moves right then the clock
+hand will move to here right so the next reference page number four reference bit is one so we clear
+the reference bit move the clock hand to the next page in the circular list so the reference bit is
+one clear reference bit move the clock hand to the next entry in the circular queue right in the
+list right so in this case so reference bit is zero replace so bring in page four so this is the
+newest page the clock hand need to move to the next entry in the circular queue not clock hand is
+here
+
+[29:31] the last reference is five clock hand is calculated here and r bit is zero replace so after
+replacement the clock hand will move to the next entry in the queue right so move to the top right
+so that's basically how the clock algorithm works so in this case so the clock algorithm also
+generates eight page faults right eight page faults right same as LRU so that's why this is the
+approximation of LRU of LRU least recent algorithm all right however what's the worst case scenario
+right so recall when you're using this algorithm right so we always look at all this page right
+that's the victim page replace
+
+[30:22] right so the worst case scenario right so the worst case scenario is what the oldest page will be
+replaced always right for instance right so in the case if the reference bit is all set for all the
+pages then eventually all this page will be replaced all right so the worst case scenario is what
+what's the scenario is so this algorithm will work exactly the same as the FIFO right so that's the
+worst case scenario right so the best case scenario is this algorithm will work like LRU right to
+generate some number of page faults as LRU and the worst case scenario is this algorithm will work
+like FIFO all right so that's
+
+[31:15] all for this lecture and for the next lecture then we will look at the frame allocation and the
+performance issue right so related to the virtual memory support

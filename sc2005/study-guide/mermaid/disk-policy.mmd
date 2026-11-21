@@ -1,0 +1,7 @@
+flowchart LR
+ A{"How is the next request chosen?"}
+ A -->|"Arrival order"| F["FCFS"]
+ A -->|"Shortest seek from current head"| S["SSTF"]
+ A -->|"Directional sweep"| E{"Where does the sweep turn or wrap?"}
+ E -->|"Physical end"| P["SCAN reverses; C-SCAN wraps"]
+ E -->|"Last pending request"| L["LOOK reverses; C-LOOK wraps"]

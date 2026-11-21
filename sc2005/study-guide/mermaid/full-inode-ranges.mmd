@@ -1,0 +1,5 @@
+flowchart LR
+ Q["Logical block q"] -->|"0 through 11"| D["Direct: inode entry q"]
+ Q -->|"12 through 267"| S["Single indirect: index q − 12"]
+ Q -->|"268 through 65,803"| B["Double indirect: split q − 268"]
+ Q -->|"65,804 onward within capacity"| T["Triple indirect"]

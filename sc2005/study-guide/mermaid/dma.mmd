@@ -1,0 +1,4 @@
+flowchart LR
+ CPU["CPU / kernel"] -->|"1. Configure DMA"| CTRL["Device controller"]
+ CTRL -->|"2. Transfer data"| MEM["Main memory"]
+ CTRL -.->|"3. Completion interrupt"| CPU

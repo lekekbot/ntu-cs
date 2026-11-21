@@ -1,0 +1,411 @@
+% SC1004 Linear Algebra. Print on one A4 sheet, landscape, double-sided.
+\documentclass[10pt,a4paper,landscape]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=7.5mm]{geometry}
+\usepackage{amsmath,amssymb,array,xcolor}
+
+\renewcommand{\familydefault}{\sfdefault}
+\definecolor{ink}{HTML}{19252C}
+\definecolor{accent}{HTML}{173E50}
+\definecolor{rulegray}{HTML}{A7B7BF}
+\definecolor{wash}{HTML}{EDF2F4}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.1pt}
+\setlength{\fboxsep}{2.8pt}
+\setlength{\tabcolsep}{3pt}
+\setlength{\emergencystretch}{1em}
+\raggedbottom
+
+\newlength{\sheetcol}
+\setlength{\sheetcol}{\dimexpr(\textwidth-6mm)/3\relax}
+\newcommand{\Col}{\operatorname{Col}}
+\newcommand{\Row}{\operatorname{Row}}
+\newcommand{\Null}{\operatorname{N}}
+\newcommand{\RREF}{\operatorname{rref}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\proj}{\operatorname{proj}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\smat}[1]{\bigl[\begin{smallmatrix}#1\end{smallmatrix}\bigr]}
+\newcommand{\formula}[1]{\par\noindent\(\displaystyle #1\)\par}
+\newcommand{\topic}[1]{%
+  \par\addvspace{2.8pt}{\color{accent}\bfseries #1\par}\nobreak\vspace{-1pt}}
+\newcommand{\checkstrip}[1]{%
+  \par\vspace{2.5pt}%
+  \noindent\colorbox{wash}{\parbox{\dimexpr\textwidth-2\fboxsep\relax}{\cue{True/false checks}\quad #1}}\par}
+\newenvironment{panel}[1]{%
+  \begin{minipage}[t]{\sheetcol}\vspace{0pt}%
+  \raggedright\setlength{\parskip}{1.1pt}%
+  {\color{accent}\bfseries\fontsize{10.5}{12}\selectfont \strut #1\par}%
+  \vspace{.8pt}{\color{rulegray}\hrule height .45pt}\vspace{1pt}%
+}{\end{minipage}}
+\newcommand{\cue}[1]{\textbf{#1}}
+\newcommand{\rowend}{\tabularnewline[1pt]}
+
+% Use the standard fonts on full TeX installations. A partial macOS
+% XeTeX cache can use local STIX glyphs for the missing math fonts.
+\newif\ifpartialfontcache
+\ifdefined\XeTeXversion
+  \IfFileExists{lmex10.pfb}{}{%
+    \IfFileExists{/System/Library/Fonts/Supplemental/STIXTwoMath.otf}{%
+      \partialfontcachetrue
+    }{}%
+  }
+\fi
+\ifpartialfontcache
+\makeatletter
+\input{ot1lmr.fd}
+\input{omllmm.fd}
+\input{omslmsy.fd}
+\makeatother
+\DeclareFontShape{OT1}{lmr}{m}{n}{<->rm-lmr9}{}
+\DeclareFontShape{OML}{lmm}{m}{it}{<-6.5>lmmi5 <6.5-10>lmmi9 <10->lmmi10}{}
+\DeclareFontShape{OMS}{lmsy}{m}{n}{<-6.5>lmsy5 <6.5-10>lmsy8 <10->lmsy10}{}
+\font\sheetSTIX="STIX Two Math" at 8pt
+\font\sheetSTIXDisplay="STIX Two Math" at 10.5pt
+\font\sheetSTIXBrackets="STIX Two Math" at 15pt
+\renewcommand{\RR}{\mathord{\hbox{\sheetSTIX\char"211D}}}
+\renewcommand{\sum}{\mathop{\mathchoice{\vcenter{\hbox{\sheetSTIXDisplay\char"2211}}}{\vcenter{\hbox{\sheetSTIX\char"2211}}}{\hbox{\sheetSTIX\char"2211}}{\hbox{\sheetSTIX\char"2211}}}\displaylimits}
+\renewcommand{\prod}{\mathop{\mathchoice{\vcenter{\hbox{\sheetSTIXDisplay\char"220F}}}{\vcenter{\hbox{\sheetSTIX\char"220F}}}{\hbox{\sheetSTIX\char"220F}}{\hbox{\sheetSTIX\char"220F}}}\displaylimits}
+\renewcommand{\smat}[1]{\mathopen{\vcenter{\hbox{\sheetSTIXBrackets[}}}\begin{smallmatrix}#1\end{smallmatrix}\mathclose{\vcenter{\hbox{\sheetSTIXBrackets]}}}}
+\fi
+
+% SC1004, one double-sided A4 sheet. Course guides and Finals Quick Reference v10 set the scope.
+% Studocu theorem cross-check: https://www.studocu.com/sg/document/nanyang-technological-university/linear-algebra-for-computing/sc1004-final-exam-cheatsheet-linear-algebra-concepts-and-theorems/146017236
+% Cross-checks: https://www.cs.cornell.edu/~tomf/notes/cs421-cheat-sheet.pdf
+% https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/5500c16aff18ebcc312df763e8f85992_MIT18_06SCF11_Ses2.12sum.pdf
+% https://see.stanford.edu/materials/lsoftaee261/Formulas.pdf
+\begin{document}
+\fontsize{8.85}{10.1}\selectfont
+\color{ink}
+\noindent\begin{panel}{Systems, rank and bases}
+\topic{Consistency and solution-set theorems}
+Let $A=[a_1\,\cdots\,a_n]$ be $m\times n$ and $r=\rank A$.
+$Ax=\sum_j x_j a_j$, so solving for $x$ tests membership in
+the span of the columns. Use \cue{rref} on $[A\mid b]$.
+
+\cue{REF and symbolic pivots}
+Zero rows go last. Each leading entry is strictly to the right
+of the one above. In RREF, each pivot is $1$ and alone in its column.
+Before dividing by a parameter expression, split into its zero
+and nonzero cases, then count pivots in each case.
+
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{.40\linewidth}>{\raggedright\arraybackslash}p{.57\linewidth}@{}}
+\cue{What you find} & \cue{What it tells you}\rowend
+Pivot in the $b$ column & Inconsistent. No exact solution.\rowend
+Consistent, $r=n$ & One solution.\rowend
+Consistent, $r<n$ & Infinitely many. $n-r$ free variables.\rowend
+Pivot in every column of $A$ & Columns LI. $x\mapsto Ax$ is one-to-one.\rowend
+Pivot in every row of $A$ & Columns span $\RR^m$. Map is onto.\rowend
+\end{tabular}
+
+\formula{Ax=b\text{ is consistent}\iff b\in\Col A\iff\rank[A\mid b]=r.}
+Given one solution $x_p$, all solutions are $x_p+\Null(A)$.
+For $b=0$, the solution set is the null space (kernel).
+
+\topic{Rank--nullity and the four fundamental spaces}
+$\rank A+\dim\Null(A)=n$ for $n$ columns.
+\begin{tabular}{@{}p{.27\linewidth}p{.10\linewidth}>{\raggedright\arraybackslash}p{.57\linewidth}@{}}
+\cue{Space} & \cue{Dim.} & \cue{Build a basis}\rowend
+$\Col A\subseteq\RR^m$ & $r$ & Pivot columns from the \cue{original} $A$.\rowend
+$\Row A\subseteq\RR^n$ & $r$ & Nonzero echelon rows.\rowend
+$\Null(A)\subseteq\RR^n$ & $n-r$ & Solve $Ax=0$. Give each free variable a turn at $1$ with the others at $0$.\rowend
+$\Null(A^\top)\subseteq\RR^m$ & $m-r$ & Same null-space recipe on $A^\top$.\rowend
+\end{tabular}
+
+$\rank A=\rank A^\top\le\min(m,n)$. Row reduction preserves
+row and null spaces. If \cue{rref} rejects a tall matrix,
+append zero columns until it is square, then read the original block.
+
+\topic{Subspace and spanning set theorems}
+Test $0\in W$ and $\alpha u+\beta v\in W$ for all $u,v\in W$
+and scalars. Any span is a subspace. Test span membership
+with $[v_i]c=b$. LI means $[v_i]c=0$ forces $c=0$.
+A basis is LI and spans. Drop a redundant vector without
+changing the span. Keeping $u$, replacing $v$ by $v+cu$
+also preserves the span. In dimension $d$, more than $d$
+vectors or a set containing $0$ is dependent. Fewer than $d$
+cannot span. With $d$ vectors, either basis check suffices.
+For polynomials of degree $\le d$, $\dim P_d=d+1$. $\dim M_{m\times n}=mn$ and
+$\dim\{S=S^\top\}=\dfrac{n(n+1)}{2}$ for $n\times n$ matrices.
+
+\topic{Use structure to get rank quickly}
+$\rank(AB)\le\min(\rank A,\rank B)$.
+Multiplying by an invertible matrix preserves rank.
+For $uv^\top$ with $u,v\ne0$, the rank is $1$, the columns
+span $u$, and the rows span $v^\top$.
+\end{panel}%
+\hfill
+\begin{panel}{Invertibility, determinants and LU}
+\topic{Invertible Matrix Theorem (square \(A\))}
+\formula{\begin{aligned}
+ A\text{ invertible}&\iff\det A\ne0\iff\rank A=n\\
+ &\iff\RREF(A)=I\iff\Null(A)=\{0\}\\
+ &\iff\text{columns (or rows) form a basis}\\
+ &\iff 0\text{ is not an eigenvalue}\\
+ &\iff Ax=b\text{ has a unique solution for every }b.
+\end{aligned}}
+For square matrices, even a one-sided inverse suffices.
+If $\det A=0$, any attainable $b$ has infinitely many preimages.
+Use $\rank[A\mid b]$ to check the particular $b$.
+
+\topic{Determinant laws and volume scaling}
+Use \cue{det} for numeric determinants.
+Swapping two rows or columns flips the sign. Scaling one
+by $c$ multiplies the determinant by $c$. Adding a multiple
+of another preserves it. A triangular determinant is the
+product of the diagonal entries.
+
+\formula{\begin{aligned}
+ \det(AB)&=\det A\,\det B,\quad \det A^\top=\det A\\
+ \det(cA)&=c^n\det A,\quad \det(A^k)=(\det A)^k\\
+ \det(A^{-1})&=\frac{1}{\det A} \quad(A\text{ invertible}).
+\end{aligned}}
+For a rank-one change of the identity,
+$\det(I+uv^\top)=1+v^\top u$.
+The area or volume scale is $\abs{\det A}$.
+Put edge vectors in the columns of $A$ to get the area
+of a parallelogram or volume of a parallelepiped.
+Stretching the unit disk by $\diag(a,b)$ gives an ellipse
+of area $\pi ab$ for $a,b>0$. A negative determinant reverses orientation.
+
+\topic{Read matrix products}
+$(m\times n)(n\times p)$ gives $m\times p$.
+Column $j$ of $AB$ is $Ab_j$, where $b_j$ is column $j$ of $B$.
+Thus $AB=0\iff\Col B\subseteq\ker A$.
+Use matrix keys for numerical products and inverses.
+\formula{(AB)^\top=B^\top A^\top,\qquad
+  (AB)^{-1}=B^{-1}A^{-1}.}
+For compatible products, $\tr(AB)=\tr(BA)$.
+Use $\tr(A+B)=\tr A+\tr B$ for square matrices of the same size. Also $(A^\top)^{-1}=(A^{-1})^\top$ when invertible.
+
+\topic{Elementary matrices and LU factorisation}
+One row operation on $I$ gives $E$. Then $EA$ performs the
+same operation on $A$. Its inverse undoes the operation.
+
+\cue{LU setup} $PA=LU$, where $P$ records row swaps, $L$ has
+unit diagonal and stores elimination multipliers, and $U$
+is the result of elimination. With no swaps $P=I$.
+\formula{Ly=Pb,\qquad Ux=y.}
+Use forward substitution, then back substitution. Reuse
+the factors for a new $b$. For square $A$ with $s$ swaps,
+$\det A=(-1)^s\prod_i u_{ii}$.
+
+\cue{Conditional cancellation}
+If $A$ is invertible, $\Null(AB)=\Null(B)$.
+If $C$ is invertible, $\Null(B)=C\,\Null(BC)$.
+\end{panel}%
+\hfill
+\begin{panel}{Geometry and linear maps}
+\topic{Point--normal theorem}
+Line $x=p+td$. Plane $x=p+su+tv$ with independent
+directions. With normal $a\ne0$, use $a^\top(x-p)=0$.
+A whole line $q+td$ lies in that plane iff
+$a^\top(q-p)=0$ and $a^\top d=0$.
+For a plane from two directions in $\RR^3$, take $a=u\times v$.
+For two intersecting planes, use their normals' cross product
+as a line direction.
+\formula{u\times v=(u_2v_3-u_3v_2,\ u_3v_1-u_1v_3,\ u_1v_2-u_2v_1).}
+$\norm{u\times v}=\norm u\norm v\sin\theta$.
+A unit vector along a nonzero $d$ is $\dfrac{d}{\norm d}$.
+
+\topic{Cauchy--Schwarz and triangle inequalities}
+$\norm u^2=u^\top u$ and $d(u,v)=\norm{u-v}$.
+For nonzero vectors,
+\formula{\cos\theta=\frac{u^\top v}{\norm u\,\norm v}.}
+Zero dot product means orthogonal.
+$\abs{u^\top v}\le\norm u\norm v$ with equality iff $u,v$
+are dependent. Also $\norm{u+v}\le\norm u+\norm v$.
+$\norm{cu}=\abs c\,\norm u$.
+For $u\perp v$, $\norm{u+v}^2=\norm u^2+\norm v^2$. In general, $\norm{u\pm v}^2=\norm u^2+\norm v^2\pm2u^\top v$.
+\formula{d(y,\text{plane through }p)=\frac{\abs{a^\top(y-p)}}{\norm a}.}
+
+\topic{Standard Matrix Theorem}
+Test $T(\alpha u+\beta v)=\alpha T(u)+\beta T(v)$.
+For linear $T$, $A=[T(e_1)\,\cdots\,T(e_n)]$ gives $T(x)=Ax$.
+If $T(v_i)=w_i$, form $V=[v_i],W=[w_i]$.
+Then $AV=W$, and $A=WV^{-1}$ when $V$ is a basis matrix.
+In $AB$, apply $B$ first.
+
+\topic{Kernel and image}
+For linear $T:V\to W$, the kernel and image are subspaces
+of the domain and codomain, respectively.
+\formula{\ker T=\{v\in V:T(v)=0\},\quad \operatorname{im}T=\{T(v):v\in V\}.}
+$\dim\ker T+\dim\operatorname{im}T=\dim V$ in finite dimension.
+$T(u)=T(v)\iff u-v\in\ker T$. Hence one-to-one iff $\ker T=\{0\}$,
+and onto iff $\operatorname{im}T=W$.
+For $T(x)=Ax$, solve $Ax=0$ for $\ker T=\Null(A)$.
+Then $\dim\ker T=n-r$ and $\operatorname{im}T=\Col A$ has dimension $r$.
+
+\cue{Common maps}
+Anticlockwise planar rotation is
+$\smat{\cos\theta&-\sin\theta\\\sin\theta&\cos\theta}$.
+Uniform scaling is $cI$. Horizontal shear is $\smat{1&k\\0&1}$. If $P$ projects orthogonally onto
+a subspace, reflection across it is $2P-I$.
+
+\topic{Change of Basis Theorem}
+Let $P_{\mathcal B}=[b_1\,\cdots\,b_n]$ for a basis of $\RR^n$.
+$x=P_{\mathcal B}[x]_{\mathcal B}$.
+Solve for the weights to get $[x]_{\mathcal B}$.
+For polynomials use coefficient columns in $1,t,t^2,\dots$.
+For matrices list entries in a fixed order. Apply the same tests.
+\formula{[x]_{\mathcal C}=P_{\mathcal C}^{-1}P_{\mathcal B}[x]_{\mathcal B}.}
+Column $i$ of $P_{\mathcal C}^{-1}P_{\mathcal B}$ is $[b_i]_{\mathcal C}$.
+\formula{[T]_{\mathcal C\leftarrow\mathcal B}=P_{\mathcal C}^{-1}AP_{\mathcal B}.}
+Read right to left. Convert input, apply $A$, then convert output.
+Using the same basis at both ends gives a similar matrix.
+\end{panel}
+
+\checkstrip{%
+Row-equivalent matrices can have different column spaces.\quad
+$\det(A+B)$ can differ from $\det A+\det B$.\quad
+$T(0)=0$ alone leaves linearity undecided.}
+
+\newpage
+\setlength{\sheetcol}{\dimexpr(\textwidth-6mm)/2\relax}
+\fontsize{10.5}{12.3}\selectfont
+\noindent\begin{panel}{Projection, QR and least squares}
+\topic{Orthogonal Decomposition Theorem}
+$\Col(A)^\perp=\Null(A^\top)$, $\Row(A)^\perp=\Null(A)$,
+and $\dim W^\perp=n-\dim W$ in $\RR^n$.
+For an orthogonal basis $(u_i)$ of $W$,
+\formula{c_i=\frac{u_i^\top y}{u_i^\top u_i},\quad
+  \hat y=\proj_W y=\textstyle\sum_i c_i u_i.}
+The signed component along $u$ is $\dfrac{u^\top y}{\norm u}$.
+The split $y=\hat y+e$ with $\hat y\in W$, $e\in W^\perp$
+is unique. For every $w\in W$,
+\formula{\norm{y-w}^2=\norm e^2+\norm{\hat y-w}^2.}
+\cue{Best Approximation Theorem} $\hat y$ is the unique
+closest point in $W$ and $\norm e$ is the distance.
+For $p+W$, project $y-p$ and add $p$.
+
+\topic{Gram--Schmidt and the QR Factorisation Theorem}
+Nonzero orthogonal vectors are LI. $Q^\top Q=I$ tests
+orthonormal columns. $Q$ preserves dot products. When square,
+$Q^{-1}=Q^\top$ and $\abs{\det Q}=1$.
+\formula{v_j=a_j-\textstyle\sum_{i<j} q_i(q_i^\top a_j),\quad
+  q_j=\frac{v_j}{\norm{v_j}}.}
+Keep nonzero remainders to span the same space.
+For $n$ LI columns, reduced $A=QR$ has $Q$ of size
+$m\times n$ and upper triangular $R=Q^\top A$ of size $n\times n$.
+$r_{ij}=q_i^\top a_j$ and $r_{jj}=\norm{v_j}>0$.
+Full QR uses square $Q$ and appends zero rows to $R$ here.
+\cue{Dependent columns} QR still exists. A square $R$ in
+reduced QR is singular, so $Rx=c$ cannot have a unique solution.
+$QQ^\top$ projects onto $\Col Q$. It projects onto $\Col A$
+exactly when $\Col Q=\Col A$. Choose an orthonormal basis of $\Col A$ if needed.
+
+\topic{Build and recognise a projector}
+$P^2=P$ fixes its range. Add $P^\top=P$ to characterise
+an orthogonal projector. For an orthonormal basis of $W$,
+$P_W=QQ^\top$. For an LI spanning matrix $A$,
+$P_W=A(A^\top A)^{-1}A^\top$.
+For a line spanned by $u\ne0$, use $P_W=\dfrac{uu^\top}{u^\top u}$.
+$P_Wy=\hat y$. The complementary projector $I-P_W$ maps
+onto $W^\perp$ and gives $e=(I-P_W)y$.
+
+\topic{Least Squares Theorem and normal equations}
+A least-squares minimiser exists for every $b$.
+It minimises $\norm{b-Ax}^2$ exactly when its residual
+$e=b-A\hat x$ is in $\Null(A^\top)=(\Col A)^\perp$.
+\formula{A^\top e=0\iff A^\top A\hat x=A^\top b.}
+Solve the normal equations by elimination. With LI columns,
+$\hat x=(A^\top A)^{-1}A^\top b$ or use reduced QR and solve
+$R\hat x=Q^\top b$. All minimisers are $\hat x+\Null(A)$.
+The fit $\hat b=A\hat x$ is always unique. Coefficients are
+unique iff the columns are LI. Exact fit iff $e=0$.
+Error is $\norm e$ and squared error is $\norm e^2$.
+For $y\approx\sum_j c_j\phi_j(t)$, build $A_{ij}=\phi_j(t_i)$,
+$b_i=y_i$, and solve the normal equations for $c$.
+
+\cue{Gram matrix} $G=A^\top A$ is positive semidefinite since
+$x^\top Gx=\norm{Ax}^2$. $\Null(G)=\Null(A)$, so $G$ is
+positive definite and invertible iff the LS coefficients are unique.
+\end{panel}%
+\hfill
+\begin{panel}{Real eigenvalues, diagonalisation and powers}
+\topic{Eigenspaces are kernels}
+Use \cue{EIGEN} for numerical eigenpairs.
+Test a vector by $Av=\lambda v$, $v\ne0$. Test a value by
+$\det(A-\lambda I)=0$. Eigenspace $E_\lambda=\ker(A-\lambda I)$.
+Triangular $A$ has its eigenvalues on the diagonal.
+For symbolic $2\times2$ work,
+\formula{\det(tI-A)=t^2-(\tr A)t+\det A.}
+\cue{AM} counts copies of $\lambda$ as a root.
+\cue{GM} is $\dim E_\lambda=n-\rank(A-\lambda I)$.
+For each eigenvalue, $1\le\mathrm{GM}\le\mathrm{AM}$.
+Use the shifted rank test when roots repeat.
+\cue{Similarity} preserves the characteristic polynomial,
+rank and each eigenspace dimension.
+If $B=S^{-1}AS$ and $v$ is an eigenvector of $A$ for $\lambda$,
+then $S^{-1}v$ is an eigenvector of $B$ for $\lambda$.
+When all roots are real, $\tr A=\sum_i\lambda_i$ and
+$\det A=\prod_i\lambda_i$, counting algebraic multiplicity.
+
+\topic{Diagonalisation Theorem}
+$A$ is diagonalizable over $\RR$ iff it has $n$ LI real eigenvectors.
+If there are $n$ real characteristic roots counting multiplicity,
+test $\mathrm{AM}=\mathrm{GM}$ at each root. Eigenvectors for distinct
+eigenvalues are LI, so $n$ distinct real eigenvalues suffice. Put eigenvectors in $P$ and
+the matching eigenvalues in $D$.
+\formula{AP=PD,\quad A=PDP^{-1},\quad A^k=PD^kP^{-1}.}
+For $x_{k+1}=Ax_k$, set $c=P^{-1}x_0$ and use
+$x_k=\sum_i c_i\lambda_i^k v_i$.
+Active modes with $\abs\lambda<1$ vanish, $\lambda=1$ persists,
+$\lambda=-1$ alternates, and $\abs\lambda>1$ grows in magnitude.
+If all characteristic roots are real and have $\abs\lambda<1$, then $A^k\to0$.
+If diagonalizable with only $1$ on the unit circle and all
+others inside, retain the component for $\lambda=1$.
+
+\cue{Reuse an eigenpair} $p(A)v=p(\lambda)v$.
+For $A^{-1}$ the eigenvalue is $\dfrac{1}{\lambda}$ if invertible.
+If $A^p=0$, all eigenvalues vanish and
+$(I-A)^{-1}=I+A+\cdots+A^{p-1}$.
+
+\topic{Infer from matrix structure}
+\cue{Spectral Theorem} Real $S$ is symmetric iff $S=QDQ^\top$ for orthogonal $Q$ and real diagonal $D$.
+For symmetric $S$, positive definite means $\lambda_i>0$
+for all $i$, equivalently $x^\top Sx>0$ for all $x\ne0$.
+
+\cue{Projector} $E_1=\operatorname{range}P$, $E_0=\Null(P)$
+for $P^2=P$ (when those eigenvalues occur).
+$\tr P=\rank P=\dim\operatorname{range}P$.
+
+\par\vspace{4pt}
+{\setlength{\fboxsep}{4pt}%
+\noindent\colorbox{wash}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{%
+\raggedright\fontsize{9.2}{11}\selectfont
+\setlength{\parskip}{1.6pt}%
+{\color{accent}\bfseries Complex numbers and DFT quick tips}\par
+\cue{Complex numbers} For $z=a+jb$, $j^2=-1$,
+$\bar z=a-jb$, and $\abs z=\sqrt{a^2+b^2}=r$.
+Write $z=re^{j\theta}=r(\cos\theta+j\sin\theta)$ and check the quadrant of $\theta$.
+For $z^p$, use magnitude $r^p$ and angle $p\theta$.
+The $p$ roots use magnitude $\sqrt[p]{r}$ and angles $\frac{\theta+2\pi m}{p}$,
+$m=0,\dots,p-1$.
+Nonreal eigenvalues of a real matrix come in conjugate pairs.
+
+\cue{DFT / IDFT} In \cue{DFTEXAM}, enter samples in order from $x[0]$.
+For $0\le k,n<N$, use $X=Wx$, where $W_{kn}=e^{-jkn\alpha}$ and $\alpha=\frac{2\pi}{N}$.
+The inverse flips the exponent sign and scales by $\frac{1}{N}$.
+$X[0]=\sum_n x[n]$, so the mean is $\frac{X[0]}{N}$.
+For real samples, $X[N-k]=\overline{X[k]}$ for $1\le k<N$.
+
+\cue{Row direction} Wrap the DFT row step $-\frac{2\pi k}{N}$ into $(-\pi,\pi]$.
+Negative means clockwise, positive means anticlockwise,
+$0$ stays fixed, and $\pi$ alternates.
+}}}
+\end{panel}
+
+\checkstrip{%
+An orthogonal set containing $0$ is dependent.\quad
+Repeated eigenvalues can still yield an eigenbasis (as in $I_n$).\quad
+A common spectrum alone leaves similarity undecided.}
+\end{document}

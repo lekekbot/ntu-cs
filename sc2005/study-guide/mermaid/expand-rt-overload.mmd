@@ -1,0 +1,7 @@
+flowchart TD
+ E["Jobs ready under overload"] --> R["RM: fixed task priority"]
+ E --> D["EDF: earliest current deadline"]
+ R --> R1["Higher priorities keep first claim on CPU"]
+ R1 --> R2["Lower priorities tend to miss first"]
+ D --> D1["Urgency order changes with arrivals"]
+ D1 --> D2["Misses can affect different tasks"]

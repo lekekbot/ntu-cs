@@ -1,0 +1,7 @@
+flowchart LR
+ A["Job A: period 4, due at 12"] --> R["RM compares periods"]
+ B["Job B: period 7, due at 11"] --> R
+ A --> E["EDF compares absolute deadlines"]
+ B --> E
+ R --> P["Run A"]
+ E --> Q["Run B"]

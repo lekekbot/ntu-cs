@@ -1,0 +1,7 @@
+flowchart TD
+ V["Virtual machine monitor"] --> M["Multiplex"]
+ V --> A["Aggregate"]
+ V --> E["Emulate"]
+ M --> C["One core shared by several vCPUs"]
+ A --> D["Several disks exposed as one logical disk"]
+ E --> N["Guest sees a familiar network card"]

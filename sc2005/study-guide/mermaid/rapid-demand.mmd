@@ -1,0 +1,6 @@
+flowchart LR
+ A["Access a virtual page"] --> Q{"Resident and allowed?"}
+ Q -->|"Yes"| D["Read or write RAM"]
+ Q -->|"Legal but absent"| K["Find frame; load or initialise"]
+ K --> P["Update mapping and retry"]
+ Q -->|"Disallowed"| X["Reject or apply protection policy"]

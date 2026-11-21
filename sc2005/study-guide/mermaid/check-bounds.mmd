@@ -1,0 +1,4 @@
+flowchart LR
+ A["Load or store"] --> Check{"base ≤ address < base + limit?"}
+ Check -->|"Yes"| M["Perform access"]
+ Check -->|"No"| T["Raise a protection trap"]

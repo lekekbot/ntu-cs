@@ -1,0 +1,4 @@
+flowchart LR
+ L["Too few resident jobs: CPU can idle on I/O"] -->|"Admit jobs"| M["Enough ready jobs to use the CPU"]
+ M -->|"Admit beyond frame capacity"| H["Too many jobs: paging pressure"]
+ H -->|"Suspend or swap out jobs"| M

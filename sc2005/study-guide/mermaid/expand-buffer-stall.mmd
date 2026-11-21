@@ -1,0 +1,7 @@
+flowchart TD
+ E["Buffer empty"] --> C["Consumer takes mutex"]
+ C --> W["Consumer waits on full"]
+ E --> P["Producer reserves empty slot"]
+ P --> M["Producer waits on mutex"]
+ W -->|"Needs producer to post full"| M
+ M -->|"Needs consumer to unlock"| W

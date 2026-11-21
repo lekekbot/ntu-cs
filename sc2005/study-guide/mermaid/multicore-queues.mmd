@@ -1,0 +1,9 @@
+flowchart TD
+ subgraph Partitioned
+   Q0["Ready queue 0"] --> C0["Core 0"]
+   Q1["Ready queue 1"] --> C1["Core 1"]
+ end
+ subgraph Global
+   Q["Global ready queue"] --> G0["Core 0"]
+   Q --> G1["Core 1"]
+ end

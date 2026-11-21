@@ -1,0 +1,5 @@
+flowchart LR
+ R["Request"] --> S["Seek: position the head"]
+ S --> L["Rotational latency: wait for the sector"]
+ L --> T["Transfer: bytes pass under the head"]
+ R -.->|"Access time is the sum of these stages"| T

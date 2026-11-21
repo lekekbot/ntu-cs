@@ -1,0 +1,44 @@
+[00:00] This video recording explains the particular anomaly that may happen when we use page replacement
+algorithm. So it's called Belady's anomaly. As we have already explained, the objective of using
+page replacement algorithm is to minimize the number of page faults. And we illustrate how a page
+replacement algorithm works by using this example page reference string. So intuitively, when we
+assign more frames to a process, then the number of page faults should be reduced when using a
+particular page replacement algorithm. However, this is not always the case. When we assign more
+frames to a process, it doesn't result in a few number of page faults,
+
+[01:02] then we see that the Belady's anomaly happens. We introduced quite a number of page replacement
+algorithms. So first in, first out, so that will identify the oldest page as the victim page to
+replace. So optimal algorithm, so that will identify the page that will now be referenced for the
+longest period of time as a victim page to replace. LRU, the least recently used algorithm. So that
+will replace a page that hasn't been referenced, used for the longest period of time to replace. And
+second chance algorithm, so this is LRU approximation is a variation of the FIFO algorithm. And it
+is a variation of FIFO. and approximates the behavior of LRU.
+
+[02:05] Now let's look at the FIFO algorithm first. See if FIFO suffers from Belady's anomaly. The slide
+here shows we assign three frames to the process. For this given reference string, that is generated
+9-page faults when using FIFO algorithm. Now when we increase the number of frames assigned to the
+process, for the same reference string, that is generated 10-page faults. So what's that mean? So
+that means this algorithm suffers from Belady's anomaly. So when we increase the number of frames
+assigned to the process. When using this FIFO algorithm for page replacement, it doesn't result in a
+few number of page faults.
+
+[02:57] So in general, if we know a page replacement algorithm that satisfies this inclusion property, then
+we can guarantee that algorithm doesn't suffer from Belady's anomaly. So what is the inclusion
+property? So inclusion property says, the pages that's currently in the memory when using n frames n
+plus 1 frames. So that's the inclusion property. So if this property is true, then basically it
+guarantees if there's no page fault when we're using n frames, then there will be no page fault when
+we're using n plus 1 frames. So for optimal algorithm, then we can prove the algorithm satisfies
+this inclusion property.
+
+[03:59] So recall how the algorithm works, right? So the algorithm replaces a page that will not be
+referenced for the longest period of time. So the algorithm basically guarantees the current n pages
+in the memory when using n frames. So the next n frames are the next n pages that will be referenced
+in the immediate future. So if we increase the number of frames to n plus 1, then these n pages will
+be still in the memory. So inclusion property is true, is satisfied. So similar to the optimal
+algorithm, the LRU algorithm doesn't suffer the Belady's anomaly either. So we can prove this
+algorithm also satisfies the inclusion property.
+
+[05:02] So for this replacement algorithm, the set of pages in the memory will be the n most recently
+referenced pages. If the number of frames is increased, then these n pages will be still the most
+recently referenced, and so will be still in the memory. So the inclusion property is true, and the
+LRU algorithm doesn't suffer from Belady's anomaly.

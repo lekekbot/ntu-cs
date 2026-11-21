@@ -1,0 +1,876 @@
+1
+00:00:00,000 --> 00:00:11,640
+This is the last part of the lecture, memory organization.
+
+2
+00:00:11,640 --> 00:00:22,120
+So in this part of lecture, we look at memory allocation by using segmentation approach.
+
+3
+00:00:22,120 --> 00:00:30,040
+So using segmentation, a logical address space consists of a collection of segments.
+
+4
+00:00:30,040 --> 00:00:32,380
+So this is different from paging.
+
+5
+00:00:32,380 --> 00:00:41,320
+So for paging, a logical address space basically is a sequence of bytes, one dimensional sequence of bytes.
+
+6
+00:00:41,320 --> 00:00:46,880
+But for segmentation, a logical address space consists of a collection of segments.
+
+7
+00:00:46,880 --> 00:00:48,620
+So what is a segment?
+
+8
+00:00:48,620 --> 00:00:53,000
+A segment basically is a logical unit of a program.
+
+9
+00:00:53,000 --> 00:01:04,300
+For instance, a segment can be a subroutine, a segment can be a specific data structure used in your program.
+
+10
+00:01:04,300 --> 00:01:07,040
+A segment can be the main program.
+
+11
+00:01:07,040 --> 00:01:11,220
+So each segment is a sequence of bytes.
+
+12
+00:01:11,220 --> 00:01:17,540
+So different from paging, different segments may have different sizes.
+
+13
+00:01:17,540 --> 00:01:21,920
+So segments can be of variable size.
+
+14
+00:01:21,920 --> 00:01:32,920
+And to do the memory allocation, then we need to do the memory allocation for all the segments in the logic address space.
+
+15
+00:01:32,920 --> 00:01:39,300
+So these segments may not be located contiguously in the physical memory.
+
+16
+00:01:39,300 --> 00:01:43,300
+They can be at different places in the physical memory.
+
+17
+00:01:43,300 --> 00:01:51,300
+So that's why this segmentation scheme is also under the non-contiguous memory allocation category.
+
+18
+00:01:51,300 --> 00:01:58,680
+Now let's look at an example.
+
+19
+00:01:58,680 --> 00:02:02,680
+So for instance, in this case, so we have this logic address space.
+
+20
+00:02:02,680 --> 00:02:07,060
+So this logic address space consists of four segments.
+
+21
+00:02:07,060 --> 00:02:13,060
+Then to load this logic address space, this process into the memory.
+
+22
+00:02:13,060 --> 00:02:21,060
+Then we need to locate the memory space for every segment in this logic address space.
+
+23
+00:02:21,060 --> 00:02:27,440
+So these segments are not located contiguously in the physical memory.
+
+24
+00:02:27,440 --> 00:02:31,440
+So segment one is here, and two is here, three is here, and four is here.
+
+25
+00:02:31,440 --> 00:02:40,440
+Then if you're using this segmentation scheme, then what will be the logic address format?
+
+26
+00:02:40,440 --> 00:02:55,820
+So for instance, if we try to locate this particular position in the logic address space, then first of all, we need to know,
+
+27
+00:02:55,820 --> 00:03:00,560
+so this position is in which segment?
+
+28
+00:03:00,560 --> 00:03:07,140
+And second, then we need to know what is the off-site of this position within that segment.
+
+29
+00:03:07,140 --> 00:03:20,680
+So that's basically means, so for logical address format, by using the segmentation scheme, the format will be in this form, right?
+
+30
+00:03:20,680 --> 00:03:26,800
+So the logic address will consist of two components, the segment number and offset.
+
+31
+00:03:26,800 --> 00:03:31,160
+So similar to paging scheme, right?
+
+32
+00:03:31,160 --> 00:03:37,900
+So under segmentation scheme, then there's a segment table, right?
+
+33
+00:03:37,900 --> 00:03:41,700
+So the segment table basically will keep track.
+
+34
+00:03:41,700 --> 00:03:47,780
+So which segment is located in which part of memory?
+
+35
+00:03:47,780 --> 00:03:59,220
+So the number of entries in the segment table is equal to the number of segments in the logic address space, right?
+
+36
+00:03:59,220 --> 00:04:05,960
+So for instance, in this example, there are four segments in the logic address space.
+
+37
+00:04:05,960 --> 00:04:10,340
+So there were four entries in the segment table.
+
+38
+00:04:10,340 --> 00:04:19,180
+So each entry that contains two pieces of information, base and the limit.
+
+39
+00:04:19,180 --> 00:04:23,380
+So base is the starting address of the segment.
+
+40
+00:04:23,380 --> 00:04:32,120
+So where is that segment located in the physical memory, the starting address of that segment in the physical memory, right?
+
+41
+00:04:32,120 --> 00:04:36,760
+And the limit, so limit basically is the size of the segment, right?
+
+42
+00:04:36,760 --> 00:04:44,260
+So how big that segment is, so how much memory space that segment occupies.
+
+43
+00:04:44,260 --> 00:04:56,000
+So again, similar to the page table, this segment table is also in the memory, also stored in the memory, right?
+
+44
+00:04:56,000 --> 00:05:06,620
+To locate where the segment table is for the person in the running state, then these two system resistors will be used, right?
+
+45
+00:05:06,620 --> 00:05:11,360
+The segment table base resistor and the segment table lens resistor.
+
+46
+00:05:11,360 --> 00:05:23,200
+So segment table base resistor will point into the beginning address, starting address of where segment table is located in the physical memory.
+
+47
+00:05:23,200 --> 00:05:30,740
+And the segment table lens resistor will indicate the size of the segment table, right?
+
+48
+00:05:30,740 --> 00:05:34,740
+So this is for the person in the running state.
+
+49
+00:05:34,740 --> 00:05:46,720
+When the person is not in the running state, then these two values will be saved in the process control block, PCB, right?
+
+50
+00:05:46,720 --> 00:05:53,860
+Now let's look at the address translation for segmentation, right?
+
+51
+00:05:53,860 --> 00:05:56,860
+So given our logical address, right?
+
+52
+00:05:56,860 --> 00:06:02,860
+So in this format, so segment number and offset, right?
+
+53
+00:06:02,860 --> 00:06:12,860
+And first of all, we use the segment number to index into the segment table to locate a corresponding entry.
+
+54
+00:06:12,860 --> 00:06:17,860
+So from the entry, so we obtain the base and the limit.
+
+55
+00:06:17,860 --> 00:06:22,860
+And first of all, we use the base and limit.
+
+56
+00:06:22,860 --> 00:06:25,860
+We use the limit, right?
+
+57
+00:06:25,860 --> 00:06:27,860
+To check against the offset, right?
+
+58
+00:06:27,860 --> 00:06:28,860
+To check.
+
+59
+00:06:28,860 --> 00:06:32,860
+So what's not offset is less than the limit.
+
+60
+00:06:32,860 --> 00:06:37,860
+If offset is larger than or equal to the limit.
+
+61
+00:06:37,860 --> 00:06:43,860
+So that's basically means, so the corresponding address is illegal, right?
+
+62
+00:06:43,860 --> 00:06:51,860
+So in this case, so the address refers to some mirrors all side, that segment, right?
+
+63
+00:06:51,860 --> 00:06:54,860
+Then it's illegal, right?
+
+64
+00:06:54,860 --> 00:06:56,860
+So if this condition is not true, right?
+
+65
+00:06:56,860 --> 00:06:59,860
+So offset is larger than or equal to limit.
+
+66
+00:06:59,860 --> 00:07:03,860
+Then the address is an illegal address in this case.
+
+67
+00:07:03,860 --> 00:07:05,860
+So it's an error, right?
+
+68
+00:07:05,860 --> 00:07:07,860
+Then a truck will be generated.
+
+69
+00:07:07,860 --> 00:07:10,860
+So this will be handled by OS.
+
+70
+00:07:10,860 --> 00:07:13,860
+If this condition is true, right?
+
+71
+00:07:13,860 --> 00:07:15,860
+Offset is less than the limit.
+
+72
+00:07:15,860 --> 00:07:18,860
+Then address is a valid address.
+
+73
+00:07:18,860 --> 00:07:25,860
+If this is a valid address, then to generate the physical address, we add the offset to the base.
+
+74
+00:07:25,860 --> 00:07:30,860
+So that will give you the physical address, right?
+
+75
+00:07:30,860 --> 00:07:32,860
+Now, so illustrate this, right?
+
+76
+00:07:32,860 --> 00:07:37,860
+So this is the base, right?
+
+77
+00:07:37,860 --> 00:07:42,860
+So that's where the segment is located in the physical memory, right?
+
+78
+00:07:42,860 --> 00:07:49,860
+And this is the limit, right?
+
+79
+00:07:49,860 --> 00:07:51,860
+And this is the offset.
+
+80
+00:07:51,860 --> 00:07:55,860
+This is the offset, right?
+
+81
+00:07:55,860 --> 00:08:00,860
+Then the physical address basically is the base plus the offset.
+
+82
+00:08:00,860 --> 00:08:04,860
+So that gives you the physical address, right?
+
+83
+00:08:04,860 --> 00:08:09,860
+So that's how the address translation is done, using the segmentation scheme.
+
+84
+00:08:09,860 --> 00:08:16,860
+So we'll go back to the laser puncture, right?
+
+85
+00:08:16,860 --> 00:08:20,860
+Okay, now let's look at the specific example, right?
+
+86
+00:08:20,860 --> 00:08:28,860
+So again, in this example, so we have four segments in the logical address space, right?
+
+87
+00:08:28,860 --> 00:08:35,860
+So segment 0 is here, and 1, 2, 3, and 4, right?
+
+88
+00:08:35,860 --> 00:08:41,860
+So to load this logical address space, to load this preset into the physical memory,
+
+89
+00:08:41,860 --> 00:08:47,860
+then we need to do memory allocation for every segment in this logical address space, right?
+
+90
+00:08:47,860 --> 00:08:53,860
+Then we have a segment table, so that we keep track where the segment is in the physical memory.
+
+91
+00:08:53,860 --> 00:08:58,860
+So segment 0, so the base is 1, 4, 0, 0, right?
+
+92
+00:08:58,860 --> 00:09:06,860
+So the beginning address of this segment is 1, 4, 0, 0, and the size of this segment is 1,000.
+
+93
+00:09:06,860 --> 00:09:13,860
+And segment 1, the base address is 3, 0, 0, so segment 1 is here.
+
+94
+00:09:13,860 --> 00:09:15,860
+So that's the base address.
+
+95
+00:09:15,860 --> 00:09:19,860
+And the size of this segment is 400, and so on and so forth.
+
+96
+00:09:19,860 --> 00:09:25,860
+So there's 1 entry per segment in the segment table.
+
+97
+00:09:25,860 --> 00:09:28,860
+Now, give this logic address, right?
+
+98
+00:09:28,860 --> 00:09:37,860
+So this logic address refers to this specific location in the logic address space.
+
+99
+00:09:37,860 --> 00:09:42,860
+So it's segment 3, segment 3 is here, right?
+
+100
+00:09:42,860 --> 00:09:45,860
+And off-site, 1, 2, 8, right?
+
+101
+00:09:45,860 --> 00:09:55,860
+So this segment 3, and the off-site here is 1, 2, 8, right?
+
+102
+00:09:55,860 --> 00:10:02,860
+So this logic address refers to this particular location, right?
+
+103
+00:10:02,860 --> 00:10:08,860
+And the segment 3 is mapped into the physical memory, mapped to here.
+
+104
+00:10:08,860 --> 00:10:10,860
+So this segment 3 is here, right?
+
+105
+00:10:10,860 --> 00:10:20,860
+So the position, the location which we try to access is here, in the physical memory, right?
+
+106
+00:10:20,860 --> 00:10:27,860
+So this is off-site, 1, 2, 8, right?
+
+107
+00:10:27,860 --> 00:10:30,860
+And this is the base, okay?
+
+108
+00:10:30,860 --> 00:10:39,860
+Now let's look at how we translate from this logic address to the physical address in this case.
+
+109
+00:10:39,860 --> 00:10:40,860
+Right?
+
+110
+00:10:40,860 --> 00:10:41,860
+Okay?
+
+111
+00:10:41,860 --> 00:10:52,860
+Now, first of all, given this logic address, we know, so this address is inside segment 3, right?
+
+112
+00:10:52,860 --> 00:10:55,860
+So we do the segment table lookup.
+
+113
+00:10:55,860 --> 00:10:58,860
+So this is entry we need to access.
+
+114
+00:10:58,860 --> 00:11:02,860
+From this entry, then we obtain the base and the limit.
+
+115
+00:11:02,860 --> 00:11:03,860
+Right?
+
+116
+00:11:03,860 --> 00:11:05,860
+So we have base and the limit.
+
+117
+00:11:05,860 --> 00:11:11,860
+Now, we need to use the limit to check against the offset.
+
+118
+00:11:11,860 --> 00:11:17,860
+So in this case, the offset is 1, 2, 8, which is less than the limit.
+
+119
+00:11:17,860 --> 00:11:23,860
+So that means the address which we try to access is within the segment is legal.
+
+120
+00:11:23,860 --> 00:11:24,860
+Right?
+
+121
+00:11:24,860 --> 00:11:25,860
+So it's legal.
+
+122
+00:11:25,860 --> 00:11:33,860
+So then we will proceed to do the address translation, but adding the offset to the base to form the physical address.
+
+123
+00:11:33,860 --> 00:11:34,860
+Right?
+
+124
+00:11:34,860 --> 00:11:40,860
+So again, if I write, okay,
+
+125
+00:11:40,860 --> 00:11:41,860
+the pin, okay,
+
+126
+00:11:47,860 --> 00:11:53,860
+so this is the position we try to access, right?
+
+127
+00:11:53,860 --> 00:12:05,860
+So this position in the physical memory, so it's base 2, 3, 2, 0, 0, plus the offset 1, 2, 8.
+
+128
+00:12:05,860 --> 00:12:06,860
+Right?
+
+129
+00:12:06,860 --> 00:12:11,860
+So that's where this location is in the physical memory.
+
+130
+00:12:11,860 --> 00:12:12,860
+Right?
+
+131
+00:12:12,860 --> 00:12:14,860
+So that's the place which we try to access.
+
+132
+00:12:14,860 --> 00:12:18,860
+You have to get as a data or instruction, right?
+
+133
+00:12:18,860 --> 00:12:20,860
+In the physical memory.
+
+134
+00:12:20,860 --> 00:12:21,860
+All right.
+
+135
+00:12:21,860 --> 00:12:27,860
+So that's the address translation for the segmentation scheme.
+
+136
+00:12:27,860 --> 00:12:28,860
+Right?
+
+137
+00:12:28,860 --> 00:12:29,860
+Right.
+
+138
+00:12:30,860 --> 00:12:37,860
+Then to assign a memory space for a segment.
+
+139
+00:12:37,860 --> 00:12:42,860
+So recall, to do the memory allocation using the segmentation,
+
+140
+00:12:42,860 --> 00:12:49,860
+then we need to assign the memory space for every single segment in the logic address space.
+
+141
+00:12:49,860 --> 00:12:50,860
+Right?
+
+142
+00:12:50,860 --> 00:12:52,860
+So the logic address space is a collection of segment.
+
+143
+00:12:52,860 --> 00:12:53,860
+Right?
+
+144
+00:12:53,860 --> 00:12:57,860
+Then to assign a memory location for a specific segment.
+
+145
+00:12:57,860 --> 00:12:59,860
+Then what we need to do?
+
+146
+00:12:59,860 --> 00:13:05,860
+Basically is we need to find a large enough hole in the physical memory for that segment.
+
+147
+00:13:05,860 --> 00:13:09,860
+To locate a large enough hole in the physical memory.
+
+148
+00:13:09,860 --> 00:13:13,860
+So recall, so the last lecture, so we cover, right?
+
+149
+00:13:13,860 --> 00:13:17,860
+So the, right, as actually it's in the first lecture,
+
+150
+00:13:17,860 --> 00:13:22,860
+when we cover the contiguous memory location, the variable partitioning,
+
+151
+00:13:22,860 --> 00:13:26,860
+then we have a storage allocation policies,
+
+152
+00:13:26,860 --> 00:13:30,860
+also by-speed, worse-speed, first-speed, right?
+
+153
+00:13:30,860 --> 00:13:31,860
+And so on.
+
+154
+00:13:31,860 --> 00:13:37,860
+So these storage allocation policies, then in this case, can be used, right?
+
+155
+00:13:37,860 --> 00:13:42,860
+To find a large enough hole for a given segment, right?
+
+156
+00:13:42,860 --> 00:13:47,860
+To do the memory allocation for a specific segment.
+
+157
+00:13:47,860 --> 00:13:51,860
+So similar to the variable partitioning,
+
+158
+00:13:51,860 --> 00:13:55,860
+under the contiguous memory allocation, right?
+
+159
+00:13:55,860 --> 00:13:57,860
+For segmentation, so in this case,
+
+160
+00:13:57,860 --> 00:14:01,860
+it's also suffered from internal fragmentation, right?
+
+161
+00:14:01,860 --> 00:14:04,860
+So when process created and terminated,
+
+162
+00:14:04,860 --> 00:14:07,860
+then the memory will become fragmented, right?
+
+163
+00:14:07,860 --> 00:14:11,860
+There may be holes that are too small to be useful.
+
+164
+00:14:11,860 --> 00:14:16,860
+So this holes in between allocated memory space.
+
+165
+00:14:16,860 --> 00:14:19,860
+So that's external fragmentation.
+
+166
+00:14:20,860 --> 00:14:26,860
+All right, so that's for basically for the segmentation, right?
+
+167
+00:14:26,860 --> 00:14:33,860
+Now let's wrap up this part of OS, the memory allocation, right?
+
+168
+00:14:33,860 --> 00:14:37,860
+So we have to do the memory allocation, right?
+
+169
+00:14:37,860 --> 00:14:39,860
+So for memory allocation, so under this part of lecture,
+
+170
+00:14:39,860 --> 00:14:41,860
+so we cover different approaches.
+
+171
+00:14:41,860 --> 00:14:45,860
+So we cover the fixed partitioning and the dynamic partitioning,
+
+172
+00:14:45,860 --> 00:14:48,860
+and the contiguous allocation schemes.
+
+173
+00:14:48,860 --> 00:15:09,860
+Then we also cover the paging and segmentation and then nine contiguous memory allocation schemes.
+
+174
+00:15:10,860 --> 00:15:14,860
+So in particular, we also covered this specific issue.
+
+175
+00:15:14,860 --> 00:15:16,860
+So that's fragmentation issue.
+
+176
+00:15:16,860 --> 00:15:21,860
+So we have two different types of fragmentations.
+
+177
+00:15:21,860 --> 00:15:25,860
+So internal versus external fragmentation.
+
+178
+00:15:25,860 --> 00:15:29,860
+So internal fragmentation refers to the memory space
+
+179
+00:15:29,860 --> 00:15:33,860
+that's allocated to a process that's not really in use.
+
+180
+00:15:33,860 --> 00:15:34,860
+That's visited.
+
+181
+00:15:34,860 --> 00:15:36,860
+So that's internal fragmentation.
+
+182
+00:15:36,860 --> 00:15:42,860
+So this happens if you're using fixed partitioning or paging.
+
+183
+00:15:42,860 --> 00:15:50,860
+And internal fragmentation refers to the unusable memory space
+
+184
+00:15:50,860 --> 00:15:53,860
+in between allocated partitions.
+
+185
+00:15:53,860 --> 00:15:58,860
+So that's holes, the memory holes, that's too small to be useful.
+
+186
+00:15:58,860 --> 00:16:01,860
+So this happens, the internal fragmentation happens
+
+187
+00:16:01,860 --> 00:16:07,860
+when we're using either dynamic partitioning or segmentation.
+
+188
+00:16:07,860 --> 00:16:17,860
+So to execute instructions, the CPU may generate memory references.
+
+189
+00:16:17,860 --> 00:16:26,860
+So those references will refer to the logical address space of a process.
+
+190
+00:16:26,860 --> 00:16:32,860
+So there's one logical address space for every process.
+
+191
+00:16:32,860 --> 00:16:40,860
+So when CPU is getting instruction, the references, location references generated,
+
+192
+00:16:40,860 --> 00:16:45,860
+so that's refers to the logical address space of a process.
+
+193
+00:16:45,860 --> 00:16:53,860
+Then in order to assess the physical memory, to get the required data or instruction,
+
+194
+00:16:53,860 --> 00:16:59,860
+then this logical address space must translate into the physical address space.
+
+195
+00:16:59,860 --> 00:17:06,860
+This logical address must translate into the physical address.
+
+196
+00:17:06,860 --> 00:17:10,860
+So how this logical address can be translated into the physical address?
+
+197
+00:17:10,860 --> 00:17:14,860
+So that's depending on the memory allocation approach.
+
+198
+00:17:14,860 --> 00:17:18,860
+So we covered under the contiguous allocation.
+
+199
+00:17:18,860 --> 00:17:25,860
+So this translation from logical to physical address basically rely on this relocation register.
+
+200
+00:17:25,860 --> 00:17:32,860
+Then for paging, we also covered the number of address translation schemes.
+
+201
+00:17:32,860 --> 00:17:34,860
+So we covered the basic scheme.
+
+202
+00:17:34,860 --> 00:17:39,860
+So given a logical address, then we divide it into page number and offset.
+
+203
+00:17:39,860 --> 00:17:45,860
+So we used the page number to index into the page table, locate entry.
+
+204
+00:17:45,860 --> 00:17:52,860
+From entry, we have frame number and frame number together with the offset to form the physical address.
+
+205
+00:17:52,860 --> 00:18:02,860
+Then we also covered all the address translation can be carried out if you're using the translation look as a buffer.
+
+206
+00:18:02,860 --> 00:18:05,860
+So we didn't cover multi-level paging.
+
+207
+00:18:05,860 --> 00:18:16,860
+So if you're interested, then you can look at the textbook to get more information regarding all this multi-level paging can be carried out.
+
+208
+00:18:16,860 --> 00:18:19,860
+But we do cover the inverted page table.
+
+209
+00:18:19,860 --> 00:18:28,860
+So using inverted page table, then in this case, instead of one page table for each process,
+
+210
+00:18:28,860 --> 00:18:34,860
+then in this case, so this system only maintain one inverted page table.
+
+211
+00:18:34,860 --> 00:18:40,860
+So this single inverted page table, then will be shared among all the processes.
+
+212
+00:18:40,860 --> 00:18:45,860
+And using inverted page table, then in this case, given a logical address,
+
+213
+00:18:45,860 --> 00:18:51,860
+then we prefix that logical address with the PID, process ID.
+
+214
+00:18:51,860 --> 00:19:03,860
+Then we use the process ID and page number to search the inverted page table to locate matching entry.
+
+215
+00:19:03,860 --> 00:19:11,860
+If a matching entry is located at entry i, so that means the page of this process is mapped in frame i.
+
+216
+00:19:11,860 --> 00:19:17,860
+Then we use this i together with the offset to form the physical address.
+
+217
+00:19:17,860 --> 00:19:24,860
+All right, so that's basically all for the memory allocation.
+
+218
+00:19:24,860 --> 00:19:25,860
+Right.
+
+219
+00:19:25,860 --> 00:19:31,860
+And the next part of lecture will be on the virtual memory support.
+

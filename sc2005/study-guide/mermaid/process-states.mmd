@@ -1,0 +1,7 @@
+flowchart LR
+ N["New"] -->|"Admit"| R["Ready"]
+ R -->|"Dispatch"| P["Running"]
+ P -->|"Preempt"| R
+ P -->|"Block"| W["Waiting"]
+ W -->|"Event completes"| R
+ P -->|"Exit"| E["Terminated"]

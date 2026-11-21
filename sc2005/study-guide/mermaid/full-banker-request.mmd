@@ -1,0 +1,8 @@
+flowchart LR
+ R["Process requests a vector"] --> C{"Within its remaining Need?"}
+ C -->|"No"| X["Reject invalid request"]
+ C -->|"Yes"| A{"Fits Available?"}
+ A -->|"No"| W["Wait"]
+ A -->|"Yes"| S["Tentatively grant and run safety test"]
+ S -->|"Safe"| G["Commit"]
+ S -->|"Unsafe"| U["Undo grant and wait"]

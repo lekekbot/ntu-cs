@@ -1,0 +1,12 @@
+sequenceDiagram
+ participant P as Parent
+ participant K as Kernel
+ participant C as Child
+ P->>K: fork()
+ K-->>P: Return child's PID
+ K-->>C: Return 0 to child
+ C->>K: exec(new program)
+ K-->>C: Start new image with same PID
+ C->>K: exit(status)
+ P->>K: wait()
+ K-->>P: Collect child's PID and status

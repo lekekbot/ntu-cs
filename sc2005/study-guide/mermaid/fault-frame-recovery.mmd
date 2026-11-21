@@ -1,0 +1,5 @@
+flowchart TD
+ Q{"Free frame available?"} -->|"Yes"| L["Load or initialise the page"]
+ Q -->|"No"| E["Evict a victim and save it if dirty"]
+ E --> L
+ L --> R["Update PTE and retry instruction"]

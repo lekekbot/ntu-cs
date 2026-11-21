@@ -1,0 +1,10 @@
+sequenceDiagram
+ participant P3
+ participant A as Resource A
+ participant P2
+ participant B as Resource B
+ participant P1
+ P3->>A: Releases its instance
+ A-->>P2: Grants free instance
+ P2->>B: Finishes and releases B
+ B-->>P1: Grants free instance

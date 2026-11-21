@@ -1,0 +1,5 @@
+flowchart TD
+ A["Sense, compute and actuate"] --> D["Correct output must arrive by its deadline"]
+ D --> S["Specify release, execution demand and deadline"]
+ S --> P["Fixed per-task priority: RM compares periods"]
+ S --> Q["Dynamic per-job priority: EDF compares absolute deadlines"]

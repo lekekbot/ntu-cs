@@ -1,0 +1,214 @@
+% Compile twice with XeLaTeX or use Tectonic. Requires the accompanying mermaid/rendered directory.
+\newcommand{\DocumentName}{Visual Study Guide}
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=21mm,bottom=20mm,left=21mm,right=21mm,headheight=15pt]{geometry}
+\ifdefined\XeTeXversion
+\IfFileExists{/System/Library/Fonts/Supplemental/Georgia.ttf}{
+\DeclareFontFamily{TU}{guiderm}{}
+\DeclareFontShape{TU}{guiderm}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Georgia Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guiderm}{bx}{n}{<->ssub * guiderm/b/n}{}
+\DeclareFontShape{TU}{guiderm}{m}{sl}{<->ssub * guiderm/m/it}{}
+\DeclareFontShape{TU}{guiderm}{bx}{it}{<->ssub * guiderm/b/it}{}
+\DeclareFontFamily{TU}{guidess}{}
+\DeclareFontShape{TU}{guidess}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Arial.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Arial Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Arial Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidess}{bx}{n}{<->ssub * guidess/b/n}{}
+\DeclareFontShape{TU}{guidess}{m}{sl}{<->ssub * guidess/m/it}{}
+\DeclareFontShape{TU}{guidess}{bx}{it}{<->ssub * guidess/b/it}{}
+\DeclareFontFamily{TU}{guidett}{}
+\DeclareFontShape{TU}{guidett}{m}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{m}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{n}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{b}{it}{<->"[/System/Library/Fonts/Supplemental/Courier New Bold Italic.ttf]"}{}
+\DeclareFontShape{TU}{guidett}{bx}{n}{<->ssub * guidett/b/n}{}
+\DeclareFontShape{TU}{guidett}{m}{sl}{<->ssub * guidett/m/it}{}
+\DeclareFontShape{TU}{guidett}{bx}{it}{<->ssub * guidett/b/it}{}
+\renewcommand{\rmdefault}{guiderm}
+\renewcommand{\sfdefault}{guidess}
+\renewcommand{\ttdefault}{guidett}
+}{}
+\else
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\fi
+\usepackage[cmex10]{amsmath}\usepackage{amssymb}
+\DeclareFontShape{OMX}{cmex}{m}{n}{<->sfixed*lmex10}{}
+\DeclareFontShape{OT1}{cmr}{m}{n}{<-> rm-lmr10}{}
+\DeclareFontShape{OML}{cmm}{m}{it}{<-> lmmi10}{}
+\DeclareFontShape{OMS}{cmsy}{m}{n}{<-> lmsy10}{}
+\usepackage[table]{xcolor}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem,fancyhdr,fancyvrb,needspace,graphicx,ragged2e}
+\usepackage[unicode,colorlinks=true,linkcolor=teal!60!black,urlcolor=teal!60!black,bookmarksopen=true]{hyperref}
+
+\definecolor{ink}{HTML}{152D42}
+\definecolor{accent}{HTML}{086C68}
+\definecolor{pale}{HTML}{E9F5F3}
+\definecolor{mist}{HTML}{EDF2F6}
+\definecolor{amber}{HTML}{F9EEDC}
+\definecolor{muted}{HTML}{415971}
+\hypersetup{pdftitle={SC2005 \DocumentName}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 1pt}
+\setlength{\emergencystretch}{2em}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.16}
+\setlist{leftmargin=*,itemsep=3pt,topsep=3pt,parsep=1pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\sffamily\color{muted}SC2005 Operating Systems}
+\fancyhead[R]{\small\sffamily\color{muted}\DocumentName}
+\fancyfoot[R]{\small\sffamily\color{muted}\thepage}
+\renewcommand{\headrulewidth}{.3pt}
+\raggedbottom
+\newcommand{\titleline}[1]{{\sffamily\raggedright\bfseries\color{ink}\fontsize{29}{34}\selectfont #1\par}\vspace{3pt}}
+\newcommand{\sectionline}[1]{\par\smallskip{\sffamily\bfseries\color{accent}#1\par}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\boxtext}[2]{\par\medskip\noindent\colorbox{pale}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textbf{#1}\enspace #2}}\par\smallskip}
+\newcommand{\diag}[2]{\par\smallskip
+{\centering
+\includegraphics[width=.98\linewidth,height=53mm,keepaspectratio]{mermaid/rendered/#1.pdf}\par
+\vspace{2pt}{\small\color{muted}#2\par}}\smallskip}
+\newcommand{\panel}[3]{\sectionline{#1}\diag{#2}{#3}}
+\newcommand{\formula}[1]{\par\noindent\colorbox{mist}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\centering #1}}\par}
+\newcommand{\recall}[2]{\boxtext{Quick check.}{#1\par\textbf{Answer.} #2}}
+\newcommand{\topic}[4]{\clearpage\phantomsection\label{#2}\pdfbookmark[0]{#3}{bm-#2}
+{\sffamily\bfseries\color{accent}#1\par}\titleline{#3}{\color{muted}#4\par}}
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\begin{document}
+\thispagestyle{fancy}
+\titleline{SC2005 Visual Study Guide}
+{\large\color{muted}Operating Systems \enspace / \enspace Rapid revision}\par
+\vspace{4mm}
+\boxtext{How to study each page.}{Follow the arrows, replay the worked trace, then cover the answer and predict what happens next.}
+\sectionline{Topic map}
+\begin{tabularx}{\linewidth}{@{}lYl@{}}
+\toprule
+\rowcolor{mist}\textbf{Topic}&\textbf{What you should be able to see}&\textbf{Page}\\
+\midrule
+\hyperref[intro]{OS basics and protection}&How an app or device enters the kernel&\pageref{intro}\\
+\hyperref[proc]{Processes and threads}&Which tasks can run and what threads share&\pageref{proc}\\
+\hyperref[cpu]{CPU scheduling}&Who runs next and how long each job waits&\pageref{cpu}\\
+\hyperref[sync]{Synchronisation}&How a shared update gets lost&\pageref{sync}\\
+\hyperref[dead]{Deadlocks}&Who holds what and who can finish&\pageref{dead}\\
+\hyperref[mem]{Memory organisation}&How a virtual address becomes a physical address&\pageref{mem}\\
+\hyperref[vm]{Virtual memory}&What happens on a fault and which page leaves&\pageref{vm}\\
+\hyperref[fs]{File systems}&How a byte offset leads to a disk block&\pageref{fs}\\
+\hyperref[io]{I/O systems and disks}&Why the head moves in that order&\pageref{io}\\
+\hyperref[rt]{Real-time operating systems}&Which ready job has priority&\pageref{rt}\\
+\hyperref[virt]{Virtualisation}&How two schedulers decide whether a thread advances&\pageref{virt}\\
+\bottomrule
+\end{tabularx}
+
+\vspace{3mm}
+\sectionline{Use it with the two quizzes}
+\textbf{Concept quiz.} Explain an arrow or predict the next state.\\
+\textbf{Algorithm quiz.} Reproduce a worked trace on blank paper, then try the separate practice questions.
+
+\topic{01 / FULL GUIDE CHAPTER 1}{intro}{OS basics and protection}{Follow how an application or a device enters the kernel.}
+\panel{1. Two ways to enter the kernel}{trap-and-interrupt}{The app triggers its own trap. The device can interrupt whichever task is running.}
+\panel{2. Move data with DMA}{dma}{The CPU sets up the transfer. The controller moves the bytes and signals completion.}
+\sectionline{3. Test the address boundary}
+\formula{\(300040\leq \mathrm{address}<300040+120900=420940\)}
+\diag{rapid-protection}{The limit is the length of the allowed range. The address exactly at the upper edge is outside it.}
+\recall{Which path does a completed disk read take?}{The device interrupt path. The kernel can wake the waiting task.}
+
+\topic{02 / FULL GUIDE CHAPTER 2}{proc}{Processes and threads}{The state tells you what needs to happen before a task can run.}
+\panel{1. Follow the process states}{process-states}{After a blocking read, the task must go through Waiting and then Ready before dispatch makes it Running.}
+\panel{2. See what threads share}{rapid-thread-stacks}{Each cook has their own bookmark and workbench. The cooks share the kitchen.}
+\panel{3. Watch a new process start}{fork-exec}{After \code{fork()}, two processes continue. \code{exec()} replaces the calling process's program.}
+\recall{The I/O has finished. Does the task run immediately?}{It becomes Ready. It runs when the scheduler dispatches it.}
+
+\topic{03 / FULL GUIDE CHAPTER 3}{cpu}{CPU scheduling}{Start with the ready queue. Then read the measurements from the timeline.}
+\panel{1. Choose the next job}{rapid-cpu-choice}{Choose from the Ready queue. In preemptive scheduling, compare the running job with a newly ready contender.}
+\panel{2. Read a worked SRTF timeline}{srtf-practice}{P arrives at 0 and needs 7 CPU units. It runs from 0--2 and 5--10.}
+\sectionline{3. Measure P's time}
+\begin{tabularx}{\linewidth}{@{}YYY@{}}
+\toprule
+\rowcolor{mist}\textbf{Turnaround}&\textbf{Response}&\textbf{Ready-queue waiting}\\
+\midrule
+Finish minus arrival&First start minus arrival&Time ready while off-core\\
+\(10-0=10\)&\(0-0=0\)&\(5-2=3\)\\
+\bottomrule
+\end{tabularx}
+\recall{A round-robin task blocks halfway through its quantum. Where does it go?}{To Waiting. It joins the ready queue when the event occurs.}
+
+\topic{04 / FULL GUIDE CHAPTER 4}{sync}{Synchronisation}{See the update that gets lost, then follow the semaphore order that keeps the buffer moving.}
+\panel{1. Spot the race}{lost-update}{Both read 5. The final write is 4. If each update finished before the next read, the result would be 5.}
+\panel{2. Follow one item through the buffer}{rapid-buffer}{Start with \code{empty=N}, \code{full=0}, \code{mutex=1}. Wait for a slot or item before taking the mutex.}
+\sectionline{3. Check a critical-section solution}
+\begin{tabularx}{\linewidth}{@{}YYY@{}}
+\toprule
+\rowcolor{mist}\textbf{Mutual exclusion}&\textbf{Progress}&\textbf{Bounded waiting}\\
+\midrule
+Only one can enter.&Eligible contenders can make a decision.&There is a limit on overtaking.\\
+\bottomrule
+\end{tabularx}
+\recall{What goes wrong if the producer locks before waiting for space?}{On a full buffer, the consumer needs the held lock to free a slot.}
+
+\topic{05 / FULL GUIDE CHAPTER 5}{dead}{Deadlocks}{Trace the wait cycle. Then simulate what would happen if a request were granted.}
+\panel{1. Read the resource graph}{resource-cycle}{Process to resource means request. Resource to process means assignment. With one instance per resource here, the cycle is a deadlock.}
+\panel{2. Run Banker's safety test}{rapid-bank-steps}{A process can finish when all components of its Need fit in Work. Compute Need as Max minus Allocation.}
+\panel{3. Watch Work grow}{banker-work}{P1 returns \((2,0,0)\). P3 then returns \((2,1,1)\). Continue until every process can finish.}
+\recall{No safe sequence exists. What does that tell you?}{The state is unsafe. Whether tasks are already deadlocked depends on their current waits.}
+
+\topic{06 / FULL GUIDE CHAPTER 6}{mem}{Memory organisation}{Change the page number into a frame number. Keep the byte offset.}
+\panel{1. Split a 32-bit virtual address}{two-level-address-fields}{With 4 KiB pages and four-byte entries, each table page holds 1024 entries.}
+\panel{2. Translate a worked example}{page-address}{With 2 KiB pages, \(6155=3(2048)+11\). Page 3 maps to frame 9, so the physical address is \(9(2048)+11=18443\).}
+\panel{3. Locate the wasted space}{rapid-fragmentation}{Internal waste is inside an allocation. External holes are free space between allocations.}
+\recall{What does the TLB save on a hit?}{A page-table lookup. The cached frame still has to be combined with the byte offset.}
+
+\topic{07 / FULL GUIDE CHAPTER 7}{vm}{Virtual memory}{A page can have a valid address in the process and still be absent from RAM.}
+\panel{1. Follow a fault}{rapid-demand}{A legal absent page needs a frame. If a victim must be evicted, preserve dirty data when required before reusing the frame.}
+\panel{2. Follow the clock hand}{clock-scan}{Clear each reference bit of 1. The first candidate with a 0 can be replaced.}
+\sectionline{3. See what each policy remembers}
+\begin{tabularx}{\linewidth}{@{}lYY@{}}
+\toprule
+\rowcolor{mist}\textbf{Policy}&\textbf{What it tracks}&\textbf{Victim}\\
+\midrule
+FIFO&Time loaded&Earliest load\\
+LRU&Time last referenced&Least recent reference\\
+OPT&Time of next reference&Furthest in the future\\
+\bottomrule
+\end{tabularx}
+\recall{What changes when a resident page gets an LRU hit?}{Its frame stays the same. Its last-use time becomes the newest.}
+
+\topic{08 / FULL GUIDE CHAPTER 8}{fs}{File systems}{Start at the file descriptor. Find the inode. Then locate the data block.}
+\panel{1. Follow an open file}{open-file-objects}{Each open description has its own offset. Duplicated descriptors can share one open description and offset.}
+\panel{2. Split a byte position}{rapid-file-lookup}{2748 bytes gives logical block 2 and offset 700. The example uses contiguous allocation.}
+\panel{3. Follow an inode pointer}{inode-paths}{Direct reaches the data block. Each indirect level adds another pointer lookup.}
+\recall{With 12 direct entries and 256 single-indirect entries, where does block 268 go?}{Double indirect, outer entry 0 and inner entry 0.}
+
+\topic{09 / FULL GUIDE CHAPTER 9}{io}{I/O systems and disks}{Follow the mechanical work of one request, then trace a whole queue.}
+\panel{1. Break down access time}{disk-latency}{Seek moves the head. Rotation brings the sector underneath. Transfer moves the bytes.}
+\panel{2. Trace SSTF}{rapid-disk-movement}{From head 100 with 40, 125 and 135 pending, choose the nearest each time. Total movement is \(25+10+95=130\) cylinders.}
+\panel{3. See where SCAN and LOOK turn}{scan-head}{Initially moving down, SCAN goes to cylinder 0. LOOK reverses at the last lower request, 14.}
+\recall{How does C-SCAN differ from SCAN?}{It wraps and resumes in the same service direction. SCAN reverses service direction.}
+
+\topic{10 / FULL GUIDE CHAPTER 10}{rt}{Real-time operating systems}{Check whether the job finishes by its own absolute deadline.}
+\panel{1. Read the execution window}{deadline-window}{The window starts at release \(R\) and ends at \(R+D\). The CPU can deliver the required work in multiple slices.}
+\panel{2. Compare RM and EDF on the same jobs}{rapid-rt-choice}{At time 8, A has period 4 and deadline 12. B has period 7 and deadline 11. RM and EDF choose different jobs.}
+\sectionline{3. Mark the deadline on the timeline}
+\formula{\(\mathrm{Release}=9\qquad \mathrm{Relative\ deadline}=5\qquad \mathrm{Absolute\ deadline}=9+5=14\)}
+\recall{A job finishes at 14. Is it on time?}{Yes, completion exactly at the deadline is allowed.}
+
+\topic{11 / FULL GUIDE CHAPTER 11}{virt}{Virtualisation}{A guest thread needs two scheduling decisions to line up before it can advance.}
+\panel{1. Track guest and host decisions}{rapid-vcpu-control}{The guest chooses a thread. The host or hypervisor chooses when its vCPU gets a physical core.}
+\panel{2. See a lock holder lose its core}{vcpu-ledger}{A0 holds a lock but is off-core from 4 to 8. A1 keeps executing the spin loop during that interval. It cannot acquire the lock.}
+\sectionline{3. Match the virtualisation mechanism}
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+\rowcolor{mist}\textbf{Mechanism}&\textbf{What it looks like}\\
+\midrule
+Multiplexing&Two guests take turns using one core.\\
+Aggregation&Several physical drives appear as one logical drive.\\
+Emulation&The guest sees a different device or machine interface.\\
+\bottomrule
+\end{tabularx}
+\recall{A guest app calls the OS. Where does the syscall go first?}{The guest kernel. A selected operation from the guest can then exit to the hypervisor.}
+\end{document}

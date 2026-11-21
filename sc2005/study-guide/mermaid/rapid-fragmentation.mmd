@@ -1,0 +1,5 @@
+flowchart TD
+ M["Memory allocation"] --> F["Fixed partitions: unused space inside an allocation"]
+ M --> H["Dynamic partitions: free holes between allocations"]
+ M --> P["Paging: unused bytes in the final page"]
+ M --> S["Segmentation: variable segments can leave holes"]
